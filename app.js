@@ -3,9 +3,9 @@
    Bilingual Edition: English (EN) & Spanish (ES)
    ===================================================================== */
 const CONFIG = {
-  STRIPE_LINK_BASE: '',
-  STRIPE_LINK_BUMP: '',
-  STRIPE_LINK_UPGRADE: '',
+  STRIPE_LINK_BASE: 'https://buy.stripe.com/6oU7sLek90MdbVechV38401',
+  STRIPE_LINK_BUMP: 'https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402',
+  STRIPE_LINK_UPGRADE: 'https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403',
 
   PRICE_BASE: 37,
   PRICE_BUMP: 47,
