@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Sovereign 5-System Blueprint · Numerology & Rosicrucian Cycles</title>
+  <meta name="description" content="Run your name and birth date through all 5 ancient mathematical systems (Pythagorean, Chaldean, Kabbalistic, Vedic & Chinese Lo Shu) to discover your Master Overlap Numbers." />
+  <meta name="theme-color" content="#0A0A0C" />
+  <meta property="og:title" content="Why Western Numerology Only Gives You 20% of the Code" />
+  <meta property="og:description" content="Discover your Master Overlap Numbers across 5 ancient systems. Free teaser calculation." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A0A0C'/><text x='50' y='68' font-size='56' text-anchor='middle' fill='%23D4AF37' font-family='serif'>V</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { obsidian: '#0A0A0C', charcoal: '#121318', gold: '#D4AF37', champagne: '#F3E5AB', olive: '#556B2F', ivory: '#F5F5F7' },
+          fontFamily: { display: ['Cinzel', 'serif'], serif: ['"Cormorant Garamond"', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="min-h-screen">
+
+  <!-- ============ HEADER ============ -->
+  <header class="no-print">
+    <div class="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between">
+      <button type="button" data-action="home" class="flex items-center gap-2.5">
+        <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#D4AF37" stroke-width="2"/><polygon points="50,12 86,38 72,82 28,82 14,38" fill="none" stroke="#D4AF37" stroke-width="2"/><circle cx="50" cy="50" r="6" fill="#D4AF37"/></svg>
+        <span class="font-display text-[0.8rem] tracking-[0.25em] text-champagne">SOVEREIGN<span class="text-gold"> · </span>5</span>
+      </button>
+      <div class="flex items-center gap-3">
+        <span class="badge-olive hidden sm:inline-flex" data-i18n="badge_systems">5 Ancient Systems · 1 Code</span>
+        <div class="lang-switch">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="es">ES</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ VIEW 1 · HERO HOOK ============ -->
+    <section id="view-hero" class="px-5 pb-16 pt-4">
+      <div class="max-w-xl mx-auto text-center reveal">
+        <span class="badge-gold mb-5" data-i18n="hero_badge">Free 5-System Teaser Scan</span>
+        <h1 class="font-display text-[2rem] leading-[1.12] sm:text-5xl sm:leading-[1.08] mt-5" data-i18n="hero_title">
+          Why Western Numerology Only Gives You <span class="text-gold-grad">20%</span> of the Code.
+        </h1>
+        <p class="mt-5 text-[0.98rem] sm:text-lg text-zinc-300 leading-relaxed" data-i18n="hero_sub">
+          Enter your name and birth date to run your profile through all <strong class="text-champagne font-semibold">5 Ancient Mathematical Systems</strong> (Pythagorean, Babylonian Chaldean, Kabbalistic, Vedic &amp; Chinese Lo Shu) to discover your <strong class="text-champagne font-semibold">Master Overlap Numbers</strong>.
+        </p>
+      </div>
+
+      <!-- 20% bar -->
+      <div class="max-w-xl mx-auto mt-7 grid grid-cols-5 gap-1.5 reveal" style="animation-delay:.1s" aria-hidden="true">
+        <div class="text-center"><div class="h-1.5 rounded-full bg-gold"></div><div class="mt-2 text-[0.6rem] tracking-[0.15em] uppercase text-champagne">Pythag.</div></div>
+        <div class="text-center"><div class="h-1.5 rounded-full bg-zinc-800"></div><div class="mt-2 text-[0.6rem] tracking-[0.15em] uppercase text-zinc-500">Chaldean</div></div>
+        <div class="text-center"><div class="h-1.5 rounded-full bg-zinc-800"></div><div class="mt-2 text-[0.6rem] tracking-[0.15em] uppercase text-zinc-500">Kabbalah</div></div>
+        <div class="text-center"><div class="h-1.5 rounded-full bg-zinc-800"></div><div class="mt-2 text-[0.6rem] tracking-[0.15em] uppercase text-zinc-500">Vedic</div></div>
+        <div class="text-center"><div class="h-1.5 rounded-full bg-zinc-800"></div><div class="mt-2 text-[0.6rem] tracking-[0.15em] uppercase text-zinc-500">Lo Shu</div></div>
+      </div>
+
+      <!-- Form -->
+      <form id="calc-form" class="card max-w-xl mx-auto mt-8 p-5 sm:p-7 reveal" style="animation-delay:.18s" novalidate>
+        <div id="unlock-notice" class="hidden mb-5 p-3 rounded-xl border border-olive/70 bg-olive/20 text-sm text-lime-100/90" data-i18n="unlock_notice">
+          ✦ Purchase confirmed. Enter (or confirm) your details below to generate your full Sovereign Dossier.
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="field-label" for="fullName" data-i18n="form_label_name">Full Birth Name</label>
+            <input id="fullName" name="fullName" class="field" type="text" autocomplete="name" placeholder="First and last name" data-i18n-ph="form_placeholder_name" required />
+            <div class="field-error" data-error="fullName"></div>
+          </div>
+          <div>
+            <label class="field-label" for="birthDate" data-i18n="form_label_dob">Date of Birth</label>
+            <input id="birthDate" name="birthDate" class="field" type="date" required />
+            <div class="field-error" data-error="birthDate"></div>
+          </div>
+          <div>
+            <label class="field-label" for="email" data-i18n="form_label_email">Email Address</label>
+            <input id="email" name="email" class="field" type="email" autocomplete="email" inputmode="email" placeholder="Where should we send your results?" data-i18n-ph="form_placeholder_email" required />
+            <div class="field-error" data-error="email"></div>
+          </div>
+        </div>
+        <button type="submit" class="btn-gold mt-5">
+          <span data-i18n="form_submit">Calculate My 5-System Overlap</span>
+          <span class="opacity-70 text-[0.7rem] font-semibold" data-i18n="form_submit_sub">(Free Teaser)</span>
+        </button>
+        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <button type="button" data-action="sample" class="btn-ghost w-full sm:w-auto" data-i18n="founder_sample">✦ Load Founder Sample (Adam Vega)</button>
+          <span class="text-[0.7rem] text-zinc-500 flex items-center gap-1.5" data-i18n="privacy_notice">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            Private. Never shared.
+          </span>
+        </div>
+      </form>
+
+      <!-- Systems strip -->
+      <div class="max-w-3xl mx-auto mt-12 reveal" style="animation-delay:.26s">
+        <p class="eyebrow text-center" data-i18n="strip_eyebrow">The 5 Systems We Cross-Reference</p>
+        <div id="systems-strip" class="mt-5 grid grid-cols-1 sm:grid-cols-5 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- ============ VIEW 2 · TEASER + SALES ============ -->
+    <section id="view-teaser" class="hidden px-4 sm:px-5 pb-32 pt-2">
+      <div id="teaser-root" class="max-w-3xl mx-auto"></div>
+    </section>
+
+    <!-- ============ VIEW 3 · UNLOCKED DOSSIER ============ -->
+    <section id="view-dossier" class="hidden px-3 sm:px-5 pb-20 pt-2">
+      <!-- Fallback Claim Bar (shown when paying customer lands on a device without localStorage) -->
+      <div id="claim-bar" class="hidden no-print max-w-[860px] mx-auto mb-6 card p-5 sm:p-7 border-gold/60">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="badge-gold !text-[0.62rem]" data-i18n="claim_title">Order Confirmed · 100% Unlocked</span>
+          <span class="badge-olive !text-[0.62rem]">VIP Access</span>
+        </div>
+        <h2 class="font-display text-xl sm:text-2xl text-ivory" data-i18n="claim_desc">Enter your Name & Birth Date to generate your unlocked PDF:</h2>
+        <form id="claim-form" class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3" novalidate>
+          <div>
+            <label class="field-label text-[0.65rem]" for="claimFullName" data-i18n="form_label_name">Full Birth Name</label>
+            <input id="claimFullName" class="field !py-2.5 text-sm" type="text" placeholder="First and last name" data-i18n-ph="form_placeholder_name" required />
+          </div>
+          <div>
+            <label class="field-label text-[0.65rem]" for="claimBirthDate" data-i18n="form_label_dob">Date of Birth</label>
+            <input id="claimBirthDate" class="field !py-2.5 text-sm" type="date" required />
+          </div>
+          <div class="flex items-end">
+            <button type="submit" class="btn-gold !py-2.5 w-full text-xs">
+              <span data-i18n="claim_btn">✦ Generate My Dossier & PDF</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div id="dossier-actions" class="no-print max-w-[860px] mx-auto mb-6 card p-4 sm:p-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+        <div>
+          <p class="eyebrow" data-i18n="unlocked_access">Unlocked · Full Access</p>
+          <p class="text-sm text-zinc-400 mt-1" data-i18n="print_tip">Tip: in the print dialog choose <em>Save as PDF</em> and enable <em>Background graphics</em>.</p>
+        </div>
+        <div class="flex gap-2 flex-col sm:flex-row">
+          <button type="button" data-action="print" id="btn-print-dossier" class="btn-gold sm:w-auto !py-3 !px-5 glow-pulse" data-i18n="print_btn">⤓ Download / Print Luxury PDF Dossier</button>
+          <button type="button" data-action="restart" class="btn-ghost" data-i18n="restart_btn">New Profile</button>
+        </div>
+      </div>
+      <div id="dossier-root" class="dossier"></div>
+    </section>
+  </main>
+
+  <footer class="no-print px-5 pb-10 pt-6 text-center text-[0.68rem] text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+    <div class="hairline mb-6"></div>
+    <span data-i18n="disclaimer_footer">© <span id="year"></span> Sovereign 5-System. For entertainment, self-reflection and educational purposes only. Not financial, medical, legal or psychological advice.</span>
+  </footer>
+
+  <!-- Sticky CTA (teaser) -->
+  <div id="sticky-cta" class="sticky-cta no-print">
+    <button type="button" data-action="scroll-checkout" class="btn-gold max-w-xl mx-auto flex"><span data-i18n="unlock_cta">Unlock My Full Dossier · </span><span data-total>$37</span></button>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast no-print card px-4 py-3 text-sm text-champagne"></div>
+
+  <!-- Calculation ritual overlay -->
+  <div id="ritual" class="ritual no-print" aria-live="polite">
+    <div class="text-center px-6">
+      <div class="relative mx-auto ritual-ring"></div>
+      <p class="font-display mt-7 text-champagne tracking-[0.2em] text-sm" id="ritual-text" data-i18n="ritual_align">Aligning the systems…</p>
+      <p class="text-xs text-zinc-500 mt-2" data-i18n="ritual_cross">Cross-referencing 5 ancient traditions</p>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
