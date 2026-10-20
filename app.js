@@ -989,7 +989,7 @@ const CONFIG = {
           </div>
           <div class="bar-track mt-4"><div class="bar-fill" style="width:${cy.progress}%"></div></div>
         </div>
-        <table class="lux-table mt-6"><thead><tr><th></th><th>${state.lang === 'es' ? 'Período' : 'Period'}</th><th>${state.lang === 'es' ? 'Fechas' : 'Dates'}</th><th>${state.lang === 'es' ? 'Modo Táctico' : 'Mode'}</th></tr></thead><tbody>${cy.periods.map(c => cycleRow(c, C_LANG)).join('')}</tbody></table>` });
+        <table class="lux-table table-cycles mt-6"><thead><tr><th></th><th>${state.lang === 'es' ? 'Período' : 'Period'}</th><th>${state.lang === 'es' ? 'Fechas' : 'Dates'}</th><th>${state.lang === 'es' ? 'Modo Táctico' : 'Mode'}</th></tr></thead><tbody>${cy.periods.map(c => cycleRow(c, C_LANG)).join('')}</tbody></table>` });
 
       pages.push({ title: state.lang === 'es' ? 'Directivas del Ciclo Activo' : 'Current Cycle Brief', html: `
         ${secHead(state.lang === 'es' ? `Informe Táctico · Ciclo ${cy.current.n} de 7` : `Tactical Brief · Cycle ${cy.current.n} of 7`, `${cy.current.name}: ${state.lang === 'es' ? 'Tus Directivas' : 'Your Directives'}`, curT.directive)}

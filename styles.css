@@ -197,12 +197,18 @@ main, header, footer { position: relative; z-index: 1; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- Bars & Frequency Tally ---------- */
-.bar-row { margin-bottom: 0.95rem; }
+.bar-row {
+  margin-bottom: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 4px;
+}
 .bar-label {
   display: flex !important;
   justify-content: space-between !important;
   align-items: baseline !important;
   width: 100% !important;
+  box-sizing: border-box !important;
   font-size: 0.8rem;
   margin-bottom: 0.35rem;
 }
@@ -215,6 +221,7 @@ main, header, footer { position: relative; z-index: 1; }
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-right: 0.5rem;
+  min-width: 0;
 }
 .bar-label .bar-val, .bar-label > span:last-child {
   font-family: 'Cinzel', serif;
@@ -225,7 +232,7 @@ main, header, footer { position: relative; z-index: 1; }
   white-space: nowrap;
   flex-shrink: 0;
 }
-.bar-track { height: 8px; border-radius: 99px; background: rgba(245,245,247,.06); overflow: hidden; }
+.bar-track { height: 8px; border-radius: 99px; background: rgba(245,245,247,.06); overflow: hidden; width: 100%; box-sizing: border-box; }
 .bar-fill { height: 100%; border-radius: 99px; background: var(--gold-grad); }
 
 /* ---------- Lo Shu grid ---------- */
@@ -287,19 +294,88 @@ main, header, footer { position: relative; z-index: 1; }
 .seal { width: 120px; height: 120px; margin: 0 auto; }
 
 @media (max-width: 640px) {
-  .page { padding: 36px 18px 52px; border-radius: 4px; }
-  .page::before { inset: 8px; }
-  .page-foot { left: 18px; right: 18px; bottom: 18px; }
-  .page h2.sec-title { font-size: 1.45rem; }
+  html, body, #view-dossier {
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+  .dossier {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0 auto;
+  }
+  .page {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 0 auto 24px !important;
+    box-sizing: border-box !important;
+    padding: 22px 14px 36px !important;
+    border-radius: 4px;
+    overflow-x: hidden !important;
+  }
+  .page::before { inset: 6px; }
+  .page-foot { left: 14px; right: 14px; bottom: 14px; }
+  .page h2.sec-title { font-size: 1.35rem; }
   .cover {
     min-height: 580px;
-    padding: 24px 16px 36px;
+    padding: 22px 14px 32px !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   .cover .seal { width: 72px; height: 72px; }
   .cover .hairline { margin: 10px auto; }
+
+  /* Bars & Tally on mobile */
+  .bar-row {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-right: 4px !important;
+  }
+
+  /* Lo Shu grid centered on mobile */
+  .loshu {
+    margin: 0 auto !important;
+    max-width: 270px !important;
+  }
+
+  /* Tables on mobile */
+  table.lux-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    box-sizing: border-box !important;
+  }
+  table.lux-table th, table.lux-table td {
+    padding: 0.45rem 0.2rem !important;
+    word-break: break-word !important;
+  }
+
+  /* 4-column Rosicrucian Cycles table */
+  table.lux-table.table-cycles th:nth-child(1), table.lux-table.table-cycles td:nth-child(1),
+  article.page[data-page="13"] table.lux-table th:nth-child(1), article.page[data-page="13"] table.lux-table td:nth-child(1) {
+    width: 12% !important;
+  }
+  table.lux-table.table-cycles th:nth-child(2), table.lux-table.table-cycles td:nth-child(2),
+  article.page[data-page="13"] table.lux-table th:nth-child(2), article.page[data-page="13"] table.lux-table td:nth-child(2) {
+    width: 38% !important;
+  }
+  table.lux-table.table-cycles th:nth-child(3), table.lux-table.table-cycles td:nth-child(3),
+  article.page[data-page="13"] table.lux-table th:nth-child(3), article.page[data-page="13"] table.lux-table td:nth-child(3) {
+    width: 26% !important;
+  }
+  table.lux-table.table-cycles th:nth-child(4), table.lux-table.table-cycles td:nth-child(4),
+  article.page[data-page="13"] table.lux-table th:nth-child(4), article.page[data-page="13"] table.lux-table td:nth-child(4) {
+    width: 24% !important;
+  }
+
+  .mode-pill {
+    font-size: 0.52rem !important;
+    padding: 2px 4px !important;
+    letter-spacing: 0.06em !important;
+    white-space: nowrap !important;
+  }
 }
 
 /* =====================================================================
