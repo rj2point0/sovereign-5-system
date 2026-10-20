@@ -355,11 +355,11 @@ main, header, footer { position: relative; z-index: 1; }
   /* 4-column Rosicrucian Cycles table */
   table.lux-table.table-cycles th:nth-child(1), table.lux-table.table-cycles td:nth-child(1),
   article.page[data-page="13"] table.lux-table th:nth-child(1), article.page[data-page="13"] table.lux-table td:nth-child(1) {
-    width: 12% !important;
+    width: 10% !important;
   }
   table.lux-table.table-cycles th:nth-child(2), table.lux-table.table-cycles td:nth-child(2),
   article.page[data-page="13"] table.lux-table th:nth-child(2), article.page[data-page="13"] table.lux-table td:nth-child(2) {
-    width: 38% !important;
+    width: 34% !important;
   }
   table.lux-table.table-cycles th:nth-child(3), table.lux-table.table-cycles td:nth-child(3),
   article.page[data-page="13"] table.lux-table th:nth-child(3), article.page[data-page="13"] table.lux-table td:nth-child(3) {
@@ -367,14 +367,21 @@ main, header, footer { position: relative; z-index: 1; }
   }
   table.lux-table.table-cycles th:nth-child(4), table.lux-table.table-cycles td:nth-child(4),
   article.page[data-page="13"] table.lux-table th:nth-child(4), article.page[data-page="13"] table.lux-table td:nth-child(4) {
-    width: 24% !important;
+    width: 30% !important;
+    text-align: right !important;
   }
 
   .mode-pill {
-    font-size: 0.52rem !important;
+    font-size: 0.48rem !important;
     padding: 2px 4px !important;
-    letter-spacing: 0.06em !important;
-    white-space: nowrap !important;
+    letter-spacing: 0.04em !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: inline-block !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
