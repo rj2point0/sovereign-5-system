@@ -227,6 +227,7 @@ const CONFIG = {
   /* ---------------- toast ---------------- */
   let toastTimer = null;
   function toast(html, duration) {
+    if (window._disableToast) return;
     const el = $('#toast');
     if (!el) return;
     el.innerHTML = html;
@@ -234,6 +235,7 @@ const CONFIG = {
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.classList.remove('show'), duration || 3600);
   }
+  window.toast = toast;
 
   /* ---------------- views ---------------- */
   function showView(name) {
@@ -650,14 +652,14 @@ const CONFIG = {
     return `<p class="eyebrow">${eyebrow}</p><h2 class="sec-title">${title}</h2><div class="hairline my-4" style="max-width:120px;margin-left:0"></div>${lead ? `<p class="lead">${lead}</p>` : ''}`;
   }
   function statCard(label, display, sub) {
-    return `<div class="card-soft p-4 text-center avoid-break"><div class="text-[0.58rem] tracking-[0.2em] uppercase text-zinc-500">${label}</div><div class="font-display text-3xl text-gold-grad mt-1.5">${display}</div>${sub ? `<div class="text-[0.7rem] text-champagne mt-1">${sub}</div>` : ''}</div>`;
+    return `<div class="card-soft py-3 px-1.5 sm:p-4 text-center avoid-break"><div class="text-[0.52rem] sm:text-[0.58rem] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-zinc-500 truncate">${label}</div><div class="font-display text-gold-grad mt-1 whitespace-nowrap" style="font-size:clamp(1.05rem,4.2vw,1.6rem);">${display}</div>${sub ? `<div class="text-[0.62rem] sm:text-[0.7rem] text-champagne mt-0.5 sm:mt-1">${sub}</div>` : ''}</div>`;
   }
   function interp(title, body) {
     return `<div class="avoid-break border-l border-gold/40 pl-4 py-1" style="border-color:rgba(212,175,55,.4)"><p class="font-display text-[0.95rem] text-champagne">${title}</p><p class="text-sm text-zinc-300 mt-1">${body}</p></div>`;
   }
   function bar(label, count, max, rightLabel) {
     const pct = Math.min(100, Math.round(((count || 0) / (max || 1)) * 100));
-    return `<div class="bar-row"><div class="bar-label"><span>${label}</span><span>${rightLabel || count}</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
+    return `<div class="bar-row"><div class="bar-label"><span>${label}</span><span class="bar-val">${rightLabel || count}</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
   }
   function chips(letterWords) {
     return `<div class="flex flex-wrap gap-2 my-3">${letterWords.map((w) => `<div class="flex gap-1">${w.letters.map((l) => `<span class="chip ${l.vowel ? 'vowel' : ''}"><span class="ch">${l.ch}</span><span class="val">${l.val}</span></span>`).join('')}</div>`).join('<span class="chip-space"></span>')}</div>`;
@@ -847,7 +849,7 @@ const CONFIG = {
     const seenC = new Set();
     pages.push({ title: state.lang === 'es' ? 'Sistema II · Caldeo' : 'System II · Chaldean', html: `
       ${secHead(state.lang === 'es' ? 'Sistema II · Babilonia' : 'System II · Babylon', state.lang === 'es' ? 'Análisis de Compuestos Caldeos' : 'Chaldean Compound Analysis', state.lang === 'es' ? 'El sistema numérico más antiguo clasifica las letras por vibración sonora del 1 al 8. El nueve es sagrado y jamás se asigna. El número compuesto revela la historia profunda y el destino oculto; el reducido expresa la manifestación externa.' : 'The oldest numerical system on record assigns letters by sound vibration, using only 1–8. Nine is sacred and never assigned. The compound number (before reduction) reveals the hidden story; the root reveals the outer expression.')}
-      <div class="grid grid-cols-3 gap-3 mt-6">
+      <div class="grid grid-cols-3 gap-1.5 sm:gap-3 mt-6">
         ${compounds.map(([lab, n]) => statCard(lab, n.display, `${state.lang === 'es' ? 'Total bruto' : 'Total'} ${n.raw}`)).join('')}
       </div>
       <div class="mt-5 avoid-break"><p class="eyebrow !text-[0.55rem] mb-2">${state.lang === 'es' ? 'Valores de Letras Caldeas' : 'Chaldean Letter Values'}</p>${chips(ch.letters)}</div>
