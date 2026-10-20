@@ -486,6 +486,18 @@
     const overlap = masterOverlap(p, c, k, v, l, name, birth);
     const cycles = rosicrucianCycles(birth, today);
 
+    const vitality = {
+      moolankNum: v.moolank.value,
+      bhagyankNum: v.bhagyank.value,
+      dominantElement: l.dominantElement,
+      dominantNumber: l.dominantNumber,
+      weakElements: l.weakElements,
+      missingNumbers: l.missing,
+      currentCycle: cycles.current.index,
+      isPushWindow: cycles.current.index === 0 || cycles.current.index === 2,
+      isRecoveryWindow: cycles.current.index === 1 || cycles.current.index === 6,
+    };
+
     const displayName = titleCase(fullName);
     return {
       input: {
@@ -504,6 +516,7 @@
       loShu: l,
       overlap,
       cycles,
+      vitality,
       personalYear: personalYear(birth, today),
       generatedLabel: fmtLong(todayUTC(today)),
     };

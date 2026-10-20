@@ -215,13 +215,17 @@ main, header, footer { position: relative; z-index: 1; }
 .bar-label > span:first-child {
   color: var(--ivory);
   font-weight: 500;
-  display: flex;
-  align-items: baseline;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-right: 0.5rem;
   min-width: 0;
+}
+.bar-label > span:first-child > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .bar-label .bar-val, .bar-label > span:last-child {
   font-family: 'Cinzel', serif;
@@ -327,6 +331,35 @@ main, header, footer { position: relative; z-index: 1; }
   }
   .cover .seal { width: 72px; height: 72px; }
   .cover .hairline { margin: 10px auto; }
+
+  /* Medallions scaling on mobile */
+  .page .medallion-lg { width: 96px !important; height: 96px !important; }
+  .page .medallion-lg span { font-size: 2.2rem !important; }
+  .page .medallion-md { width: 68px !important; height: 68px !important; }
+  .page .medallion-md span { font-size: 1.5rem !important; }
+  .page .flex.justify-center.gap-6,
+  .page .flex.justify-center.gap-5,
+  .page .flex.justify-center.items-end { gap: 10px !important; }
+
+  /* Grid strictly 1 column on mobile to prevent overflow */
+  .page .grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .page .grid > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Secondary harmonics flex wrap on mobile */
+  .page .flex.items-center.gap-4 {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
 
   /* Bars & Tally on mobile */
   .bar-row {

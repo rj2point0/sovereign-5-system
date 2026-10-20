@@ -444,6 +444,233 @@
     9: 'Culminación. Cierra ciclos, despréndete de lo obsoleto y prepara el renacer.',
   };
 
+  /* ===================================================================
+     AYURVEDIC VEDIC CONSTITUTION (1–9)
+     =================================================================== */
+  const AYURVEDA_EN = {
+    1: {
+      dosha: 'Pitta-Dominant',
+      title: 'Solar Metabolic Vitality',
+      profile: 'High metabolic heat, cardiovascular drive, and strong cellular fire. Prone to systemic inflammation and adrenal burnout when over-extended.',
+      protocol: 'Morning sunlight within 30 min of waking, structured heat regulation, cooling hydration, and avoiding work during peak midday heat.',
+      protocolShort: 'Morning sunlight, cooling hydration & thermal pauses',
+    },
+    2: {
+      dosha: 'Kapha-Vata',
+      title: 'Lunar Fluid & Neural Rhythm',
+      profile: 'Fluid, lymphatic, and emotional nervous system sensitivity. Highly responsive to circadian alignment, hydration, and lunar biorhythms.',
+      protocol: 'Strict sleep hygiene, electrolyte-rich hydration, evening parasympathetic down-regulation, and proximity to natural bodies of water.',
+      protocolShort: 'Strict sleep hygiene, electrolytes & evening parasympathetic reset',
+    },
+    3: {
+      dosha: 'Kapha-Pitta',
+      title: 'Expansive Metabolic Stamina',
+      profile: 'Strong baseline stamina, liver and arterial expansion, and robust systemic vitality. Watch over-indulgence and metabolic surplus.',
+      protocol: 'Intermittent fasting windows, high-output zone-2 endurance training, bitter greens for hepatic drainage, and metabolic expenditure balance.',
+      protocolShort: 'Intermittent fasting, zone-2 endurance & hepatic drainage',
+    },
+    4: {
+      dosha: 'Vata-Dominant',
+      title: 'High-Voltage Electrical Nervous System',
+      profile: 'High electrical neural bandwidth, hyper-focus spikes, and sudden energy surges. Prone to mental exhaustion, insomnia, and nervous tension.',
+      protocol: 'Grounding/earthing protocols, heavy progressive resistance training, magnesium threonate/glycinate, trace minerals, and blue-light curfews.',
+      protocolShort: 'Grounding, heavy resistance training, magnesium & blue-light curfews',
+    },
+    5: {
+      dosha: 'Vata-Pitta',
+      title: 'Neuro-Respiratory & Vagal Agility',
+      profile: 'Fast cognitive processing, respiratory and vagus nerve responsiveness, and quick reflexes. Prone to sensory overstimulation and adrenal scatter.',
+      protocol: 'Coherent diaphragmatic breathwork, structured digital detox intervals, movement variety, and nervous system adaptogens (Ashwagandha/Tulsi).',
+      protocolShort: 'Coherent breathwork, digital detox intervals & adaptogens',
+    },
+    6: {
+      dosha: 'Kapha-Dominant',
+      title: 'Endocrine Vitality & Tissue Longevity',
+      profile: 'Strong reproductive and endocrine vitality, high tissue/collagen resilience, and structural symmetry. Prone to lymphatic congestion if sedentary.',
+      protocol: 'Consistent daily zone-2 cardiovascular flushing, clean whole-food metabolic inputs, lymphatic drainage, and anti-inflammatory nutrition.',
+      protocolShort: 'Daily zone-2 flushing, lymphatic drainage & clean whole foods',
+    },
+    7: {
+      dosha: 'Vata-Pitta Mystic',
+      title: 'Deep Neural Cortex & Gut-Brain Axis',
+      profile: 'Hyper-attuned analytical cortex, pineal sensitivity, and deep gut-brain reactivity. Prone to tension and nervous fatigue when over-analyzing.',
+      protocol: 'Solitude recovery windows, cold water immersion/swimming, high-grade magnesium, gut microbiome support, and total sensory blackout for REM sleep.',
+      protocolShort: 'Solitude recovery, cold water, magnesium & REM sleep protection',
+    },
+    8: {
+      dosha: 'Vata-Kapha',
+      title: 'Structural Frame & Slow-Burn Endurance Engine',
+      profile: 'Dense skeletal and structural framework, high connective tissue integrity, and slow-burn stamina. Prone to joint stiffness and mineral depletion under stress.',
+      protocol: 'Heavy compound resistance training, dedicated mobility and joint lubrication, collagen/mineral broth replenishment, and sauna heat therapy.',
+      protocolShort: 'Compound resistance training, joint mobility, mineral broth & sauna',
+    },
+    9: {
+      dosha: 'Pitta-Fire Warrior',
+      title: 'High-Output Muscular & Adrenal Engine',
+      profile: 'High fast-twitch muscle recruitment, potent adrenal response, and elevated core temperature. High physical output; rapidly accumulates internal heat.',
+      protocol: 'Intense athletic or combat training outlets, deliberate cooling/deload days, cold showers, electrolyte hydration, and moderation of stimulants.',
+      protocolShort: 'Intense athletic outlets, deliberate cooling days & electrolyte balance',
+    },
+  };
+
+  const AYURVEDA_ES = {
+    1: {
+      dosha: 'Pitta Dominante',
+      title: 'Vitalidad Metabólica Solar',
+      profile: 'Elevado fuego metabólico, potencia cardiovascular y gran empuje celular. Propenso a inflamación y fatiga por exceso de esfuerzo.',
+      protocol: 'Luz solar matutina en los primeros 30 min, regulación térmica estructurada, hidratación refrescante y pausas en horas de calor pico.',
+      protocolShort: 'Luz solar matutina, hidratación refrescante y pausas térmicas',
+    },
+    2: {
+      dosha: 'Kapha-Vata',
+      title: 'Sensibilidad Fluídica y Neural Lunar',
+      profile: 'Alta sensibilidad linfática y del sistema nervioso emocional. Responde profundamente a la sincronización circadiana y biorritmos lunares.',
+      protocol: 'Higiene de sueño estricta, hidratación rica en electrolitos, desactivación parasimpática nocturna y contacto con el agua.',
+      protocolShort: 'Higiene de sueño estricta, electrolitos y desconexión nocturna',
+    },
+    3: {
+      dosha: 'Kapha-Pitta',
+      title: 'Resistencia Metabólica Expansiva',
+      profile: 'Fuerte resistencia basal, expansión arterial y metabolismo hepático robusto. Tendencia a sobrecargas metabólicas sin gestión.',
+      protocol: 'Ventanas de ayuno intermitente, resistencia sostenida en zona 2, tónicos amargos para drenaje hepático y gasto calórico activo.',
+      protocolShort: 'Ayuno intermitente, cardio zona 2 y drenaje hepático',
+    },
+    4: {
+      dosha: 'Vata Dominante',
+      title: 'Sistema Nervioso Eléctrico de Alto Voltaje',
+      profile: 'Elevado ancho de banda neural, picos de hiperenfoque y descargas energéticas súbitas. Propenso al agotamiento mental e insomnio.',
+      protocol: 'Protocolos de contacto a tierra, entrenamiento de fuerza pesada, magnesio, minerales traza y bloqueo estricto de luz azul.',
+      protocolShort: 'Toma de tierra, fuerza pesada, magnesio y desconexión lumínica',
+    },
+    5: {
+      dosha: 'Vata-Pitta',
+      title: 'Agilidad Neuro-Respiratoria y Vagal',
+      profile: 'Rápido procesamiento cognitivo y alta reactividad del nervio vago y sistema respiratorio. Riesgo de sobreestimulación sensorial y dispersión adrenal.',
+      protocol: 'Respiración diafragmática coherente, desconexión digital programada, variedad de movimiento y adaptógenos de soporte neural.',
+      protocolShort: 'Respiración coherente, desconexión digital y adaptógenos',
+    },
+    6: {
+      dosha: 'Kapha Dominante',
+      title: 'Vitalidad Endocrina y Longevidad Tisular',
+      profile: 'Excelente base hormonal y reproductiva, alta resiliencia de tejidos y simetría. Propenso a congestión linfática si cae en el sedentarismo.',
+      protocol: 'Cardio diario en zona 2 para barrido metabólico, drenaje linfático, alimentación antiinflamatoria e hidratación pura.',
+      protocolShort: 'Cardio zona 2 diario, drenaje linfático y alimentos puros',
+    },
+    7: {
+      dosha: 'Vata-Pitta Místico',
+      title: 'Corteza Neural Profunda y Eje Intestino-Cerebro',
+      profile: 'Corteza analítica hiperactiva, sensibilidad pineal y reactividad del eje intestino-cerebro. Somatiza la sobrecarga analítica y tensión mental.',
+      protocol: 'Ventanas de aislamiento restaurativo, inmersión en agua fría o natación, suplementación con magnesio, probióticos y oscuridad total para el sueño REM.',
+      protocolShort: 'Aislamiento restaurativo, agua fría, magnesio y protección de sueño REM',
+    },
+    8: {
+      dosha: 'Vata-Kapha',
+      title: 'Chasis Estructural y Motor de Resistencia Lenta',
+      profile: 'Estructura ósea densa, alta integridad de tejido conectivo y resistencia tenaz. Propenso a rigidez articular y desgaste mineral bajo estrés.',
+      protocol: 'Entrenamiento de fuerza con movimientos compuestos, movilidad articular, colágeno y caldo mineral, sauna terapéutica y descanso regular inflexible.',
+      protocolShort: 'Fuerza compuesta, movilidad articular, minerales y sauna',
+    },
+    9: {
+      dosha: 'Pitta Fuego Guerrero',
+      title: 'Motor Muscular y Adrenal de Alto Rendimiento',
+      profile: 'Gran activación de fibras musculares rápidas, fuerte respuesta adrenal y calor interno. Rendimiento sobresaliente; acumula fricción y calor interno.',
+      protocol: 'Descargas físicas de alta intensidad o deportes de combate, días deliberados de enfriamiento y descarga, balance de electrolitos y moderación de estimulantes.',
+      protocolShort: 'Deportes de combate/fuerza, días de enfriamiento y electrolitos',
+    },
+  };
+
+  /* ===================================================================
+     SOMATIC FIVE-ELEMENT BALANCE (WU XING)
+     =================================================================== */
+  const SOMATIC_ELEMENTS_EN = {
+    Wood: {
+      organs: 'Liver, Gallbladder, Tendons & Neuromuscular Drive',
+      power: 'High neuromuscular velocity, sharp visual acuity, tendon spring, and strategic execution.',
+      depletion: 'When depleted or stagnant: eye strain, tendon stiffness, irritability, or creative block.',
+      rebalance: 'Dark green leafy vegetables, sour botanicals, dynamic joint mobility, and intentional screen breaks.',
+    },
+    Fire: {
+      organs: 'Heart, Small Intestine, Vascular Circulation & Metabolic Spark',
+      power: 'Cardiovascular vitality, thermogenic spark, charismatic presence, and rapid energy mobilization.',
+      depletion: 'When over-accelerated: vascular agitation, irregular heart rhythms under stress, or rapid exhaustion.',
+      rebalance: 'CoQ10, hawthorn berries, steady zone-2 aerobic work, cooling breathwork, and emotional stillness.',
+    },
+    Earth: {
+      organs: 'Spleen, Stomach, Pancreas & Core Musculature',
+      power: 'Metabolic nutrient assimilation, physical grounding, dense core muscularity, and somatic endurance.',
+      depletion: 'When overloaded: digestive bloating, brain fog after meals, sluggishness, or chronic rumination.',
+      rebalance: 'Warm cooked root vegetables, fresh ginger, post-meal walking, and avoiding eating under mental stress.',
+    },
+    Metal: {
+      organs: 'Lungs, Large Intestine, Skin & Immune Boundary',
+      power: 'Peak oxygen uptake, mucosal barrier defense, skin/fascial resilience, and clear mental discrimination.',
+      depletion: 'When depleted: shallow chest breathing, dry skin, respiratory vulnerability, or difficulty letting go.',
+      rebalance: 'Deep diaphragmatic breathwork, sauna with cold contrast, zinc and vitamin C, and firm psychological boundaries.',
+    },
+    Water: {
+      organs: 'Kidneys, Adrenal Reserves, Bone Marrow & Deep Cellular Battery',
+      power: 'Deep adrenal stamina, primordial Jing reserves, bone density, and autonomic nervous system endurance.',
+      depletion: 'When drained: adrenal exhaustion, lower back stiffness, cold feet, or underlying chronic anxiety.',
+      rebalance: 'Mineral-dense hydration with unrefined salt, bone broth, black sesame/seaweed, and protected deep sleep.',
+    },
+  };
+
+  const SOMATIC_ELEMENTS_ES = {
+    Wood: {
+      organs: 'Hígado, Vesícula Biliar, Tendones e Impulso Neuromuscular',
+      power: 'Gran velocidad neuromuscular, agudeza visual, elasticidad en tendones y ejecución estratégica.',
+      depletion: 'Al agotarse o estancarse: fatiga ocular, rigidez de tendones, irritabilidad o bloqueo creativo.',
+      rebalance: 'Vegetales de hoja verde oscura, tónicos amargos/cítricos, movilidad dinámica y pausas de pantalla.',
+    },
+    Fire: {
+      organs: 'Corazón, Intestino Delgado, Circulación Vascular y Chispa Metabólica',
+      power: 'Vitalidad cardiovascular, chispa termogénica, presencia magnética y rápida movilización de energía.',
+      depletion: 'Al sobrecalentarse: agitación vascular, pulsaciones reactivas bajo estrés o fatiga vespertina súbita.',
+      rebalance: 'Coenzima Q10, espino blanco, cardio aeróbico estable en zona 2, respiración refrescante y quietud.',
+    },
+    Earth: {
+      organs: 'Bazo, Estómago, Páncreas y Musculatura Central',
+      power: 'Asimilación de nutrientes, anclaje corporal, masa muscular funcional y resistencia somática.',
+      depletion: 'Al sobrecargarse: distensión digestiva, niebla mental postprandial, pesadez o rumiación mental.',
+      rebalance: 'Alimentos tibios de raíz, jengibre fresco, caminatas suaves tras comer y comer sin prisas ni estrés.',
+    },
+    Metal: {
+      organs: 'Pulmones, Intestino Grueso, Piel y Barrera Inmune',
+      power: 'Captación óptima de oxígeno, defensa mucosal, resiliencia fascial/cutánea y discernimiento mental limpio.',
+      depletion: 'Al debilitarse: respiración torácica superficial, piel seca, susceptibilidad respiratoria o dificultad para soltar.',
+      rebalance: 'Respiración diafragmática profunda, sauna con contraste frío, zinc, vitamina C y límites firmes.',
+    },
+    Water: {
+      organs: 'Riñones, Glándulas Suprarrenales, Médula Ósea y Batería Celular',
+      power: 'Resistencia adrenal profunda, reservas de Jing primordial, densidad ósea y temple del sistema nervioso.',
+      depletion: 'Al vaciarse: agotamiento adrenal, rigidez lumbar, extremidades frías o ansiedad soterrada.',
+      rebalance: 'Agua mineralizada con sal marina sin refinar, caldo de huesos, sésamo negro y descanso profundo innegociable.',
+    },
+  };
+
+  /* ===================================================================
+     ROSICRUCIAN BIORHYTHM CYCLES DIRECTIVES
+     =================================================================== */
+  const BIORHYTHM_CYCLES_EN = [
+    { mode: 'High Physical Output', protocol: 'Peak cardiovascular drive, solar metabolic fire, and athletic initiative. Maximize training volume.' },
+    { mode: 'Nervous System Recovery', protocol: 'Fluid lymphatic flush, sleep restoration, and parasympathetic reset. Lower training load; prioritize sleep and hydration.' },
+    { mode: 'Peak Muscular Force', protocol: 'High-intensity output, fast-twitch recruitment, PR testing, and combat/sport training. Channel physical drive into resistance.' },
+    { mode: 'Neuromuscular Calibration', protocol: 'Fine motor coordination, agility, high vagus nerve reactivity, and precision breathwork.' },
+    { mode: 'Metabolic Expansion', protocol: 'High cellular stamina, nutrient assimilation, and sustained physical endurance. Maintain structured fasting windows.' },
+    { mode: 'Endocrine & Tissue Recharge', protocol: 'Hormonal balancing, aesthetic movement, zone-2 cardiovascular recovery, and connective tissue nourishment.' },
+    { mode: 'Mandatory Structural Deload', protocol: 'Joint rehabilitation, connective tissue remodeling, bone-broth/mineral replenishment, and deliberate nervous vault defense.' },
+  ];
+
+  const BIORHYTHM_CYCLES_ES = [
+    { mode: 'Alto Rendimiento Físico', protocol: 'Pico de impulso cardiovascular, fuego metabólico solar e iniciativa atlética. Maximiza volumen de entrenamiento.' },
+    { mode: 'Recuperación del Sistema Nervioso', protocol: 'Drenaje linfático, restauración del sueño y reinicio parasimpático. Reduce carga física; prioriza sueño e hidratación.' },
+    { mode: 'Pico de Fuerza Muscular', protocol: 'Entrenamiento de alta intensidad, fibras rápidas, marcas personales y deportes de combate. Canaliza la potencia en resistencia.' },
+    { mode: 'Calibración Neuromuscular', protocol: 'Coordinación motora fina, agilidad, reactividad del nervio vago y respiración diafragmática.' },
+    { mode: 'Expansión Metabólica', protocol: 'Alta resistencia celular, asimilación de nutrientes y fondo físico sostenido. Mantén ventanas de ayuno estructuradas.' },
+    { mode: 'Recarga Endocrina y Tisular', protocol: 'Balance hormonal, movimiento estético, recuperación cardiovascular en zona 2 y nutrición de tejidos conectivos.' },
+    { mode: 'Descarga Estructural Obligatoria', protocol: 'Rehabilitación articular, remodelación de tejido conectivo, caldo mineral y protección del sistema nervioso.' },
+  ];
+
   const SYSTEM_INFO_EN = [
     { key: 'Pythagorean', name: 'Pythagorean', origin: 'Ancient Greece · 6th c. BCE', blurb: 'The Western mathematical system: letters mapped 1–9 in sequence to reveal your path, expression and inner drives.' },
     { key: 'Chaldean', name: 'Chaldean', origin: 'Babylon · Mesopotamia', blurb: 'The oldest sound-vibration system. Letters carry 1–8 by frequency; 9 is sacred. Compound numbers hold the hidden story.' },
@@ -548,6 +775,12 @@
     claim_title: 'Order Confirmed · 100% Unlocked',
     claim_desc: 'Enter your Name & Birth Date to generate your unlocked 15-page Sovereign Dossier:',
     claim_btn: '✦ Generate My Dossier & PDF',
+    vitality_pillar_title: 'IV · Vitality, Longevity & Bio-Rhythm',
+    somatic_box_title: 'Somatic & Elemental Vitality Balance',
+    ayurvedic_dosha: 'Ayurvedic Constitution',
+    peak_recovery_protocol: 'Peak Vitality & Recovery Protocol',
+    vitality_feature_title: 'Vitality & Somatic Architecture',
+    vitality_feature_desc: 'Ayurvedic dosha alignment, Wu Xing organ balance & 52-day bio-rhythm protocols',
   };
 
   const UI_ES = {
@@ -635,6 +868,12 @@
     claim_title: 'Orden Confirmada · 100% Desbloqueado',
     claim_desc: 'Ingresa tu Nombre y Fecha de Nacimiento para generar tu Dossier Soberano de 15 páginas:',
     claim_btn: '✦ Generar Mi Dossier y PDF',
+    vitality_pillar_title: 'IV · Vitalidad, Longevidad y Biorritmo',
+    somatic_box_title: 'Equilibrio Somático y Vitalidad Elemental',
+    ayurvedic_dosha: 'Constitución Ayurvédica',
+    peak_recovery_protocol: 'Protocolo de Rendimiento y Recuperación',
+    vitality_feature_title: 'Vitalidad y Arquitectura Somática',
+    vitality_feature_desc: 'Alineación de dosha ayurvédico, balance orgánico Wu Xing y biorritmos de 52 días',
   };
 
   /* ===================================================================
@@ -654,6 +893,9 @@
       CYCLE_TEXT: isEs ? CYCLE_TEXT_ES : CYCLE_TEXT_EN,
       PERSONAL_YEAR: isEs ? PERSONAL_YEAR_ES : PERSONAL_YEAR_EN,
       SYSTEM_INFO: isEs ? SYSTEM_INFO_ES : SYSTEM_INFO_EN,
+      AYURVEDA: isEs ? AYURVEDA_ES : AYURVEDA_EN,
+      SOMATIC_ELEMENTS: isEs ? SOMATIC_ELEMENTS_ES : SOMATIC_ELEMENTS_EN,
+      BIORHYTHM_CYCLES: isEs ? BIORHYTHM_CYCLES_ES : BIORHYTHM_CYCLES_EN,
       UI: isEs ? UI_ES : UI_EN,
     };
   }
@@ -672,6 +914,9 @@
     CYCLE_TEXT: CYCLE_TEXT_EN,
     PERSONAL_YEAR: PERSONAL_YEAR_EN,
     SYSTEM_INFO: SYSTEM_INFO_EN,
+    AYURVEDA: AYURVEDA_EN,
+    SOMATIC_ELEMENTS: SOMATIC_ELEMENTS_EN,
+    BIORHYTHM_CYCLES: BIORHYTHM_CYCLES_EN,
     UI: UI_EN,
     // Raw language tables:
     EN: getBundle('en'),

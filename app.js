@@ -62,7 +62,7 @@ const CONFIG = {
     'Cover & Big Three Master Overlap Badge', 'The 5-System Method & Contents', 'Your Big Three Master Overlap Anchors',
     'Primary Signature Anchor Deep-Dive', 'Secondary Wealth & Strategy Engine', 'Tertiary Structural Foundation',
     'System I · Pythagorean Core Numbers', 'System II · Chaldean Compound Analysis', 'System III · Kabbalistic Placement & Tree of Life',
-    'System IV · Vedic Planetary Architecture', 'System V · Lo Shu Magic Square & Five Elements', 'Tactical Synthesis · Wealth, Strategy & Magnetism',
+    'System IV · Vedic Planetary Architecture', 'System V · Lo Shu Magic Square, Five Elements & Somatic Vitality', 'Tactical Synthesis · Wealth, Strategy, Magnetism & Bio-Rhythm',
     'Bonus Module · Rosicrucian 365-Day Cycles Calendar*', 'Bonus Module · Active Cycle Tactical Directives*',
     'The Sovereign Codex · One-Page Operating Blueprint',
   ];
@@ -71,7 +71,7 @@ const CONFIG = {
     'Portada y Medallón de Coincidencia Maestra', 'El Método de los 5 Sistemas y Contenido', 'Tus Tres Anclas de Coincidencia Maestra',
     'Análisis Profundo del Ancla de Firma Primaria', 'Motor Secundario de Riqueza y Estrategia', 'Fundación Estructural Terciaria',
     'Sistema I · Números Esenciales Pitagóricos', 'Sistema II · Análisis de Compuestos Caldeos', 'Sistema III · Ubicación Cabalística y Árbol de la Vida',
-    'Sistema IV · Arquitectura Planetaria Védica', 'Sistema V · Cuadrado Mágico Lo Shu y Cinco Elementos', 'Síntesis Táctica · Riqueza, Estrategia y Magnetismo',
+    'Sistema IV · Arquitectura Planetaria Védica', 'Sistema V · Cuadrado Mágico Lo Shu, Cinco Elementos y Vitalidad Somática', 'Síntesis Táctica · Riqueza, Estrategia, Magnetismo y Biorritmo',
     'Módulo Especial · Calendario Rosacruz de 365 Días*', 'Módulo Especial · Directivas Tácticas del Ciclo Activo*',
     'El Códice Soberano · Plano Operativo en Una Sola Página',
   ];
@@ -434,7 +434,7 @@ const CONFIG = {
           ${lockedCard(state.lang === 'es' ? 'Sistema II · Caldeo' : 'System II · Chaldean', state.lang === 'es' ? 'Vibración del nombre babilónico y números compuestos' : 'Babylonian compound name vibration', ['◆◆/◆', '◆◆/◆', '◆◆/◆'])}
           ${lockedCard(state.lang === 'es' ? 'Sistema III · Cabalístico' : 'System III · Kabbalistic', state.lang === 'es' ? 'Árbol de la Vida y Balance de Columnas' : 'Tree of Life & Pillar Balance', ['◆', '◆', '◆'])}
           ${lockedCard(state.lang === 'es' ? 'Sistema IV · Védico' : 'System IV · Vedic', state.lang === 'es' ? 'Moolank · Bhagyank · Namank' : 'Moolank · Bhagyank · Namank', ['◆', '◆', '◆'])}
-          ${lockedCard(state.lang === 'es' ? 'Sistema V · Lo Shu' : 'System V · Lo Shu', state.lang === 'es' ? 'Cuadrado Mágico 3×3 y Cinco Elementos' : '3×3 Magic Square & Five Elements', ['◆◆', '◆', '◆◆◆'])}
+          ${lockedCard(state.lang === 'es' ? 'Sistema V · Lo Shu & Vitalidad Somática' : 'System V · Lo Shu & Somatic Vitality', state.lang === 'es' ? 'Cuadrado Mágico 3×3, Cinco Elementos y Salud Somática' : '3×3 Magic Square, Five Elements & Somatic Health', ['◆◆', '◆', '◆◆◆'])}
           ${lockedCard(state.lang === 'es' ? '#2 Motor de Riqueza y Estrategia' : '#2 Wealth & Strategy Engine', state.lang === 'es' ? 'Cómo estás diseñado para materializar abundancia' : 'How you materialize abundance', ['◆', '◆◆', '◆'])}
         </div>
         <div class="mt-3">${lockedCard(state.lang === 'es' ? 'Tu Ciclo Rosacruz Activo de 52 Días' : 'Your Current Rosicrucian 52-Day Cycle', state.lang === 'es' ? '¿Ventana de máxima expansión o de preservación de capital?' : 'Press-edges window or capital-preservation window?', ['◆◆◆', '◆◆', '◆◆◆'], windowAlert)}</div>
@@ -932,6 +932,10 @@ const CONFIG = {
     /* 11 · LO SHU */
     const maxE = Math.max(...Object.values(l.elements), 1);
     const ET = C_LANG.ELEMENT_TEXT[l.dominantElement];
+    const domSomatic = C_LANG.SOMATIC_ELEMENTS[l.dominantElement];
+    const weakEl = (l.weakElements && l.weakElements.length) ? l.weakElements[0] : (l.missing.length ? E.elementOf(l.missing[0]) : null);
+    const weakSomatic = weakEl ? C_LANG.SOMATIC_ELEMENTS[weakEl] : null;
+
     pages.push({ title: state.lang === 'es' ? 'Sistema V · Lo Shu' : 'System V · Lo Shu', html: `
       ${secHead(state.lang === 'es' ? 'Sistema V · China Antigua' : 'System V · Ancient China', state.lang === 'es' ? 'Cuadrado Mágico Lo Shu y Cinco Elementos' : 'Lo Shu Magic Square & Five Elements', state.lang === 'es' ? `Cada dígito de tu fecha de nacimiento (${r.input.birth.compact}) más tu Sendero de Vida (${p.lifePath.value}), Expresión (${p.expression.value}) y Nombre Caldeo (${ch.total.value}) se ubica en el cuadrado Lo Shu 3×3, cuyas filas y columnas suman 15.` : `Every digit of your birth date (${r.input.birth.compact}) plus your Life Path (${p.lifePath.value}), Expression (${p.expression.value}) and Chaldean Name (${ch.total.value}) is placed into the 3×3 Lo Shu square, whose rows, columns and diagonals all sum to 15.`)}
       <div class="grid sm:grid-cols-2 gap-7 mt-6 items-start">
@@ -942,6 +946,28 @@ const CONFIG = {
           <div class="card-soft p-4 mt-3"><p class="font-display text-champagne">${state.lang === 'es' ? 'Dominante:' : 'Dominant:'} ${l.dominantElement} <span class="text-zinc-500 text-xs font-sans">(${l.dominantNumber})</span></p><p class="text-[0.8rem] text-zinc-300 mt-1">${ET.text}</p><p class="text-[0.75rem] text-zinc-400 mt-2"><b class="text-gold">${state.lang === 'es' ? 'Activar:' : 'Activate:'}</b> ${ET.activate}</p></div>
         </div>
       </div>
+
+      <!-- Somatic & Elemental Vitality Balance Callout -->
+      <div class="card-soft p-4 sm:p-5 mt-5 border border-gold/30 avoid-break" style="border-color:rgba(212,175,55,.35)">
+        <p class="eyebrow !text-gold">${C_LANG.UI.somatic_box_title}</p>
+        <div class="grid sm:grid-cols-2 gap-4 mt-2.5 text-xs">
+          <div>
+            <p class="font-display text-champagne text-[0.82rem]">${state.lang === 'es' ? 'Superpoder Somático Dominante' : 'Dominant Somatic Engine'}: <span class="text-gold font-bold">${l.dominantElement}</span></p>
+            <p class="text-[0.72rem] text-zinc-400 mt-0.5"><b class="text-zinc-300">${state.lang === 'es' ? 'Órganos Gobernados:' : 'Governed Systems:'}</b> ${domSomatic.organs}</p>
+            <p class="text-[0.74rem] text-zinc-300 mt-1 leading-relaxed">${domSomatic.power}</p>
+          </div>
+          <div>
+            <p class="font-display text-champagne text-[0.82rem]">${state.lang === 'es' ? 'Punto de Agotamiento y Recarga' : 'Depletion Blindspot & Recovery'}: <span class="text-rose-300/90 font-bold">${weakEl || (state.lang === 'es' ? 'Equilibrado' : 'Balanced')}</span></p>
+            ${weakSomatic ? `
+              <p class="text-[0.72rem] text-zinc-400 mt-0.5">${weakSomatic.depletion}</p>
+              <p class="text-[0.74rem] text-zinc-300 mt-1 leading-relaxed"><b class="text-gold">${state.lang === 'es' ? 'Protocolo de Recarga:' : 'Rebalance Protocol:'}</b> ${weakSomatic.rebalance}</p>
+            ` : `
+              <p class="text-[0.74rem] text-zinc-400 mt-1">${state.lang === 'es' ? 'Tu matriz sostiene una distribución armónica de los cinco elementos.' : 'Your matrix maintains an equitable harmonic distribution of the five elements.'}</p>
+            `}
+          </div>
+        </div>
+      </div>
+
       <div class="grid sm:grid-cols-2 gap-5 mt-6">
         <div class="avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'Flechas de Fortaleza' : 'Arrows of Strength'}</p>${l.arrowsOfStrength.length ? l.arrowsOfStrength.map((a) => `<p class="text-sm mt-2"><span class="text-champagne">${a.name}</span> <span class="text-zinc-600">(${a.nums.join('-')})</span><br/><span class="text-zinc-400 text-[0.8rem]">${C_LANG.ARROW_TEXT[a.key].strong}</span></p>`).join('') : `<p class="text-sm text-zinc-500 mt-2">${state.lang === 'es' ? 'Fortalezas distribuidas de manera equilibrada.' : 'No complete arrows. Strengths are distributed.'}</p>`}</div>
         <div class="avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'Flechas a Desarrollar' : 'Arrows to Develop'}</p>${l.arrowsOfWeakness.length ? l.arrowsOfWeakness.map((a) => `<p class="text-sm mt-2"><span class="text-champagne">${a.name}</span> <span class="text-zinc-600">(${a.nums.join('-')})</span><br/><span class="text-zinc-400 text-[0.8rem]">${C_LANG.ARROW_TEXT[a.key].weak}</span></p>`).join('') : `<p class="text-sm text-zinc-500 mt-2">${state.lang === 'es' ? 'Ningún plano de tu matriz está totalmente ausente.' : 'No empty arrows. Grid is complete.'}</p>`}</div>
@@ -952,19 +978,46 @@ const CONFIG = {
     const bhag = v.bhagyank.ruler, mool = v.moolank.ruler, curT = C_LANG.CYCLE_TEXT[cy.current.index];
     const jup = cy.periods[4], sat = cy.periods[6], sol = cy.periods[0];
     const soulA = PA(p.soulUrge.value), persA = PA(p.personality.value);
+    const ayurMool = C_LANG.AYURVEDA[v.moolank.value];
+    const ayurBhag = C_LANG.AYURVEDA[v.bhagyank.value];
+    const bioCycle = C_LANG.BIORHYTHM_CYCLES[cy.current.index];
+
     pages.push({ title: state.lang === 'es' ? 'Síntesis Táctica' : 'Tactical Synthesis', html: `
-      ${secHead(state.lang === 'es' ? 'Integración Estratégica' : 'Integration', state.lang === 'es' ? 'Cómo Operar con Tu Código' : 'How to Use Your Numbers', state.lang === 'es' ? 'Riqueza, estrategia y magnetismo social sintetizados en un solo código operativo unificado.' : 'Wealth, strategy and social magnetism, synthesized across all five systems into one operating code.')}
-      <div class="space-y-5 mt-6">
-        <div class="card-soft p-5 avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'I · Arquitectura de Riqueza' : 'I · Wealth'}</p><p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu Motor Secundario es <b class="text-champagne">${a2.number} · ${A2.name}</b>. ${A2.wealth}` : `Your Secondary Engine is <b class="text-champagne">${a2.number} · ${A2.name}</b>. ${A2.wealth}`}</p><p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu regente védico <b class="text-champagne">${bhag.planet}</b> complementa: ${C_LANG.VEDIC_TEXT[v.bhagyank.value]} Tu elemento dominante <b class="text-champagne">${l.dominantElement}</b> orienta tu sector de riqueza hacia el <b class="text-champagne">${ET.direction}</b>.` : `Your Vedic Conductor, <b class="text-champagne">${bhag.planet}</b>, adds: ${C_LANG.VEDIC_TEXT[v.bhagyank.value]} Your dominant <b class="text-champagne">${l.dominantElement}</b> element points your wealth corner to the <b class="text-champagne">${ET.direction}</b>.`}</p></div>
-        <div class="card-soft p-5 avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'II · Mando y Estrategia' : 'II · Strategy'}</p><p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Lidera desde tu Ancla de Firma <b class="text-champagne">${a1.number} · ${A1.name}</b>. ${A1.tactics[0]} ${A1.tactics[1]} Apóyate en tu Fundación <b class="text-champagne">${a3.number} · ${A3.name}</b>: ${sentences(A3.foundation, 2)}` : `Lead from your Signature Anchor <b class="text-champagne">${a1.number} · ${A1.name}</b>. ${A1.tactics[0]} ${A1.tactics[1]} Ground every campaign in your Foundation <b class="text-champagne">${a3.number} · ${A3.name}</b>: ${sentences(A3.foundation, 2)}`}</p><p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `En este momento te encuentras en <b class="text-champagne">${cy.current.name}</b>, una ventana en modo <span class="mode-pill mode-${curT.modeTone}">${curT.mode}</span>.` : `Right now you are in <b class="text-champagne">${cy.current.name}</b>, a <span class="mode-pill mode-${curT.modeTone}">${curT.mode}</span> window.`}</p></div>
-        <div class="card-soft p-5 avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'III · Magnetismo Social' : 'III · Social Magnetism'}</p><p class="text-sm text-zinc-300 mt-2">${soulA ? soulA.soul + ' ' : ''}${persA ? persA.persona + ' ' : ''}${A1.magnetism}</p></div>
+      ${secHead(state.lang === 'es' ? 'Integración Estratégica' : 'Integration', state.lang === 'es' ? 'Cómo Operar con Tu Código' : 'How to Use Your Numbers', state.lang === 'es' ? 'Riqueza, estrategia, magnetismo y biorritmo sintetizados en un solo código operativo unificado.' : 'Wealth, strategy, social magnetism and bio-rhythm, synthesized across all five systems into one operating code.')}
+      <div class="grid sm:grid-cols-2 gap-4 mt-6">
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${state.lang === 'es' ? 'I · Arquitectura de Riqueza' : 'I · Wealth & Capital'}</p>
+          <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu Motor Secundario es <b class="text-champagne">${a2.number} · ${A2.name}</b>. ${A2.wealth}` : `Your Secondary Engine is <b class="text-champagne">${a2.number} · ${A2.name}</b>. ${A2.wealth}`}</p>
+          <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu regente védico <b class="text-champagne">${bhag.planet}</b> complementa: ${C_LANG.VEDIC_TEXT[v.bhagyank.value]} Tu elemento dominante <b class="text-champagne">${l.dominantElement}</b> orienta tu sector de riqueza hacia el <b class="text-champagne">${ET.direction}</b>.` : `Your Vedic Conductor, <b class="text-champagne">${bhag.planet}</b>, adds: ${C_LANG.VEDIC_TEXT[v.bhagyank.value]} Your dominant <b class="text-champagne">${l.dominantElement}</b> element points your wealth corner to the <b class="text-champagne">${ET.direction}</b>.`}</p>
+        </div>
+
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${state.lang === 'es' ? 'II · Mando y Estrategia' : 'II · Strategy & Execution'}</p>
+          <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Lidera desde tu Ancla de Firma <b class="text-champagne">${a1.number} · ${A1.name}</b>. ${A1.tactics[0]} ${A1.tactics[1]} Apóyate en tu Fundación <b class="text-champagne">${a3.number} · ${A3.name}</b>: ${sentences(A3.foundation, 2)}` : `Lead from your Signature Anchor <b class="text-champagne">${a1.number} · ${A1.name}</b>. ${A1.tactics[0]} ${A1.tactics[1]} Ground every campaign in your Foundation <b class="text-champagne">${a3.number} · ${A3.name}</b>: ${sentences(A3.foundation, 2)}`}</p>
+          <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `En este momento te encuentras en <b class="text-champagne">${cy.current.name}</b>, una ventana en modo <span class="mode-pill mode-${curT.modeTone}">${curT.mode}</span>.` : `Right now you are in <b class="text-champagne">${cy.current.name}</b>, a <span class="mode-pill mode-${curT.modeTone}">${curT.mode}</span> window.`}</p>
+        </div>
+
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${state.lang === 'es' ? 'III · Magnetismo Social' : 'III · Social Magnetism'}</p>
+          <p class="text-sm text-zinc-300 mt-2">${soulA ? soulA.soul + ' ' : ''}${persA ? persA.persona + ' ' : ''}${A1.magnetism}</p>
+          <p class="text-sm text-zinc-400 mt-2">${state.lang === 'es' ? `Tu campo social se polariza favorablemente proyectando la certeza serena de tu arquetipo <b class="text-champagne">${A1.name}</b>.` : `Your social aura commands authority when operating from the grounded certainty of <b class="text-champagne">${A1.name}</b>.`}</p>
+        </div>
+
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${C_LANG.UI.vitality_pillar_title}</p>
+          <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Constitución Védica: <b class="text-champagne">${ayurMool.dosha}</b> (${ayurMool.title}), modulada por tu sendero <b class="text-champagne">${ayurBhag.dosha}</b>. ${ayurMool.profile}` : `Ayurvedic Energy: <b class="text-champagne">${ayurMool.dosha}</b> (${ayurMool.title}), modulated by conductor <b class="text-champagne">${ayurBhag.dosha}</b>. ${ayurMool.profile}`}</p>
+          <p class="text-sm text-zinc-300 mt-2"><b class="text-gold">${state.lang === 'es' ? 'Biorritmo Activo:' : 'Active Bio-Rhythm:'}</b> ${state.lang === 'es' ? `En tu ciclo actual (${cy.current.name}), tu cuerpo opera en modo <span class="mode-pill mode-${curT.modeTone}">${bioCycle.mode}</span>. ${bioCycle.protocol}` : `In your current cycle (${cy.current.name}), your physical vessel operates in <span class="mode-pill mode-${curT.modeTone}">${bioCycle.mode}</span> mode. ${bioCycle.protocol}`}</p>
+        </div>
       </div>
+
       <div class="mt-6 avoid-break">
         <p class="eyebrow">${state.lang === 'es' ? 'Tu Código Operativo Soberano' : 'Your Sovereign Operating Code'}</p>
         <table class="lux-table mt-2"><tbody>
           <tr><td class="text-zinc-500 w-[42%]">${state.lang === 'es' ? 'Día Primario de Poder' : 'Primary Power Day'}</td><td class="text-champagne">${mool.day} <span class="text-zinc-500">(${mool.planet})</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Día de Destino' : 'Destiny Day'}</td><td class="text-champagne">${bhag.day} <span class="text-zinc-500">(${bhag.planet})</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Gema y Colores de Poder' : 'Power Gem · Colours'}</td><td class="text-champagne">${mool.gem} · ${mool.color}</td></tr>
+          <tr><td class="text-zinc-500">${C_LANG.UI.ayurvedic_dosha}</td><td class="text-champagne">${ayurMool.dosha} <span class="text-zinc-500">(${ayurMool.title})</span></td></tr>
+          <tr><td class="text-zinc-500">${C_LANG.UI.peak_recovery_protocol}</td><td class="text-champagne text-xs">${ayurMool.protocolShort}</td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Dirección de Riqueza' : 'Wealth Direction'}</td><td class="text-champagne">${ET.direction} <span class="text-zinc-500">(${l.dominantElement})</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Año Personal' : 'Personal Year'} ${r.personalYear.year}</td><td class="text-champagne">${r.personalYear.value} <span class="text-zinc-500">· ${C_LANG.PERSONAL_YEAR[r.personalYear.value]}</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Ventana Anual de Riqueza' : 'Annual Wealth Window'}</td><td class="text-champagne">${full ? `${jup.startLabel} – ${jup.endLabel}` : `${LOCK_SVG.replace('width="16" height="16"', 'width="11" height="11"')} Módulo de Ciclos`}</td></tr>
