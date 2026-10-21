@@ -25,10 +25,14 @@ async def verify_live_pages():
         print(f"Post-payment unlocked dossier rendered: {pages_count} pages!")
         assert pages_count == 20, f"Expected 20 pages on live site, got {pages_count}"
 
-        # Test 4: Check that download PDF button is visible
+        # Test 4: Check that download PDF button and Share button are visible
         pdf_btn = await page.is_visible('#btn-print-dossier')
         assert pdf_btn is True, "Download PDF button should be visible"
         print("Download PDF button verified!")
+
+        share_btn = await page.is_visible('#dossier-actions button[data-action="share-code"]')
+        assert share_btn is True, "Dossier Share button should be visible"
+        print("Live Dossier Share button verified!")
 
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")
         await browser.close()
