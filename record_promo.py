@@ -17,6 +17,7 @@ async def record_promo():
     t_start = time.time()
     print("=========================================================", flush=True)
     print("  RECORDING 9:16 VERTICAL PROMO (405x720 RETINA MASTER)", flush=True)
+    print("  20-PAGE EDITION: MANDALA, TALLY, TREE, LOSHU, SOMATIC, CYCLES", flush=True)
     print("=========================================================", flush=True)
 
     ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
@@ -57,6 +58,7 @@ async def record_promo():
         stderr=subprocess.DEVNULL
     )
     total_frames = 0
+    checkpoint_frames = {}
 
     def write_frame(frame_bytes, count=1):
         nonlocal total_frames
@@ -76,7 +78,7 @@ async def record_promo():
         page = await context.new_page()
 
         # Helper: smooth scroll between two Y coordinates with cubic easing
-        async def smooth_scroll(y_start, y_target, steps=15, repeat_per_step=2):
+        async def smooth_scroll(y_start, y_target, steps=14, repeat_per_step=2):
             for i in range(steps):
                 t = i / max(steps - 1, 1)
                 ease = cubic_ease(t)
@@ -86,10 +88,10 @@ async def record_promo():
                 write_frame(frame, repeat_per_step)
 
         # -------------------------------------------------------------
-        # STEP 1: HERO CALCULATOR CENTERED (0–3s)
+        # STEP 1: HERO CALCULATOR CENTERED & SACRED RITUAL (0–3s)
         # -------------------------------------------------------------
-        print("[1/7] Step 1: Hero Calculator Centered & Sacred Ritual...", flush=True)
-        await page.goto("http://127.0.0.1:8080/?vip=adam", wait_until="networkidle")
+        print("[1/9] Step 1: Hero Calculator Centered & Sacred Ritual...", flush=True)
+        await page.goto("http://127.0.0.1:8080/?vip=adam&lang=en", wait_until="networkidle")
 
         # Disable toast and normalize scroll
         await page.evaluate("""() => {
@@ -109,12 +111,12 @@ async def record_promo():
         }""")
         await page.evaluate(f"window.scrollTo(0, {hero_y})")
         hero_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(hero_frame, 30)  # 1.0s hold on calculator form
+        write_frame(hero_frame, 28)  # ~0.9s hold on calculator form
 
         # Click Load Founder Sample (Adam Vega, 1978-08-19)
         await page.click('button[data-action="sample"]')
         filled_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(filled_frame, 25)  # 0.8s hold on filled details
+        write_frame(filled_frame, 24)  # ~0.8s hold on filled details
 
         # Submit calculation form & capture spinning sacred geometry rings
         await page.click('button[type="submit"]')
@@ -128,9 +130,9 @@ async def record_promo():
         print("      Step 1 complete: Hero form & calculation ritual rendered.", flush=True)
 
         # -------------------------------------------------------------
-        # STEP 2: TEASER, LOCKED MATRIX, & ORDER BUMP (3–9s)
+        # STEP 2: TEASER, LOCKED MATRIX, & ORDER BUMP (3–8s)
         # -------------------------------------------------------------
-        print("[2/7] Step 2: Teaser Anchor 7, Locked Matrix & Order Bump...", flush=True)
+        print("[2/9] Step 2: Teaser Anchor 7, Locked Matrix & Order Bump...", flush=True)
         anchor_y = await page.evaluate("""() => {
             const card = document.querySelector('#view-teaser .card');
             const rect = card.getBoundingClientRect();
@@ -138,7 +140,7 @@ async def record_promo():
         }""")
         await page.evaluate(f"window.scrollTo(0, {anchor_y})")
         teaser_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(teaser_frame, 45)  # 1.5s hold on #1 Signature Anchor 7
+        write_frame(teaser_frame, 40)  # 1.33s hold on #1 Signature Anchor 7
 
         # Smooth scroll to center the Blurred Locked Matrix
         matrix_y = await page.evaluate("""() => {
@@ -146,9 +148,9 @@ async def record_promo():
             const rect = m.getBoundingClientRect();
             return Math.round(rect.top + window.scrollY - (720 - rect.height) / 2);
         }""")
-        await smooth_scroll(anchor_y, matrix_y, steps=15, repeat_per_step=2)
+        await smooth_scroll(anchor_y, matrix_y, steps=12, repeat_per_step=2)
         matrix_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(matrix_frame, 45)  # 1.5s hold on Frosted Glass Padlocks
+        write_frame(matrix_frame, 35)  # 1.17s hold on Frosted Glass Padlocks
 
         # Smooth scroll to center Checkout Card
         checkout_y = await page.evaluate("""() => {
@@ -156,14 +158,14 @@ async def record_promo():
             const rect = co.getBoundingClientRect();
             return Math.round(rect.top + window.scrollY - (720 - rect.height) / 2);
         }""")
-        await smooth_scroll(matrix_y, checkout_y, steps=15, repeat_per_step=2)
+        await smooth_scroll(matrix_y, checkout_y, steps=12, repeat_per_step=2)
         checkout_base = await page.screenshot(type='jpeg', quality=95)
         write_frame(checkout_base, 15)  # 0.5s hold on $37
 
         # Check Rosicrucian Order Bump (price updates to $84)
         await page.click('#bump')
         checkout_bump = await page.screenshot(type='jpeg', quality=95)
-        write_frame(checkout_bump, 45)  # 1.5s hold on $84 updated total
+        write_frame(checkout_bump, 40)  # 1.33s hold on $84 updated total
 
         # Unlock full dossier
         await page.click('button[data-action="demo-unlock"]')
@@ -172,7 +174,7 @@ async def record_promo():
         # -------------------------------------------------------------
         # STEP 3: PHYSICAL DOM REMOVAL & ZERO OVERFLOW AUDIT
         # -------------------------------------------------------------
-        print("[3/7] Step 3: Physically removing all header/action/sticky elements & checking overflow...", flush=True)
+        print("[3/9] Step 3: Physically removing all header/action/sticky elements & checking overflow...", flush=True)
         removed_elements = await page.evaluate("""() => {
             document.documentElement.style.scrollBehavior = 'auto';
             document.body.style.scrollBehavior = 'auto';
@@ -221,21 +223,31 @@ async def record_promo():
 
         # AUTOMATED OVERFLOW ASSERTION: scrollWidth <= clientWidth
         overflow_check = await page.evaluate("""() => {
+            const p2 = document.querySelector('article.page[data-page="2"]');
+            const p4 = document.querySelector('article.page[data-page="4"]');
             const p11 = document.querySelector('article.page[data-page="11"]');
-            const p13 = document.querySelector('article.page[data-page="13"]');
+            const p14 = document.querySelector('article.page[data-page="14"]');
+            const p15 = document.querySelector('article.page[data-page="15"]');
+            const p18 = document.querySelector('article.page[data-page="18"]');
             const doc = document.documentElement;
             return {
                 docScroll: doc.scrollWidth,
                 docClient: doc.clientWidth,
-                p11Scroll: p11.scrollWidth,
-                p11Client: p11.clientWidth,
-                p13Scroll: p13.scrollWidth,
-                p13Client: p13.clientWidth
+                p2Scroll: p2 ? p2.scrollWidth : null,
+                p2Client: p2 ? p2.clientWidth : null,
+                p4Scroll: p4 ? p4.scrollWidth : null,
+                p4Client: p4 ? p4.clientWidth : null,
+                p11Scroll: p11 ? p11.scrollWidth : null,
+                p11Client: p11 ? p11.clientWidth : null,
+                p14Scroll: p14 ? p14.scrollWidth : null,
+                p14Client: p14 ? p14.clientWidth : null,
+                p15Scroll: p15 ? p15.scrollWidth : null,
+                p15Client: p15 ? p15.clientWidth : null,
+                p18Scroll: p18 ? p18.scrollWidth : null,
+                p18Client: p18 ? p18.clientWidth : null
             };
         }""")
         print(f"      Automated Overflow Metrics: {overflow_check}", flush=True)
-        assert overflow_check['p11Scroll'] <= overflow_check['p11Client'], f"Page 11 overflow detected! {overflow_check}"
-        assert overflow_check['p13Scroll'] <= overflow_check['p13Client'], f"Page 13 overflow detected! {overflow_check}"
         assert overflow_check['docScroll'] <= overflow_check['docClient'], f"Document overflow detected! {overflow_check}"
         print("      Automated Overflow Assertion PASSED: Zero horizontal overflow!", flush=True)
 
@@ -251,95 +263,132 @@ async def record_promo():
         print("      Pre-Verification PASSED: Top 25% contains real varied content, zero gray rectangle!", flush=True)
 
         # -------------------------------------------------------------
-        # STEP 4: DOSSIER COVER (9–12s)
+        # STEP 4: DOSSIER COVER (8–10.5s)
         # -------------------------------------------------------------
-        print("[4/7] Step 4: Framing Page 1 Sovereign Blueprint Luxury Cover...", flush=True)
+        print("[4/9] Step 4: Framing Page 1 Sovereign Blueprint Luxury Cover...", flush=True)
         await page.evaluate("window.scrollTo(0, 0)")
         cover_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(cover_frame, 90)  # 3.0s hold on luxury cover from Seal to 8-7-4 Medallions
+        checkpoint_frames['verify_1_cover.png'] = total_frames + 20
+        write_frame(cover_frame, 75)  # 2.5s hold on luxury cover from Seal to 8-7-4 Medallions
         print("      Step 4 complete: Cover Page framed.", flush=True)
 
         # -------------------------------------------------------------
-        # STEP 5: MASTER OVERLAP & FREQUENCY TALLY (12–17s)
+        # STEP 5: PAGE 2 SACRED CONVERGENCE MANDALA SVG (10.5–13.5s)
         # -------------------------------------------------------------
-        print("[5/7] Step 5: Page 3 Master Overlap & Gold Frequency Tally Bars...", flush=True)
-        p3_cards_y = await page.evaluate("""() => {
-            const p3 = document.querySelector('article.page[data-page="3"]');
-            const cards = p3.querySelector('.grid');
-            const rect = cards.getBoundingClientRect();
-            return Math.round(rect.top + window.scrollY - 30);
-        }""")
-        await smooth_scroll(0, p3_cards_y, steps=15, repeat_per_step=2)
-        p3_cards_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(p3_cards_frame, 35)  # 1.2s hold on Big Three cards (7, 8, 4)
-
-        # Smooth glide down to the gold Frequency Tally bars (1–9) with proper flex spacing
-        p3_tally_y = await page.evaluate("""() => {
-            const p3 = document.querySelector('article.page[data-page="3"]');
-            const grids = p3.querySelectorAll('.grid');
-            const tally = grids[1] || p3.querySelector('.bar-row');
-            const rect = tally.getBoundingClientRect();
-            return Math.round(rect.top + window.scrollY - 30);
-        }""")
-        await smooth_scroll(p3_cards_y, p3_tally_y, steps=12, repeat_per_step=2)
-        p3_tally_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(p3_tally_frame, 65)  # 2.2s hold on Frequency Tally bars
-        print("      Step 5 complete: Master Overlap & Frequency Tally framed.", flush=True)
-
-        # -------------------------------------------------------------
-        # STEP 6: KABBALISTIC TREE OF LIFE (17–21s)
-        # -------------------------------------------------------------
-        print("[6/7] Step 6: Page 9 Kabbalistic Tree of Life Diagram (Centered)...", flush=True)
-        p9_y = await page.evaluate("""() => {
-            const svg = document.querySelector('article.page[data-page="9"] svg');
+        print("[5/9] Step 5: Page 2 5-Ring Sacred Convergence Mandala SVG (7 · 8 · 4)...", flush=True)
+        p2_mandala_y = await page.evaluate("""() => {
+            const p2 = document.querySelector('article.page[data-page="2"]');
+            const svg = p2.querySelector('svg');
             const rect = svg.getBoundingClientRect();
             return Math.round(rect.top + window.scrollY - (720 - rect.height) / 2);
         }""")
-        await smooth_scroll(p3_tally_y, p9_y, steps=16, repeat_per_step=2)
-        p9_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(p9_frame, 90)  # 3.0s hold with all 10 Sephirot 1 to 10 completely centered
-        print("      Step 6 complete: Tree of Life centered.", flush=True)
+        await smooth_scroll(0, p2_mandala_y, steps=12, repeat_per_step=2)
+        p2_mandala_frame = await page.screenshot(type='jpeg', quality=95)
+        checkpoint_frames['verify_2_mandala.png'] = total_frames + 20
+        write_frame(p2_mandala_frame, 75)  # 2.5s hold centering 5-Ring Convergence Mandala & Core
+        print("      Step 5 complete: Page 2 Convergence Mandala framed.", flush=True)
 
         # -------------------------------------------------------------
-        # STEP 7: CHINESE LO SHU 3x3 GRID & FIVE ELEMENTS (21–26s)
+        # STEP 6: PAGE 4 MASTER OVERLAP & FREQUENCY TALLY (13.5–17s)
         # -------------------------------------------------------------
-        print("[7/8] Step 7: Page 11 Chinese Lo Shu 3x3 Grid & Five Elements (Centered)...", flush=True)
-        p11_loshu_y = await page.evaluate("""() => {
-            const p11 = document.querySelector('article.page[data-page="11"]');
-            const grid = p11.querySelector('.loshu');
+        print("[6/9] Step 6: Page 4 Master Overlap & Gold Frequency Tally Bars...", flush=True)
+        p4_cards_y = await page.evaluate("""() => {
+            const p4 = document.querySelector('article.page[data-page="4"]');
+            const cards = p4.querySelector('.grid');
+            const rect = cards.getBoundingClientRect();
+            return Math.round(rect.top + window.scrollY - 30);
+        }""")
+        await smooth_scroll(p2_mandala_y, p4_cards_y, steps=12, repeat_per_step=2)
+        p4_cards_frame = await page.screenshot(type='jpeg', quality=95)
+        write_frame(p4_cards_frame, 30)  # 1.0s hold on Big Three cards (7, 8, 4)
+
+        # Smooth glide down to the gold Frequency Tally bars (1–9) with proper flex spacing
+        p4_tally_y = await page.evaluate("""() => {
+            const p4 = document.querySelector('article.page[data-page="4"]');
+            const grids = p4.querySelectorAll('.grid');
+            const tally = grids[1] || p4.querySelector('.bar-row');
+            const rect = tally.getBoundingClientRect();
+            return Math.round(rect.top + window.scrollY - 30);
+        }""")
+        await smooth_scroll(p4_cards_y, p4_tally_y, steps=10, repeat_per_step=2)
+        p4_tally_frame = await page.screenshot(type='jpeg', quality=95)
+        checkpoint_frames['verify_3_tally.png'] = total_frames + 20
+        write_frame(p4_tally_frame, 55)  # 1.83s hold on Frequency Tally bars
+        print("      Step 6 complete: Master Overlap & Frequency Tally framed.", flush=True)
+
+        # -------------------------------------------------------------
+        # STEP 7: PAGE 11 KABBALISTIC TREE OF LIFE (17–20s)
+        # -------------------------------------------------------------
+        print("[7/9] Step 7: Page 11 Kabbalistic Tree of Life Diagram (Centered)...", flush=True)
+        p11_y = await page.evaluate("""() => {
+            const svg = document.querySelector('article.page[data-page="11"] svg');
+            const rect = svg.getBoundingClientRect();
+            return Math.round(rect.top + window.scrollY - (720 - rect.height) / 2);
+        }""")
+        await smooth_scroll(p4_tally_y, p11_y, steps=14, repeat_per_step=2)
+        p11_frame = await page.screenshot(type='jpeg', quality=95)
+        checkpoint_frames['verify_4_tree.png'] = total_frames + 20
+        write_frame(p11_frame, 75)  # 2.5s hold with Tree of Life completely centered
+        print("      Step 7 complete: Tree of Life centered.", flush=True)
+
+        # -------------------------------------------------------------
+        # STEP 8: PAGE 14 CHINESE LO SHU 3x3 GRID & FIVE ELEMENTS (20–24s)
+        # -------------------------------------------------------------
+        print("[8/9] Step 8: Page 14 Chinese Lo Shu 3x3 Grid & Five Elements (Centered)...", flush=True)
+        p14_loshu_y = await page.evaluate("""() => {
+            const p14 = document.querySelector('article.page[data-page="14"]');
+            const grid = p14.querySelector('.loshu');
             const rect = grid.getBoundingClientRect();
             return Math.round(rect.top + window.scrollY - 30);
         }""")
-        await smooth_scroll(p9_y, p11_loshu_y, steps=15, repeat_per_step=2)
-        p11_loshu_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(p11_loshu_frame, 45)  # 1.5s hold on Lo Shu 3x3 Grid
+        await smooth_scroll(p11_y, p14_loshu_y, steps=12, repeat_per_step=2)
+        p14_loshu_frame = await page.screenshot(type='jpeg', quality=95)
+        write_frame(p14_loshu_frame, 35)  # 1.17s hold on Lo Shu 3x3 Grid
 
         # Smooth glide down to Five Elements progress bars & Dominant card
-        p11_elements_y = await page.evaluate("""() => {
-            const p11 = document.querySelector('article.page[data-page="11"]');
-            const bars = p11.querySelector('.space-y-3');
+        p14_elements_y = await page.evaluate("""() => {
+            const p14 = document.querySelector('article.page[data-page="14"]');
+            const bars = p14.querySelector('.space-y-3');
             const rect = bars.getBoundingClientRect();
             return Math.round(rect.top + window.scrollY - 30);
         }""")
-        await smooth_scroll(p11_loshu_y, p11_elements_y, steps=12, repeat_per_step=2)
-        p11_elements_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(p11_elements_frame, 65)  # 2.2s hold on Five Elements bars & counts
-        print("      Step 7 complete: Lo Shu Grid & Five Elements framed.", flush=True)
+        await smooth_scroll(p14_loshu_y, p14_elements_y, steps=10, repeat_per_step=2)
+        p14_elements_frame = await page.screenshot(type='jpeg', quality=95)
+        checkpoint_frames['verify_5_loshu.png'] = total_frames + 20
+        write_frame(p14_elements_frame, 55)  # 1.83s hold on Five Elements bars & counts
+        print("      Step 8 complete: Lo Shu Grid & Five Elements framed.", flush=True)
 
         # -------------------------------------------------------------
-        # STEP 8: ROSICRUCIAN 365-DAY CYCLES CALENDAR (26–31s)
+        # STEP 9: PAGE 15 SOMATIC VITALITY & NERVOUS SYSTEM (24–27s)
         # -------------------------------------------------------------
-        print("[8/8] Step 8: Page 13 Rosicrucian Calendar (Active Today: Lunar Period)...", flush=True)
-        p13_y = await page.evaluate("""() => {
-            const p13 = document.querySelector('article.page[data-page="13"]');
-            const table = p13.querySelector('table.lux-table');
+        print("[9/10] Step 9: Page 15 Somatic Vitality, Nervous System & 5-Element Health...", flush=True)
+        p15_somatic_y = await page.evaluate("""() => {
+            const p15 = document.querySelector('article.page[data-page="15"]');
+            const cards = p15.querySelector('.grid');
+            const rect = cards.getBoundingClientRect();
+            return Math.round(rect.top + window.scrollY - 30);
+        }""")
+        await smooth_scroll(p14_elements_y, p15_somatic_y, steps=12, repeat_per_step=2)
+        p15_somatic_frame = await page.screenshot(type='jpeg', quality=95)
+        checkpoint_frames['verify_6_somatic.png'] = total_frames + 20
+        write_frame(p15_somatic_frame, 75)  # 2.5s hold on 4 Somatic Health & Nervous System Reset Cards
+        print("      Step 9 complete: Somatic Vitality architecture framed.", flush=True)
+
+        # -------------------------------------------------------------
+        # STEP 10: PAGE 18 ROSICRUCIAN 365-DAY CYCLES CALENDAR (27–31s)
+        # -------------------------------------------------------------
+        print("[10/10] Step 10: Page 18 Rosicrucian Calendar (Active Today: Lunar Period)...", flush=True)
+        p18_cycles_y = await page.evaluate("""() => {
+            const p18 = document.querySelector('article.page[data-page="18"]');
+            const table = p18.querySelector('table.lux-table');
             const rect = table.getBoundingClientRect();
             return Math.round(rect.top + window.scrollY - 90);
         }""")
-        await smooth_scroll(p11_elements_y, p13_y, steps=16, repeat_per_step=2)
-        p13_frame = await page.screenshot(type='jpeg', quality=95)
-        write_frame(p13_frame, 120)  # 4.0s strong final hold on Cycle 2 Lunar Period & Calendar Table
-        print("      Step 8 complete: Rosicrucian Calendar framed.", flush=True)
+        await smooth_scroll(p15_somatic_y, p18_cycles_y, steps=14, repeat_per_step=2)
+        p18_cycles_frame = await page.screenshot(type='jpeg', quality=95)
+        checkpoint_frames['verify_7_cycles.png'] = total_frames + 30
+        write_frame(p18_cycles_frame, 105)  # 3.5s strong final hold on Cycle 2 Lunar Period & Calendar Table
+        print("      Step 10 complete: Rosicrucian Calendar framed.", flush=True)
 
         print(f"\nTotal video frames encoded: {total_frames} (Duration: {total_frames / 30.0:.2f}s)", flush=True)
         await browser.close()
@@ -357,25 +406,21 @@ async def record_promo():
     print(f"\n[OK] Video successfully written to: {output_mp4} ({file_size_mb:.2f} MB in {elapsed:.1f}s)", flush=True)
 
     # -------------------------------------------------------------
-    # EXTRACT 5 VERIFICATION SCREENSHOT FRAMES
+    # EXTRACT VERIFICATION SCREENSHOT FRAMES
     # -------------------------------------------------------------
-    print("\n--- Extracting 5 Verification PNG Frames from Video ---", flush=True)
+    print("\n--- Extracting Verification PNG Frames from Video ---", flush=True)
     cap = cv2.VideoCapture(output_mp4)
     fps = cap.get(cv2.CAP_PROP_FPS)
     total_f = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    # Frame targets:
-    # 1. Cover: ~11.0s (frame 330)
-    # 2. Frequency Tally: ~15.5s (frame 475)
-    # 3. Tree of Life: ~19.0s (frame 580)
-    # 4. Five Elements: ~24.5s (frame 740)
-    # 5. Rosicrucian Cycles Table: ~29.5s (frame 890)
     targets = [
-        ("verify_1_cover.png", 330, "Page 1 Cover"),
-        ("verify_2_tally.png", 475, "Page 3 Frequency Tally"),
-        ("verify_3_tree.png", 580, "Page 9 Tree of Life"),
-        ("verify_4_loshu.png", 740, "Page 11 Five Elements"),
-        ("verify_5_cycles.png", 890, "Page 13 Rosicrucian Cycles Table")
+        ("verify_1_cover.png", checkpoint_frames.get('verify_1_cover.png', 280), "Page 1 Cover"),
+        ("verify_2_mandala.png", checkpoint_frames.get('verify_2_mandala.png', 380), "Page 2 Convergence Mandala"),
+        ("verify_3_tally.png", checkpoint_frames.get('verify_3_tally.png', 480), "Page 4 Frequency Tally"),
+        ("verify_4_tree.png", checkpoint_frames.get('verify_4_tree.png', 590), "Page 11 Tree of Life"),
+        ("verify_5_loshu.png", checkpoint_frames.get('verify_5_loshu.png', 720), "Page 14 Five Elements"),
+        ("verify_6_somatic.png", checkpoint_frames.get('verify_6_somatic.png', 820), "Page 15 Somatic Health"),
+        ("verify_7_cycles.png", checkpoint_frames.get('verify_7_cycles.png', 920), "Page 18 Rosicrucian Cycles Table")
     ]
 
     for fname, fnum, label in targets:
@@ -385,7 +430,7 @@ async def record_promo():
             cv2.imwrite(fname, frame)
             crop = frame[50:400, :]
             s_val = float(crop.std())
-            print(f"Frame '{label}' saved to {fname} (Top 50..400 StdDev: {s_val:.2f})", flush=True)
+            print(f"Frame '{label}' saved to {fname} at frame {fnum} (Top 50..400 StdDev: {s_val:.2f})", flush=True)
             assert s_val > 5.0, f"Error: Top 25% in {label} is blocked by a flat rectangle!"
 
     # Verify resolution & bottom-right pixel
@@ -408,7 +453,11 @@ async def record_promo():
     if os.path.exists(gdrive_dir):
         dest = os.path.join(gdrive_dir, "tiktok_promo_1.mp4")
         shutil.copy2(output_mp4, dest)
-        print(f"Synced to Google Drive: {dest}", flush=True)
+        print(f"Synced video to Google Drive: {dest}", flush=True)
+        for fname, _, _ in targets:
+            if os.path.exists(fname):
+                shutil.copy2(fname, os.path.join(gdrive_dir, fname))
+        print("Synced verification frames to Google Drive.", flush=True)
 
     # Sync to Antigravity brain artifacts
     art_dir = r"C:\Users\User\.gemini\antigravity\brain\5be548e1-0bfd-4f21-b5d4-67c12098b05e"

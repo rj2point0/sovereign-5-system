@@ -265,6 +265,63 @@ const CONFIG = {
   }
   window.toast = toast;
 
+  /* ---------------- viral share ---------------- */
+  function shareCode() {
+    const anchor1 = state.result && state.result.overlap && state.result.overlap.anchors && state.result.overlap.anchors[0]
+      ? state.result.overlap.anchors[0].number
+      : (state.profile && state.profile.anchor1 ? state.profile.anchor1 : '7');
+    const shareTitle = 'The Sovereign Blueprint';
+    const shareUrl = 'https://rj2point0.github.io/sovereign-5-system/';
+    const shareText = state.lang === 'es'
+      ? `Acabo de analizar mi nombre y fecha de nacimiento en los 5 sistemas ancestrales — mi Ancla de Coincidencia Maestra es #${anchor1}. Descifra el tuyo aquí:`
+      : `I just ran my name and birth date through all 5 ancient numerology systems — my Master Overlap Anchor is #${anchor1}. Run yours here:`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      }).catch((err) => {
+        if (err && err.name !== 'AbortError') {
+          copyShareLink(shareUrl);
+        }
+      });
+    } else {
+      copyShareLink(shareUrl);
+    }
+  }
+
+  function copyShareLink(url) {
+    const toastMsg = state.lang === 'es'
+      ? '¡Enlace copiado al portapapeles! Compártelo con un amigo o pareja.'
+      : 'Link copied to clipboard! Share it with a friend or partner.';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        toast(toastMsg);
+      }).catch(() => {
+        fallbackCopyText(url, toastMsg);
+      });
+    } else {
+      fallbackCopyText(url, toastMsg);
+    }
+  }
+
+  function fallbackCopyText(text, toastMsg) {
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      toast(toastMsg);
+    } catch (e) {
+      toast(text);
+    }
+  }
+
   /* ---------------- views ---------------- */
   function showView(name) {
     document.body.dataset.view = name;
@@ -439,6 +496,12 @@ const CONFIG = {
         <div class="flex flex-wrap justify-center gap-2 mt-3">${a.systems.map((s) => `<span class="badge-gold">${translateSystem(s)}</span>`).join('')}</div>
         <div class="hairline my-6"></div>
         <p class="font-serif text-[1.18rem] sm:text-[1.3rem] leading-relaxed text-zinc-200 text-left sm:text-center">${A.core}</p>
+      </div>
+      <!-- 1-TAP VIRAL SHARE BUTTON -->
+      <div class="mt-4 text-center">
+        <button type="button" data-action="share-code" class="btn-ghost w-full sm:w-auto !py-3 !px-6 border-gold/40 hover:border-gold hover:bg-gold/10 text-champagne text-xs sm:text-sm font-semibold transition-all">
+          <span data-i18n="share_btn">${UI.share_btn}</span>
+        </button>
       </div>
 
       <!-- MATRIX -->
@@ -1526,6 +1589,7 @@ const CONFIG = {
     else if (a === 'checkout') checkout();
     else if (a === 'demo-unlock') demoUnlock();
     else if (a === 'print') window.print();
+    else if (a === 'share-code') shareCode();
     else if (a === 'scroll-checkout') $('#checkout').scrollIntoView({ behavior: 'smooth', block: 'start' });
     else if (a === 'upgrade') {
       if (CONFIG.STRIPE_LINK_UPGRADE) goToStripe(CONFIG.STRIPE_LINK_UPGRADE, 'full');
