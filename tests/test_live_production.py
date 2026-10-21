@@ -23,7 +23,7 @@ async def verify_live_pages():
         await page.wait_for_selector("#view-dossier:not(.hidden)", timeout=8000)
         pages_count = await page.locator(".page").count()
         print(f"Post-payment unlocked dossier rendered: {pages_count} pages!")
-        assert pages_count >= 15
+        assert pages_count == 20, f"Expected 20 pages on live site, got {pages_count}"
 
         # Test 4: Check that download PDF button is visible
         pdf_btn = await page.is_visible('#btn-print-dossier')
