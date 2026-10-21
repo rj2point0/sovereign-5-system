@@ -59,21 +59,49 @@ const CONFIG = {
   };
 
   const DOSSIER_SECTIONS_EN = [
-    'Cover & Big Three Master Overlap Badge', 'The 5-System Method & Contents', 'Your Big Three Master Overlap Anchors',
-    'Primary Signature Anchor Deep-Dive', 'Secondary Wealth & Strategy Engine', 'Tertiary Structural Foundation',
-    'System I · Pythagorean Core Numbers', 'System II · Chaldean Compound Analysis', 'System III · Kabbalistic Placement & Tree of Life',
-    'System IV · Vedic Planetary Architecture', 'System V · Lo Shu Magic Square, Five Elements & Somatic Vitality', 'Tactical Synthesis · Wealth, Strategy, Magnetism & Bio-Rhythm',
-    'Bonus Module · Rosicrucian 365-Day Cycles Calendar*', 'Bonus Module · Active Cycle Tactical Directives*',
-    'The Sovereign Codex · One-Page Operating Blueprint',
+    'Cover & Big Three Master Overlap Medallions',
+    'The Secret of the 5 Ancient Lenses (Convergence Mandala)',
+    'The 5 Ancient Systems & 20-Page Table of Contents',
+    'Your Big Three Master Overlap Anchors & Frequency Tally',
+    'The Complete 15-Point Cross-System Calculation Ledger',
+    'Anchor #1 Deep-Dive · Soul Magnetism & True Essence',
+    'Anchor #2 Deep-Dive · Wealth Engine & Manifestation Flow',
+    'Anchor #3 Deep-Dive · Sanctuary & Nervous System Guardrails',
+    'System I · Pythagorean Core Numbers & 4-Box Math Breakdown',
+    'System II · Babylonian Chaldean Compound Sound Analysis',
+    'System III · Kabbalah Part 1: Tree of Life & Pillar Balance',
+    'System III · Kabbalah Part 2: Your 5 Illuminated Sephirot',
+    'System IV · Vedic Planetary Council (Moolank, Bhagyank, Namank)',
+    'System V · Imperial Chinese Lo Shu Magic Square & Wu Xing',
+    'Somatic Vitality, Nervous System & 5-Element Health Blueprint',
+    'Integration Part 1 · The 4 Sovereign Pillars of Power',
+    'Integration Part 2 · Your Daily Sovereign Operating Code',
+    'Bonus Module · 365-Day Rosicrucian Cycles Calendar*',
+    'Tactical Brief · Active 52-Day Cycle Directives & Annual Action Map*',
+    'Closing · The Sovereign Codex Master Seal & Personal Mantra',
   ];
 
   const DOSSIER_SECTIONS_ES = [
-    'Portada y Medallón de Coincidencia Maestra', 'El Método de los 5 Sistemas y Contenido', 'Tus Tres Anclas de Coincidencia Maestra',
-    'Análisis Profundo del Ancla de Firma Primaria', 'Motor Secundario de Riqueza y Estrategia', 'Fundación Estructural Terciaria',
-    'Sistema I · Números Esenciales Pitagóricos', 'Sistema II · Análisis de Compuestos Caldeos', 'Sistema III · Ubicación Cabalística y Árbol de la Vida',
-    'Sistema IV · Arquitectura Planetaria Védica', 'Sistema V · Cuadrado Mágico Lo Shu, Cinco Elementos y Vitalidad Somática', 'Síntesis Táctica · Riqueza, Estrategia, Magnetismo y Biorritmo',
-    'Módulo Especial · Calendario Rosacruz de 365 Días*', 'Módulo Especial · Directivas Tácticas del Ciclo Activo*',
-    'El Códice Soberano · Plano Operativo en Una Sola Página',
+    'Portada y Medallones de Coincidencia Maestra',
+    'El Secreto de los 5 Lentes Ancestrales (Mandala de Convergencia)',
+    'Los 5 Sistemas y Tabla de Contenidos de 20 Páginas',
+    'Tus Tres Anclas de Coincidencia Maestra y Frecuencias',
+    'El Registro Completo de 15 Cálculos y Reducciones',
+    'Análisis Profundo Ancla #1 · Magnetismo del Alma y Esencia',
+    'Análisis Profundo Ancla #2 · Motor de Riqueza y Manifestación',
+    'Análisis Profundo Ancla #3 · Santuario y Sistema Nervioso',
+    'Sistema I · Números Esenciales Pitagóricos y Desglose Matemático',
+    'Sistema II · Análisis de Compuestos Caldeos Babilónicos',
+    'Sistema III · Cábala Parte 1: Árbol de la Vida y Columnas',
+    'Sistema III · Cábala Parte 2: Tus 5 Esferas Sephirot Iluminadas',
+    'Sistema IV · Consejo Planetario Védico (Moolank, Bhagyank, Namank)',
+    'Sistema V · Cuadrado Mágico Lo Shu y Cinco Elementos Wu Xing',
+    'Vitalidad Somática, Sistema Nervioso y Salud Elemental',
+    'Integración Parte 1 · Los 4 Pilares Soberanos de Poder',
+    'Integración Parte 2 · Tu Código Operativo Diario y Alineación',
+    'Módulo Especial · Calendario Rosacruz de 365 Días (7 Ciclos)*',
+    'Informe Táctico · Directivas del Ciclo Activo y Mapa Anual*',
+    'Cierre · El Sello Maestro del Códice Soberano y Mantra Personal',
   ];
 
   const SYS_NAMES = {
@@ -670,6 +698,56 @@ const CONFIG = {
     return m ? m.slice(0, n).join(' ') : text;
   }
 
+  function convergenceMandalaSvg(anchors, lang) {
+    const [a1, a2, a3] = anchors;
+    const sysLabelsEn = ['I · PYTHAGOREAN', 'II · CHALDEAN', 'III · KABBALISTIC', 'IV · VEDIC', 'V · CHINESE LO SHU'];
+    const sysLabelsEs = ['I · PITAGÓRICO', 'II · CALDEO', 'III · CABALÍSTICO', 'IV · VÉDICO', 'V · LO SHU CHINO'];
+    const labels = lang === 'es' ? sysLabelsEs : sysLabelsEn;
+
+    const centers = [
+      { x: 250, y: 82, lx: 250, ly: 22, anchor: 'middle' },
+      { x: 315, y: 129, lx: 395, ly: 125, anchor: 'start' },
+      { x: 290, y: 205, lx: 360, ly: 260, anchor: 'start' },
+      { x: 210, y: 205, lx: 140, ly: 260, anchor: 'end' },
+      { x: 185, y: 129, lx: 105, ly: 125, anchor: 'end' },
+    ];
+
+    const circles = centers.map((c, i) => `
+      <circle cx="${c.x}" cy="${c.y}" r="64" fill="rgba(212,175,55,0.03)" stroke="rgba(212,175,55,0.38)" stroke-width="1.2" />
+      <line x1="250" y1="150" x2="${c.x}" y2="${c.y}" stroke="rgba(212,175,55,0.22)" stroke-dasharray="3 3" stroke-width="1" />
+      <text x="${c.lx}" y="${c.ly}" text-anchor="${c.anchor}" font-family="'Cinzel', serif" font-size="8" font-weight="600" letter-spacing="1" fill="#D4AF37">${labels[i]}</text>
+    `).join('');
+
+    const centerLabel = lang === 'es' ? 'CÓDIGO SOBERANO' : 'SOVEREIGN CODE';
+    const subLabel = lang === 'es' ? 'CONVERGENCIA MAESTRA' : 'MASTER CONVERGENCE';
+
+    return `
+    <div class="flex justify-center my-3 avoid-break">
+      <svg viewBox="0 0 500 285" class="w-full max-w-[460px] h-auto overflow-visible" aria-label="The 5-Ring Sacred Convergence Mandala">
+        <defs>
+          <radialGradient id="mandalaGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#2a2516" />
+            <stop offset="70%" stop-color="#121318" />
+            <stop offset="100%" stop-color="#0A0A0C" />
+          </radialGradient>
+          <radialGradient id="mandalaAura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(212,175,55,0.35)" />
+            <stop offset="100%" stop-color="transparent" />
+          </radialGradient>
+        </defs>
+        <circle cx="250" cy="150" r="105" fill="url(#mandalaAura)" />
+        <circle cx="250" cy="150" r="130" fill="none" stroke="rgba(212,175,55,0.18)" stroke-dasharray="4 6" stroke-width="1" />
+        <polygon points="250,82 290,205 185,129 315,129 210,205" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="0.8" />
+        ${circles}
+        <circle cx="250" cy="150" r="46" fill="url(#mandalaGlow)" stroke="#D4AF37" stroke-width="1.8" />
+        <circle cx="250" cy="150" r="41" fill="none" stroke="rgba(212,175,55,0.4)" stroke-dasharray="2 3" stroke-width="1" />
+        <text x="250" y="132" text-anchor="middle" font-family="'Cinzel', serif" font-size="6.5" font-weight="600" letter-spacing="2" fill="#D4AF37">${centerLabel}</text>
+        <text x="250" y="156" text-anchor="middle" font-family="'Cinzel', serif" font-size="20" font-weight="700" fill="#F3E5AB">${a1.number} · ${a2.number} · ${a3.number}</text>
+        <text x="250" y="171" text-anchor="middle" font-family="'Cinzel', serif" font-size="5.8" font-weight="500" letter-spacing="1.5" fill="rgba(243,229,171,0.7)">${subLabel}</text>
+      </svg>
+    </div>`;
+  }
+
   function anchorPage(anchor, idx, C_LANG) {
     const UI = C_LANG.UI;
     const A = C_LANG.ARCHETYPES[anchor.number], n = anchor.number, V = E.VEDIC[n], S = E.SEPHIROT[n], el = E.elementOf(n);
@@ -680,26 +758,58 @@ const CONFIG = {
     const sourcesClean = anchor.sources.map(s => translateSource(s));
     const systemsClean = anchor.systems.map(s => translateSystem(s));
 
+    const relInsightsEn = {
+      1: 'In intimacy and partnerships, you command devotion through quiet confidence rather than control. You thrive with an equal who respects your autonomy while providing a haven of warm adoration.',
+      2: 'Your relational aura is deeply empathic, intuitive, and magnetic. You forge profound emotional bonds by listening deeply, but your growth lies in establishing sacred boundaries to avoid energetic absorption.',
+      3: 'You illuminate connections through wit, joy, and creative fire. For you, intellectual play, playful banter, and passionate dialogue are the sacred gateway to enduring devotion.',
+      4: 'Your love is grounded in absolute loyalty, quiet dedication, and tangible shelter. You build lasting intimacy not through grand promises, but through faithful action and domestic peace.',
+      5: 'You bring electrifying vitality, wit, and novelty to romantic connection. You flourish with a co-explorer who celebrates your freedom and matches your spontaneous appetite for life.',
+      6: 'The master archetype of devotion and harmony: you radiate warmth, protective care, and refined elegance. You elevate your partner\'s life and thrive in mutual, sacred reciprocity.',
+      7: 'You attract through soul depth, mysterious intellect, and quiet grace. You require a sacred connection where silence is comfortable, thoughts are respected, and trust is absolute.',
+      8: 'You project magnetic authority, protective shelter, and unflinching integrity. In partnerships, you look for a true equal: someone who matches your empire-building drive and moral backbone.',
+      9: 'You love with cosmic compassion, idealism, and broad horizons. You inspire those around you, drawing partners who share your devotion to leaving the world more luminous than you found it.'
+    };
+
+    const relInsightsEs = {
+      1: 'En el amor y las relaciones, inspiras devoción a través de una seguridad serena y sin control. Floreces con una pareja que respete tu autonomía y te brinde un santuario de admiración cálida.',
+      2: 'Tu aura relacional es profundamente empática, intuitiva y magnética. Creas intimidad escuchando con el alma, pero tu maestría radica en fijar límites energéticos claros.',
+      3: 'Iluminas tus vínculos con ingenio, alegría y fuego creativo. Para ti, el juego intelectual, la complicidad verbal y la pasión expresiva son la puerta hacia una devoción duradera.',
+      4: 'Tu amor se cimenta en la lealtad inquebrantable, la devoción silenciosa y la seguridad. Construyes relaciones sólidas mediante la fidelidad en los hechos y la paz del hogar.',
+      5: 'Aportas vitalidad electrizante, novedad y aventura a los vínculos afectivos. Te expandes junto a un co-explorador que celebre tu libertad y comparta tu apetito por descubrir el mundo.',
+      6: 'El arquetipo de la devoción, la armonía y la belleza: irradias calidez, protección y elegancia refinada. Elevas la vida de tu pareja y floreces en la reciprocidad sincera.',
+      7: 'Atraes a través de la profundidad del alma, la inteligencia intuitiva y el misterio sereno. Exiges un vínculo donde el silencio sea cómodo y la confianza sea un templo sagrado.',
+      8: 'Proyectas una autoridad magnética, protección incondicional y rectitud de carácter. En el amor buscas un igual: alguien con tu misma visión de construir un legado y lealtad total.',
+      9: 'Amas con compasión universal, idealismo y visión trascendente. Inspiras a quienes te rodean, atrayendo a almas con propósito que deseen dejar una huella luminosa en el mundo.'
+    };
+
+    const relText = state.lang === 'es' ? relInsightsEs[n] : relInsightsEn[n];
+
     return `
       ${secHead(`${state.lang === 'es' ? 'Coincidencia Maestra · Ancla' : 'Master Overlap · Anchor'} ${idx + 1} ${state.lang === 'es' ? 'de 3' : 'of 3'}`, roleTitle, roleSub)}
-      <div class="flex flex-col sm:flex-row gap-6 items-center mt-6 avoid-break">
+      <div class="flex flex-col sm:flex-row gap-5 items-center mt-5 avoid-break">
         ${medal(n, 'lg')}
         <div class="flex-1 text-center sm:text-left">
           <p class="font-display text-2xl">${A.name}</p>
           <p class="text-[0.65rem] tracking-[0.2em] uppercase text-zinc-500 mt-1">${A.keywords.join(' · ')}</p>
-          <p class="text-sm text-champagne mt-3">${state.lang === 'es' ? 'Frecuencia:' : 'Frequency:'} <b>${anchor.count}×</b> · ${state.lang === 'es' ? 'Sistemas:' : 'Systems:'} ${systemsClean.join(', ') || '—'}</p>
+          <p class="text-sm text-champagne mt-2.5">${state.lang === 'es' ? 'Frecuencia:' : 'Frequency:'} <b>${anchor.count}×</b> · ${state.lang === 'es' ? 'Sistemas:' : 'Systems:'} ${systemsClean.join(', ') || '—'}</p>
           ${sourcesClean.length ? `<p class="text-xs text-zinc-500 mt-1">${state.lang === 'es' ? 'Identificado en:' : 'Found in:'} ${sourcesClean.join(' · ')}</p>` : `<p class="text-xs text-zinc-500 mt-1">${state.lang === 'es' ? 'Confirmado por frecuencia Lo Shu.' : 'Selected by Lo Shu frequency tie-break.'}</p>`}
         </div>
       </div>
-      <p class="lead mt-7">${focus}</p>
-      <div class="grid sm:grid-cols-3 gap-3 mt-7">
-        <div class="card-soft p-4 avoid-break"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Regente Védico' : 'Vedic Ruler'}</p><p class="font-display mt-1">${V.planet} · ${V.english}</p><p class="text-xs text-zinc-400 mt-1">${V.archetype}</p></div>
-        <div class="card-soft p-4 avoid-break"><p class="eyebrow !text-[0.55rem]">Sephirah</p><p class="font-display mt-1">${S.name}</p><p class="text-xs text-zinc-400 mt-1">${S.title} · ${S.essence}</p></div>
-        <div class="card-soft p-4 avoid-break"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Elemento Lo Shu' : 'Lo Shu Element'}</p><p class="font-display mt-1">${el}</p><p class="text-xs text-zinc-400 mt-1">${E.ELEMENTS[el].theme}</p></div>
+      <p class="lead mt-5 !text-[1.12rem]">${focus}</p>
+      <div class="grid sm:grid-cols-3 gap-2.5 mt-5">
+        <div class="card-soft p-3.5 avoid-break"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Regente Védico' : 'Vedic Ruler'}</p><p class="font-display text-sm mt-1">${V.planet} · ${V.english}</p><p class="text-xs text-zinc-400 mt-0.5">${V.archetype}</p></div>
+        <div class="card-soft p-3.5 avoid-break"><p class="eyebrow !text-[0.55rem]">Sephirah</p><p class="font-display text-sm mt-1">${S.name}</p><p class="text-xs text-zinc-400 mt-0.5">${S.title} · ${S.essence}</p></div>
+        <div class="card-soft p-3.5 avoid-break"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Elemento Lo Shu' : 'Lo Shu Element'}</p><p class="font-display text-sm mt-1">${el}</p><p class="text-xs text-zinc-400 mt-0.5">${E.ELEMENTS[el].theme}</p></div>
       </div>
-      <div class="grid sm:grid-cols-2 gap-5 mt-7">
-        <div class="avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'Tácticas de Activación' : 'Activation Tactics'}</p><ul class="mt-3 space-y-2 text-sm text-zinc-300">${A.tactics.map((t) => `<li class="flex">${CHECK}<span>${t}</span></li>`).join('')}</ul></div>
-        <div class="avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'Sombra a Dominar' : 'Shadow to Master'}</p><p class="text-sm text-zinc-300 mt-3">${A.shadow}</p><p class="eyebrow mt-5">${state.lang === 'es' ? 'Clave de Magnetismo' : 'Magnetism Key'}</p><p class="text-sm text-zinc-300 mt-3">${A.magnetism}</p></div>
+      <div class="grid sm:grid-cols-2 gap-4 mt-5">
+        <div class="avoid-break space-y-3">
+          <div class="card-soft p-3.5"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Tácticas de Activación' : 'Activation Tactics'}</p><ul class="mt-2 space-y-1.5 text-xs text-zinc-300">${A.tactics.map((t) => `<li class="flex">${CHECK}<span>${t}</span></li>`).join('')}</ul></div>
+          <div class="card-soft p-3.5"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Sombra a Dominar' : 'Shadow to Master'}</p><p class="text-xs text-zinc-300 mt-1">${A.shadow}</p></div>
+        </div>
+        <div class="avoid-break space-y-3">
+          <div class="card-soft p-3.5"><p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Presencia y Magnetismo Personal' : 'Presence & Personal Magnetism'}</p><p class="text-xs text-zinc-300 mt-1">${A.magnetism}</p></div>
+          <div class="card-soft p-3.5"><p class="eyebrow !text-[0.55rem] text-gold">${state.lang === 'es' ? 'Amor, Vínculos y Resonancia Relacional' : 'Love, Intimacy & Relational Resonance'}</p><p class="text-xs text-zinc-300 mt-1 leading-relaxed">${relText}</p></div>
+        </div>
       </div>`;
   }
 
@@ -726,6 +836,35 @@ const CONFIG = {
 
     const birthLabel = formatBirthDate(r.input.birthDate);
     const currentLabel = formatCurrentDate();
+    const maxT = Math.max(...Object.values(r.overlap.tally).map((t) => t.count), 1);
+    const lb = p.lifePathBreakdown;
+    const PA = (n) => C_LANG.ARCHETYPES[n] || null;
+    const PIL = k.pillars;
+    const birthDigits = r.input.birth.compact.split('');
+    const dayDigits = String(r.input.birth.d).split('');
+    const daySum = dayDigits.reduce((acc, d) => acc + parseInt(d, 10), 0);
+    const moolCalc = r.input.birth.d > 9
+      ? `Day ${r.input.birth.d} → ${dayDigits.join(' + ')} = ${daySum}${daySum !== v.moolank.value ? ' → ' + v.moolank.value : ''}`
+      : `Day ${r.input.birth.d} → ${v.moolank.value}`;
+    const bhagCalc = `${birthDigits.join('+')} = ${v.bhagyank.raw} → ${v.bhagyank.value}`;
+    const chalDigits = String(ch.total.raw).split('');
+    const chalSum = chalDigits.reduce((acc, d) => acc + parseInt(d, 10), 0);
+    const namCalc = ch.total.raw > 9
+      ? `Chaldean ${ch.total.raw} → ${chalDigits.join(' + ')} = ${chalSum}${chalSum !== v.namank.value ? ' → ' + v.namank.value : ''}`
+      : `Chaldean ${ch.total.raw} → ${v.namank.value}`;
+
+    const maxE = Math.max(...Object.values(l.elements), 1);
+    const ET = C_LANG.ELEMENT_TEXT[l.dominantElement];
+    const domSomatic = C_LANG.SOMATIC_ELEMENTS[l.dominantElement];
+    const weakEl = (l.weakElements && l.weakElements.length) ? l.weakElements[0] : (l.missing.length ? E.elementOf(l.missing[0]) : null);
+    const weakSomatic = weakEl ? C_LANG.SOMATIC_ELEMENTS[weakEl] : null;
+
+    const bhag = v.bhagyank.ruler, mool = v.moolank.ruler, curT = C_LANG.CYCLE_TEXT[cy.current.index];
+    const jup = cy.periods[4], sat = cy.periods[6], sol = cy.periods[0];
+    const soulA = PA(p.soulUrge.value), persA = PA(p.personality.value);
+    const ayurMool = C_LANG.AYURVEDA[v.moolank.value];
+    const ayurBhag = C_LANG.AYURVEDA[v.bhagyank.value];
+    const bioCycle = C_LANG.BIORHYTHM_CYCLES[cy.current.index];
 
     /* 1 · COVER */
     pages.push({ cover: true, title: state.lang === 'es' ? 'Portada' : 'Cover', html: `
@@ -736,28 +875,70 @@ const CONFIG = {
       <div>
         <p class="font-display text-[0.8rem] tracking-[0.5em] text-zinc-400">${state.lang === 'es' ? 'EL' : 'THE'}</p>
         <h1 class="font-display text-4xl sm:text-6xl text-gold-grad mt-2 leading-tight">${state.lang === 'es' ? 'Plano<br/>Soberano' : 'Sovereign<br/>Blueprint'}</h1>
-        <p class="font-serif italic text-xl text-zinc-300 mt-4">${state.lang === 'es' ? 'Dossier de Numerología de los 5 Sistemas y Ciclos Rosacruces' : '5-System Numerology & Rosicrucian Cycles Dossier'}</p>
-        <div class="hairline my-10 mx-auto" style="max-width:260px"></div>
+        <p class="font-serif italic text-xl text-zinc-300 mt-4">${state.lang === 'es' ? 'Dossier de 20 Páginas de Numerología de los 5 Sistemas y Ciclos Rosacruces' : '20-Page 5-System Numerology & Rosicrucian Cycles Dossier'}</p>
+        <div class="hairline my-8 mx-auto" style="max-width:260px"></div>
         <p class="text-[0.62rem] tracking-[0.35em] uppercase text-zinc-500">${UI.cover_prepared}</p>
-        <p class="font-display text-3xl sm:text-4xl mt-3 text-ivory">${name}</p>
-        <p class="font-serif text-lg text-champagne mt-2">${UI.cover_born.replace('${birthLabel}', birthLabel)}</p>
+        <p class="font-display text-3xl sm:text-4xl mt-2.5 text-ivory">${name}</p>
+        <p class="font-serif text-lg text-champagne mt-1.5">${UI.cover_born.replace('${birthLabel}', birthLabel)}</p>
       </div>
       <div>
-        <p class="eyebrow mb-5">${UI.cover_big3}</p>
+        <p class="eyebrow mb-4">${UI.cover_big3}</p>
         <div class="flex justify-center items-end gap-5 sm:gap-8">
           ${[a2, a1, a3].map((a) => `<div class="text-center">${medal(a.number, a === a1 ? 'lg' : 'md', a === a1 ? 'glow-pulse' : '')}<p class="text-[0.58rem] tracking-[0.2em] uppercase text-zinc-400 mt-3">${a === a1 ? (state.lang === 'es' ? 'Firma' : 'Signature') : a === a2 ? (state.lang === 'es' ? 'Riqueza' : 'Wealth') : (state.lang === 'es' ? 'Fundación' : 'Foundation')}</p></div>`).join('')}
         </div>
-        <p class="text-[0.6rem] tracking-[0.25em] uppercase text-zinc-600 mt-10">${UI.cover_issued.replace('${generatedLabel}', currentLabel)}</p>
+        <p class="text-[0.6rem] tracking-[0.25em] uppercase text-zinc-600 mt-8">${UI.cover_issued.replace('${generatedLabel}', currentLabel)}</p>
       </div>` });
 
-    /* 2 · METHOD + CONTENTS */
-    pages.push({ title: state.lang === 'es' ? 'El Método' : 'The Method', contents: true });
+    /* 2 · THE SECRET OF THE 5 ANCIENT LENSES (METAPHOR + CONVERGENCE MANDALA) */
+    pages.push({
+      title: state.lang === 'es' ? 'Los 5 Lentes Ancestrales' : 'The 5 Ancient Lenses',
+      html: `
+      ${secHead(
+        state.lang === 'es' ? 'La Convergencia Sagrada' : 'The Sacred Convergence',
+        state.lang === 'es' ? 'El Secreto de los 5 Lentes Ancestrales' : 'The Secret of the 5 Ancient Lenses',
+        state.lang === 'es'
+          ? 'Observar un solo sistema de numerología es como escuchar una única nota de una sinfonía: millones de personas comparten tu mismo Sendero de Vida occidental. A lo largo del mundo antiguo, cinco grandes civilizaciones—Grecia (Pitagórica), Babilonia (Caldea), los Místicos Hebreos (Cábala), la India (Védica) y la China Imperial (Lo Shu)—desarrollaron códigos matemáticos completamente independientes utilizando alfabetos y calendarios distintos. Al pasar la vibración sonora de tu nombre y la fecha exacta de tu nacimiento por los 5 lentes simultáneamente, la mayoría de los números se dispersan. Aguarda el milagro: 3 números específicos resuenan a través de culturas totalmente distintas. Esa intersección sagrada es tu Código Soberano.'
+          : 'Looking at a single numerology system is like hearing one note of a song—millions of people share your Western Life Path number. Across the ancient world, five great civilizations—Greece (Pythagorean), Babylon (Chaldean), Hebrew Mystics (Kabbalah), India (Vedic), and Imperial China (Lo Shu)—developed completely independent mathematical codes using different alphabets and calendars. When we pass both the sound vibration of your name and the exact date of your birth through all 5 lenses at once, most numbers scatter. Wait for the miracle: 3 specific numbers echo across completely different cultures. That intersection is your Sovereign Code.'
+      )}
+      ${convergenceMandalaSvg([a1, a2, a3], state.lang)}
+      <div class="grid sm:grid-cols-3 gap-3 mt-3 avoid-break">
+        <div class="card-soft p-3.5 text-center" style="border-color:rgba(212,175,55,.45)">
+          <div class="flex items-center justify-center gap-1.5 mb-1">
+            <span class="badge-gold !text-[0.6rem] !py-0.5">#1</span>
+            <span class="font-display text-champagne text-xs font-semibold">${state.lang === 'es' ? 'Ancla de Firma' : 'Signature Anchor'}</span>
+          </div>
+          <p class="font-display text-gold text-lg font-bold">${a1.number} · ${A1.name}</p>
+          <p class="text-[0.68rem] text-zinc-300 font-medium mt-1">${state.lang === 'es' ? 'Tu Magnetismo del Alma y Verdadera Esencia' : 'Your Soul Magnetism & True Essence'}</p>
+          <p class="text-[0.65rem] text-zinc-400 mt-1 leading-snug">${state.lang === 'es' ? 'Quién eres sin esfuerzo y la frecuencia natural que otros perciben al entrar en tu presencia.' : 'Who you effortlessly are and how people naturally feel and respond to your presence.'}</p>
+        </div>
+        <div class="card-soft p-3.5 text-center">
+          <div class="flex items-center justify-center gap-1.5 mb-1">
+            <span class="badge-gold !text-[0.6rem] !py-0.5">#2</span>
+            <span class="font-display text-champagne text-xs font-semibold">${state.lang === 'es' ? 'Motor de Riqueza' : 'Wealth Engine'}</span>
+          </div>
+          <p class="font-display text-gold text-lg font-bold">${a2.number} · ${A2.name}</p>
+          <p class="text-[0.68rem] text-zinc-300 font-medium mt-1">${state.lang === 'es' ? 'Tu Flujo de Abundancia y Manifestación' : 'Your Wealth & Manifestation Flow'}</p>
+          <p class="text-[0.65rem] text-zinc-400 mt-1 leading-snug">${state.lang === 'es' ? 'El vehículo exacto mediante el cual el dinero, el capital y las oportunidades te encuentran.' : 'The exact vehicle through which money, career success, and opportunities naturally find you.'}</p>
+        </div>
+        <div class="card-soft p-3.5 text-center">
+          <div class="flex items-center justify-center gap-1.5 mb-1">
+            <span class="badge-gold !text-[0.6rem] !py-0.5">#3</span>
+            <span class="font-display text-champagne text-xs font-semibold">${state.lang === 'es' ? 'Fundación Estructural' : 'Structural Foundation'}</span>
+          </div>
+          <p class="font-display text-gold text-lg font-bold">${a3.number} · ${A3.name}</p>
+          <p class="text-[0.68rem] text-zinc-300 font-medium mt-1">${state.lang === 'es' ? 'Tu Santuario, Límites y Sistema Nervioso' : 'Your Sanctuary & Nervous System'}</p>
+          <p class="text-[0.65rem] text-zinc-400 mt-1 leading-snug">${state.lang === 'es' ? 'Lo que protege tu paz interior, tus relaciones y la estabilidad de tu energía vital diaria.' : 'What protects your inner peace, intimate relationships, and daily vital energy.'}</p>
+        </div>
+      </div>`
+    });
 
-    /* 3 · BIG THREE MASTER OVERLAP + SECONDARY HARMONICS */
-    const maxT = Math.max(...Object.values(r.overlap.tally).map((t) => t.count), 1);
+    /* 3 · SYSTEMS ROADMAP & 20-PAGE TABLE OF CONTENTS (Placeholder - populated in renderDossier) */
+    pages.push({ title: state.lang === 'es' ? 'Sistemas y Contenido' : 'Systems & Contents', contents: true });
+
+    /* 4 · BIG THREE MASTER OVERLAP + SECONDARY HARMONICS + TALLY (1-9) */
     pages.push({ title: state.lang === 'es' ? 'Coincidencia Maestra' : 'Master Overlap', html: `
       ${secHead(UI.overlap_eyebrow, UI.overlap_title, UI.overlap_lead.replace('${totalSources}', r.overlap.totalSources))}
-      <div class="grid sm:grid-cols-3 gap-3 mt-7">
+      <div class="grid sm:grid-cols-3 gap-3.5 mt-6">
         ${r.overlap.anchors.map((a, i) => {
           const roleTitle = [UI.signature_role, UI.wealth_role, UI.foundation_role][i];
           const roleSub = [UI.signature_sub, UI.wealth_sub, UI.foundation_sub][i];
@@ -773,7 +954,7 @@ const CONFIG = {
       </div>
 
       <!-- Secondary Harmonics Callout -->
-      <div class="mt-4 p-3 rounded-xl border border-gold/25 bg-charcoal/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs avoid-break">
+      <div class="mt-4 p-3.5 rounded-xl border border-gold/25 bg-charcoal/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs avoid-break">
         <div class="flex items-center gap-2">
           <span class="badge-gold !text-[0.6rem] !py-0.5">${UI.secondary_harmonics}</span>
           <span class="text-zinc-400 text-[0.7rem] hidden sm:inline">${UI.sec_harmonics_desc}</span>
@@ -788,21 +969,33 @@ const CONFIG = {
         </div>
       </div>
 
-      <div class="grid sm:grid-cols-2 gap-7 mt-6">
-        <div class="space-y-3 avoid-break">
-          <p class="eyebrow">${UI.frequency_tally}</p>
+      <!-- Frequency Tally 1-9 in 2 balanced columns -->
+      <div class="mt-6 avoid-break">
+        <p class="eyebrow mb-3">${UI.frequency_tally}</p>
+        <div class="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
           ${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => bar(`<span class="font-display text-champagne mr-2">${n}</span>${C_LANG.ARCHETYPES[n].name}`, r.overlap.tally[n].count, maxT, r.overlap.tally[n].count + '×')).join('')}
         </div>
-        <div class="avoid-break">
-          <p class="eyebrow">${UI.source_calcs}</p>
-          <table class="lux-table mt-2"><thead><tr><th style="width:28%">${state.lang === 'es' ? 'Fuente' : 'Source'}</th><th style="width:44%">${state.lang === 'es' ? 'Fórmula / Reducción' : 'Formula / Reduction'}</th><th style="width:18%">${state.lang === 'es' ? 'Sistema' : 'System'}</th><th style="width:10%;text-align:right">#</th></tr></thead><tbody>
-            ${r.overlap.sources.map((s) => `<tr><td class="text-zinc-300 text-[0.76rem] font-medium leading-snug">${translateSource(s.label)}</td><td class="font-mono text-champagne text-[0.72rem] leading-snug">${s.formula || `${s.value}`}</td><td class="text-zinc-500 text-[0.72rem]">${translateSystem(s.system)}</td><td class="font-display text-gold text-right font-bold text-[0.95rem]">${s.value}</td></tr>`).join('')}
-          </tbody></table>
-          <p class="text-[0.7rem] text-zinc-500 mt-3">${state.lang === 'es' ? 'La coincidencia cabalística se acredita cuando un número ocupa una Sephirah a través de tu Sendero de Vida, Expresión, Nombre Caldeo o Impulso del Alma.' : 'Kabbalistic overlap is credited when a number occupies a Sephirah via your Life Path, Expression, Chaldean Name or Soul Urge.'}</p>
+        <p class="text-[0.72rem] text-zinc-500 mt-4 leading-relaxed">${state.lang === 'es' ? 'Los números con mayor frecuencia acumulada forman tus anclas operativas primarias, secundarias y armónicas.' : 'The numbers with highest accumulated frequency constitute your primary, secondary, and harmonic operational anchors.'}</p>
+      </div>` });
+
+    /* 5 · COMPLETE 15-POINT SOURCE CALCULATIONS LEDGER */
+    pages.push({ title: state.lang === 'es' ? 'Registro de Cálculos' : 'Source Calculations', html: `
+      ${secHead(
+        state.lang === 'es' ? 'Auditoría Matemática Inter-Sistemas' : 'Cross-System Mathematical Audit',
+        state.lang === 'es' ? 'Las 15 Fuentes de Cálculo y Reducciones' : 'The Complete 15-Point Calculation Ledger',
+        state.lang === 'es' ? 'Cada número extraído de tu nombre y fecha de nacimiento a través de las 5 tradiciones. Fórmulas transparentes de reducción compuesta a raíz que demuestran el origen exacto de tu código.' : 'Every calculation extracted from your birth name and date across the five traditions. Transparent compound-to-root reductions showing the exact mathematical origin of your blueprint.'
+      )}
+      <div class="mt-6 avoid-break">
+        <table class="lux-table mt-1"><thead><tr><th style="width:28%">${state.lang === 'es' ? 'Fuente' : 'Source'}</th><th style="width:44%">${state.lang === 'es' ? 'Fórmula / Reducción' : 'Formula / Reduction'}</th><th style="width:18%">${state.lang === 'es' ? 'Sistema' : 'System'}</th><th style="width:10%;text-align:right">#</th></tr></thead><tbody>
+          ${r.overlap.sources.map((s) => `<tr><td class="text-zinc-300 text-[0.78rem] font-medium leading-snug">${translateSource(s.label)}</td><td class="font-mono text-champagne text-[0.74rem] leading-snug">${s.formula || `${s.value}`}</td><td class="text-zinc-400 text-[0.74rem]">${translateSystem(s.system)}</td><td class="font-display text-gold text-right font-bold text-[0.98rem]">${s.value}</td></tr>`).join('')}
+        </tbody></table>
+        <div class="card-soft p-4 mt-5 avoid-break">
+          <p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Determinismo Matemático y Resonancia' : 'Mathematical Determinism & Resonance'}</p>
+          <p class="text-[0.78rem] text-zinc-300 mt-1.5 leading-relaxed">${state.lang === 'es' ? 'Al procesar tu perfil a través de cinco alfabetos, métodos de reducción y calendarios independientes, se aísla el ruido arbitrario. Las recurrencias observadas en tus anclas no son coincidencias estadísticas, sino patrones armónicos universales que definen tu impronta soberana.' : 'By evaluating your profile across five independent alphabets, reduction methodologies, and calendars, statistical noise is eliminated. The recurrences in your anchors represent deterministic harmonic intersections that define your Sovereign Code.'}</p>
         </div>
       </div>` });
 
-    /* 4–6 · ANCHORS DEEP-DIVE */
+    /* 6–8 · ANCHORS DEEP-DIVE */
     r.overlap.anchors.forEach((a, i) => pages.push({
       title: state.lang === 'es'
         ? ['Ancla de Firma', 'Motor de Riqueza', 'Fundación Estructural'][i]
@@ -810,9 +1003,7 @@ const CONFIG = {
       html: anchorPage(a, i, C_LANG)
     }));
 
-    /* 7 · PYTHAGOREAN */
-    const lb = p.lifePathBreakdown;
-    const PA = (n) => C_LANG.ARCHETYPES[n] || null;
+    /* 9 · SYSTEM I · PYTHAGOREAN */
     pages.push({ title: state.lang === 'es' ? 'Sistema I · Pitagórico' : 'System I · Pythagorean', html: `
       ${secHead(state.lang === 'es' ? 'Sistema I · Antigua Grecia' : 'System I · Ancient Greece', state.lang === 'es' ? 'Números Esenciales Pitagóricos' : 'Pythagorean Core Numbers', state.lang === 'es' ? 'El sistema matemático occidental asigna el alfabeto del 1 al 9 en secuencia. Revela el camino que transitas, tus herramientas innatas, lo que tu alma anhela y la faz que muestras al mundo.' : 'The Western mathematical system maps the alphabet sequentially to 1–9. It reveals the road you walk, the tools you carry, what your heart hungers for, and the mask the world sees.')}
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
@@ -840,7 +1031,6 @@ const CONFIG = {
             <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.exprFormula : ''} = ${p.expression.raw} → <b class="text-gold">${p.expression.value}</b></p>
             <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Suma de todas las letras del nombre completo' : 'Sum of all letters across full birth name'}</p>
           </div>
-
           <div class="card-soft p-3 avoid-break">
             <div class="flex items-center justify-between">
               <span class="text-[0.62rem] uppercase tracking-wider text-gold font-semibold">${state.lang === 'es' ? 'Deseo del Alma (Vocales)' : 'Soul Urge (Vowels)'}</span>
@@ -849,7 +1039,6 @@ const CONFIG = {
             <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.vowelFormula : ''} = ${p.soulUrge.raw}${p.soulUrge.raw > 9 ? ' → <b class="text-gold">' + p.soulUrge.value + '</b>' : ''}</p>
             <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Suma de las vocales (enmarcadas en oro)' : 'Sum of vowel vibrations (gold outlines)'}</p>
           </div>
-
           <div class="card-soft p-3 avoid-break">
             <div class="flex items-center justify-between">
               <span class="text-[0.62rem] uppercase tracking-wider text-zinc-400 font-semibold">${state.lang === 'es' ? 'Personalidad (Consonantes)' : 'Personality (Consonants)'}</span>
@@ -858,7 +1047,6 @@ const CONFIG = {
             <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.consFormula : ''} = ${p.personality.raw}${p.personality.raw > 9 ? ' → <b class="text-gold">' + p.personality.value + '</b>' : ''}</p>
             <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Suma de todas las consonantes exteriores' : 'Sum of all outer consonant vibrations'}</p>
           </div>
-
           <div class="card-soft p-3 avoid-break">
             <div class="flex items-center justify-between">
               <span class="text-[0.62rem] uppercase tracking-wider text-zinc-400 font-semibold">${state.lang === 'es' ? 'Consonantes Primer Nombre' : 'First-Name Consonants'}</span>
@@ -876,7 +1064,7 @@ const CONFIG = {
         ${PA(p.personality.value) ? interp(`${state.lang === 'es' ? 'Personalidad' : 'Personality'} ${p.personality.value} · ${state.lang === 'es' ? 'La Máscara' : 'The Mask'}`, PA(p.personality.value).persona) : ''}
       </div>` });
 
-    /* 8 · CHALDEAN */
+    /* 10 · SYSTEM II · CHALDEAN */
     const compounds = [
       [state.lang === 'es' ? 'Primer Nombre' : 'First Name', ch.firstName],
       [state.lang === 'es' ? 'Apellido' : 'Last Name', ch.lastName],
@@ -902,18 +1090,21 @@ const CONFIG = {
         <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu nombre completo resuelve en <b class="text-champagne">${ch.total.display}</b>, la frecuencia de <b class="text-champagne">${C_LANG.ARCHETYPES[ch.total.value].name}</b>. En la tradición caldea, esta es la vibración que otros sienten al pronunciar tu nombre, y es el número que opera como tu <i>Namank</i> védico.` : `Your full name resolves to <b class="text-champagne">${ch.total.display}</b>, the vibration of <b class="text-champagne">${C_LANG.ARCHETYPES[ch.total.value].name}</b>. In the Chaldean tradition this is the frequency others feel when they hear your name, and it is the number used as your Vedic <i>Namank</i>.`}</p>
       </div>` });
 
-    /* 9 · KABBALAH */
-    const PIL = k.pillars;
-    pages.push({ title: state.lang === 'es' ? 'Sistema III · Cábala' : 'System III · Kabbalah', html: `
-      ${secHead(state.lang === 'es' ? 'Sistema III · El Árbol de la Vida' : 'System III · The Tree of Life', state.lang === 'es' ? 'Ubicación Cabalística y Balance de Columnas' : 'Kabbalistic Placement & Pillar Balance', state.lang === 'es' ? 'Tus cuatro números esenciales se ubican en las diez Sephirot del Árbol de la Vida. Las esferas que activan y la columna hacia la que se inclinan revelan cómo la fuerza se transmuta en forma en tu vida.' : 'Your four core numbers are placed on the ten Sephirot of the Tree of Life. The spheres they illuminate, and the pillar they lean toward, reveal how force becomes form in your life.')}
+    /* 11 · SYSTEM III · KABBALAH PART 1 — TREE OF LIFE & PILLARS */
+    pages.push({ title: state.lang === 'es' ? 'Cábala · Árbol de la Vida' : 'Kabbalah · Tree of Life', html: `
+      ${secHead(state.lang === 'es' ? 'Sistema III · Mística Hebrea' : 'System III · Hebrew Mysticism', state.lang === 'es' ? 'El Árbol de la Vida y Balance de Columnas' : 'The Tree of Life & Pillar Balance', state.lang === 'es' ? 'Tus números esenciales se ubican en las diez Sephirot del Árbol de la Vida. La columna hacia la que se inclinan revela cómo la fuerza se transmuta en forma en tu vida.' : 'Your core numbers are placed on the ten Sephirot of the Tree of Life. The pillar they lean toward reveals how force becomes form in your life.')}
       <div class="grid sm:grid-cols-5 gap-6 mt-6 items-start">
         <div class="sm:col-span-2 avoid-break">${treeSvg(new Set(k.activeSephirot))}</div>
-        <div class="sm:col-span-3 space-y-3 pt-0.5">
-          ${k.placements.map((pl) => `
-            <div class="card-soft p-3.5 avoid-break flex gap-3 items-start">
-              ${medal(pl.value, 'sm')}
-              <div><p class="text-[0.58rem] tracking-[0.18em] uppercase text-zinc-500">${translateSource(pl.label)}</p><p class="font-display text-[0.95rem] text-champagne">${pl.sephirah.name} · ${pl.sephirah.title}</p><p class="text-[0.78rem] text-zinc-400 mt-1">${C_LANG.SEPHIROT_TEXT[pl.value]}</p></div>
-            </div>`).join('')}
+        <div class="sm:col-span-3 space-y-4 pt-1">
+          <div class="card-soft p-4 avoid-break">
+            <p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'Columna Dominante en Tu Matriz' : 'Dominant Pillar in Your Matrix'}</p>
+            <p class="font-display text-champagne text-lg mt-1">${k.dominantPillar === 'Mercy' ? (state.lang === 'es' ? 'Columna de la Misericordia (Expansión)' : 'Pillar of Mercy (Expansion)') : k.dominantPillar === 'Severity' ? (state.lang === 'es' ? 'Columna del Rigor (Forma y Juicio)' : 'Pillar of Severity (Form & Judgment)') : (state.lang === 'es' ? 'Columna del Equilibrio (Mildness)' : 'Pillar of Mildness (Equilibrium)')}</p>
+            <p class="lead mt-2 !text-[1.05rem] leading-relaxed">${C_LANG.PILLAR_TEXT[k.dominantPillar]}</p>
+          </div>
+          <div class="card-soft p-4 avoid-break">
+            <p class="eyebrow !text-[0.55rem]">${state.lang === 'es' ? 'La Dinámica de las Tres Columnas' : 'The Three Pillars Dynamics'}</p>
+            <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">${state.lang === 'es' ? 'La Columna Derecha (Misericordia) canaliza la fuerza, la creatividad y la iniciativa. La Columna Izquierda (Rigor) aporta contención, estructura y límites. La Columna Central (Equilibrio) sintetiza ambas en conciencia soberana y armonía.' : 'The Right Pillar of Mercy channels force, visionary fire, and expansion. The Left Pillar of Severity provides structure, critical discernment, and containment. The Middle Pillar of Equilibrium integrates both into conscious sovereignty.'}</p>
+          </div>
         </div>
       </div>
       <div class="mt-6 avoid-break">
@@ -945,15 +1136,38 @@ const CONFIG = {
               </div>`;
           }).join('')}
         </div>
-        <p class="lead mt-5 !text-[1.08rem]">${C_LANG.PILLAR_TEXT[k.dominantPillar]}</p>
       </div>` });
 
-    /* 10 · VEDIC */
-    const birthDigits = r.input.birth.compact.split('');
-    const moolCalc = `Day ${r.input.birth.d} → ${v.moolank.raw > 9 ? String(v.moolank.raw).split('').join(' + ') + ' = ' + v.moolank.raw + (v.moolank.raw !== v.moolank.value ? ' → ' + v.moolank.value : '') : v.moolank.value}`;
-    const bhagCalc = `${birthDigits.join('+')} = ${v.bhagyank.raw} → ${v.bhagyank.value}`;
-    const namCalc = `Chaldean ${ch.total.raw} → ${String(ch.total.raw).split('').join(' + ')} = ${v.namank.value}`;
+    /* 12 · SYSTEM III · KABBALAH PART 2 — 5 ILLUMINATED SEPHIROT */
+    pages.push({ title: state.lang === 'es' ? 'Cábala · Sephirot Iluminadas' : 'Kabbalah · Illuminated Sephirot', html: `
+      ${secHead(
+        state.lang === 'es' ? 'Sistema III · Los Senderos de la Luz' : 'System III · Paths of Illumination',
+        state.lang === 'es' ? 'Tus 5 Esferas Sephirot Iluminadas' : 'Your 5 Illuminated Sephirot Spheres',
+        state.lang === 'es' ? 'Las cinco emanaciones divinas activadas por tu Sendero de Vida, Expresión, Nombre Caldeo, Impulso del Alma y Apellido.' : 'The five divine emanations illuminated by your Life Path, Expression, Chaldean Name, Soul Urge, and Surname.'
+      )}
+      <div class="space-y-3 mt-5 avoid-break">
+        ${k.placements.map((pl) => `
+          <div class="card-soft p-3.5 avoid-break flex gap-3.5 items-start">
+            ${medal(pl.value, 'sm')}
+            <div class="flex-1">
+              <div class="flex items-baseline justify-between gap-2">
+                <p class="font-display text-[0.95rem] text-champagne">${pl.sephirah.name} · ${pl.sephirah.title}</p>
+                <span class="text-[0.58rem] tracking-[0.18em] uppercase text-zinc-500">${translateSource(pl.label)}</span>
+              </div>
+              <p class="text-[0.78rem] text-zinc-300 mt-1 leading-snug">${C_LANG.SEPHIROT_TEXT[pl.value]}</p>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="card-soft p-4 sm:p-5 mt-5 border border-gold/30 avoid-break" style="border-color:rgba(212,175,55,.35)">
+        <p class="eyebrow !text-gold">${state.lang === 'es' ? 'Alineación Cabalística del Alma y Alquimia Relacional' : 'Kabbalistic Soul Alignment & Relationship Alchemy'}</p>
+        <p class="text-xs text-zinc-300 mt-2 leading-relaxed">
+          ${state.lang === 'es'
+            ? 'La tradición cabalística enseña que la fuerza no manifestada desciende desde las esferas superiores a través de Tiphareth (el Centro del Corazón) y Yesod (el Espejo Emocional) antes de plasmarse en Malkuth (el Mundo Físico). Cuando tus vínculos íntimos y decisiones diarias honran tus esferas activas, el flujo energético es limpio, magnético y autorregenerativo; cuando operas desde la sombra o reprimes tus esferas, surge fricción o agotamiento.'
+            : 'Kabbalistic wisdom teaches that divine creative force descends from the upper supernals through Tiphareth (the Heart Center) and Yesod (the Emotional Mirror) before materializing into Malkuth (Physical Reality). When your intimate relationships and daily choices honor your illuminated spheres, energetic flow is clean, magnetic, and self-replenishing; when operating from their shadow, friction and emotional leakage occur.'}
+        </p>
+      </div>` });
 
+    /* 13 · SYSTEM IV · VEDIC */
     const vRows = [
       [state.lang === 'es' ? 'Moolank' : 'Moolank', state.lang === 'es' ? 'Psíquico / Conductor' : 'Psychic / Driver', v.moolank, moolCalc],
       [state.lang === 'es' ? 'Bhagyank' : 'Bhagyank', state.lang === 'es' ? 'Destino / Conductor' : 'Destiny / Conductor', v.bhagyank, bhagCalc],
@@ -997,15 +1211,9 @@ const CONFIG = {
       </div>
       <div class="space-y-4 mt-6">${interp(state.lang === 'es' ? 'Psíquico × Destino' : 'Driver × Conductor', vNote)}${interp(state.lang === 'es' ? 'Resonancia del Nombre' : 'Name Resonance', nNote)}</div>` });
 
-    /* 11 · LO SHU */
-    const maxE = Math.max(...Object.values(l.elements), 1);
-    const ET = C_LANG.ELEMENT_TEXT[l.dominantElement];
-    const domSomatic = C_LANG.SOMATIC_ELEMENTS[l.dominantElement];
-    const weakEl = (l.weakElements && l.weakElements.length) ? l.weakElements[0] : (l.missing.length ? E.elementOf(l.missing[0]) : null);
-    const weakSomatic = weakEl ? C_LANG.SOMATIC_ELEMENTS[weakEl] : null;
-
+    /* 14 · SYSTEM V · CHINESE LO SHU */
     pages.push({ title: state.lang === 'es' ? 'Sistema V · Lo Shu' : 'System V · Lo Shu', html: `
-      ${secHead(state.lang === 'es' ? 'Sistema V · China Antigua' : 'System V · Ancient China', state.lang === 'es' ? 'Cuadrado Mágico Lo Shu y Cinco Elementos' : 'Lo Shu Magic Square & Five Elements', state.lang === 'es' ? `Cada dígito de tu fecha de nacimiento (${r.input.birth.compact}) más tu Sendero de Vida (${p.lifePath.value}), Expresión (${p.expression.value}) y Nombre Caldeo (${ch.total.value}) se ubica en el cuadrado Lo Shu 3×3, cuyas filas y columnas suman 15.` : `Every digit of your birth date (${r.input.birth.compact}) plus your Life Path (${p.lifePath.value}), Expression (${p.expression.value}) and Chaldean Name (${ch.total.value}) is placed into the 3×3 Lo Shu square, whose rows, columns and diagonals all sum to 15.`)}
+      ${secHead(state.lang === 'es' ? 'Sistema V · China Imperial' : 'System V · Imperial China', state.lang === 'es' ? 'Cuadrado Mágico Lo Shu y Cinco Elementos' : 'Lo Shu Magic Square & Five Elements', state.lang === 'es' ? `Cada dígito de tu fecha de nacimiento (${r.input.birth.compact}) más tu Sendero de Vida (${p.lifePath.value}), Expresión (${p.expression.value}) y Nombre Caldeo (${ch.total.value}) se ubica en el cuadrado Lo Shu 3×3, cuyas filas y columnas suman 15.` : `Every digit of your birth date (${r.input.birth.compact}) plus your Life Path (${p.lifePath.value}), Expression (${p.expression.value}) and Chaldean Name (${ch.total.value}) is placed into the 3×3 Lo Shu square, whose rows, columns and diagonals all sum to 15.`)}
       <div class="grid sm:grid-cols-2 gap-7 mt-6 items-start">
         <div class="avoid-break">
           <div class="mb-3.5 p-2.5 rounded-lg border border-gold/25 bg-charcoal/60 text-xs">
@@ -1024,59 +1232,78 @@ const CONFIG = {
           <div class="card-soft p-4 mt-3"><p class="font-display text-champagne">${state.lang === 'es' ? 'Dominante:' : 'Dominant:'} ${l.dominantElement} <span class="text-zinc-500 text-xs font-sans">(${l.dominantNumber})</span></p><p class="text-[0.8rem] text-zinc-300 mt-1">${ET.text}</p><p class="text-[0.75rem] text-zinc-400 mt-2"><b class="text-gold">${state.lang === 'es' ? 'Activar:' : 'Activate:'}</b> ${ET.activate}</p></div>
         </div>
       </div>
-
-      <!-- Somatic & Elemental Vitality Balance Callout -->
-      <div class="card-soft p-4 sm:p-5 mt-5 border border-gold/30 avoid-break" style="border-color:rgba(212,175,55,.35)">
-        <p class="eyebrow !text-gold">${C_LANG.UI.somatic_box_title}</p>
-        <div class="grid sm:grid-cols-2 gap-4 mt-2.5 text-xs">
-          <div>
-            <p class="font-display text-champagne text-[0.82rem]">${state.lang === 'es' ? 'Superpoder Somático Dominante' : 'Dominant Somatic Engine'}: <span class="text-gold font-bold">${l.dominantElement}</span></p>
-            <p class="text-[0.72rem] text-zinc-400 mt-0.5"><b class="text-zinc-300">${state.lang === 'es' ? 'Órganos Gobernados:' : 'Governed Systems:'}</b> ${domSomatic.organs}</p>
-            <p class="text-[0.74rem] text-zinc-300 mt-1 leading-relaxed">${domSomatic.power}</p>
-          </div>
-          <div>
-            <p class="font-display text-champagne text-[0.82rem]">${state.lang === 'es' ? 'Punto de Agotamiento y Recarga' : 'Depletion Blindspot & Recovery'}: <span class="text-rose-300/90 font-bold">${weakEl || (state.lang === 'es' ? 'Equilibrado' : 'Balanced')}</span></p>
-            ${weakSomatic ? `
-              <p class="text-[0.72rem] text-zinc-400 mt-0.5">${weakSomatic.depletion}</p>
-              <p class="text-[0.74rem] text-zinc-300 mt-1 leading-relaxed"><b class="text-gold">${state.lang === 'es' ? 'Protocolo de Recarga:' : 'Rebalance Protocol:'}</b> ${weakSomatic.rebalance}</p>
-            ` : `
-              <p class="text-[0.74rem] text-zinc-400 mt-1">${state.lang === 'es' ? 'Tu matriz sostiene una distribución armónica de los cinco elementos.' : 'Your matrix maintains an equitable harmonic distribution of the five elements.'}</p>
-            `}
-          </div>
-        </div>
-      </div>
-
       <div class="grid sm:grid-cols-2 gap-5 mt-6">
         <div class="avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'Flechas de Fortaleza' : 'Arrows of Strength'}</p>${l.arrowsOfStrength.length ? l.arrowsOfStrength.map((a) => `<p class="text-sm mt-2"><span class="text-champagne">${a.name}</span> <span class="text-zinc-600">(${a.nums.join('-')})</span><br/><span class="text-zinc-400 text-[0.8rem]">${C_LANG.ARROW_TEXT[a.key].strong}</span></p>`).join('') : `<p class="text-sm text-zinc-500 mt-2">${state.lang === 'es' ? 'Fortalezas distribuidas de manera equilibrada.' : 'No complete arrows. Strengths are distributed.'}</p>`}</div>
         <div class="avoid-break"><p class="eyebrow">${state.lang === 'es' ? 'Flechas a Desarrollar' : 'Arrows to Develop'}</p>${l.arrowsOfWeakness.length ? l.arrowsOfWeakness.map((a) => `<p class="text-sm mt-2"><span class="text-champagne">${a.name}</span> <span class="text-zinc-600">(${a.nums.join('-')})</span><br/><span class="text-zinc-400 text-[0.8rem]">${C_LANG.ARROW_TEXT[a.key].weak}</span></p>`).join('') : `<p class="text-sm text-zinc-500 mt-2">${state.lang === 'es' ? 'Ningún plano de tu matriz está totalmente ausente.' : 'No empty arrows. Grid is complete.'}</p>`}</div>
       </div>
       ${interp(l.hasWealthEight ? (state.lang === 'es' ? 'El Número de Suprema Riqueza Está Activo' : 'The Supreme Wealth Number Is Present') : (state.lang === 'es' ? 'La Riqueza Debe Forjarse Metódicamente' : 'The Wealth Number Must Be Built'), l.hasWealthEight ? (state.lang === 'es' ? `El 8 (Fa, 發) se manifiesta ${l.counts[8]}× en tu matriz, señalando un canal natural hacia la prosperidad material a través de la Tierra: paciencia, activos reales y la resistencia inquebrantable de la Montaña.` : `The 8 (Fa, 發) appears ${l.counts[8]}× in your grid, signalling a natural channel for prosperity through Earth: patience, real assets and the Mountain's endurance.`) : (state.lang === 'es' ? 'Tu matriz no cuenta con 8 directo. La riqueza se construye activando deliberadamente el elemento Tierra, presupuestos estructurados y vehículos sólidos de acumulación.' : 'Your grid holds no 8. Prosperity is cultivated consciously: activate the Earth element, formalize savings, and work with 8-ruled timing.'))}` });
 
-    /* 12 · SYNTHESIS */
-    const bhag = v.bhagyank.ruler, mool = v.moolank.ruler, curT = C_LANG.CYCLE_TEXT[cy.current.index];
-    const jup = cy.periods[4], sat = cy.periods[6], sol = cy.periods[0];
-    const soulA = PA(p.soulUrge.value), persA = PA(p.personality.value);
-    const ayurMool = C_LANG.AYURVEDA[v.moolank.value];
-    const ayurBhag = C_LANG.AYURVEDA[v.bhagyank.value];
-    const bioCycle = C_LANG.BIORHYTHM_CYCLES[cy.current.index];
-
-    pages.push({ title: state.lang === 'es' ? 'Síntesis Táctica' : 'Tactical Synthesis', html: `
-      ${secHead(state.lang === 'es' ? 'Integración Estratégica' : 'Integration', state.lang === 'es' ? 'Cómo Operar con Tu Código' : 'How to Use Your Numbers', state.lang === 'es' ? 'Riqueza, estrategia, magnetismo y biorritmo sintetizados en un solo código operativo unificado.' : 'Wealth, strategy, social magnetism and bio-rhythm, synthesized across all five systems into one operating code.')}
+    /* 15 · FULL PAGE SOMATIC VITALITY & NERVOUS SYSTEM ARCHITECTURE */
+    pages.push({ title: state.lang === 'es' ? 'Salud y Vitalidad Somática' : 'Somatic Vitality & Health', html: `
+      ${secHead(
+        state.lang === 'es' ? 'Arquitectura de Salud y Biorritmo' : 'Health, Vitality & Nervous System Architecture',
+        state.lang === 'es' ? 'Tu Constitución Somática y Vitalidad' : 'Your Somatic Vitality & Energy Blueprint',
+        state.lang === 'es'
+          ? 'Sintetizando la medicina tradicional china (Wu Xing), la constitución ayurvédica védica (Doshas) y tus ciclos bio-rítmicos de 52 días para optimizar tu energía, recuperación y longevidad.'
+          : 'Synthesizing Chinese Five-Element medicine (Wu Xing), Vedic Ayurvedic constitutional typing (Doshas), and 52-day bio-rhythmic cycles to optimize vitality, nervous system regulation, and peak longevity.'
+      )}
       <div class="grid sm:grid-cols-2 gap-4 mt-6">
         <div class="card-soft p-5 avoid-break">
-          <p class="eyebrow">${state.lang === 'es' ? 'I · Arquitectura de Riqueza' : 'I · Wealth & Capital'}</p>
+          <p class="eyebrow !text-gold">${state.lang === 'es' ? 'I · Sistema Orgánico Dominante (Wu Xing)' : 'I · Dominant Organ System (Wu Xing)'}</p>
+          <p class="font-display text-champagne text-base mt-2">${state.lang === 'es' ? 'Elemento' : 'Element'}: <span class="text-gold font-bold">${l.dominantElement}</span></p>
+          <p class="text-xs text-zinc-400 mt-1"><b class="text-zinc-300">${state.lang === 'es' ? 'Sistemas Gobernados:' : 'Governed Systems:'}</b> ${domSomatic.organs}</p>
+          <p class="text-xs text-zinc-300 mt-2 leading-relaxed">${domSomatic.power}</p>
+        </div>
+
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow !text-rose-300/80">${state.lang === 'es' ? 'II · Punto de Agotamiento y Recarga' : 'II · Stress Depletion & Rebalance'}</p>
+          <p class="font-display text-champagne text-base mt-2">${state.lang === 'es' ? 'Elemento Vulnerable' : 'Vulnerable Element'}: <span class="text-rose-300 font-bold">${weakEl || (state.lang === 'es' ? 'Equilibrado' : 'Balanced')}</span></p>
+          ${weakSomatic ? `
+            <p class="text-xs text-zinc-400 mt-1">${weakSomatic.depletion}</p>
+            <p class="text-xs text-zinc-300 mt-2 leading-relaxed"><b class="text-gold">${state.lang === 'es' ? 'Protocolo de Recarga:' : 'Rebalance Protocol:'}</b> ${weakSomatic.rebalance}</p>
+          ` : `
+            <p class="text-xs text-zinc-400 mt-2">${state.lang === 'es' ? 'Tu matriz sostiene una distribución armónica de los cinco elementos.' : 'Your matrix maintains an equitable harmonic distribution of the five elements.'}</p>
+          `}
+        </div>
+
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${state.lang === 'es' ? 'III · Constitución Ayurvédica Védica' : 'III · Ayurvedic Energy Profile'}</p>
+          <p class="font-display text-champagne text-base mt-2">${ayurMool.dosha} <span class="text-zinc-500 font-sans text-xs">(${ayurMool.title})</span></p>
+          <p class="text-xs text-zinc-300 mt-2 leading-relaxed">${ayurMool.profile}</p>
+          <p class="text-xs text-zinc-300 mt-2 leading-relaxed"><b class="text-gold">${state.lang === 'es' ? 'Regulación del Sistema Nervioso:' : 'Nervous System Reset:'}</b> ${ayurMool.protocolShort}</p>
+        </div>
+
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${state.lang === 'es' ? 'IV · Biorritmo Físico y Recuperación Activa' : 'IV · Active Bio-Rhythm & Cellular Recovery'}</p>
+          <p class="font-display text-champagne text-base mt-2">${cy.current.name} · <span class="mode-pill mode-${curT.modeTone}">${bioCycle.mode}</span></p>
+          <p class="text-xs text-zinc-300 mt-2 leading-relaxed">${bioCycle.protocol}</p>
+          <p class="text-xs text-zinc-400 mt-2 leading-relaxed"><b class="text-champagne">${state.lang === 'es' ? 'Directiva de Sueño y Brillo:' : 'Sleep & Radiance Directive:'}</b> ${state.lang === 'es' ? 'Mantén un ritmo circadiano constante y reduce la sobreestimulación sensorial en las 2 horas previas al descanso.' : 'Prioritize circadian light alignment and eliminate sensory overstimulation in the final 2 hours before restorative sleep.'}</p>
+        </div>
+      </div>
+      <p class="text-[0.65rem] text-zinc-500 mt-6 leading-relaxed text-center avoid-break">
+        ${state.lang === 'es'
+          ? 'Aviso de bienestar holístico: Esta sección sintetiza tradiciones metafísicas milenarias (Medicina Tradicional China Wu Xing, Ayurveda Védica y Ciclos Rosacruces) para el autoconocimiento y la optimización de energía. No constituye diagnóstico ni tratamiento médico.'
+          : 'Holistic vitality note: This section synthesizes ancient constitutional traditions (Traditional Chinese Medicine Wu Xing, Ayurvedic Doshas, and Rosicrucian Biorhythms) for self-reflection and lifestyle alignment. It does not provide medical diagnosis or treatment.'}
+      </p>` });
+
+    /* 16 · INTEGRATION PART 1 — THE 4 SOVEREIGN PILLARS */
+    pages.push({ title: state.lang === 'es' ? 'Los 4 Pilares Soberanos' : 'The 4 Sovereign Pillars', html: `
+      ${secHead(state.lang === 'es' ? 'Integración Estratégica · Parte 1' : 'Strategic Integration · Part 1', state.lang === 'es' ? 'Los Cuatro Pilares Soberanos' : 'The Four Sovereign Pillars', state.lang === 'es' ? 'Riqueza, mando estratégico, magnetismo relacional y vitalidad biológica sintetizados en cuatro pilares fundamentales.' : 'Wealth, command, relational magnetism, and biological vitality, synthesized into four foundational pillars.')}
+      <div class="grid sm:grid-cols-2 gap-4 mt-6">
+        <div class="card-soft p-5 avoid-break">
+          <p class="eyebrow">${state.lang === 'es' ? 'I · Arquitectura de Riqueza y Capital' : 'I · Wealth & Capital Architecture'}</p>
           <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu Motor Secundario es <b class="text-champagne">${a2.number} · ${A2.name}</b>. ${A2.wealth}` : `Your Secondary Engine is <b class="text-champagne">${a2.number} · ${A2.name}</b>. ${A2.wealth}`}</p>
           <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Tu regente védico <b class="text-champagne">${bhag.planet}</b> complementa: ${C_LANG.VEDIC_TEXT[v.bhagyank.value]} Tu elemento dominante <b class="text-champagne">${l.dominantElement}</b> orienta tu sector de riqueza hacia el <b class="text-champagne">${ET.direction}</b>.` : `Your Vedic Conductor, <b class="text-champagne">${bhag.planet}</b>, adds: ${C_LANG.VEDIC_TEXT[v.bhagyank.value]} Your dominant <b class="text-champagne">${l.dominantElement}</b> element points your wealth corner to the <b class="text-champagne">${ET.direction}</b>.`}</p>
         </div>
 
         <div class="card-soft p-5 avoid-break">
-          <p class="eyebrow">${state.lang === 'es' ? 'II · Mando y Estrategia' : 'II · Strategy & Execution'}</p>
+          <p class="eyebrow">${state.lang === 'es' ? 'II · Mando y Estrategia Soberana' : 'II · Strategy & Sovereign Command'}</p>
           <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Lidera desde tu Ancla de Firma <b class="text-champagne">${a1.number} · ${A1.name}</b>. ${A1.tactics[0]} ${A1.tactics[1]} Apóyate en tu Fundación <b class="text-champagne">${a3.number} · ${A3.name}</b>: ${sentences(A3.foundation, 2)}` : `Lead from your Signature Anchor <b class="text-champagne">${a1.number} · ${A1.name}</b>. ${A1.tactics[0]} ${A1.tactics[1]} Ground every campaign in your Foundation <b class="text-champagne">${a3.number} · ${A3.name}</b>: ${sentences(A3.foundation, 2)}`}</p>
           <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `En este momento te encuentras en <b class="text-champagne">${cy.current.name}</b>, una ventana en modo <span class="mode-pill mode-${curT.modeTone}">${curT.mode}</span>.` : `Right now you are in <b class="text-champagne">${cy.current.name}</b>, a <span class="mode-pill mode-${curT.modeTone}">${curT.mode}</span> window.`}</p>
         </div>
 
         <div class="card-soft p-5 avoid-break">
-          <p class="eyebrow">${state.lang === 'es' ? 'III · Magnetismo Social' : 'III · Social Magnetism'}</p>
+          <p class="eyebrow">${state.lang === 'es' ? 'III · Amor, Vínculos y Magnetismo Social' : 'III · Love, Relationships & Social Magnetism'}</p>
           <p class="text-sm text-zinc-300 mt-2">${soulA ? soulA.soul + ' ' : ''}${persA ? persA.persona + ' ' : ''}${A1.magnetism}</p>
           <p class="text-sm text-zinc-400 mt-2">${state.lang === 'es' ? `Tu campo social se polariza favorablemente proyectando la certeza serena de tu arquetipo <b class="text-champagne">${A1.name}</b>.` : `Your social aura commands authority when operating from the grounded certainty of <b class="text-champagne">${A1.name}</b>.`}</p>
         </div>
@@ -1086,24 +1313,40 @@ const CONFIG = {
           <p class="text-sm text-zinc-300 mt-2">${state.lang === 'es' ? `Constitución Védica: <b class="text-champagne">${ayurMool.dosha}</b> (${ayurMool.title}), modulada por tu sendero <b class="text-champagne">${ayurBhag.dosha}</b>. ${ayurMool.profile}` : `Ayurvedic Energy: <b class="text-champagne">${ayurMool.dosha}</b> (${ayurMool.title}), modulated by conductor <b class="text-champagne">${ayurBhag.dosha}</b>. ${ayurMool.profile}`}</p>
           <p class="text-sm text-zinc-300 mt-2"><b class="text-gold">${state.lang === 'es' ? 'Biorritmo Activo:' : 'Active Bio-Rhythm:'}</b> ${state.lang === 'es' ? `En tu ciclo actual (${cy.current.name}), tu cuerpo opera en modo <span class="mode-pill mode-${curT.modeTone}">${bioCycle.mode}</span>. ${bioCycle.protocol}` : `In your current cycle (${cy.current.name}), your physical vessel operates in <span class="mode-pill mode-${curT.modeTone}">${bioCycle.mode}</span> mode. ${bioCycle.protocol}`}</p>
         </div>
-      </div>
+      </div>` });
 
+    /* 17 · INTEGRATION PART 2 — SOVEREIGN OPERATING CODE */
+    pages.push({ title: state.lang === 'es' ? 'Código Operativo' : 'Sovereign Operating Code', html: `
+      ${secHead(
+        state.lang === 'es' ? 'Integración Estratégica · Parte 2' : 'Strategic Integration · Part 2',
+        state.lang === 'es' ? 'Tu Código Operativo Soberano Diario' : 'Your Daily Sovereign Operating Code',
+        state.lang === 'es' ? 'Tu hoja de referencia diaria de frecuencias, direcciones de poder, ventanas anuales y rituales de alineación.' : 'Your master daily reference ledger of frequencies, power directions, annual timing windows, and alignment rituals.'
+      )}
       <div class="mt-6 avoid-break">
-        <p class="eyebrow">${state.lang === 'es' ? 'Tu Código Operativo Soberano' : 'Your Sovereign Operating Code'}</p>
-        <table class="lux-table mt-2"><tbody>
+        <table class="lux-table mt-1"><tbody>
           <tr><td class="text-zinc-500 w-[42%]">${state.lang === 'es' ? 'Día Primario de Poder' : 'Primary Power Day'}</td><td class="text-champagne">${mool.day} <span class="text-zinc-500">(${mool.planet})</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Día de Destino' : 'Destiny Day'}</td><td class="text-champagne">${bhag.day} <span class="text-zinc-500">(${bhag.planet})</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Gema y Colores de Poder' : 'Power Gem · Colours'}</td><td class="text-champagne">${mool.gem} · ${mool.color}</td></tr>
           <tr><td class="text-zinc-500">${C_LANG.UI.ayurvedic_dosha}</td><td class="text-champagne">${ayurMool.dosha} <span class="text-zinc-500">(${ayurMool.title})</span></td></tr>
           <tr><td class="text-zinc-500">${C_LANG.UI.peak_recovery_protocol}</td><td class="text-champagne text-xs">${ayurMool.protocolShort}</td></tr>
-          <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Dirección de Riqueza' : 'Wealth Direction'}</td><td class="text-champagne">${ET.direction} <span class="text-zinc-500">(${l.dominantElement})</span></td></tr>
+          <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Dirección de Riqueza (Feng Shui)' : 'Wealth Direction (Feng Shui)'}</td><td class="text-champagne">${ET.direction} <span class="text-zinc-500">(${l.dominantElement})</span></td></tr>
+          <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Dirección de Amor y Alianzas' : 'Love & Partnerships Direction'}</td><td class="text-champagne">${state.lang === 'es' ? 'Suroeste (Tierra / Armonía)' : 'Southwest (Earth / Harmony)'}</td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Año Personal' : 'Personal Year'} ${r.personalYear.year}</td><td class="text-champagne">${r.personalYear.value} <span class="text-zinc-500">· ${C_LANG.PERSONAL_YEAR[r.personalYear.value]}</span></td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Ventana Anual de Riqueza' : 'Annual Wealth Window'}</td><td class="text-champagne">${full ? `${jup.startLabel} – ${jup.endLabel}` : `${LOCK_SVG.replace('width="16" height="16"', 'width="11" height="11"')} Módulo de Ciclos`}</td></tr>
           <tr><td class="text-zinc-500">${state.lang === 'es' ? 'Ventana de Preservación de Capital' : 'Capital Preservation Window'}</td><td class="text-champagne">${full ? `${sat.startLabel} – ${sat.endLabel}` : `${LOCK_SVG.replace('width="16" height="16"', 'width="11" height="11"')} Módulo de Ciclos`}</td></tr>
         </tbody></table>
+      </div>
+      <div class="card-soft p-4 sm:p-5 mt-6 avoid-break">
+        <p class="eyebrow !text-gold">${state.lang === 'es' ? 'Rituales Diarios de Sintonía Matutina y Vespertina' : 'Daily Morning & Evening Alignment Rituals'}</p>
+        <p class="text-xs text-zinc-300 mt-2 leading-relaxed">
+          ${state.lang === 'es'
+            ? `<b class="text-champagne">Ritual Matutino (Activación):</b> Inicia cada jornada afirmando la certeza serena de tu Ancla de Firma <b>${a1.number} (${A1.name})</b>. Antes de revisar notificaciones o demandas externas, dedica 3 minutos a enfocar tu intención en tu dirección de riqueza (${ET.direction}).<br/><b class="text-champagne mt-2 block">Ritual Vespertino (Preservación):</b> Desconecta mediante tu Fundación <b>${a3.number} (${A3.name})</b>. Cierra ciclos abiertos, apaga pantallas 60 minutos antes de dormir y aplica tu protocolo ayurvédico de reseteo del sistema nervioso.`
+            : `<b class="text-champagne">Morning Alignment (Activation):</b> Open every day by centering on the quiet certainty of your Signature Anchor <b>${a1.number} (${A1.name})</b>. Before checking notifications or external demands, spend 3 minutes setting daily intention facing your wealth direction (${ET.direction}).<br/><b class="text-champagne mt-2 block">Evening Grounding (Preservation):</b> Unwind through your Foundation Anchor <b>${a3.number} (${A3.name})</b>. Close open loops, disconnect screens 60 minutes prior to rest, and apply your Ayurvedic nervous system reset protocol.`
+          }
+        </p>
       </div>` });
 
-    /* 13–14 · CYCLES */
+    /* 18–19 · CYCLES */
     if (full) {
       const nx = cy.next;
       pages.push({ title: state.lang === 'es' ? 'Ciclos Rosacruces' : 'Rosicrucian Cycles', html: `
@@ -1151,7 +1394,7 @@ const CONFIG = {
         </div>` });
     }
 
-    /* 15 · CODEX */
+    /* 20 · CODEX */
     const coreRows = [
       [state.lang === 'es' ? 'Sendero de Vida' : 'Life Path', 'Pythagorean', p.lifePath.display],
       [state.lang === 'es' ? 'Expresión' : 'Expression', 'Pythagorean', p.expression.display],
@@ -1205,21 +1448,34 @@ const CONFIG = {
     const total = pages.length;
     const name = esc(r.input.fullName);
 
-    // Contents page (index 1)
-    pages[1].html = `
-      ${secHead(UI.method_eyebrow, UI.method_title, UI.method_lead)}
-      <div class="grid sm:grid-cols-5 gap-2 mt-6">
+    // Systems & Table of Contents page (index 2)
+    pages[2].html = `
+      ${secHead(
+        state.lang === 'es' ? 'Orientación y Mapa de Ruta' : 'Orientation & Roadmap',
+        state.lang === 'es' ? 'Los 5 Sistemas y Cómo Usar Tu Dossier' : 'The 5 Ancient Systems & Blueprint Guide',
+        state.lang === 'es' ? 'Cada tradición antigua codificó una dimensión distinta de tu destino. A continuación, el mapa de tus 20 páginas de sabiduría personalizada.' : 'Each ancient tradition encoded a distinct dimension of your destiny. Below is the master roadmap of your 20-page personalized blueprint.'
+      )}
+      <div class="grid sm:grid-cols-5 gap-2 mt-5">
         ${C_LANG.SYSTEM_INFO.map((s, i) => `<div class="card-soft p-3 avoid-break"><p class="font-display text-gold">${ROMAN[i]}</p><p class="font-display text-[0.8rem] mt-1">${s.name}</p><p class="text-[0.68rem] text-zinc-500 mt-1 leading-snug">${s.blurb}</p></div>`).join('')}
       </div>
-      <p class="eyebrow mt-9">${UI.contents_eyebrow}</p>
-      <div class="card-soft p-4 mt-3 avoid-break">
-        <ol class="space-y-1.5 text-xs text-zinc-300">
-          ${pages.map((p, i) => `
-            <li class="flex justify-between items-baseline border-b border-white/5 py-1">
-              <span class="text-zinc-400"><b class="font-mono text-gold mr-2">${String(i + 1).padStart(2, '0')}</b> ${p.title}</span>
-              <span class="font-mono text-[0.7rem] text-zinc-600">${state.lang === 'es' ? 'Pág.' : 'Page'} ${i + 1}</span>
-            </li>`).join('')}
-        </ol>
+      <p class="eyebrow mt-6">${UI.contents_eyebrow}</p>
+      <div class="card-soft p-4 mt-2.5 avoid-break">
+        <div class="grid sm:grid-cols-2 gap-x-8 gap-y-1 text-xs text-zinc-300">
+          <ol class="space-y-1">
+            ${pages.slice(0, 10).map((p, i) => `
+              <li class="flex justify-between items-baseline border-b border-white/5 py-1">
+                <span class="text-zinc-400"><b class="font-mono text-gold mr-2">${String(i + 1).padStart(2, '0')}</b> ${p.title}</span>
+                <span class="font-mono text-[0.7rem] text-zinc-600">${state.lang === 'es' ? 'Pág.' : 'Page'} ${i + 1}</span>
+              </li>`).join('')}
+          </ol>
+          <ol class="space-y-1" start="11">
+            ${pages.slice(10, 20).map((p, i) => `
+              <li class="flex justify-between items-baseline border-b border-white/5 py-1">
+                <span class="text-zinc-400"><b class="font-mono text-gold mr-2">${String(i + 11).padStart(2, '0')}</b> ${p.title}</span>
+                <span class="font-mono text-[0.7rem] text-zinc-600">${state.lang === 'es' ? 'Pág.' : 'Page'} ${i + 11}</span>
+              </li>`).join('')}
+          </ol>
+        </div>
       </div>`;
 
     const html = pages.map((p, i) => {
@@ -1229,7 +1485,9 @@ const CONFIG = {
       return `
       <article class="page ${isCover ? 'cover' : ''}" data-page="${i + 1}">
         ${head}
-        ${p.html}
+        <div class="page-body">
+          ${p.html}
+        </div>
         ${foot}
       </article>`;
     }).join('');

@@ -11,7 +11,7 @@ async def run():
         # ---------------- 1. TEST ENGLISH ----------------
         context_en = await browser.new_context(viewport={'width': 1280, 'height': 900})
         page_en = await context_en.new_page()
-        await page_en.goto('http://127.0.0.1:8080/?lang=en')
+        await page_en.goto('http://127.0.0.1:8080/?lang=en&vip=adam')
 
         # Click Founder Sample
         await page_en.click('button[data-action="sample"]')
@@ -34,7 +34,7 @@ async def run():
         # Verify pages count
         pages_count_en = await page_en.locator('.page').count()
         print(f"English Dossier Pages: {pages_count_en}")
-        assert pages_count_en == 15, f"Expected 15 pages, got {pages_count_en}"
+        assert pages_count_en == 20, f"Expected 20 pages, got {pages_count_en}"
 
         # Measure page heights in print emulation
         await page_en.emulate_media(media="print")
@@ -59,7 +59,7 @@ async def run():
         # ---------------- 2. TEST SPANISH ----------------
         context_es = await browser.new_context(viewport={'width': 1280, 'height': 900})
         page_es = await context_es.new_page()
-        await page_es.goto('http://127.0.0.1:8080/?lang=es')
+        await page_es.goto('http://127.0.0.1:8080/?lang=es&vip=adam')
 
         # Verify hero title in Spanish
         hero_title = await page_es.locator('h1[data-i18n="hero_title"]').inner_text()
@@ -91,7 +91,7 @@ async def run():
         # Verify pages count
         pages_count_es = await page_es.locator('.page').count()
         print(f"Spanish Dossier Pages: {pages_count_es}")
-        assert pages_count_es == 15, f"Expected 15 pages, got {pages_count_es}"
+        assert pages_count_es == 20, f"Expected 20 pages, got {pages_count_es}"
 
         # Measure page heights in print emulation
         await page_es.emulate_media(media="print")
@@ -119,7 +119,7 @@ async def run():
             has_touch=True
         )
         mobile_page = await mobile_context.new_page()
-        await mobile_page.goto('http://127.0.0.1:8080/?lang=es')
+        await mobile_page.goto('http://127.0.0.1:8080/?lang=es&vip=adam')
         await mobile_page.screenshot(path='view1_hero_mobile_es.png')
         print("Captured mobile View 1 ES")
 

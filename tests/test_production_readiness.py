@@ -59,7 +59,7 @@ async def test_all():
         await page.wait_for_selector('#view-dossier:not(.hidden)', timeout=5000)
         pages_count = await page.locator('.page').count()
         print(f"Dossier automatically rendered: {pages_count} pages")
-        assert pages_count == 15, f"Expected 15 pages, got {pages_count}"
+        assert pages_count == 20, f"Expected 20 pages, got {pages_count}"
         print("[OK] Post-payment redirect with localStorage automatically restored and rendered full dossier!")
 
         # TEST 4: Post-Payment on New Device (Empty localStorage) Fallback Claim Bar
@@ -82,7 +82,7 @@ async def test_all():
 
         pages_count_claimed = await page_clean.locator('.page').count()
         print(f"Claimed Dossier rendered: {pages_count_claimed} pages")
-        assert pages_count_claimed == 15
+        assert pages_count_claimed == 20
         print("[OK] Fallback claim bar allowed customer on new device to immediately generate and unlock their dossier!")
 
         # TEST 5: Secret Founder VIP parameter (?vip=adam)
@@ -116,7 +116,7 @@ async def test_all():
         await page_pub.wait_for_selector('#view-dossier:not(.hidden)', timeout=5000)
         pages_vip = await page_pub.locator('.page').count()
         print(f"Founder unlocked dossier count: {pages_vip}")
-        assert pages_vip == 15
+        assert pages_vip == 20
         print("[OK] Secret Founder VIP Bypass (?vip=adam) works 100% perfectly!")
 
         await browser.close()

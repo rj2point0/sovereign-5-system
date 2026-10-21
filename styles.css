@@ -280,15 +280,21 @@ main, header, footer { position: relative; z-index: 1; }
 .page {
   position: relative; background: linear-gradient(180deg, #111216, #0B0B0E);
   border: 1px solid var(--line); border-radius: 6px;
-  padding: 56px 52px 64px; margin: 0 auto 28px;
+  padding: 48px 48px 24px; margin: 0 auto 28px;
   box-shadow: 0 40px 80px -40px rgba(0,0,0,.9);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 1050px;
+  box-sizing: border-box;
 }
 .page::before { /* inner gold frame */
   content: ''; position: absolute; inset: 14px; border: 1px solid rgba(212,175,55,.22); border-radius: 3px; pointer-events: none;
 }
-.page-head { display: flex; justify-content: space-between; align-items: center; font-size: .6rem; letter-spacing: .25em; text-transform: uppercase; color: rgba(212,175,55,.75); margin-bottom: 28px; }
-.page-foot { position: absolute; left: 52px; right: 52px; bottom: 26px; display: flex; justify-content: space-between; font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(245,245,247,.35); }
+.page-head { display: flex; justify-content: space-between; align-items: center; font-size: .6rem; letter-spacing: .25em; text-transform: uppercase; color: rgba(212,175,55,.75); margin-bottom: 20px; flex-shrink: 0; }
+.page-body { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+.page-foot { position: static; width: 100%; margin-top: auto; padding-top: 18px; display: flex; justify-content: space-between; font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(245,245,247,.35); flex-shrink: 0; }
 .page h2.sec-title { font-family: 'Cinzel', serif; font-size: 1.9rem; line-height: 1.15; margin: .35rem 0 .6rem; }
 .page p.lead { font-family: 'Cormorant Garamond', serif; font-size: 1.22rem; line-height: 1.55; color: #e7e3d6; }
 .page p, .page li { line-height: 1.65; }
@@ -315,12 +321,16 @@ main, header, footer { position: relative; z-index: 1; }
     max-width: calc(100% - 24px) !important;
     margin: 0 auto 24px !important;
     box-sizing: border-box !important;
-    padding: 22px 14px 36px !important;
+    padding: 22px 14px 18px !important;
     border-radius: 4px;
     overflow-x: hidden !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
   .page::before { inset: 6px; }
-  .page-foot { left: 14px; right: 14px; bottom: 14px; }
+  .page-foot { position: static !important; width: 100% !important; margin-top: auto !important; padding-top: 14px !important; left: auto !important; right: auto !important; bottom: auto !important; }
   .page h2.sec-title { font-size: 1.35rem; }
   .cover {
     min-height: 580px;
@@ -430,13 +440,15 @@ main, header, footer { position: relative; z-index: 1; }
   #view-dossier { display: block !important; padding: 0 !important; margin: 0 !important; }
   .dossier { max-width: none; }
   .page {
-    width: 8.5in; height: 11in; min-height: 11in; max-height: 11in; box-sizing: border-box; overflow: hidden; margin: 0; border: 0; border-radius: 0; box-shadow: none;
-    padding: 0.42in 0.52in 0.48in; break-after: page; page-break-after: always; break-inside: avoid; page-break-inside: avoid;
+    width: 8.5in !important; height: 11in !important; min-height: 11in !important; max-height: 11in !important; box-sizing: border-box !important; overflow: hidden !important; margin: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    padding: 0.44in 0.52in 0.36in !important; break-after: page !important; page-break-after: always !important; break-inside: avoid !important; page-break-inside: avoid !important;
+    display: flex !important; flex-direction: column !important; justify-content: space-between !important;
   }
-  .page:last-child { break-after: auto; page-break-after: auto; }
-  .page::before { inset: 10px; }
-  .page-head { margin-bottom: 14px; font-size: .56rem; }
-  .page-foot { left: .52in; right: .52in; bottom: .22in; font-size: .54rem; }
+  .page:last-child { break-after: auto !important; page-break-after: auto !important; }
+  .page::before { inset: 10px !important; }
+  .page-head { margin-bottom: 12px !important; font-size: .56rem !important; flex-shrink: 0 !important; }
+  .page-body { flex: 1 1 auto !important; display: flex !important; flex-direction: column !important; min-height: 0 !important; }
+  .page-foot { position: static !important; width: 100% !important; margin-top: auto !important; padding-top: 14px !important; font-size: .54rem !important; flex-shrink: 0 !important; left: auto !important; right: auto !important; bottom: auto !important; }
   .page h2.sec-title { font-size: 1.5rem; margin: .2rem 0 .35rem; }
   .page p.lead { font-size: 1.05rem; line-height: 1.45; }
   .page p, .page li { line-height: 1.45; font-size: .8rem; }

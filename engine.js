@@ -316,15 +316,23 @@
      ------------------------------------------------------------------ */
   function masterOverlap(p, c, k, v, l, name, birth) {
     const firstConsText = (p.mathBreakdown && p.mathBreakdown.firstConsFormula) ? p.mathBreakdown.firstConsFormula : 'First Name';
+    const dayDigits = String(birth.d).split('');
+    const daySum = dayDigits.reduce((acc, d) => acc + parseInt(d, 10), 0);
+    const moolFormula = birth.d > 9 ? `Day ${birth.d} → ${dayDigits.join('+')}=${daySum} → ${v.moolank.value}` : `Day ${birth.d} → ${v.moolank.value}`;
+
+    const chalDigits = String(c.total.raw).split('');
+    const chalSum = chalDigits.reduce((acc, d) => acc + parseInt(d, 10), 0);
+    const namFormula = c.total.raw > 9 ? `Chaldean ${c.total.raw} → ${chalDigits.join('+')}=${chalSum}` : `Chaldean ${c.total.raw} → ${v.namank.value}`;
+
     const sources = [
       { key: 'lifePath',            label: 'Life Path',                                  system: 'Pythagorean', value: p.lifePath.value, formula: `${birth.iso || birth.compact} → ${p.lifePath.raw > 9 ? p.lifePath.raw + '/' : ''}${p.lifePath.value}` },
       { key: 'expression',          label: 'Expression / Destiny',                       system: 'Pythagorean', value: p.expression.value, formula: `Full Name → ${p.expression.raw > 9 ? p.expression.raw + '/' : ''}${p.expression.value}` },
       { key: 'soulUrge',            label: "Soul Urge (Heart's Desire)",                 system: 'Pythagorean', value: p.soulUrge.value, formula: `Vowels → ${p.soulUrge.raw > 9 ? p.soulUrge.raw + '/' : ''}${p.soulUrge.value}` },
       { key: 'firstNameConsonants', label: 'First-Name Consonants',                      system: 'Pythagorean', value: p.firstNameConsonants.value, formula: `${firstConsText} → ${p.firstNameConsonants.raw > 9 ? p.firstNameConsonants.raw + '/' : ''}${p.firstNameConsonants.value} (Double 4)` },
       { key: 'chaldeanName',        label: 'Chaldean Full Name',                         system: 'Chaldean',    value: c.total.value, formula: `Chaldean Name → ${c.total.raw > 9 ? c.total.raw + '/' : ''}${c.total.value}` },
-      { key: 'moolank',             label: 'Moolank (Driver)',                           system: 'Vedic',       value: v.moolank.value, formula: `Day ${birth.d} → ${v.moolank.raw > 9 ? String(v.moolank.raw).split('').join('+') + '=' : ''}${v.moolank.raw > 9 ? '10/' : ''}${v.moolank.value}` },
+      { key: 'moolank',             label: 'Moolank (Driver)',                           system: 'Vedic',       value: v.moolank.value, formula: moolFormula },
       { key: 'bhagyank',            label: 'Bhagyank (Conductor)',                       system: 'Vedic',       value: v.bhagyank.value, formula: `Full Date → ${v.bhagyank.raw} → ${v.bhagyank.value}` },
-      { key: 'namank',              label: 'Namank (Name Vibration)',                    system: 'Vedic',       value: v.namank.value, formula: `Chaldean ${c.total.raw} → ${v.namank.value}` },
+      { key: 'namank',              label: 'Namank (Name Vibration)',                    system: 'Vedic',       value: v.namank.value, formula: namFormula },
       { key: 'loShuDominant',       label: `Lo Shu Dominant (${l.dominantElement})`,     system: 'Lo Shu',      value: l.dominantNumber, formula: `Lo Shu ${l.dominantElement} → ${l.dominantNumber} (${l.counts[l.dominantNumber] || 0}×)` },
     ];
 
