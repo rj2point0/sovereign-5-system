@@ -198,6 +198,14 @@
     const soulUrge = makeNum(sumLetters(name.full, PYTHAGOREAN, (l) => l.vowel));
     const personality = makeNum(sumLetters(name.full, PYTHAGOREAN, (l) => !l.vowel));
     const firstNameConsonants = makeNum(sumLetters(name.first, PYTHAGOREAN, (l) => !l.vowel));
+
+    const wordsBreakdown = name.words.map((w) => ({ word: w, letters: letterBreakdown(w, PYTHAGOREAN) }));
+    const exprFormula = wordsBreakdown.map(wb => wb.letters.map(l => `${l.ch}(${l.val})`).join('+')).join(' + ');
+    const vowelFormula = wordsBreakdown.map(wb => wb.letters.filter(l => l.vowel).map(l => `${l.ch}(${l.val})`).join('+')).filter(Boolean).join(' + ') || '0';
+    const consFormula = wordsBreakdown.map(wb => wb.letters.filter(l => !l.vowel).map(l => `${l.ch}(${l.val})`).join('+')).filter(Boolean).join(' + ') || '0';
+    const firstConsLetters = (wordsBreakdown[0] ? wordsBreakdown[0].letters : []).filter(l => !l.vowel);
+    const firstConsFormula = firstConsLetters.map(l => `${l.ch}(${l.val})`).join(' + ') || '0';
+
     return {
       lifePath, expression, soulUrge, personality, firstNameConsonants,
       lifePathBreakdown: {
@@ -205,7 +213,10 @@
         month: { raw: birth.m, reduced: monthReduced },
         day: { raw: birth.d, reduced: dayReduced },
       },
-      letters: name.words.map((w) => ({ word: w, letters: letterBreakdown(w, PYTHAGOREAN) })),
+      mathBreakdown: {
+        exprFormula, vowelFormula, consFormula, firstConsFormula
+      },
+      letters: wordsBreakdown,
     };
   }
 
@@ -304,28 +315,29 @@
      MASTER OVERLAP ALGORITHM
      ------------------------------------------------------------------ */
   function masterOverlap(p, c, k, v, l, name, birth) {
+    const firstConsText = (p.mathBreakdown && p.mathBreakdown.firstConsFormula) ? p.mathBreakdown.firstConsFormula : 'First Name';
     const sources = [
-      { key: 'lifePath',            label: 'Life Path',                                  system: 'Pythagorean', value: p.lifePath.value },
-      { key: 'expression',          label: 'Expression / Destiny',                       system: 'Pythagorean', value: p.expression.value },
-      { key: 'soulUrge',            label: "Soul Urge (Heart's Desire)",                 system: 'Pythagorean', value: p.soulUrge.value },
-      { key: 'firstNameConsonants', label: 'First-Name Consonants',                      system: 'Pythagorean', value: p.firstNameConsonants.value },
-      { key: 'chaldeanName',        label: 'Chaldean Full Name',                         system: 'Chaldean',    value: c.total.value },
-      { key: 'moolank',             label: 'Moolank (Driver)',                           system: 'Vedic',       value: v.moolank.value },
-      { key: 'bhagyank',            label: 'Bhagyank (Conductor)',                       system: 'Vedic',       value: v.bhagyank.value },
-      { key: 'namank',              label: 'Namank (Name Vibration)',                    system: 'Vedic',       value: v.namank.value },
-      { key: 'loShuDominant',       label: `Lo Shu Dominant (${l.dominantElement})`,     system: 'Lo Shu',      value: l.dominantNumber },
+      { key: 'lifePath',            label: 'Life Path',                                  system: 'Pythagorean', value: p.lifePath.value, formula: `${birth.iso || birth.compact} → ${p.lifePath.raw > 9 ? p.lifePath.raw + '/' : ''}${p.lifePath.value}` },
+      { key: 'expression',          label: 'Expression / Destiny',                       system: 'Pythagorean', value: p.expression.value, formula: `Full Name → ${p.expression.raw > 9 ? p.expression.raw + '/' : ''}${p.expression.value}` },
+      { key: 'soulUrge',            label: "Soul Urge (Heart's Desire)",                 system: 'Pythagorean', value: p.soulUrge.value, formula: `Vowels → ${p.soulUrge.raw > 9 ? p.soulUrge.raw + '/' : ''}${p.soulUrge.value}` },
+      { key: 'firstNameConsonants', label: 'First-Name Consonants',                      system: 'Pythagorean', value: p.firstNameConsonants.value, formula: `${firstConsText} → ${p.firstNameConsonants.raw > 9 ? p.firstNameConsonants.raw + '/' : ''}${p.firstNameConsonants.value} (Double 4)` },
+      { key: 'chaldeanName',        label: 'Chaldean Full Name',                         system: 'Chaldean',    value: c.total.value, formula: `Chaldean Name → ${c.total.raw > 9 ? c.total.raw + '/' : ''}${c.total.value}` },
+      { key: 'moolank',             label: 'Moolank (Driver)',                           system: 'Vedic',       value: v.moolank.value, formula: `Day ${birth.d} → ${v.moolank.raw > 9 ? String(v.moolank.raw).split('').join('+') + '=' : ''}${v.moolank.raw > 9 ? '10/' : ''}${v.moolank.value}` },
+      { key: 'bhagyank',            label: 'Bhagyank (Conductor)',                       system: 'Vedic',       value: v.bhagyank.value, formula: `Full Date → ${v.bhagyank.raw} → ${v.bhagyank.value}` },
+      { key: 'namank',              label: 'Namank (Name Vibration)',                    system: 'Vedic',       value: v.namank.value, formula: `Chaldean ${c.total.raw} → ${v.namank.value}` },
+      { key: 'loShuDominant',       label: `Lo Shu Dominant (${l.dominantElement})`,     system: 'Lo Shu',      value: l.dominantNumber, formula: `Lo Shu ${l.dominantElement} → ${l.dominantNumber} (${l.counts[l.dominantNumber] || 0}×)` },
     ];
 
     if (c && c.lastName && c.lastName.value) {
-      sources.push({ key: 'chaldeanSurname', label: 'Chaldean Surname Vibration', system: 'Chaldean', value: c.lastName.value });
+      sources.push({ key: 'chaldeanSurname', label: 'Chaldean Surname Vibration', system: 'Chaldean', value: c.lastName.value, formula: `Surname ${name.last || ''} → ${c.lastName.raw > 9 ? c.lastName.raw + '/' : ''}${c.lastName.value}` });
     }
 
     if (birth && birth.m) {
-      sources.push({ key: 'birthMonth', label: 'Birth Month Vibration', system: 'Pythagorean', value: reduce(birth.m) });
+      sources.push({ key: 'birthMonth', label: 'Birth Month Vibration', system: 'Pythagorean', value: reduce(birth.m), formula: `Month ${birth.m} → ${reduce(birth.m)}` });
     }
 
     if (l && l.counts && l.counts[8] > 0) {
-      sources.push({ key: 'loShuWealthEight', label: 'Lo Shu Earth Wealth (8 - Fa)', system: 'Lo Shu', value: 8 });
+      sources.push({ key: 'loShuWealthEight', label: 'Lo Shu Earth Wealth (8 - Fa)', system: 'Lo Shu', value: 8, formula: `Lo Shu Earth → 8 (${l.counts[8]}×)` });
     }
 
     // Structural Consonant Base & Foundations:
@@ -344,7 +356,8 @@
             key: 'consonantBase' + n,
             label: `Consonant Structural Base (${n})`,
             system: 'Pythagorean',
-            value: n
+            value: n,
+            formula: `Consonants (${n}) → ${consonantCounts[n]}×`
           });
         }
       });
@@ -355,7 +368,8 @@
           key: 'kabbalahChesed',
           label: 'Kabbalistic Abundance Base (Chesed / Dalet-Mem)',
           system: 'Kabbalistic',
-          value: 4
+          value: 4,
+          formula: `Dalet(4)+Mem(4) → Chesed (4)`
         });
       }
     }
@@ -365,7 +379,8 @@
       key: 'baguaWealthCorner',
       label: 'Feng Shui Wealth Corner (Southeast Xun)',
       system: 'Lo Shu',
-      value: 4
+      value: 4,
+      formula: `Sector 4 · Xun Wood (SE)`
     });
 
     const filteredSources = sources.filter((s) => s.value >= 1 && s.value <= 9);

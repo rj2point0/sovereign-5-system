@@ -652,7 +652,7 @@ const CONFIG = {
     return `<p class="eyebrow">${eyebrow}</p><h2 class="sec-title">${title}</h2><div class="hairline my-4" style="max-width:120px;margin-left:0"></div>${lead ? `<p class="lead">${lead}</p>` : ''}`;
   }
   function statCard(label, display, sub) {
-    return `<div class="card-soft py-3 px-1.5 sm:p-4 text-center avoid-break"><div class="text-[0.52rem] sm:text-[0.58rem] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-zinc-500 truncate">${label}</div><div class="font-display text-gold-grad mt-1 whitespace-nowrap" style="font-size:clamp(1.05rem,4.2vw,1.6rem);">${display}</div>${sub ? `<div class="text-[0.62rem] sm:text-[0.7rem] text-champagne mt-0.5 sm:mt-1">${sub}</div>` : ''}</div>`;
+    return `<div class="card-soft py-3 px-1.5 sm:p-4 text-center avoid-break"><div class="text-[0.52rem] sm:text-[0.58rem] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-zinc-500 leading-tight">${label}</div><div class="font-display text-gold-grad mt-1" style="font-size:clamp(1.05rem,4.2vw,1.6rem);">${display}</div>${sub ? `<div class="text-[0.62rem] sm:text-[0.7rem] text-champagne mt-0.5 sm:mt-1">${sub}</div>` : ''}</div>`;
   }
   function interp(title, body) {
     return `<div class="avoid-break border-l border-gold/40 pl-4 py-1" style="border-color:rgba(212,175,55,.4)"><p class="font-display text-[0.95rem] text-champagne">${title}</p><p class="text-sm text-zinc-300 mt-1">${body}</p></div>`;
@@ -707,10 +707,10 @@ const CONFIG = {
     const T = C_LANG.CYCLE_TEXT[c.index];
     const todayBadge = state.lang === 'es' ? 'Activo Hoy' : 'Today';
     return `<tr class="${c.isCurrent ? 'current' : ''}">
-      <td class="whitespace-nowrap"><span class="font-display text-gold text-lg mr-1.5">${c.glyph}</span><span class="font-display text-sm">${c.n}</span></td>
-      <td><div class="font-display text-[0.85rem] text-ivory">${c.name}${c.isCurrent ? ` <span class="badge-gold !py-0.5 !text-[0.55rem] ml-1">${todayBadge}</span>` : ''}</div><div class="text-[0.72rem] text-zinc-500 mt-0.5">${c.theme}</div></td>
-      <td class="whitespace-nowrap text-[0.78rem] text-zinc-300">${c.startLabel}<br/>${c.endLabel}<div class="text-[0.6rem] text-zinc-600">${state.lang === 'es' ? `Días ${c.startDay}–${c.endDay}` : `Days ${c.startDay}–${c.endDay}`}</div></td>
-      <td><span class="mode-pill mode-${T.modeTone}">${T.mode}</span></td>
+      <td><span class="font-display text-gold text-lg mr-1">${c.glyph}</span><span class="font-display text-sm font-semibold">${c.n}</span></td>
+      <td><div class="font-display text-[0.85rem] text-ivory leading-snug">${c.name}${c.isCurrent ? ` <span class="badge-gold !py-0.5 !text-[0.55rem] ml-1">${todayBadge}</span>` : ''}</div><div class="text-[0.7rem] text-zinc-500 mt-0.5">${c.theme}</div></td>
+      <td class="text-[0.76rem] text-zinc-300">${c.startLabel} – ${c.endLabel}<div class="text-[0.62rem] text-zinc-500 mt-0.5 font-mono">${state.lang === 'es' ? `Días ${c.startDay}–${c.endDay} (~52 días)` : `Days ${c.startDay}–${c.endDay} (~52 days)`}</div></td>
+      <td class="text-right"><span class="mode-pill mode-${T.modeTone}">${T.mode}</span></td>
     </tr>`;
   }
 
@@ -795,8 +795,8 @@ const CONFIG = {
         </div>
         <div class="avoid-break">
           <p class="eyebrow">${UI.source_calcs}</p>
-          <table class="lux-table mt-2"><thead><tr><th>${state.lang === 'es' ? 'Resultado' : 'Output'}</th><th>${state.lang === 'es' ? 'Sistema' : 'System'}</th><th>#</th></tr></thead><tbody>
-            ${r.overlap.sources.map((s) => `<tr><td class="text-zinc-300">${translateSource(s.label)}</td><td class="text-zinc-500 text-xs">${translateSystem(s.system)}</td><td class="font-display text-gold">${s.value}</td></tr>`).join('')}
+          <table class="lux-table mt-2"><thead><tr><th style="width:28%">${state.lang === 'es' ? 'Fuente' : 'Source'}</th><th style="width:44%">${state.lang === 'es' ? 'Fórmula / Reducción' : 'Formula / Reduction'}</th><th style="width:18%">${state.lang === 'es' ? 'Sistema' : 'System'}</th><th style="width:10%;text-align:right">#</th></tr></thead><tbody>
+            ${r.overlap.sources.map((s) => `<tr><td class="text-zinc-300 text-[0.76rem] font-medium leading-snug">${translateSource(s.label)}</td><td class="font-mono text-champagne text-[0.72rem] leading-snug">${s.formula || `${s.value}`}</td><td class="text-zinc-500 text-[0.72rem]">${translateSystem(s.system)}</td><td class="font-display text-gold text-right font-bold text-[0.95rem]">${s.value}</td></tr>`).join('')}
           </tbody></table>
           <p class="text-[0.7rem] text-zinc-500 mt-3">${state.lang === 'es' ? 'La coincidencia cabalística se acredita cuando un número ocupa una Sephirah a través de tu Sendero de Vida, Expresión, Nombre Caldeo o Impulso del Alma.' : 'Kabbalistic overlap is credited when a number occupies a Sephirah via your Life Path, Expression, Chaldean Name or Soul Urge.'}</p>
         </div>
@@ -831,7 +831,43 @@ const CONFIG = {
       <div class="mt-5 avoid-break">
         <p class="eyebrow !text-[0.55rem] mb-2">${state.lang === 'es' ? 'Valores de Letras (vocales enmarcadas en oro)' : 'Letter Values (vowels outlined in gold)'}</p>
         ${chips(p.letters)}
-        <p class="text-[0.72rem] text-zinc-500">${state.lang === 'es' ? 'Total Expresión' : 'Total'} ${p.expression.raw} → ${p.expression.display} · ${state.lang === 'es' ? 'Vocales' : 'Vowels'} ${p.soulUrge.raw} → ${p.soulUrge.display} · ${state.lang === 'es' ? 'Consonantes' : 'Consonants'} ${p.personality.raw} → ${p.personality.display} · ${state.lang === 'es' ? 'Consonantes del primer nombre' : 'First-name consonants'} ${p.firstNameConsonants.raw} → ${p.firstNameConsonants.display}</p>
+        <div class="grid sm:grid-cols-2 gap-3 mt-3">
+          <div class="card-soft p-3 avoid-break">
+            <div class="flex items-center justify-between">
+              <span class="text-[0.62rem] uppercase tracking-wider text-zinc-400 font-semibold">${state.lang === 'es' ? 'Expresión Total' : 'Full Name Expression'}</span>
+              <span class="badge-gold !text-[0.68rem] font-mono">${p.expression.display}</span>
+            </div>
+            <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.exprFormula : ''} = ${p.expression.raw} → <b class="text-gold">${p.expression.value}</b></p>
+            <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Suma de todas las letras del nombre completo' : 'Sum of all letters across full birth name'}</p>
+          </div>
+
+          <div class="card-soft p-3 avoid-break">
+            <div class="flex items-center justify-between">
+              <span class="text-[0.62rem] uppercase tracking-wider text-gold font-semibold">${state.lang === 'es' ? 'Deseo del Alma (Vocales)' : 'Soul Urge (Vowels)'}</span>
+              <span class="badge-gold !text-[0.68rem] font-mono">${p.soulUrge.display}</span>
+            </div>
+            <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.vowelFormula : ''} = ${p.soulUrge.raw}${p.soulUrge.raw > 9 ? ' → <b class="text-gold">' + p.soulUrge.value + '</b>' : ''}</p>
+            <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Suma de las vocales (enmarcadas en oro)' : 'Sum of vowel vibrations (gold outlines)'}</p>
+          </div>
+
+          <div class="card-soft p-3 avoid-break">
+            <div class="flex items-center justify-between">
+              <span class="text-[0.62rem] uppercase tracking-wider text-zinc-400 font-semibold">${state.lang === 'es' ? 'Personalidad (Consonantes)' : 'Personality (Consonants)'}</span>
+              <span class="badge-gold !text-[0.68rem] font-mono">${p.personality.display}</span>
+            </div>
+            <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.consFormula : ''} = ${p.personality.raw}${p.personality.raw > 9 ? ' → <b class="text-gold">' + p.personality.value + '</b>' : ''}</p>
+            <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Suma de todas las consonantes exteriores' : 'Sum of all outer consonant vibrations'}</p>
+          </div>
+
+          <div class="card-soft p-3 avoid-break">
+            <div class="flex items-center justify-between">
+              <span class="text-[0.62rem] uppercase tracking-wider text-zinc-400 font-semibold">${state.lang === 'es' ? 'Consonantes Primer Nombre' : 'First-Name Consonants'}</span>
+              <span class="badge-gold !text-[0.68rem] font-mono">${p.firstNameConsonants.display}</span>
+            </div>
+            <p class="font-mono text-[0.72rem] text-champagne mt-1 break-all">${p.mathBreakdown ? p.mathBreakdown.firstConsFormula : ''} = ${p.firstNameConsonants.raw}${p.firstNameConsonants.raw > 9 ? ' → <b class="text-gold">' + p.firstNameConsonants.value + '</b>' : ''}</p>
+            <p class="text-[0.65rem] text-zinc-500 mt-0.5">${state.lang === 'es' ? 'Fundación estructural de acción e iniciativa' : 'Structural foundation of action & initiative'}</p>
+          </div>
+        </div>
       </div>
       <div class="space-y-4 mt-6">
         ${PA(p.lifePath.value) ? interp(`${state.lang === 'es' ? 'Sendero de Vida' : 'Life Path'} ${p.lifePath.value} · ${state.lang === 'es' ? 'El Camino' : 'The Road'}`, sentences(PA(p.lifePath.value).core, 2)) : ''}
@@ -872,7 +908,7 @@ const CONFIG = {
       ${secHead(state.lang === 'es' ? 'Sistema III · El Árbol de la Vida' : 'System III · The Tree of Life', state.lang === 'es' ? 'Ubicación Cabalística y Balance de Columnas' : 'Kabbalistic Placement & Pillar Balance', state.lang === 'es' ? 'Tus cuatro números esenciales se ubican en las diez Sephirot del Árbol de la Vida. Las esferas que activan y la columna hacia la que se inclinan revelan cómo la fuerza se transmuta en forma en tu vida.' : 'Your four core numbers are placed on the ten Sephirot of the Tree of Life. The spheres they illuminate, and the pillar they lean toward, reveal how force becomes form in your life.')}
       <div class="grid sm:grid-cols-5 gap-6 mt-6 items-start">
         <div class="sm:col-span-2 avoid-break">${treeSvg(new Set(k.activeSephirot))}</div>
-        <div class="sm:col-span-3 space-y-3">
+        <div class="sm:col-span-3 space-y-3 pt-0.5">
           ${k.placements.map((pl) => `
             <div class="card-soft p-3.5 avoid-break flex gap-3 items-start">
               ${medal(pl.value, 'sm')}
@@ -882,20 +918,46 @@ const CONFIG = {
       </div>
       <div class="mt-6 avoid-break">
         <p class="eyebrow">${state.lang === 'es' ? 'Equilibrio de Columnas' : 'Pillar Balance'}</p>
-        <div class="grid sm:grid-cols-3 gap-4 mt-3">
-          ${['Mercy', 'Mildness', 'Severity'].map((key) => {
-            const label = state.lang === 'es' ? (key === 'Mercy' ? 'Misericordia' : key === 'Severity' ? 'Rigor' : 'Equilibrio') : PIL[key].label;
-            return bar(`${label} <span class="text-zinc-600">(${PIL[key].numbers.join(', ')})</span>`, PIL[key].count, k.placements.length, PIL[key].count + ' / ' + k.placements.length);
+        <div class="grid sm:grid-cols-3 gap-3.5 mt-3">
+          ${[
+            { key: 'Mercy', enName: 'Pillar of Mercy', esName: 'Columna de la Misericordia', nums: '(2, 4, 7)' },
+            { key: 'Mildness', enName: 'Pillar of Mildness / Equilibrium', esName: 'Columna del Equilibrio', nums: '(1, 6, 9)' },
+            { key: 'Severity', enName: 'Pillar of Severity', esName: 'Columna del Rigor', nums: '(3, 5, 8)' }
+          ].map((p) => {
+            const pData = PIL[p.key];
+            const pName = state.lang === 'es' ? p.esName : p.enName;
+            const pct = Math.min(100, Math.round(((pData.count || 0) / (k.placements.length || 1)) * 100));
+            return `
+              <div class="card-soft p-3.5 avoid-break flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between gap-2">
+                    <span class="font-display text-[0.8rem] text-ivory leading-snug">${pName}</span>
+                    <span class="font-display text-gold text-sm font-bold shrink-0">${pData.count} / ${k.placements.length}</span>
+                  </div>
+                  <div class="mt-1 flex items-center justify-between text-[0.72rem]">
+                    <span class="text-zinc-500">${state.lang === 'es' ? 'Esferas Activas:' : 'Active Spheres:'}</span>
+                    <span class="text-gold font-mono font-semibold tracking-wider">${p.nums}</span>
+                  </div>
+                </div>
+                <div class="bar-track mt-3">
+                  <div class="bar-fill" style="width:${pct}%"></div>
+                </div>
+              </div>`;
           }).join('')}
         </div>
         <p class="lead mt-5 !text-[1.08rem]">${C_LANG.PILLAR_TEXT[k.dominantPillar]}</p>
       </div>` });
 
     /* 10 · VEDIC */
+    const birthDigits = r.input.birth.compact.split('');
+    const moolCalc = `Day ${r.input.birth.d} → ${v.moolank.raw > 9 ? String(v.moolank.raw).split('').join(' + ') + ' = ' + v.moolank.raw + (v.moolank.raw !== v.moolank.value ? ' → ' + v.moolank.value : '') : v.moolank.value}`;
+    const bhagCalc = `${birthDigits.join('+')} = ${v.bhagyank.raw} → ${v.bhagyank.value}`;
+    const namCalc = `Chaldean ${ch.total.raw} → ${String(ch.total.raw).split('').join(' + ')} = ${v.namank.value}`;
+
     const vRows = [
-      [state.lang === 'es' ? 'Moolank' : 'Moolank', state.lang === 'es' ? 'Psíquico / Conductor' : 'Psychic / Driver', v.moolank, `${state.lang === 'es' ? 'Día de nacimiento' : 'Day of birth'} ${v.moolank.raw} → ${v.moolank.value}`],
-      [state.lang === 'es' ? 'Bhagyank' : 'Bhagyank', state.lang === 'es' ? 'Destino / Conductor' : 'Destiny / Conductor', v.bhagyank, `${r.input.birth.compact} → ${v.bhagyank.raw} → ${v.bhagyank.value}`],
-      [state.lang === 'es' ? 'Namank' : 'Namank', state.lang === 'es' ? 'Vibración del Nombre' : 'Name Vibration', v.namank, `${state.lang === 'es' ? 'Total Caldeo' : 'Chaldean total'} ${v.namank.raw} → ${v.namank.value}`]
+      [state.lang === 'es' ? 'Moolank' : 'Moolank', state.lang === 'es' ? 'Psíquico / Conductor' : 'Psychic / Driver', v.moolank, moolCalc],
+      [state.lang === 'es' ? 'Bhagyank' : 'Bhagyank', state.lang === 'es' ? 'Destino / Conductor' : 'Destiny / Conductor', v.bhagyank, bhagCalc],
+      [state.lang === 'es' ? 'Namank' : 'Namank', state.lang === 'es' ? 'Vibración del Nombre' : 'Name Vibration', v.namank, namCalc]
     ];
     const vNote = state.lang === 'es'
       ? (v.moolank.value === v.bhagyank.value
@@ -916,14 +978,20 @@ const CONFIG = {
     pages.push({ title: state.lang === 'es' ? 'Sistema IV · Védico' : 'System IV · Vedic', html: `
       ${secHead(state.lang === 'es' ? 'Sistema IV · India Antigua' : 'System IV · Ancient India', state.lang === 'es' ? 'Arquitectura Planetaria Védica' : 'Vedic Planetary Architecture', state.lang === 'es' ? 'En la astro-numerología védica y tamil, cada número está gobernado por uno de los Navagraha, las nueve inteligencias planetarias. Tus números Psíquico, Destino y Nombre conforman tu consejo cósmico personal.' : 'In Vedic and Tamil astro-numerology, each number is governed by one of the Navagraha, the nine planetary intelligences. Your Driver, Conductor and Name numbers form your personal planetary council.')}
       <div class="space-y-3 mt-6">
-        ${vRows.map(([t, sub, n, calc]) => `
+        ${vRows.map(([t, sub, n, calcBadge]) => `
           <div class="card-soft p-4 sm:p-5 avoid-break flex gap-4 items-start">
             ${medal(n.value, 'md')}
             <div class="flex-1">
-              <div class="flex flex-wrap items-baseline gap-x-3"><p class="font-display text-lg text-ivory">${t}</p><p class="text-[0.6rem] tracking-[0.2em] uppercase text-zinc-500">${sub}</p></div>
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <div class="flex flex-wrap items-baseline gap-x-3">
+                  <p class="font-display text-lg text-ivory">${t}</p>
+                  <p class="text-[0.6rem] tracking-[0.2em] uppercase text-zinc-500">${sub}</p>
+                </div>
+                <span class="badge-gold !text-[0.68rem] font-mono font-semibold py-0.5 px-2.5">${calcBadge}</span>
+              </div>
               <p class="font-display text-champagne mt-1">${n.ruler.planet} · ${n.ruler.english} <span class="text-zinc-500 font-sans text-xs">· ${n.ruler.archetype}</span></p>
               <p class="text-[0.82rem] text-zinc-300 mt-2">${C_LANG.VEDIC_TEXT[n.value]}</p>
-              <p class="text-[0.7rem] text-zinc-500 mt-2">${state.lang === 'es' ? 'Día de poder:' : 'Power day:'} <span class="text-champagne">${n.ruler.day}</span> · ${state.lang === 'es' ? 'Gema:' : 'Gem:'} <span class="text-champagne">${n.ruler.gem}</span> · ${state.lang === 'es' ? 'Colores:' : 'Colours:'} <span class="text-champagne">${n.ruler.color}</span> · <span class="font-mono">${calc}</span></p>
+              <p class="text-[0.7rem] text-zinc-500 mt-2">${state.lang === 'es' ? 'Día de poder:' : 'Power day:'} <span class="text-champagne">${n.ruler.day}</span> · ${state.lang === 'es' ? 'Gema:' : 'Gem:'} <span class="text-champagne">${n.ruler.gem}</span> · ${state.lang === 'es' ? 'Colores:' : 'Colours:'} <span class="text-champagne">${n.ruler.color}</span></p>
             </div>
           </div>`).join('')}
       </div>
@@ -939,10 +1007,20 @@ const CONFIG = {
     pages.push({ title: state.lang === 'es' ? 'Sistema V · Lo Shu' : 'System V · Lo Shu', html: `
       ${secHead(state.lang === 'es' ? 'Sistema V · China Antigua' : 'System V · Ancient China', state.lang === 'es' ? 'Cuadrado Mágico Lo Shu y Cinco Elementos' : 'Lo Shu Magic Square & Five Elements', state.lang === 'es' ? `Cada dígito de tu fecha de nacimiento (${r.input.birth.compact}) más tu Sendero de Vida (${p.lifePath.value}), Expresión (${p.expression.value}) y Nombre Caldeo (${ch.total.value}) se ubica en el cuadrado Lo Shu 3×3, cuyas filas y columnas suman 15.` : `Every digit of your birth date (${r.input.birth.compact}) plus your Life Path (${p.lifePath.value}), Expression (${p.expression.value}) and Chaldean Name (${ch.total.value}) is placed into the 3×3 Lo Shu square, whose rows, columns and diagonals all sum to 15.`)}
       <div class="grid sm:grid-cols-2 gap-7 mt-6 items-start">
-        <div class="avoid-break">${loShuGrid(l)}<p class="text-[0.68rem] text-zinc-500 mt-3">${state.lang === 'es' ? 'Ausentes:' : 'Missing:'} ${l.missing.length ? l.missing.join(', ') : (state.lang === 'es' ? 'ninguno' : 'none')} · ${state.lang === 'es' ? 'Repetidos:' : 'Repeated:'} ${l.repeated.length ? l.repeated.map((n) => `${n}×${l.counts[n]}`).join(', ') : (state.lang === 'es' ? 'ninguno' : 'none')}</p></div>
+        <div class="avoid-break">
+          <div class="mb-3.5 p-2.5 rounded-lg border border-gold/25 bg-charcoal/60 text-xs">
+            <p class="text-[0.6rem] uppercase tracking-widest text-zinc-400 font-semibold mb-1">${state.lang === 'es' ? 'Dígitos de Entrada en la Matriz:' : 'Matrix Input Digits:'}</p>
+            <div class="font-mono text-[0.72rem] text-champagne flex flex-wrap gap-x-2.5 gap-y-1">
+              <span><b>${state.lang === 'es' ? 'Fecha:' : 'Birth Date:'}</b> <span class="text-gold font-semibold">${r.input.birth.compact.split('').join(', ')}</span></span>
+              <span><b>${state.lang === 'es' ? 'Esenciales:' : 'Core Numbers:'}</b> <span class="text-gold font-semibold">LP ${p.lifePath.value}, EXP ${p.expression.value}, CH ${ch.total.value}</span></span>
+            </div>
+          </div>
+          ${loShuGrid(l)}
+          <p class="text-[0.68rem] text-zinc-500 mt-3">${state.lang === 'es' ? 'Ausentes:' : 'Missing:'} ${l.missing.length ? l.missing.join(', ') : (state.lang === 'es' ? 'ninguno' : 'none')} · ${state.lang === 'es' ? 'Repetidos:' : 'Repeated:'} ${l.repeated.length ? l.repeated.map((n) => `${n}×${l.counts[n]}`).join(', ') : (state.lang === 'es' ? 'ninguno' : 'none')}</p>
+        </div>
         <div class="space-y-3 avoid-break">
           <p class="eyebrow">${state.lang === 'es' ? 'Cinco Elementos' : 'Five Elements'}</p>
-          ${Object.keys(l.elements).map((e) => bar(`${e} <span class="text-zinc-600">· ${E.ELEMENTS[e].theme}</span>`, l.elements[e], maxE)).join('')}
+          ${Object.keys(l.elements).map((e) => bar(`${e} <span class="text-zinc-600">· ${E.ELEMENTS[e].theme}</span>`, l.elements[e], maxE, l.elements[e] + '×')).join('')}
           <div class="card-soft p-4 mt-3"><p class="font-display text-champagne">${state.lang === 'es' ? 'Dominante:' : 'Dominant:'} ${l.dominantElement} <span class="text-zinc-500 text-xs font-sans">(${l.dominantNumber})</span></p><p class="text-[0.8rem] text-zinc-300 mt-1">${ET.text}</p><p class="text-[0.75rem] text-zinc-400 mt-2"><b class="text-gold">${state.lang === 'es' ? 'Activar:' : 'Activate:'}</b> ${ET.activate}</p></div>
         </div>
       </div>
@@ -1042,7 +1120,7 @@ const CONFIG = {
           </div>
           <div class="bar-track mt-4"><div class="bar-fill" style="width:${cy.progress}%"></div></div>
         </div>
-        <table class="lux-table table-cycles mt-6"><thead><tr><th></th><th>${state.lang === 'es' ? 'Período' : 'Period'}</th><th>${state.lang === 'es' ? 'Fechas' : 'Dates'}</th><th>${state.lang === 'es' ? 'Modo Táctico' : 'Mode'}</th></tr></thead><tbody>${cy.periods.map(c => cycleRow(c, C_LANG)).join('')}</tbody></table>` });
+        <table class="lux-table table-cycles mt-6"><thead><tr><th style="width:10%">#</th><th style="width:34%">${state.lang === 'es' ? 'Período' : 'Period'}</th><th style="width:28%">${state.lang === 'es' ? 'Fechas y Días' : 'Dates & Days'}</th><th style="width:28%;text-align:right">${state.lang === 'es' ? 'Modo Táctico' : 'Mode'}</th></tr></thead><tbody>${cy.periods.map(c => cycleRow(c, C_LANG)).join('')}</tbody></table>` });
 
       pages.push({ title: state.lang === 'es' ? 'Directivas del Ciclo Activo' : 'Current Cycle Brief', html: `
         ${secHead(state.lang === 'es' ? `Informe Táctico · Ciclo ${cy.current.n} de 7` : `Tactical Brief · Cycle ${cy.current.n} of 7`, `${cy.current.name}: ${state.lang === 'es' ? 'Tus Directivas' : 'Your Directives'}`, curT.directive)}
