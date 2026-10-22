@@ -6,6 +6,15 @@ __pycache__/
 tests/__pycache__/
 videos/
 temp_frames/
+scenes_cache/
+*.mp4
+*.wav
+*.pdf
+*.zip
+test_*.png
+audit_*.png
+check_*.png
+verify_*.png
 
 # OS files
 .DS_Store

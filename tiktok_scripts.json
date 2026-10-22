@@ -1,0 +1,163 @@
+{
+  "scripts": [
+    {
+      "id": "ad_01",
+      "filename": "tiktok_ad_01_generic_lifepath.mp4",
+      "hook_name": "The \"Too Generic\" Problem Hook",
+      "voice": "en-US-AvaNeural",
+      "rate": "+10%",
+      "spoken_script": "Ever wonder why your Life Path number feels way too generic? Because twenty million other people born on your birthday get the exact same reading. Looking at just one numerology system gives you almost zero real direction. That’s why we built the Sacred Number Blueprint. It passes your birth date AND the sound vibration of your name through all five ancient systems at once—Pythagorean, Chaldean, Kabbalah, Vedic, and the Chinese Lo Shu grid. Out of fifteen calculations, three specific numbers keep showing up across every culture. Those three overlap numbers reveal who you really are, how you attract wealth, and what your relationships actually need. Click the link in our bio to run your free five-system overlap test right now.",
+      "scenes": [
+        {
+          "id": "hook",
+          "type": "custom_hook",
+          "eyebrow": "✦ THE LIFE PATH PROBLEM ✦",
+          "title": "WHY YOUR LIFE PATH NUMBER IS TOO GENERIC",
+          "subtitle": "20 Million people share your exact birthday.",
+          "badge_left_title": "1 SYSTEM (PYTHAGOREAN)",
+          "badge_left_text": "✕ 20,000,000 people get the exact same reading.\n✕ Generic personality horoscopes.\n✕ Zero name sound vibration.",
+          "badge_right_title": "5-SYSTEM MASTER OVERLAP",
+          "badge_right_text": "✓ 1 in 100,000 Mathematical Precision.\n✓ Name sound + Birth date combined.\n✓ 3 Overlap Anchors revealed across 5 cultures."
+        },
+        {
+          "id": "mandala",
+          "type": "dossier_target",
+          "page": 2,
+          "selector": "article.page[data-page='2'] svg",
+          "label": "Page 2 · Sacred 5-Ring Convergence Mandala"
+        },
+        {
+          "id": "ledger",
+          "type": "dossier_target",
+          "page": 5,
+          "selector": "article.page[data-page='5'] table",
+          "label": "Page 5 · 15-Point Cross-System Calculation Ledger"
+        },
+        {
+          "id": "anchors",
+          "type": "dossier_target",
+          "page": 4,
+          "selector": "article.page[data-page='4'] .grid",
+          "label": "Page 4 · The Big Three Master Overlap Anchors"
+        },
+        {
+          "id": "cta",
+          "type": "cta_screen",
+          "eyebrow": "✦ SACRED NUMBER BLUEPRINT ✦",
+          "title": "TEST YOUR 5-SYSTEM CODE FOR FREE",
+          "subtitle": "Cross-reference Pythagorean, Chaldean, Kabbalah, Vedic & Chinese Lo Shu in 30 seconds.",
+          "cta_pill": "✦ CLICK LINK IN BIO (@sacrednumberblueprint) ✦",
+          "cta_sub": "Free Instant Teaser · No Credit Card Required"
+        }
+      ],
+      "tiktok_caption": "Why your Life Path number feels way too generic (and the 5-system math that actually decodes you) 👁️✨ #numerology #lifepath #spirituality #astrology #sacredgeometry #chaldean #witchtok #manifestation #wealthmindset",
+      "hashtags": ["#numerology", "#lifepath", "#spirituality", "#astrology", "#sacredgeometry", "#chaldean", "#witchtok", "#manifestation", "#wealthmindset"]
+    },
+    {
+      "id": "ad_02",
+      "filename": "tiktok_ad_02_five_lenses_secret.mp4",
+      "hook_name": "The \"Name Sound Vibration + Birth Date\" Hook",
+      "voice": "en-US-AvaNeural",
+      "rate": "+10%",
+      "spoken_script": "If you're only using your birth date for numerology, you're missing eighty percent of your blueprint. Your birthday never changes, but your name carries sacred Babylonian sound frequencies and Kabbalistic Tree of Life placements that Western numerology completely ignores. When you cross-reference your name's Chaldean vibration with your birth date, and lay them across the ancient Chinese Lo Shu square, your hidden wealth channels and relationship blind spots suddenly lock into focus. Stop guessing with partial math. We built a free five-system calculator that decodes your master overlap numbers in thirty seconds. Click the link in our bio right now to run your name and birthday for free.",
+      "scenes": [
+        {
+          "id": "hook",
+          "type": "custom_hook",
+          "eyebrow": "✦ THE 80% MISSING CODE ✦",
+          "title": "YOUR BIRTH DATE IS ONLY 20% OF THE CODE",
+          "subtitle": "Why Western numerology stops where the ancients began.",
+          "badge_left_title": "WHAT THEY GIVE YOU (20%)",
+          "badge_left_text": "• 1 Single Pythagorean calculation.\n• Basic Life Path horoscope.\n• Ignores your name frequency.",
+          "badge_right_title": "THE OTHER 80% (UNLOCKED)",
+          "badge_right_text": "• Babylonian Chaldean Sound compounds.\n• Kabbalistic Tree of Life & 10 Sephirot.\n• Imperial Chinese Lo Shu & 5 Elements.\n• Vedic Planetary Council (Moolank / Bhagyank)."
+        },
+        {
+          "id": "chaldean_tree",
+          "type": "dossier_target",
+          "page": 11,
+          "selector": "article.page[data-page='11'] svg",
+          "label": "Page 11 · Kabbalistic Tree of Life Diagram"
+        },
+        {
+          "id": "loshu",
+          "type": "dossier_target",
+          "page": 14,
+          "selector": "article.page[data-page='14'] .loshu",
+          "label": "Page 14 · Chinese Lo Shu 3x3 Grid & 5 Elements"
+        },
+        {
+          "id": "anchors",
+          "type": "dossier_target",
+          "page": 4,
+          "selector": "article.page[data-page='4'] .bar-row, article.page[data-page='4'] .grid",
+          "label": "Page 4 · 1–9 Frequency Tally & Master Convergence"
+        },
+        {
+          "id": "cta",
+          "type": "cta_screen",
+          "eyebrow": "✦ 5 ANCIENT TRADITIONS · 1 CODE ✦",
+          "title": "DECODE YOUR NAME & BIRTHDAY FOR FREE",
+          "subtitle": "Discover the 3 recurring numbers that govern your destiny.",
+          "cta_pill": "✦ CLICK LINK IN BIO (@sacrednumberblueprint) ✦",
+          "cta_sub": "Instant Access · Free 5-System Alignment Teaser"
+        }
+      ],
+      "tiktok_caption": "Why your birth date alone is only 20% of your numerology blueprint (and how your name changes everything) 🔑✨ #numerology #chaldean #kabbalah #spiritualawakening #loshu #soundfrequency #alignment #esoteric",
+      "hashtags": ["#numerology", "#chaldean", "#kabbalah", "#spiritualawakening", "#loshu", "#soundfrequency", "#alignment", "#esoteric"]
+    },
+    {
+      "id": "ad_03",
+      "filename": "tiktok_ad_03_love_wealth_cycles.mp4",
+      "hook_name": "The \"52-Day Timing & Somatic Energy\" Hook",
+      "voice": "en-US-AvaNeural",
+      "rate": "+10%",
+      "spoken_script": "Ever feel like you're working eighty-hour weeks and fighting an invisible wall? You're not lazy—you're probably pushing during the wrong 52-day cycle. In ancient Rosicrucian and Vedic science, your year isn't a straight line. It's divided into seven distinct planetary periods. Some are meant for aggressive expansion and signing contracts, while others are strictly designed for nervous system recovery and capital preservation. When you align your ambition with your constitutional biorhythm, everything starts flowing effortlessly. Click the link in our bio to find out which 52-day cycle you're in today and unlock your personalized five-system blueprint for free.",
+      "scenes": [
+        {
+          "id": "hook",
+          "type": "custom_hook",
+          "eyebrow": "✦ THE TIMING PROBLEM ✦",
+          "title": "WORKING HARD BUT HITTING A WALL?",
+          "subtitle": "You are pushing during the wrong 52-Day Cycle.",
+          "badge_left_title": "WHEN YOU FIGHT THE CYCLE",
+          "badge_left_text": "• Nervous system burnout.\n• Stalled deals & delayed contracts.\n• Depleted adrenals & decision fatigue.",
+          "badge_right_title": "WHEN YOU ALIGN WITH THE 7 CYCLES",
+          "badge_right_text": "• High-Wealth Action Windows (Sun & Jupiter).\n• Capital Preservation Windows (Saturn).\n• Somatic Recovery & Cellular Reset."
+        },
+        {
+          "id": "cycles",
+          "type": "dossier_target",
+          "page": 18,
+          "selector": "article.page[data-page='18'] table.lux-table",
+          "label": "Page 18 · 365-Day Rosicrucian Cycles Calendar"
+        },
+        {
+          "id": "somatic",
+          "type": "dossier_target",
+          "page": 15,
+          "selector": "article.page[data-page='15'] .grid",
+          "label": "Page 15 · Somatic Vitality & Nervous System Architecture"
+        },
+        {
+          "id": "directives",
+          "type": "dossier_target",
+          "page": 19,
+          "selector": "article.page[data-page='19'] .grid",
+          "label": "Page 19 · Active Cycle Directives (Press vs. Avoid)"
+        },
+        {
+          "id": "cta",
+          "type": "cta_screen",
+          "eyebrow": "✦ ACTIVE TODAY: FIND YOUR WINDOW ✦",
+          "title": "WHICH 52-DAY CYCLE ARE YOU IN TODAY?",
+          "subtitle": "Align your wealth, business moves, and nervous system.",
+          "cta_pill": "✦ CLICK LINK IN BIO (@sacrednumberblueprint) ✦",
+          "cta_sub": "100% Free · Calculated In 30 Seconds"
+        }
+      ],
+      "tiktok_caption": "Why you're feeling burned out: you're pushing during the wrong 52-day cycle ⏳⚡ #biorhythm #rosicrucian #burnout #nervoussystem #wealthtiming #productivityhacks #numerology #spiritualgrowth",
+      "hashtags": ["#biorhythm", "#rosicrucian", "#burnout", "#nervoussystem", "#wealthtiming", "#productivityhacks", "#numerology", "#spiritualgrowth"]
+    }
+  ]
+}

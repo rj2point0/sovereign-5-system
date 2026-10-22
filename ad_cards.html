@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TikTok Ad Cards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0; padding: 0; background: #0A0A0D; color: #F5F5F7;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      width: 100vw; height: 100vh; min-height: 100vh; overflow: hidden; box-sizing: border-box;
+    }
+    .card-screen {
+      width: 100vw; height: 100vh; min-height: 100vh; padding: 50px 32px 60px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-sizing: border-box; position: relative;
+      background: radial-gradient(circle at 50% 25%, #181920 0%, #0B0B0E 75%, #050507 100%);
+    }
+    .gold-frame {
+      position: absolute; inset: 16px; border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 12px; pointer-events: none;
+    }
+    .gold-glow {
+      text-shadow: 0 0 25px rgba(212,175,55,0.45);
+    }
+    .badge-gold {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      border-radius: 9999px; background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.45); color: #D4AF37;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .badge-red {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      border-radius: 9999px; background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.4); color: #F87171;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .box-soft {
+      background: rgba(18, 19, 24, 0.85); border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 12px; padding: 18px 20px;
+    }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+    .text-gold { color: #D4AF37; }
+    .text-champagne { color: #F3E5AB; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== AD 1 HOOK ==================== -->
+  <div id="card_hook_ad_01" class="card-screen">
+    <div class="gold-frame"></div>
+    <div class="text-center pt-8">
+      <span class="badge-gold">✦ SACRED NUMBER BLUEPRINT ✦</span>
+      <h1 class="font-cinzel font-bold text-3xl sm:text-[2rem] leading-tight text-white mt-5 gold-glow">
+        WHY YOUR LIFE PATH NUMBER IS TOO GENERIC
+      </h1>
+      <p class="font-cormorant italic text-xl text-champagne mt-3">
+        20 Million people share your exact birthday reading.
+      </p>
+    </div>
+
+    <!-- COMPARISON BOXES -->
+    <div class="space-y-4 my-auto">
+      <div class="box-soft border-red-500/40 bg-red-950/20">
+        <div class="flex items-center justify-between">
+          <span class="badge-red">✕ 1 SYSTEM (PYTHAGOREAN)</span>
+          <span class="text-xs text-red-400 font-semibold">1 in 9 Odds</span>
+        </div>
+        <ul class="text-xs text-zinc-300 space-y-1.5 mt-3 leading-relaxed">
+          <li class="flex items-start"><span class="text-red-400 font-bold mr-2">✕</span> 20,000,000 people share your exact Life Path.</li>
+          <li class="flex items-start"><span class="text-red-400 font-bold mr-2">✕</span> Vague horoscope traits with zero strategic edge.</li>
+          <li class="flex items-start"><span class="text-red-400 font-bold mr-2">✕</span> Ignores the sound frequency of your full birth name.</li>
+        </ul>
+      </div>
+
+      <div class="box-soft border-gold/50 bg-amber-950/20">
+        <div class="flex items-center justify-between">
+          <span class="badge-gold">✓ 5-SYSTEM MASTER OVERLAP</span>
+          <span class="text-xs text-gold font-semibold">1 in 100,000 Precision</span>
+        </div>
+        <ul class="text-xs text-zinc-200 space-y-1.5 mt-3 leading-relaxed">
+          <li class="flex items-start"><span class="text-gold font-bold mr-2">✓</span> Crosses Pythagorean, Chaldean, Kabbalah, Vedic & Lo Shu.</li>
+          <li class="flex items-start"><span class="text-gold font-bold mr-2">✓</span> 15 calculations reveal your 3 Master Overlap Anchors.</li>
+          <li class="flex items-start"><span class="text-gold font-bold mr-2">✓</span> Decodes Wealth Flow, Nervous System & 52-Day Timing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-center pb-6">
+      <div class="inline-block py-2.5 px-6 rounded-full bg-gold/15 border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase">
+        Swipe up / Link in Bio to test your code
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AD 2 HOOK ==================== -->
+  <div id="card_hook_ad_02" class="card-screen hidden">
+    <div class="gold-frame"></div>
+    <div class="text-center pt-8">
+      <span class="badge-gold">✦ ANCIENT MATHEMATICS ✦</span>
+      <h1 class="font-cinzel font-bold text-3xl leading-tight text-white mt-5 gold-glow">
+        YOUR BIRTH DATE IS ONLY <span class="text-gold">20%</span> OF THE CODE
+      </h1>
+      <p class="font-cormorant italic text-xl text-champagne mt-3">
+        Why Western apps stop where the ancient masters began.
+      </p>
+    </div>
+
+    <!-- 20% vs 80% VISUAL -->
+    <div class="my-auto space-y-4">
+      <div class="box-soft">
+        <div class="flex justify-between items-center text-xs mb-2">
+          <span class="text-zinc-400 font-bold uppercase tracking-wider">Free Apps (Western Only)</span>
+          <span class="text-zinc-400 font-bold">20%</span>
+        </div>
+        <div class="w-full bg-zinc-800 h-3 rounded-full overflow-hidden">
+          <div class="bg-gold h-full rounded-full" style="width: 20%"></div>
+        </div>
+        <p class="text-[0.72rem] text-zinc-400 mt-2">Only analyzes birthday digits. Ignores sound vibrations and sacred geometry.</p>
+      </div>
+
+      <div class="box-soft border-gold/60 bg-amber-950/20">
+        <div class="flex justify-between items-center text-xs mb-2">
+          <span class="text-gold font-bold uppercase tracking-wider">5-System Convergence</span>
+          <span class="text-gold font-bold">100% UNLOCKED</span>
+        </div>
+        <div class="w-full bg-zinc-800 h-3 rounded-full overflow-hidden">
+          <div class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full rounded-full" style="width: 100%"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mt-4 text-[0.72rem] text-zinc-300">
+          <div class="p-2 rounded bg-black/40 border border-gold/20"><b>I. Chaldean:</b> Sound vibrations</div>
+          <div class="p-2 rounded bg-black/40 border border-gold/20"><b>II. Kabbalah:</b> 10 Sephirot Tree</div>
+          <div class="p-2 rounded bg-black/40 border border-gold/20"><b>III. Lo Shu:</b> Missing Elements</div>
+          <div class="p-2 rounded bg-black/40 border border-gold/20"><b>IV. Vedic:</b> Planetary Council</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center pb-6">
+      <div class="inline-block py-2.5 px-6 rounded-full bg-gold/15 border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase">
+        Discover your missing 80% · Link in Bio
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AD 3 HOOK ==================== -->
+  <div id="card_hook_ad_03" class="card-screen hidden">
+    <div class="gold-frame"></div>
+    <div class="text-center pt-8">
+      <span class="badge-gold">✦ BIORHYTHM & CAPITAL TIMING ✦</span>
+      <h1 class="font-cinzel font-bold text-3xl leading-tight text-white mt-5 gold-glow">
+        WORKING HARD BUT HITTING A WALL?
+      </h1>
+      <p class="font-cormorant italic text-xl text-champagne mt-3">
+        You're pushing during the wrong 52-Day Cycle.
+      </p>
+    </div>
+
+    <!-- 7 CYCLES BREAKDOWN -->
+    <div class="my-auto space-y-3.5">
+      <div class="box-soft border-red-500/40 bg-red-950/20">
+        <span class="badge-red text-[0.6rem]">WHEN YOU FIGHT THE CYCLE</span>
+        <p class="text-xs text-zinc-300 mt-2 leading-relaxed">
+          Launching businesses, signing contracts, or raising capital during a <b>Saturnian Preservation Period</b> leads to delayed deals, adrenal burnout, and unexplainable friction.
+        </p>
+      </div>
+
+      <div class="box-soft border-gold/60 bg-amber-950/20">
+        <span class="badge-gold text-[0.6rem]">WHEN YOU ALIGN WITH THE 7 CYCLES</span>
+        <div class="space-y-2 mt-2 text-xs text-zinc-200">
+          <p class="flex items-center"><span class="text-gold font-bold mr-2">☉ Solar & ♃ Jupiterian Periods:</span> Aggressive expansion & capital events.</p>
+          <p class="flex items-center"><span class="text-gold font-bold mr-2">♄ Saturnian Period:</span> Nervous system reset & asset protection.</p>
+          <p class="flex items-center"><span class="text-gold font-bold mr-2">☽ Lunar Period:</span> Inner clarity, strategic pivots & alliances.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center pb-6">
+      <div class="inline-block py-2.5 px-6 rounded-full bg-gold/15 border border-gold/40 text-gold text-xs font-semibold tracking-wider uppercase">
+        Check your active 52-day cycle · Link in Bio
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CTA CARD (UNIVERSAL LUXURY CLOSING) ==================== -->
+  <div id="card_cta_screen" class="card-screen hidden">
+    <div class="gold-frame"></div>
+    <div class="text-center pt-10">
+      <span class="badge-gold">✦ FREE 5-SYSTEM CALCULATION ✦</span>
+      <h2 id="cta_title" class="font-cinzel font-bold text-3xl sm:text-[2.1rem] leading-tight text-white mt-5 gold-glow">
+        TEST YOUR 5-SYSTEM CODE FOR FREE
+      </h2>
+      <p id="cta_subtitle" class="font-cormorant italic text-xl text-champagne mt-3">
+        Cross-reference all 5 ancient traditions in 30 seconds.
+      </p>
+    </div>
+
+    <!-- MOCKUP OF INPUT FORM -->
+    <div class="my-auto box-soft border-gold/50 bg-black/60 p-6 space-y-3">
+      <div>
+        <label class="text-[0.65rem] tracking-widest uppercase text-zinc-400 font-bold block mb-1">Full Birth Name</label>
+        <div class="w-full bg-zinc-900/90 border border-zinc-700/80 rounded-lg py-2.5 px-3.5 text-sm text-zinc-200 font-medium">First and last name</div>
+      </div>
+      <div>
+        <label class="text-[0.65rem] tracking-widest uppercase text-zinc-400 font-bold block mb-1">Date of Birth</label>
+        <div class="w-full bg-zinc-900/90 border border-zinc-700/80 rounded-lg py-2.5 px-3.5 text-sm text-zinc-400 font-medium">YYYY - MM - DD</div>
+      </div>
+      <div class="pt-2">
+        <div class="w-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-black font-bold py-3.5 rounded-lg text-center text-xs tracking-wider uppercase shadow-lg shadow-amber-500/20">
+          Calculate My 5-System Overlap (Free)
+        </div>
+      </div>
+    </div>
+
+    <!-- BIG GLOWING CTA BADGE -->
+    <div class="text-center pb-8 space-y-3">
+      <div class="inline-flex items-center gap-2 py-4 px-7 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-extrabold text-sm tracking-wider uppercase shadow-xl shadow-amber-500/30 animate-pulse">
+        <span>✦ CLICK LINK IN BIO (@sacrednumberblueprint) ✦</span>
+      </div>
+      <p class="text-[0.7rem] text-zinc-400">100% Free Teaser · Instant Results · No App Download Needed</p>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const cardId = params.get('card') || window.location.hash.replace('#', '');
+    if (cardId) {
+      document.querySelectorAll('.card-screen').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(cardId);
+      if (target) {
+        target.classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
