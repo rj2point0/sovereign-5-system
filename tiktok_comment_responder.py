@@ -268,14 +268,23 @@ class TikTokCommentResponder:
                     await self.run_simulation()
                     return
 
-                # In live mode, wait up to 90s for user to complete login
-                for wait_step in range(18):
-                    await asyncio.sleep(5.0)
-                    if "tiktokstudio/comment" in page.url:
-                        print("✓ Login detected! Proceeding to comment management...")
+                # In live mode, wait up to 180s for user to complete login
+                total_wait_s = 180
+                poll_interval_s = 5
+                max_steps = total_wait_s // poll_interval_s
+                print(f"Waiting up to {total_wait_s}s for login completion (QR code scan or account authorization)...", flush=True)
+                for wait_step in range(1, max_steps + 1):
+                    await asyncio.sleep(poll_interval_s)
+                    elapsed = wait_step * poll_interval_s
+                    current = page.url.lower()
+                    if "tiktokstudio/comment" in current and "login" not in current and "passport" not in current:
+                        print(f"✓ Login detected ({elapsed}s)! Proceeding to comment management...", flush=True)
                         break
+                    if elapsed % 15 == 0:
+                        remaining = total_wait_s - elapsed
+                        print(f"  ...waiting for login: {elapsed}s elapsed, {remaining}s remaining (Current URL: {page.url})", flush=True)
                 else:
-                    print("Login timeout. Exiting safely.")
+                    print("Login wait timed out after 180s. Persistent profile is saved; re-run when ready. Exiting safely.", flush=True)
                     return
 
             # Locate comments on TikTok Studio dashboard
