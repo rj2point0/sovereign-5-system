@@ -7,6 +7,8 @@ tests/__pycache__/
 videos/
 temp_frames/
 scenes_cache/
+replied_comments.json
+comment_replies_log.json
 *.mp4
 *.wav
 *.pdf
