@@ -32,10 +32,65 @@ if sys.platform == "win32":
         pass
 
 TIKTOK_STUDIO_URL = "https://www.tiktok.com/tiktokstudio/comment"
+TIKTOK_QR_LOGIN_URL = "https://www.tiktok.com/login/qrcode"
 DEFAULT_PROFILE_DIR = os.path.join(os.path.expanduser("~"), ".gemini", "antigravity", "tiktok_browser_profile")
 GDRIVE_QUEUE_DIR = r"G:\My Drive\5_System_Numerology_MVP\tiktok_queue"
 LOCAL_LOG_FILE = "comment_replies_log.json"
 LOCAL_DEDUP_FILE = "replied_comments.json"
+TASK_LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "comment_task.log")
+
+
+def force_browser_window_to_foreground():
+    """Uses Win32 API on Windows to force the Chromium/TikTok window to the very front and maximized."""
+    if sys.platform != "win32":
+        return
+    try:
+        import ctypes
+        user32 = ctypes.windll.user32
+
+        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+
+        def enum_cb(hwnd, _lparam):
+            if user32.IsWindowVisible(hwnd):
+                length = user32.GetWindowTextLengthW(hwnd)
+                if length > 0:
+                    buf = ctypes.create_unicode_buffer(length + 1)
+                    user32.GetWindowTextW(hwnd, buf, length + 1)
+                    title = buf.value.lower()
+                    if any(k in title for k in ("tiktok", "chromium", "chrome", "about:blank")):
+                        # SW_RESTORE = 9, SW_SHOWMAXIMIZED = 3
+                        user32.ShowWindow(hwnd, 3)
+                        user32.BringWindowToTop(hwnd)
+                        # Simulate Alt key state trick so Windows allows SetForegroundWindow from background console
+                        user32.keybd_event(0x12, 0, 0, 0)
+                        user32.SetForegroundWindow(hwnd)
+                        user32.keybd_event(0x12, 0, 2, 0)
+            return True
+
+        user32.EnumWindows(WNDENUMPROC(enum_cb), 0)
+    except Exception:
+        pass
+
+
+def log_status_summary(login_status: str, loaded_comments_count: int, replied_count: int):
+    """Prints and records LOGIN_STATUS, LOADED_COMMENTS_COUNT, and REPLIED_COUNT to stdout and comment_task.log."""
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    summary_line = (
+        f"[{ts}] STATUS_SUMMARY | LOGIN_STATUS={login_status} | "
+        f"LOADED_COMMENTS_COUNT={loaded_comments_count} | REPLIED_COUNT={replied_count}"
+    )
+    print("\n" + "=" * 68, flush=True)
+    print(f"LOGIN_STATUS:          {login_status}", flush=True)
+    print(f"LOADED_COMMENTS_COUNT: {loaded_comments_count}", flush=True)
+    print(f"REPLIED_COUNT:         {replied_count}", flush=True)
+    print(summary_line, flush=True)
+    print("=" * 68, flush=True)
+
+    try:
+        with open(TASK_LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(summary_line + "\n")
+    except Exception:
+        pass
 
 
 # -----------------------------------------------------------------------------
@@ -242,49 +297,63 @@ class TikTokCommentResponder:
                 browser_context = await p.chromium.launch_persistent_context(
                     user_data_dir=self.profile_dir,
                     headless=False,
-                    viewport={"width": 1280, "height": 850},
-                    args=["--disable-blink-features=AutomationControlled"]
+                    no_viewport=True,
+                    args=["--disable-blink-features=AutomationControlled", "--start-maximized"]
                 )
 
             page = browser_context.pages[0] if browser_context.pages else await browser_context.new_page()
+            await page.bring_to_front()
+            force_browser_window_to_foreground()
 
             print(f"Navigating to TikTok Studio Comments: {TIKTOK_STUDIO_URL}...", flush=True)
             await page.goto(TIKTOK_STUDIO_URL, wait_until="domcontentloaded")
             await asyncio.sleep(4.0)
+            await page.bring_to_front()
+            force_browser_window_to_foreground()
 
             # Check if user needs to log in
             current_url = page.url
             if "login" in current_url.lower() or "passport" in current_url.lower():
-                print("\n" + "!" * 68)
-                print("ACTION REQUIRED: You are not currently logged into TikTok Studio!")
-                print(f"Current URL: {current_url}")
-                print("Please log in using the open browser window.")
-                print("Your session will be saved in the persistent profile for future automated runs.")
-                print("!" * 68 + "\n")
+                print("\n" + "!" * 68, flush=True)
+                print("ACTION REQUIRED: You are not currently logged into TikTok Studio!", flush=True)
+                print(f"Navigating directly to QR Code Login: {TIKTOK_QR_LOGIN_URL}", flush=True)
+                print("Please scan the QR code in the maximized foreground browser window.", flush=True)
+                print("Your session will be saved in the persistent profile for future automated runs.", flush=True)
+                print("!" * 68 + "\n", flush=True)
 
                 # In dry-run mode when not logged in, gracefully fallback to simulation
                 if self.dry_run:
-                    print("Falling back to local dry-run simulation mode...")
+                    print("Falling back to local dry-run simulation mode...", flush=True)
+                    log_status_summary("NOT_LOGGED_IN_DRY_RUN", 0, 0)
                     await self.run_simulation()
                     return
+
+                await page.goto(TIKTOK_QR_LOGIN_URL, wait_until="domcontentloaded")
+                await asyncio.sleep(2.0)
+                await page.bring_to_front()
+                force_browser_window_to_foreground()
 
                 # In live mode, wait up to 180s for user to complete login
                 total_wait_s = 180
                 poll_interval_s = 5
                 max_steps = total_wait_s // poll_interval_s
-                print(f"Waiting up to {total_wait_s}s for login completion (QR code scan or account authorization)...", flush=True)
+                print(f"Waiting up to {total_wait_s}s for QR code scan...", flush=True)
                 for wait_step in range(1, max_steps + 1):
                     await asyncio.sleep(poll_interval_s)
                     elapsed = wait_step * poll_interval_s
                     current = page.url.lower()
-                    if "tiktokstudio/comment" in current and "login" not in current and "passport" not in current:
-                        print(f"✓ Login detected ({elapsed}s)! Proceeding to comment management...", flush=True)
+                    if "login" not in current and "passport" not in current:
+                        print(f"✓ Login detected ({elapsed}s)! Navigating to TikTok Studio Comments...", flush=True)
+                        if "tiktokstudio/comment" not in current:
+                            await page.goto(TIKTOK_STUDIO_URL, wait_until="domcontentloaded")
+                            await asyncio.sleep(4.0)
                         break
                     if elapsed % 15 == 0:
                         remaining = total_wait_s - elapsed
-                        print(f"  ...waiting for login: {elapsed}s elapsed, {remaining}s remaining (Current URL: {page.url})", flush=True)
+                        print(f"  ...waiting for QR login: {elapsed}s elapsed, {remaining}s remaining (Current URL: {page.url})", flush=True)
                 else:
                     print("Login wait timed out after 180s. Persistent profile is saved; re-run when ready. Exiting safely.", flush=True)
+                    log_status_summary("LOGIN_TIMEOUT", 0, 0)
                     return
 
             # Locate comments on TikTok Studio dashboard
@@ -295,12 +364,14 @@ class TikTokCommentResponder:
             comment_elements = await page.query_selector_all(
                 '[data-e2e="comment-item"], .comment-item, [class*="CommentItem"], [class*="comment-card"], [class*="comment-item"]'
             )
-            print(f"Found {len(comment_elements)} visible comment items in dashboard.", flush=True)
+            loaded_comments_count = len(comment_elements)
+            print(f"Found {loaded_comments_count} visible comment items in dashboard.", flush=True)
 
             if not comment_elements:
-                print("No comment items found. The feed might be empty or selectors need adjustment.")
+                print("No comment items found. The feed might be empty or selectors need adjustment.", flush=True)
+                log_status_summary("AUTHENTICATED", 0, 0)
                 if self.dry_run:
-                    print("Executing simulation fallback to demonstrate engine replies...")
+                    print("Executing simulation fallback to demonstrate engine replies...", flush=True)
                     await self.run_simulation()
                 return
 
@@ -399,6 +470,7 @@ class TikTokCommentResponder:
                             replied_count += 1
                             await asyncio.sleep(2.0)
 
+            log_status_summary("AUTHENTICATED", loaded_comments_count, replied_count)
             print("\n" + "=" * 68)
             print(f"Finished auto-responder session. Processed: {replied_count} comments.")
             print("=" * 68)

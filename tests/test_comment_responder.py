@@ -133,7 +133,8 @@ class TestCommentClassification(unittest.TestCase):
         self.assertEqual(res["bucket"], "A_BIRTHDAY")
         self.assertIn("16/7", res["reply"])
         self.assertIn("@sacrednumberblueprint", res["reply"])
-        self.assertTrue("bio" in res["reply"].lower() or "link" in res["reply"].lower())
+        for forbidden in ("click", "link", "bio", "free"):
+            self.assertNotIn(forbidden, res["reply"].lower())
 
     def test_bucket_b_number(self):
         res = self.engine.generate_reply("I'm a Life Path 8", author="@user2")
@@ -156,7 +157,7 @@ class TestCommentClassification(unittest.TestCase):
             res = self.engine.generate_reply(q, author="@user4")
             self.assertEqual(res["bucket"], "D_BURNOUT_TIMING")
             self.assertIn("@sacrednumberblueprint", res["reply"])
-            self.assertTrue("cycle" in res["reply"].lower() or "timing" in res["reply"].lower())
+            self.assertTrue("cycle" in res["reply"].lower() or "timing" in res["reply"].lower() or "window" in res["reply"].lower())
 
     def test_bucket_e_affirmation(self):
         for q in ["Claiming this energy ✨🙏", "So accurate!!", "Amen", "Wow following"]:
@@ -169,6 +170,31 @@ class TestCommentClassification(unittest.TestCase):
         r1 = self.engine.get_deterministic_reply("E_AFFIRMATION", {}, seed=0)
         r2 = self.engine.get_deterministic_reply("E_AFFIRMATION", {}, seed=1)
         self.assertNotEqual(r1, r2, "Rotation failed: identical replies returned for different seeds")
+
+    def test_spam_filter_safe_all_buckets_and_variations(self):
+        """Ensure NO reply variation across all 5 buckets ever contains 'click', 'link', 'bio', or 'free'."""
+        forbidden = ("click", "link", "bio", "free")
+        sample_comments = [
+            "08/19/1978",
+            "March 14 1995",
+            "Life path 5",
+            "I'm an 8",
+            "Master number 11",
+            "Where is the link?",
+            "I feel so burned out and exhausted",
+            "Claiming this energy ✨",
+        ]
+        for comment in sample_comments:
+            for seed in range(10):
+                res = self.engine.generate_reply(comment, author=f"@u_{seed}", seed=seed)
+                reply_lower = res["reply"].lower()
+                self.assertIn("@sacrednumberblueprint", res["reply"])
+                for word in forbidden:
+                    self.assertNotIn(
+                        word,
+                        reply_lower,
+                        f"Forbidden word '{word}' found in {res['bucket']} seed {seed}: {res['reply']}"
+                    )
 
 
 class TestDeduplicationStore(unittest.TestCase):
