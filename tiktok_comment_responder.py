@@ -297,7 +297,7 @@ class TikTokCommentResponder:
                 browser_context = await p.chromium.launch_persistent_context(
                     user_data_dir=self.profile_dir,
                     headless=False,
-                    no_viewport=True,
+                    viewport={"width": 1280, "height": 900},
                     args=["--disable-blink-features=AutomationControlled", "--start-maximized"]
                 )
 
@@ -317,7 +317,7 @@ class TikTokCommentResponder:
                 print("\n" + "!" * 68, flush=True)
                 print("ACTION REQUIRED: You are not currently logged into TikTok Studio!", flush=True)
                 print(f"Navigating directly to QR Code Login: {TIKTOK_QR_LOGIN_URL}", flush=True)
-                print("Please scan the QR code in the maximized foreground browser window.", flush=True)
+                print("Capturing tiktok_qr_login.png so you can scan directly from your monitor!", flush=True)
                 print("Your session will be saved in the persistent profile for future automated runs.", flush=True)
                 print("!" * 68 + "\n", flush=True)
 
@@ -329,15 +329,61 @@ class TikTokCommentResponder:
                     return
 
                 await page.goto(TIKTOK_QR_LOGIN_URL, wait_until="domcontentloaded")
-                await asyncio.sleep(2.0)
+                await asyncio.sleep(4.0)
                 await page.bring_to_front()
                 force_browser_window_to_foreground()
 
-                # In live mode, wait up to 180s for user to complete login
-                total_wait_s = 180
+                qr_path = os.path.abspath("tiktok_qr_login.png")
+                artifact_qr_path = r"C:\Users\User\.gemini\antigravity\brain\5be548e1-0bfd-4f21-b5d4-67c12098b05e\tiktok_qr_login.png"
+
+                async def capture_qr_screenshot(open_viewer: bool = False):
+                    try:
+                        # Only click refresh if QR code explicitly shows expired/refresh button
+                        refresh_el = await page.query_selector(
+                            'button:has-text("Refresh"), button:has-text("Retry"), [data-e2e="qr-code-refresh"]'
+                        )
+                        if refresh_el and await refresh_el.is_visible():
+                            await refresh_el.click()
+                            await asyncio.sleep(2.0)
+                    except Exception:
+                        pass
+
+                    try:
+                        img_bytes = await page.screenshot()
+                    except Exception as e:
+                        print(f"  [Notice] Screenshot capture skipped: {e}", flush=True)
+                        return
+
+                    # Save to local path (ignore Windows Photos file lock if open)
+                    try:
+                        with open(qr_path, "wb") as f:
+                            f.write(img_bytes)
+                        print(f"✓ Saved QR screenshot to: {qr_path}", flush=True)
+                    except Exception as e:
+                        print(f"  [Notice] Local QR file locked by viewer ({e}), updating artifact copy...", flush=True)
+
+                    # Always save to artifact path so chat/artifact preview is updated
+                    try:
+                        if os.path.exists(os.path.dirname(artifact_qr_path)):
+                            with open(artifact_qr_path, "wb") as f:
+                                f.write(img_bytes)
+                    except Exception:
+                        pass
+
+                    if open_viewer and sys.platform == "win32":
+                        try:
+                            os.startfile(qr_path)
+                            print("✓ Opened tiktok_qr_login.png in default Windows viewer.", flush=True)
+                        except Exception as e:
+                            print(f"  [Notice] os.startfile failed: {e}", flush=True)
+
+                await capture_qr_screenshot(open_viewer=True)
+
+                # In live mode, wait up to 240s for user to complete login, refreshing screenshot every 20s
+                total_wait_s = 240
                 poll_interval_s = 5
                 max_steps = total_wait_s // poll_interval_s
-                print(f"Waiting up to {total_wait_s}s for QR code scan...", flush=True)
+                print(f"Waiting up to {total_wait_s}s for QR code scan (re-screenshotting every 20s)...", flush=True)
                 for wait_step in range(1, max_steps + 1):
                     await asyncio.sleep(poll_interval_s)
                     elapsed = wait_step * poll_interval_s
@@ -348,11 +394,12 @@ class TikTokCommentResponder:
                             await page.goto(TIKTOK_STUDIO_URL, wait_until="domcontentloaded")
                             await asyncio.sleep(4.0)
                         break
-                    if elapsed % 15 == 0:
+                    if elapsed % 20 == 0:
                         remaining = total_wait_s - elapsed
-                        print(f"  ...waiting for QR login: {elapsed}s elapsed, {remaining}s remaining (Current URL: {page.url})", flush=True)
+                        print(f"  ...waiting for QR login: {elapsed}s elapsed, {remaining}s remaining — updating tiktok_qr_login.png...", flush=True)
+                        await capture_qr_screenshot(open_viewer=False)
                 else:
-                    print("Login wait timed out after 180s. Persistent profile is saved; re-run when ready. Exiting safely.", flush=True)
+                    print("Login wait timed out after 240s. Persistent profile is saved; re-run when ready. Exiting safely.", flush=True)
                     log_status_summary("LOGIN_TIMEOUT", 0, 0)
                     return
 
