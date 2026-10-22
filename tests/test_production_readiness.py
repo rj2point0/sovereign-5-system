@@ -90,7 +90,15 @@ async def test_all():
         context_public = await browser.new_context()
         page_pub = await context_public.new_page()
 
-        # Regular public visit to teaser (without vip):
+        # Verify Founder Sample button is hidden for public simulated visitors:
+        page_sample_check = await context_public.new_page()
+        await page_sample_check.goto("http://127.0.0.1:8080/?public_test=1")
+        sample_pub_vis = await page_sample_check.is_visible('#btn-sample')
+        print(f"Public simulated visitor sees Founder Sample button: {sample_pub_vis}")
+        assert sample_pub_vis == False, "Founder Sample button must be hidden for public visitors!"
+        await page_sample_check.close()
+
+        # Regular local visit to teaser (without vip):
         await page_pub.goto("http://127.0.0.1:8080/")
         await page_pub.click('button[data-action="sample"]')
         await page_pub.click('button[type="submit"]')

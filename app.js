@@ -1659,6 +1659,36 @@ const CONFIG = {
       }
     }
 
+    // Conditionally display Founder Sample button:
+    // ONLY display if URL contains ?vip=adam, ?demo=1, or on localhost / 127.0.0.1
+    const host = (location.hostname || '').toLowerCase();
+    const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '';
+    const showFounderSample = (
+      q.get('vip') === 'adam' ||
+      q.get('demo') === '1' ||
+      (isLocal && q.get('public_test') !== '1')
+    );
+
+    const sampleBtn = $('#btn-sample') || $('[data-action="sample"]');
+    const sampleRow = $('#sample-row') || (sampleBtn ? sampleBtn.parentElement : null);
+    if (sampleBtn) {
+      if (showFounderSample) {
+        sampleBtn.classList.remove('hidden');
+        sampleBtn.style.display = '';
+        if (sampleRow) {
+          sampleRow.classList.remove('justify-center');
+          sampleRow.classList.add('justify-between');
+        }
+      } else {
+        sampleBtn.classList.add('hidden');
+        sampleBtn.style.display = 'none';
+        if (sampleRow) {
+          sampleRow.classList.remove('justify-between');
+          sampleRow.classList.add('justify-center');
+        }
+      }
+    }
+
     // Set initial language
     setLanguage(state.lang);
 
