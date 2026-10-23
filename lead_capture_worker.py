@@ -383,6 +383,7 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
             "summary": ARCHETYPES_EN[n]["summary"],
             "count": len(hits),
             "systems": [s for s in SYSTEM_ORDER if s in sys_set],
+            "kabbalahActive": 1 if n in kab_nums else 0,
             "sources": [h[1] for h in hits],
             "firstIndex": first_idx,
             "loShuCount": counts[n],
@@ -390,7 +391,7 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
 
     ranking = sorted(
         tally.values(),
-        key=lambda a: (-a["count"], -len(a["systems"]), -a["loShuCount"], a["firstIndex"], a["number"])
+        key=lambda a: (-a["count"], -len(a["systems"]), -a["kabbalahActive"], -a["loShuCount"], a["firstIndex"], a["number"])
     )
     anchors = ranking[:3]
     active_cycle = compute_active_rosicrucian_cycle(m, d)

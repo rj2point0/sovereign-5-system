@@ -406,6 +406,7 @@
         number: n,
         count: hits.length,
         systems: SYSTEM_ORDER.filter((s) => sys.has(s)),
+        kabbalahActive: kabbalahNums.has(n) ? 1 : 0,
         sources: hits.map((h) => h.label),
         firstIndex: hits.length ? filteredSources.indexOf(hits[0]) : 99,
         loShuCount: l.counts[n],
@@ -415,6 +416,7 @@
     const ranking = Object.values(tally).sort((a, b) =>
       b.count - a.count ||
       b.systems.length - a.systems.length ||
+      b.kabbalahActive - a.kabbalahActive ||
       b.loShuCount - a.loShuCount ||
       a.firstIndex - b.firstIndex ||
       a.number - b.number);
