@@ -12,8 +12,10 @@ const CONFIG = {
   PRICE_ANCHOR: 197,           // struck-through "value" price
   GUARANTEE_DAYS: 30,          // set 0 to hide the guarantee badge
 
-  WEBHOOK_URL: '',
-  VSL_URL: '',
+  WEBHOOK_URL: 'https://ntfy.sh/sovereign_5_leads_mvv_991214754',
+  LOCAL_WEBHOOK_URL: 'http://127.0.0.1:8788/webhook',
+  VSL_URL: 'assets/vsl_briefing.mp4',
+  VSL_POSTER: 'assets/vsl_poster.jpg',
 
   DEMO_MODE: false,
 
@@ -236,18 +238,53 @@ const CONFIG = {
     store.set(KEYS.leads, leads);
   }
   function sendWebhook(event, extra) {
-    if (!CONFIG.WEBHOOK_URL) return;
+    if (!CONFIG.WEBHOOK_URL && !CONFIG.LOCAL_WEBHOOK_URL) return;
     try {
+      const r = state.result || (state.profile && state.profile.fullName && state.profile.birthDate ? E.calculate(state.profile.fullName, state.profile.birthDate) : null);
+      const C_LANG = C.get(state.lang || 'en');
+      const anchors = r && r.overlap && r.overlap.anchors ? r.overlap.anchors.slice(0, 3).map((a) => ({
+        number: a.number,
+        archetype: (C_LANG.ARCHETYPES[a.number] || {}).name || ('#' + a.number),
+        count: a.count,
+        systems: a.systems,
+      })) : [];
+      const top3Str = anchors.map((a) => a.number).join(', ');
+
       const payload = {
         event,
         timestamp: new Date().toISOString(),
+        lang: state.lang || 'en',
         profile: state.profile,
+        numbers: r ? {
+          top_3_overlap_numbers: top3Str,
+          anchors,
+          life_path: r.pythagorean.lifePath.display,
+          expression: r.pythagorean.expression.display,
+          soul_urge: r.pythagorean.soulUrge.display,
+          vedic_moolank: `${r.vedic.moolank.value} (${r.vedic.moolank.ruler.planet})`,
+          vedic_bhagyank: `${r.vedic.bhagyank.value} (${r.vedic.bhagyank.ruler.planet})`,
+          chaldean_name: r.chaldean.total.display,
+          active_cycle: `${r.cycles.current.name} (${r.cycles.daysRemaining}d remaining)`,
+        } : {},
         extra: extra || {},
       };
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(CONFIG.WEBHOOK_URL, JSON.stringify(payload));
-      } else {
-        fetch(CONFIG.WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), mode: 'no-cors' }).catch(() => {});
+      const bodyStr = JSON.stringify(payload);
+      if (CONFIG.WEBHOOK_URL) {
+        fetch(CONFIG.WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8', 'Title': `New 5-System Lead: ${(state.profile && state.profile.fullName) || 'Visitor'}` },
+          body: bodyStr,
+          keepalive: true,
+        }).catch(() => {});
+      }
+      if (CONFIG.LOCAL_WEBHOOK_URL) {
+        fetch(CONFIG.LOCAL_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: bodyStr,
+          mode: 'no-cors',
+          keepalive: true,
+        }).catch(() => {});
       }
     } catch (e) { /* ignore */ }
   }
@@ -383,6 +420,7 @@ const CONFIG = {
     prof.email = data.email;
     if (state.pendingTier) prof.tier = maxTier(prof.tier, state.pendingTier);
     state.profile = prof;
+    state.result = E.calculate(prof.fullName, prof.birthDate);
     saveProfile(prof);
 
     sendWebhook('lead_capture');
@@ -400,7 +438,6 @@ const CONFIG = {
     await sleep(450); ritualText.textContent = steps[3];
     await sleep(350);
 
-    state.result = E.calculate(prof.fullName, prof.birthDate);
     ritual.classList.remove('show');
 
     if (prof.tier) {
@@ -435,22 +472,12 @@ const CONFIG = {
   }
 
   function vslHtml() {
-    if (CONFIG.VSL_URL) {
-      if (CONFIG.VSL_URL.endsWith('.mp4')) {
-        return `<div class="vsl-frame card p-2"><video src="${CONFIG.VSL_URL}" controls playsinline class="w-full h-full rounded-lg object-cover"></video></div>`;
-      }
-      return `<div class="vsl-frame card p-2"><iframe src="${CONFIG.VSL_URL}" class="w-full h-full rounded-lg" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    const vslSrc = CONFIG.VSL_URL || 'assets/vsl_briefing.mp4';
+    const vslPoster = CONFIG.VSL_POSTER || 'assets/vsl_poster.jpg';
+    if (vslSrc.endsWith('.mp4')) {
+      return `<div class="vsl-frame card p-2"><video src="${vslSrc}" poster="${vslPoster}" controls playsinline preload="metadata" class="w-full h-full rounded-lg object-cover"></video></div>`;
     }
-    const briefingText = state.lang === 'es'
-      ? '<p class="font-display text-champagne text-base">Sesión con el Fundador</p><p class="text-xs text-zinc-400 mt-2 max-w-xs leading-relaxed">Configura un video vertical en <code>CONFIG.VSL_URL</code> dentro de app.js para insertar tu explicación en video.</p>'
-      : '<p class="font-display text-champagne text-base">Founder Video Briefing</p><p class="text-xs text-zinc-400 mt-2 max-w-xs leading-relaxed">Add a vertical video or embed URL to <code>CONFIG.VSL_URL</code> in app.js to place your presentation here.</p>';
-    return `
-    <div class="vsl-frame card p-6 flex flex-col items-center justify-center text-center">
-      <div class="w-14 h-14 rounded-full grid place-items-center mb-3" style="border:1px solid rgba(212,175,55,.6);background:rgba(212,175,55,.1)">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#D4AF37"><polygon points="6,3 20,12 6,21"/></svg>
-      </div>
-      ${briefingText}
-    </div>`;
+    return `<div class="vsl-frame card p-2"><iframe src="${vslSrc}" class="w-full h-full rounded-lg" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
   }
 
   function renderTeaser() {
@@ -1724,6 +1751,10 @@ const CONFIG = {
         if (urlTier) {
           toast(state.lang === 'es' ? '✦ ¡Acceso confirmado! Haz clic en "Descargar / Imprimir PDF" para guardar tu dossier.' : '✦ Access confirmed! Click "Download / Print Luxury PDF" to save your dossier.', 6000);
         }
+        return;
+      } else if (q.get('view') === 'teaser') {
+        state.result = E.calculate(prof.fullName, prof.birthDate);
+        openTeaser();
         return;
       }
     } else if (urlTier) {
