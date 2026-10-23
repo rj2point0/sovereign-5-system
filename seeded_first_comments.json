@@ -1,0 +1,43 @@
+{
+  "seeded": {
+    "broll_01": {
+      "video_id": "7699896747476225293",
+      "title_match": "Why you keep attracting the exact same exhausting relationship patterns",
+      "comment": "Which numbers from 1 to 9 are missing from your birthday—and have you noticed that same pattern in relationships? 👇",
+      "seeded_at": "2026-10-23T10:27:33.977732"
+    },
+    "ad_01": {
+      "video_id": "7699586451800984846",
+      "title_match": "Why your Life Path number feels way too generic",
+      "comment": "What Life Path number did you get when you only used your birthday—and did it actually feel accurate for you? 👇",
+      "seeded_at": "2026-10-23T10:27:43.220514"
+    },
+    "ad_02": {
+      "video_id": "7699587106246610189",
+      "title_match": "Why your birth date alone is only 20% of your numerology blueprint",
+      "comment": "Does your first name start with a 1, 7, 8, or 9 vibration in Chaldean math? Drop your birth month and day below 👇",
+      "seeded_at": "2026-10-23T10:27:52.435872"
+    }
+  },
+  "updated_at": "2026-10-23T10:29:36.704140",
+  "last_verification": {
+    "checked_at": "2026-10-23T10:28:52.760986",
+    "videos": {
+      "broll_01": {
+        "browse_comment_count": "1",
+        "comment_intact": true,
+        "in_studio_comment_feed": true
+      },
+      "ad_01": {
+        "browse_comment_count": "1",
+        "comment_intact": true,
+        "in_studio_comment_feed": true
+      },
+      "ad_02": {
+        "browse_comment_count": "1",
+        "comment_intact": true,
+        "in_studio_comment_feed": true
+      }
+    }
+  }
+}

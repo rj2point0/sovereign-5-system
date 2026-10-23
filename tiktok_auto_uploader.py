@@ -216,6 +216,7 @@ class TikTokAutoUploader:
                     "tiktok_caption",
                     "Test your 5-System Master Overlap numbers on our page 👁️✨ #numerology #lifepath #spirituality #chaldean #sacredgeometry"
                 )
+                first_comment = meta.get("first_comment", "")
                 candidates.append({
                     "filename": fname,
                     "filepath": mp4_path,
@@ -224,6 +225,7 @@ class TikTokAutoUploader:
                     "hook_name": meta.get("hook_name", "Sacred Number Blueprint Video"),
                     "lang": meta.get("lang", "en"),
                     "caption": caption,
+                    "first_comment": first_comment,
                     "already_uploaded": already,
                 })
 
@@ -291,42 +293,83 @@ class TikTokAutoUploader:
     async def configure_schedule_ui(self, page: Page, dt: datetime):
         """Switches TikTok Studio from 'Post now' to 'Schedule' and picks date/time."""
         date_str = dt.strftime("%Y-%m-%d")
-        hour_str = dt.strftime("%H")
-        # TikTok Studio time picker uses 5-minute increments
+        day_str = str(dt.day)
+        hour_str = f"{dt.hour:02d}"
         minute_rounded = (dt.minute // 5) * 5
         min_str = f"{minute_rounded:02d}"
+        time_str = f"{hour_str}:{min_str}"
 
-        print(f"   [Studio] Configuring schedule for {date_str} {hour_str}:{min_str}...", flush=True)
+        print(f"   [Studio] Configuring schedule for {date_str} {time_str}...", flush=True)
 
-        # Click the 'Schedule' radio button / label
+        # 1. Click the 'Schedule' radio button / label
         schedule_toggles = [
+            'input[type="radio"][value="schedule"]',
             'label:has-text("Schedule")',
             'span:has-text("Schedule")',
-            'input[type="radio"][value="schedule"]',
         ]
         for sel in schedule_toggles:
             loc = page.locator(sel).first
             if await loc.count() > 0:
                 try:
-                    await loc.click(timeout=3000)
-                    await asyncio.sleep(0.8)
+                    await loc.scroll_into_view_if_needed()
+                    await loc.click(force=True, timeout=3000)
+                    await asyncio.sleep(1.2)
                     break
                 except Exception:
                     pass
 
-        # Attempt to set date input or picker if visible
-        date_inputs = page.locator('input[placeholder*="YYYY"], input[value*="2026-"]')
+        # 2. Pick Date (either via input or TikTok Studio calendar popup)
+        date_inputs = page.locator('input[value*="2026-"], input[placeholder*="YYYY"]')
         if await date_inputs.count() > 0:
             try:
-                await date_inputs.first.click()
-                await page.keyboard.press("Control+A")
-                await page.keyboard.insert_text(date_str)
-                await page.keyboard.press("Enter")
-                await asyncio.sleep(0.5)
-            except Exception:
-                pass
+                await date_inputs.first.click(force=True)
+                await asyncio.sleep(0.8)
+                # Try clicking the day cell in the calendar popup
+                day_cells = page.locator(f'span.day:text-is("{day_str}"), div[class*="calendar"] span:text-is("{day_str}"), td:text-is("{day_str}")')
+                clicked_day = False
+                for i in range(await day_cells.count()):
+                    cell = day_cells.nth(i)
+                    if await cell.is_visible():
+                        cls = (await cell.get_attribute("class") or "").lower()
+                        if "disabled" not in cls:
+                            await cell.click(force=True)
+                            clicked_day = True
+                            await asyncio.sleep(0.6)
+                            break
+                if not clicked_day:
+                    await page.keyboard.press("Control+A")
+                    await page.keyboard.insert_text(date_str)
+                    await page.keyboard.press("Enter")
+                    await asyncio.sleep(0.5)
+            except Exception as e:
+                print(f"   [Studio] Date picker note: {e}", flush=True)
 
-        print(f"   [Studio] ✓ Schedule mode toggled ({date_str} {hour_str}:{min_str}).", flush=True)
+        # 3. Pick Time (via time input / TikTok Studio timepicker columns)
+        time_inputs = page.locator('input[value*=":"]')
+        if await time_inputs.count() > 0:
+            try:
+                await time_inputs.first.click(force=True)
+                await asyncio.sleep(0.8)
+                # Click hour in left column and minute in right column if timepicker popup is open
+                hr_opt = page.locator(f'span.tiktok-timepicker-left:text-is("{hour_str}"), div[class*="timepicker"] span:text-is("{hour_str}")').first
+                if await hr_opt.count() > 0 and await hr_opt.is_visible():
+                    await hr_opt.click(force=True)
+                    await asyncio.sleep(0.4)
+                min_opt = page.locator(f'span.tiktok-timepicker-right:text-is("{min_str}"), div[class*="timepicker"] span:text-is("{min_str}")').last
+                if await min_opt.count() > 0 and await min_opt.is_visible():
+                    await min_opt.click(force=True)
+                    await asyncio.sleep(0.5)
+                # Close the timepicker popover by clicking a neutral label outside the popover
+                outside_label = page.locator('text="Who can see this post"').first
+                if await outside_label.count() > 0:
+                    await outside_label.click(force=True)
+                else:
+                    await page.mouse.click(20, 200)
+                await asyncio.sleep(0.8)
+            except Exception as e:
+                print(f"   [Studio] Time picker note: {e}", flush=True)
+
+        print(f"   [Studio] ✓ Schedule mode configured ({date_str} {time_str}).", flush=True)
 
     async def upload_single_video(
         self,
@@ -382,6 +425,7 @@ class TikTokAutoUploader:
             await self.configure_schedule_ui(page, schedule_dt)
             submit_selectors = [
                 'button[data-e2e="post_video_button"]',
+                'button.TUXButton--primary:has-text("Schedule")',
                 'button:text-is("Schedule")',
             ]
         else:
@@ -408,15 +452,19 @@ class TikTokAutoUploader:
                     print(f"   [Studio] Submit selector {sel} click exception: {e}", flush=True)
 
         await asyncio.sleep(2.5)
-        # Check if TikTok Studio shows a secondary 'Continue to post? -> Post now' confirmation modal
-        for _ in range(5):
+        # Check if TikTok Studio shows a secondary 'Continue to post? / Continue to schedule?' confirmation modal
+        for _ in range(6):
             confirm_btns = page.locator(
-                'button:has-text("Post now"), div[role="dialog"] button:has-text("Post now"), div.TUXModal button:has-text("Post now")'
+                'div[role="dialog"] button.TUXButton--primary, '
+                'div.TUXModal button.TUXButton--primary, '
+                'button:has-text("Post now"), '
+                'div[role="dialog"] button:has-text("Schedule"), '
+                'div[role="dialog"] button:has-text("Continue")'
             )
             if await confirm_btns.count() > 0 and await confirm_btns.first.is_visible():
                 try:
                     await confirm_btns.first.click(force=True)
-                    print("   [Studio] ✓ Clicked secondary 'Post now' confirmation modal.", flush=True)
+                    print("   [Studio] ✓ Clicked secondary confirmation modal button.", flush=True)
                     await asyncio.sleep(5.0)
                     break
                 except Exception as e:
@@ -435,6 +483,21 @@ class TikTokAutoUploader:
                 ad_id=item.get("ad_id"),
             )
             print(f"   [Tracker] ✓ Marked {item['filename']} as {mode.upper()} in uploaded_videos.json", flush=True)
+
+            # Automatically seed automod-safe creator first comment when posting live immediately
+            if mode == "post_now" and item.get("first_comment"):
+                try:
+                    from seed_first_comments import seed_comment_on_video_from_profile
+                    print("   [Seeder] Auto-seeding automod-safe creator first comment...", flush=True)
+                    await asyncio.sleep(4.0)
+                    await seed_comment_on_video_from_profile(
+                        page,
+                        title_match=item["caption"][:48],
+                        comment_text=item["first_comment"],
+                    )
+                except Exception as e:
+                    print(f"   [Seeder] Auto-seed note: {e}", flush=True)
+
             return True
 
         print(f"   [Studio] ⚠ Could not confirm final submit click for {item['filename']}.", flush=True)

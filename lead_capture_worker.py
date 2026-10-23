@@ -83,6 +83,11 @@ CSV_COLUMNS = [
     "dob",
     "email",
     "lang",
+    "source_attribution",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "cohort",
     "top_3_overlap_numbers",
     "life_path",
     "vedic_moolank",
@@ -1088,14 +1093,109 @@ def save_lead_to_supabase(lead: Dict[str, Any], email_sent: bool):
         print(f"  [Notice] Supabase lead insert failed: {e}", flush=True)
 
 
+def extract_utm_from_payload(payload: Dict[str, Any]) -> Dict[str, str]:
+    """Extracts utm_source, utm_medium, utm_campaign, cohort, and ttclid from a webhook payload."""
+    prof = payload.get("profile") if isinstance(payload.get("profile"), dict) else {}
+    prof_utm = prof.get("utm") if isinstance(prof.get("utm"), dict) else {}
+    top_utm = payload.get("utm") if isinstance(payload.get("utm"), dict) else {}
+
+    merged: Dict[str, str] = {}
+    for k in ("utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "cohort", "ttclid"):
+        val = (
+            payload.get(k)
+            or top_utm.get(k)
+            or prof_utm.get(k)
+            or ""
+        )
+        val_str = str(val).strip()
+        if val_str:
+            merged[k] = val_str
+    return merged
+
+
+def format_attribution_source(utm: Optional[Dict[str, Any]] = None) -> str:
+    """
+    Classifies a lead's UTM/cohort dictionary into a clean attribution label for Obsidian:
+    - 'TikTok Promote' (or 'TikTok Promote (Cohort B)' if cohort is also present)
+    - 'Cohort B' / 'Organic Bio · Cohort B'
+    - 'Organic Bio' (default when arriving from bio or direct without paid flags)
+    """
+    u = utm or {}
+    src = str(u.get("utm_source") or "").strip().lower()
+    med = str(u.get("utm_medium") or "").strip().lower()
+    camp = str(u.get("utm_campaign") or "").strip().lower()
+    cohort_raw = str(u.get("cohort") or "").strip()
+    cohort_low = cohort_raw.lower()
+    ttclid = str(u.get("ttclid") or "").strip()
+
+    is_promote = (
+        med in ("promote", "paid", "cpc", "ads", "ppc", "spark")
+        or "promote" in src
+        or "promote" in camp
+        or "paid" in camp
+        or bool(ttclid)
+    )
+    is_cohort_b = (
+        cohort_low in ("b", "cohort_b", "cohort-b", "broll", "broll_01", "broll_02")
+        or "cohort_b" in camp
+        or "cohort-b" in camp
+        or "broll" in camp
+    )
+    is_cohort_a = (
+        cohort_low in ("a", "cohort_a", "cohort-a")
+        or "cohort_a" in camp
+        or "cohort-a" in camp
+    )
+
+    if is_promote:
+        if is_cohort_b:
+            return "TikTok Promote (Cohort B)"
+        if is_cohort_a:
+            return "TikTok Promote (Cohort A)"
+        if camp and camp not in ("promote", "tiktok_promote"):
+            return f"TikTok Promote ({u.get('utm_campaign')})"
+        return "TikTok Promote"
+
+    if is_cohort_b:
+        if med == "bio" or src == "tiktok":
+            return "Organic Bio · Cohort B"
+        return "Cohort B"
+
+    if is_cohort_a:
+        if med == "bio" or src == "tiktok":
+            return "Organic Bio · Cohort A"
+        return "Cohort A"
+
+    if cohort_raw:
+        return f"Cohort {cohort_raw}"
+
+    if src or med or camp:
+        if (src in ("tiktok", "tt", "") and med in ("bio", "organic", "profile", "")):
+            if camp:
+                return f"Organic Bio ({u.get('utm_campaign')})"
+            return "Organic Bio"
+        parts = [p for p in (u.get("utm_source"), u.get("utm_medium"), u.get("utm_campaign")) if p]
+        return " / ".join(str(p) for p in parts)
+
+    return "Organic Bio"
+
+
 def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
     calc = lead["calc"]
+    utm = lead.get("utm") if isinstance(lead.get("utm"), dict) else {}
+    source_attr = lead.get("source_attribution") or format_attribution_source(utm)
+
     row = {
         "timestamp": lead["timestamp"],
         "name": lead["name"],
         "dob": lead["dob"],
         "email": lead["email"],
         "lang": lead.get("lang", "en"),
+        "source_attribution": source_attr,
+        "utm_source": utm.get("utm_source", ""),
+        "utm_medium": utm.get("utm_medium", ""),
+        "utm_campaign": utm.get("utm_campaign", ""),
+        "cohort": utm.get("cohort", ""),
         "top_3_overlap_numbers": calc["top_3_overlap_numbers"],
         "life_path": calc["life_path"],
         "vedic_moolank": calc["vedic_moolank"],
@@ -1125,6 +1225,17 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
                     and r.get("dob", "") == row["dob"]
                     and r.get("name", "").lower() == row["name"].lower()
                 ):
+                    # Preserve earlier UTM/attribution if the new one is empty
+                    if not row["utm_source"] and r.get("utm_source"):
+                        row["utm_source"] = r.get("utm_source", "")
+                    if not row["utm_medium"] and r.get("utm_medium"):
+                        row["utm_medium"] = r.get("utm_medium", "")
+                    if not row["utm_campaign"] and r.get("utm_campaign"):
+                        row["utm_campaign"] = r.get("utm_campaign", "")
+                    if not row["cohort"] and r.get("cohort"):
+                        row["cohort"] = r.get("cohort", "")
+                    if row["source_attribution"] == "Organic Bio" and r.get("source_attribution") and r.get("source_attribution") != "Organic Bio":
+                        row["source_attribution"] = r.get("source_attribution", "Organic Bio")
                     existing_rows[idx] = row
                     updated = True
                     break
@@ -1135,6 +1246,8 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
                 writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                 writer.writeheader()
                 for r in existing_rows:
+                    if not r.get("source_attribution"):
+                        r["source_attribution"] = format_attribution_source(r)
                     writer.writerow(r)
             print(f"✓ Lead synced to CSV: {csv_path}", flush=True)
         except Exception as e:
@@ -1163,18 +1276,19 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
                 "",
                 "# 📬 Sacred Number Blueprint — Live Captured Leads Dashboard",
                 "",
-                "> [!INFO] Central Lead Capture & Automated 3-Part Email Sequence Log",
-                "> Every visitor who submits their Name, Birth Date, and Email on `https://rj2point0.github.io/sovereign-5-system/` is logged below, synced to `G:\\My Drive\\5_System_Numerology_MVP\\leads_captured.csv` and Supabase (`public.numerology_leads`), and enrolled in the 3-part automated luxury HTML email sequence (Instant + 24h Lo Shu + 48h Rosicrucian Cycles).",
+                "> [!INFO] Central Lead Capture, UTM/Cohort Attribution & Automated 3-Part Email Sequence Log",
+                "> Every visitor who submits their Name, Birth Date, and Email on `https://rj2point0.github.io/sovereign-5-system/` is logged below with their attribution source (`Organic Bio`, `Cohort B`, or `TikTok Promote`), synced to `G:\\My Drive\\5_System_Numerology_MVP\\leads_captured.csv` and Supabase (`public.numerology_leads`), and enrolled in the 3-part automated luxury HTML email sequence (Instant + 24h Lo Shu + 48h Rosicrucian Cycles).",
                 "",
-                "| Timestamp (UTC) | Full Birth Name | DOB | Email | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email #1 (Instant) | Email #2 (24h) | Email #3 (48h) |",
-                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+                "| Timestamp (UTC) | Full Birth Name | DOB | Email | Source / Cohort | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email #1 (Instant) | Email #2 (24h) | Email #3 (48h) |",
+                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
             ]
             for r in reversed(rows):
                 e1 = "✅" if r.get("email_1_sent_at") or r.get("email_sent") == "YES" else "⏳"
                 e2 = "✅" if r.get("email_2_sent_at") else "⏳"
                 e3 = "✅" if r.get("email_3_sent_at") else "⏳"
+                src_label = r.get("source_attribution") or format_attribution_source(r)
                 md_lines.append(
-                    f"| `{r.get('timestamp', '')[:19]}` | **{r.get('name', '')}** | `{r.get('dob', '')}` | `{r.get('email', '')}` | `{r.get('lang', 'en')}` | **{r.get('top_3_overlap_numbers', '')}** | `{r.get('life_path', '')}` | `{r.get('vedic_moolank', '')}` | `{r.get('chaldean_name', '')}` | {e1} | {e2} | {e3} |"
+                    f"| `{r.get('timestamp', '')[:19]}` | **{r.get('name', '')}** | `{r.get('dob', '')}` | `{r.get('email', '')}` | **{src_label}** | `{r.get('lang', 'en')}` | **{r.get('top_3_overlap_numbers', '')}** | `{r.get('life_path', '')}` | `{r.get('vedic_moolank', '')}` | `{r.get('chaldean_name', '')}` | {e1} | {e2} | {e3} |"
                 )
             md_lines.append("")
             with open(OBSIDIAN_DASHBOARD_PATH, "w", encoding="utf-8") as f:
@@ -1212,6 +1326,7 @@ def process_lead(
     lang: str = "en",
     timestamp: Optional[str] = None,
     force_send: bool = False,
+    utm: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     iso_dob = normalize_dob(dob_str)
     clean_email = email_addr.strip()
@@ -1228,12 +1343,21 @@ def process_lead(
     ts = timestamp or now_iso
     existing_entry = processed.get(dedup_key, {})
 
+    merged_utm = dict(existing_entry.get("utm") or {})
+    if isinstance(utm, dict):
+        for k, v in utm.items():
+            if v:
+                merged_utm[k] = str(v).strip()
+    source_attribution = format_attribution_source(merged_utm)
+
     lead_record = {
         "timestamp": ts,
         "name": clean_name,
         "dob": iso_dob,
         "email": clean_email,
         "lang": lang or "en",
+        "utm": merged_utm,
+        "source_attribution": source_attribution,
         "calc": calc,
         "email_1_sent_at": existing_entry.get("email_1_sent_at"),
         "email_2_sent_at": existing_entry.get("email_2_sent_at"),
@@ -1253,6 +1377,8 @@ def process_lead(
         "dob": iso_dob,
         "email": clean_email,
         "lang": lang or "en",
+        "utm": merged_utm,
+        "source_attribution": source_attribution,
         "top_3_overlap_numbers": calc["top_3_overlap_numbers"],
         "life_path": calc["life_path"],
         "expression": calc["expression"],
@@ -1305,6 +1431,8 @@ def check_and_send_scheduled_followups(now_utc: Optional[datetime] = None) -> in
                 "dob": dob,
                 "email": email_addr,
                 "lang": lang,
+                "utm": entry.get("utm") or {},
+                "source_attribution": entry.get("source_attribution") or format_attribution_source(entry.get("utm")),
                 "calc": calc,
                 "email_1_sent_at": entry.get("email_1_sent_at"),
                 "email_2_sent_at": None,
@@ -1328,6 +1456,8 @@ def check_and_send_scheduled_followups(now_utc: Optional[datetime] = None) -> in
                 "dob": dob,
                 "email": email_addr,
                 "lang": lang,
+                "utm": entry.get("utm") or {},
+                "source_attribution": entry.get("source_attribution") or format_attribution_source(entry.get("utm")),
                 "calc": calc,
                 "email_1_sent_at": entry.get("email_1_sent_at"),
                 "email_2_sent_at": entry.get("email_2_sent_at"),
@@ -1369,10 +1499,19 @@ def poll_cloud_relay_once() -> int:
                     email_addr = prof.get("email", "").strip()
                     lang = payload.get("lang", "en")
                     ts = payload.get("timestamp")
+                    utm_data = extract_utm_from_payload(payload)
                     if full_name and dob and email_addr and "@" in email_addr:
                         if email_addr.lower().endswith("@sovereign5.com") or email_addr.lower() == "test@example.com":
                             continue
-                        process_lead(full_name, dob, email_addr, lang=lang, timestamp=ts, force_send=False)
+                        process_lead(
+                            full_name,
+                            dob,
+                            email_addr,
+                            lang=lang,
+                            timestamp=ts,
+                            force_send=False,
+                            utm=utm_data,
+                        )
                         count += 1
                 except Exception:
                     continue
@@ -1412,9 +1551,18 @@ class WebhookHandler(BaseHTTPRequestHandler):
             email_addr = prof.get("email", "").strip()
             lang = payload.get("lang", "en")
             ts = payload.get("timestamp")
+            utm_data = extract_utm_from_payload(payload)
             if full_name and dob and email_addr and "@" in email_addr:
                 if not email_addr.lower().endswith("@sovereign5.com") and email_addr.lower() != "test@example.com":
-                    process_lead(full_name, dob, email_addr, lang=lang, timestamp=ts, force_send=False)
+                    process_lead(
+                        full_name,
+                        dob,
+                        email_addr,
+                        lang=lang,
+                        timestamp=ts,
+                        force_send=False,
+                        utm=utm_data,
+                    )
         except Exception as e:
             print(f"  [Webhook Error] {e}", flush=True)
 
@@ -1441,6 +1589,10 @@ def main():
     parser.add_argument("--dob", type=str, help="Date of Birth (YYYY-MM-DD or MM/DD/YYYY)")
     parser.add_argument("--email", type=str, help="Email address for backfill")
     parser.add_argument("--lang", type=str, default="en", help="Language (en or es)")
+    parser.add_argument("--utm-source", type=str, default="", help="Optional utm_source")
+    parser.add_argument("--utm-medium", type=str, default="", help="Optional utm_medium")
+    parser.add_argument("--utm-campaign", type=str, default="", help="Optional utm_campaign")
+    parser.add_argument("--cohort", type=str, default="", help="Optional cohort (e.g., B)")
     parser.add_argument("--force", action="store_true", help="Force re-sending email even if already in dedup store")
     parser.add_argument("--poll-once", action="store_true", help="Poll cloud relay + check 24h/48h followups once and exit")
     parser.add_argument("--daemon", action="store_true", help="Run continuous webhook & cloud relay polling daemon")
@@ -1450,7 +1602,24 @@ def main():
         if not (args.name and args.dob and args.email):
             print("Error: --backfill-lead requires --name, --dob, and --email")
             sys.exit(1)
-        res = process_lead(args.name, args.dob, args.email, lang=args.lang, force_send=args.force)
+        cli_utm = {
+            k: v
+            for k, v in {
+                "utm_source": args.utm_source,
+                "utm_medium": args.utm_medium,
+                "utm_campaign": args.utm_campaign,
+                "cohort": args.cohort,
+            }.items()
+            if v
+        }
+        res = process_lead(
+            args.name,
+            args.dob,
+            args.email,
+            lang=args.lang,
+            force_send=args.force,
+            utm=cli_utm,
+        )
         print(json.dumps(res, indent=2, ensure_ascii=False))
         return
 

@@ -224,10 +224,14 @@ const CONFIG = {
   function leadId() { return 'lead_' + Math.random().toString(36).slice(2, 9); }
   function utm() {
     const q = new URLSearchParams(location.search);
-    const u = {};
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((k) => {
+    const cached = store.get('sovereign5_utm_v1') || {};
+    const u = Object.assign({}, cached);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'cohort', 'ttclid'].forEach((k) => {
       if (q.get(k)) u[k] = q.get(k);
     });
+    if (Object.keys(u).length > 0) {
+      store.set('sovereign5_utm_v1', u);
+    }
     return u;
   }
   function saveProfile(p) {
@@ -249,12 +253,18 @@ const CONFIG = {
         systems: a.systems,
       })) : [];
       const top3Str = anchors.map((a) => a.number).join(', ');
+      const activeUtm = Object.assign({}, (state.profile && state.profile.utm) || {}, utm());
 
       const payload = {
         event,
         timestamp: new Date().toISOString(),
         lang: state.lang || 'en',
-        profile: state.profile,
+        utm: activeUtm,
+        utm_source: activeUtm.utm_source || '',
+        utm_medium: activeUtm.utm_medium || '',
+        utm_campaign: activeUtm.utm_campaign || '',
+        cohort: activeUtm.cohort || '',
+        profile: Object.assign({}, state.profile, { utm: activeUtm }),
         numbers: r ? {
           top_3_overlap_numbers: top3Str,
           anchors,
@@ -1665,6 +1675,7 @@ const CONFIG = {
 
   function init() {
     $('#year').textContent = new Date().getFullYear();
+    utm();
 
     // Check VIP Founder access (?vip=adam)
     const q = new URLSearchParams(location.search);

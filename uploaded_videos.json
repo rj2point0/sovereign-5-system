@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-10-23T09:12:35.438374",
+  "updated_at": "2026-10-23T10:17:18.113956",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -41,6 +41,15 @@
       "schedule_time": null,
       "uploaded_at": "2026-10-23T09:12:35.438374",
       "caption_preview": "Why you keep attracting the exact same exhausting relationship patterns (and what the missing numbers in your Chinese Lo"
+    },
+    "tiktok_broll_02_career_burnout_timing.mp4": {
+      "filename": "tiktok_broll_02_career_burnout_timing.mp4",
+      "ad_id": "broll_02",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-10-24 11:30",
+      "uploaded_at": "2026-10-23T10:17:18.113956",
+      "caption_preview": "Working twice as hard this month but feeling completely stuck? You might be pushing during the wrong 52-day planetary cy"
     }
   }
 }
