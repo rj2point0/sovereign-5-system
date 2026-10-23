@@ -54,6 +54,12 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_01",
+        "video_id": None,
+        "title_match": "Born on the 8th, 17th, or 26th of any month",
+        "comment": "Were you born on the 8th, 17th, or 26th—or is 8 your Life Path number? Drop your birthday month and day below 👇",
+    },
+    {
         "id": "broll_01",
         "video_id": "7699896747476225293",
         "title_match": "Why you keep attracting the exact same exhausting relationship patterns",
@@ -124,7 +130,9 @@ async def seed_comment_on_video_from_profile(
     await asyncio.sleep(2.5)
 
     matched_vid = video_id_hint
-    if not matched_vid:
+    for attempt in range(2):
+        if matched_vid:
+            break
         prof_videos = await page.evaluate(
             """() => {
                 return Array.from(document.querySelectorAll('a[href*="/video/"]')).map(a => ({
@@ -134,11 +142,16 @@ async def seed_comment_on_video_from_profile(
             }"""
         )
         for v in prof_videos:
-            if title_match.lower()[:32] in v.get("imgAlt", "").lower():
+            if title_match.lower()[:28] in v.get("imgAlt", "").lower():
                 m = re.search(r"/video/(\d+)", v.get("href", ""))
                 if m:
                     matched_vid = m.group(1)
                     break
+        if not matched_vid and attempt == 0:
+            print("   [Seed] Waiting 6s for newly posted video to appear on profile grid...", flush=True)
+            await asyncio.sleep(6.0)
+            await page.goto(PROFILE_URL, wait_until="domcontentloaded", timeout=45000)
+            await asyncio.sleep(3.5)
 
     if not matched_vid:
         print(f"   [Seed] ⚠ Could not find live video matching '{title_match}' on profile.", flush=True)
@@ -249,7 +262,26 @@ async def verify_comments_after_delay(
         await page.goto(PROFILE_URL, wait_until="domcontentloaded", timeout=45000)
         await asyncio.sleep(4.5)
         for t in targets:
-            vid = t["video_id"]
+            vid = t.get("video_id")
+            if not vid:
+                prof_videos = await page.evaluate(
+                    """() => {
+                        return Array.from(document.querySelectorAll('a[href*="/video/"]')).map(a => ({
+                            href: a.href,
+                            imgAlt: a.querySelector('img') ? (a.querySelector('img').alt || '') : ''
+                        }));
+                    }"""
+                )
+                for v in prof_videos:
+                    if t["title_match"].lower()[:28] in v.get("imgAlt", "").lower():
+                        m = re.search(r"/video/(\d+)", v.get("href", ""))
+                        if m:
+                            vid = m.group(1)
+                            break
+            if not vid:
+                print(f"   ⚠ [{t['id']}] Could not resolve video_id for '{t['title_match']}' on profile.", flush=True)
+                continue
+
             snip = t["comment"][:28].lower()
             in_studio_feed = snip in studio_text
             thumb = page.locator(f'a[href*="{vid}"]').first

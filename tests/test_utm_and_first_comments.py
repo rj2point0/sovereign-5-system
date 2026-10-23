@@ -9,7 +9,7 @@ from seed_first_comments import TARGET_FIRST_COMMENTS, is_automod_safe_first_com
 
 
 def test_target_first_comments_are_automod_safe():
-    assert len(TARGET_FIRST_COMMENTS) == 3
+    assert len(TARGET_FIRST_COMMENTS) >= 4
     for item in TARGET_FIRST_COMMENTS:
         assert is_automod_safe_first_comment(item["comment"]), f"Failed automod check: {item['comment']}"
 
@@ -30,12 +30,16 @@ def test_tiktok_scripts_first_comments_are_automod_safe():
     with open(scripts_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     found_fc = 0
+    cohort_c_ids = set()
     for s in data.get("scripts", []):
         fc = s.get("first_comment")
         if fc:
             found_fc += 1
             assert is_automod_safe_first_comment(fc), f"Script {s['id']} first_comment failed: {fc}"
-    assert found_fc >= 4
+        if s.get("cohort") == "Cohort C":
+            cohort_c_ids.add(s["id"])
+    assert found_fc >= 5
+    assert {"short_01", "short_02", "short_03"}.issubset(cohort_c_ids)
 
 
 def test_utm_and_cohort_attribution():

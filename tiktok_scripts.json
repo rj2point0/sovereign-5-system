@@ -342,6 +342,7 @@
     },
     {
       "id": "broll_01",
+      "cohort": "Cohort B",
       "filename": "tiktok_broll_01_relationship_patterns.mp4",
       "hook_name": "Why you keep attracting the exact same exhausting relationship patterns",
       "lang": "en",
@@ -364,6 +365,7 @@
     },
     {
       "id": "broll_02",
+      "cohort": "Cohort B",
       "filename": "tiktok_broll_02_career_burnout_timing.mp4",
       "hook_name": "Working twice as hard this month but feeling completely stuck? Read this.",
       "lang": "en",
@@ -382,6 +384,72 @@
         "#entrepreneurmindset",
         "#spiritualgrowth",
         "#nervoussystem"
+      ]
+    },
+    {
+      "id": "short_01",
+      "cohort": "Cohort C",
+      "filename": "tiktok_short_01_born_8_17_26.mp4",
+      "hook_name": "Born on the 8th, 17th, or 26th of any month? (Or a Life Path 8?)",
+      "lang": "en",
+      "voice": "en-US-AvaNeural",
+      "rate": "+12%",
+      "spoken_script": "If you were born on the eighth, seventeenth, or twenty-sixth, your finances probably feel all or nothing. That’s not bad luck—it’s a conflict between your birth number and your name frequency. Check the five-system calculator on my profile to see where your numbers are fighting.",
+      "tiktok_caption": "Born on the 8th, 17th, or 26th of any month? Why your finances feel all-or-nothing (and where your birth number & name frequency clash) ⚡👁️ #numerology #lifepath8 #bornonthe8th #chaldean #wealthtiming #spiritualawakening #manifestation #astrology",
+      "first_comment": "Were you born on the 8th, 17th, or 26th—or is 8 your Life Path number? Drop your birthday month and day below 👇",
+      "hashtags": [
+        "#numerology",
+        "#lifepath8",
+        "#bornonthe8th",
+        "#chaldean",
+        "#wealthtiming",
+        "#spiritualawakening",
+        "#manifestation",
+        "#astrology"
+      ]
+    },
+    {
+      "id": "short_02",
+      "cohort": "Cohort C",
+      "filename": "tiktok_short_02_born_7_16_25.mp4",
+      "hook_name": "Born on the 7th, 16th, or 25th? Why standard numerology gets you wrong:",
+      "lang": "en",
+      "voice": "en-US-AvaNeural",
+      "rate": "+12%",
+      "spoken_script": "If you were born on the seventh, sixteenth, or twenty-fifth and feel pulled between deep connection and wanting to disappear, it’s not a seven problem. It’s a clash between your Vedic number and your Chinese Lo Shu grid. Run all five systems in my bio to see where your chart collides.",
+      "tiktok_caption": "Born on the 7th, 16th, or 25th? It’s not a '7 problem'—it’s a clash between your Vedic lens and your Chinese Lo Shu grid 🔮✨ #numerology #lifepath7 #loshugrid #vedicnumerology #overthinking #relationships #spiritualtiktok #introvertlife",
+      "first_comment": "Are you a 7th, 16th, or 25th birthday—and do you feel that tug-of-war between connection and solitude? 👇",
+      "hashtags": [
+        "#numerology",
+        "#lifepath7",
+        "#loshugrid",
+        "#vedicnumerology",
+        "#overthinking",
+        "#relationships",
+        "#spiritualtiktok",
+        "#introvertlife"
+      ]
+    },
+    {
+      "id": "short_03",
+      "cohort": "Cohort C",
+      "filename": "tiktok_short_03_systems_fighting.mp4",
+      "hook_name": "Why your Life Path number feels like reading 1 page of a 20-page book",
+      "lang": "en",
+      "voice": "en-US-AvaNeural",
+      "rate": "+12%",
+      "spoken_script": "Reading your Life Path number alone is like reading one page of a book. The real breakthrough happens when you see where all five ancient systems agree—and where they fight each other in your name and birthday. Try the five-system overlap calculator on my profile.",
+      "tiktok_caption": "Why reading your Western Life Path number alone feels like reading 1 page of a 20-page book (see where your 5 systems agree vs. fight) 📖✨ #numerology #lifepath #chaldean #kabbalah #loshugrid #spiritualawakening #selfdiscovery #sacredgeometry",
+      "first_comment": "Which two numbers feel like they are constantly fighting each other in your personality? Drop your birthday below 👇",
+      "hashtags": [
+        "#numerology",
+        "#lifepath",
+        "#chaldean",
+        "#kabbalah",
+        "#loshugrid",
+        "#spiritualawakening",
+        "#selfdiscovery",
+        "#sacredgeometry"
       ]
     }
   ]

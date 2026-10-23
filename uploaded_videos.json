@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-10-23T10:17:18.113956",
+  "updated_at": "2026-10-23T16:50:21.930296",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -50,6 +50,33 @@
       "schedule_time": "2026-10-24 11:30",
       "uploaded_at": "2026-10-23T10:17:18.113956",
       "caption_preview": "Working twice as hard this month but feeling completely stuck? You might be pushing during the wrong 52-day planetary cy"
+    },
+    "tiktok_short_01_born_8_17_26.mp4": {
+      "filename": "tiktok_short_01_born_8_17_26.mp4",
+      "ad_id": "short_01",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-10-23T16:48:58.665329",
+      "caption_preview": "Born on the 8th, 17th, or 26th of any month? Why your finances feel all-or-nothing (and where your birth number & name f"
+    },
+    "tiktok_short_02_born_7_16_25.mp4": {
+      "filename": "tiktok_short_02_born_7_16_25.mp4",
+      "ad_id": "short_02",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-10-24 19:30",
+      "uploaded_at": "2026-10-23T16:49:52.009332",
+      "caption_preview": "Born on the 7th, 16th, or 25th? It’s not a '7 problem'—it’s a clash between your Vedic lens and your Chinese Lo Shu grid"
+    },
+    "tiktok_short_03_systems_fighting.mp4": {
+      "filename": "tiktok_short_03_systems_fighting.mp4",
+      "ad_id": "short_03",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-10-25 11:30",
+      "uploaded_at": "2026-10-23T16:50:21.930296",
+      "caption_preview": "Why reading your Western Life Path number alone feels like reading 1 page of a 20-page book (see where your 5 systems ag"
     }
   }
 }

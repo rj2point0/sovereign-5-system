@@ -1,25 +1,20 @@
 """
 =============================================================================
-SACRED NUMBER BLUEPRINT · COHORT B "HUMAN B-ROLL + PRODUCT REVEAL" GENERATOR
+SACRED NUMBER BLUEPRINT · COHORT B & COHORT C HUMAN B-ROLL VIDEO GENERATOR
 generate_broll_story_tiktoks.py
 -----------------------------------------------------------------------------
-Conversion Architecture (Format #2 — Organic Creator Story -> Product Reveal):
-1. NO commercial top/bottom ad borders in the first 22+ seconds.
-2. 0–4.2s: Real moving human B-roll (darkened 15%) + Native TikTok white
-   rounded-rectangle text box hook in the upper-middle safe zone.
-3. 0–15.0s: Cuts between 3 real moving human B-roll clips every 5 seconds
-   while en-US-AvaNeural (+10%) narrates a relatable discovery story.
-4. 15.0s–End: Smoothly transitions into the live interactive 5-System
-   Calculator ritual, 5-Ring Convergence Mandala, Chinese Lo Shu 3x3 Grid,
-   and 52-Day Rosicrucian Cycles Calendar.
-5. Center 3-Word CapCut-Style Captions Throughout: 56px bold white text with
-   thick black stroke/drop-shadow at y=1320, highlighting 1 power word per
-   phrase in warm gold (#FFD147).
-6. Final 5 Seconds Only: Clean organic callout pill:
-   "Tap @sacrednumberblueprint → Try the 5-System Overlap Calculator in our bio"
+Supports two high-converting formats:
+- Cohort B (38–47s Story + Product Reveal):
+  0–15s Human B-roll -> 15s–End Calculator + Dossier Reveal + Final 5s CTA pill.
+- Cohort C (12–14s Hyper-Specific Birthday Shorts for 80%+ Completion Rate):
+  0.0–4.0s: Moving Human B-roll Clip A + Native TikTok White Hook Box (0–4.5s)
+  4.0–7.5s: Moving Human B-roll Clip B + Dynamic CapCut Center Captions
+  7.5s–End: Fast Zoom Reveal of Dossier Mandala / Lo Shu Grid / 15-Point Ledger
+            + Closing CTA Pill in the final 3.5 seconds (0.5s tail hold, <14.5s).
 =============================================================================
 """
 
+import argparse
 import asyncio
 import io
 import json
@@ -65,11 +60,18 @@ POWER_WORDS = {
     "twice", "hard", "stuck", "lazy", "52-day", "cycle", "cycles", "rosicrucian",
     "planetary", "second", "engine", "saturn", "preservation", "eight", "burnout",
     "stopped", "window", "today", "name",
+    # Cohort C power words
+    "eighth", "seventeenth", "twenty-sixth", "finances", "nothing", "conflict",
+    "frequency", "fighting", "five-system", "seventh", "sixteenth", "twenty-fifth",
+    "connection", "disappear", "seven", "clash", "vedic", "collides", "book",
+    "breakthrough", "agree", "fight",
 }
 
 COHORT_B_SPECS: List[Dict[str, Any]] = [
     {
         "id": "broll_01",
+        "cohort": "Cohort B",
+        "format_type": "cohort_b_story",
         "filename": "tiktok_broll_01_relationship_patterns.mp4",
         "hook_box_text": "Why you keep attracting the exact same exhausting relationship patterns",
         "voice": "en-US-AvaNeural",
@@ -91,7 +93,6 @@ COHORT_B_SPECS: List[Dict[str, Any]] = [
             (10.0, 15.0, "broll_07_journaling_ritual.mp4"),
         ],
         "product_scenes": [
-            # 15.0 to 19.5s: live moving calculator video clip from tiktok_promo_1.mp4
             ("video_calc", "tiktok_promo_1.mp4", 0.0, 4.5),
             ("image", "scenes_cache/scene_loshu.png", 7.5),
             ("image", "scenes_cache/scene_mandala.png", 7.0),
@@ -102,6 +103,7 @@ COHORT_B_SPECS: List[Dict[str, Any]] = [
             "numbers in your Chinese Lo Shu grid reveal) 💔✨ #numerology #relationships #loshugrid "
             "#spiritualawakening #datingadvice #karmicrelationships #lifepath #chaldean #healingjourney"
         ),
+        "first_comment": "Which numbers from 1 to 9 are missing from your birthday—and have you noticed that same pattern in relationships? 👇",
         "hashtags": [
             "#numerology", "#relationships", "#loshugrid", "#spiritualawakening",
             "#datingadvice", "#karmicrelationships", "#lifepath", "#chaldean", "#healingjourney"
@@ -109,6 +111,8 @@ COHORT_B_SPECS: List[Dict[str, Any]] = [
     },
     {
         "id": "broll_02",
+        "cohort": "Cohort B",
+        "format_type": "cohort_b_story",
         "filename": "tiktok_broll_02_career_burnout_timing.mp4",
         "hook_box_text": "Working twice as hard this month but feeling completely stuck? Read this.",
         "voice": "en-US-AvaNeural",
@@ -140,9 +144,121 @@ COHORT_B_SPECS: List[Dict[str, Any]] = [
             "wrong 52-day planetary cycle ⏳⚡ #burnout #wealthtiming #numerology #biorhythm #rosicrucian "
             "#lifepath8 #entrepreneurmindset #spiritualgrowth #nervoussystem"
         ),
+        "first_comment": "Which 52-day planetary cycle are you in right now—and what is your Life Path number? Drop your birth month and day below 👇",
         "hashtags": [
             "#burnout", "#wealthtiming", "#numerology", "#biorhythm", "#rosicrucian",
             "#lifepath8", "#entrepreneurmindset", "#spiritualgrowth", "#nervoussystem"
+        ],
+    },
+]
+
+COHORT_C_SPECS: List[Dict[str, Any]] = [
+    {
+        "id": "short_01",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_01_born_8_17_26.mp4",
+        "hook_box_text": "Born on the 8th, 17th, or 26th of any month? (Or a Life Path 8?)",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the eighth, seventeenth, or twenty-sixth, your finances probably feel all or nothing. "
+            "That’s not bad luck—it’s a conflict between your birth number and your name frequency. "
+            "Check the five-system calculator on my profile to see where your numbers are fighting."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_04_stressed_temples.mp4"),
+            (4.0, 7.5, "broll_05_working_late.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_mandala.png", 2.8),
+            ("image", "scenes_cache/scene_ledger.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 8th, 17th, or 26th of any month? Why your finances feel all-or-nothing "
+            "(and where your birth number & name frequency clash) ⚡👁️ #numerology #lifepath8 "
+            "#bornonthe8th #chaldean #wealthtiming #spiritualawakening #manifestation #astrology"
+        ),
+        "first_comment": "Were you born on the 8th, 17th, or 26th—or is 8 your Life Path number? Drop your birthday month and day below 👇",
+        "hashtags": [
+            "#numerology", "#lifepath8", "#bornonthe8th", "#chaldean",
+            "#wealthtiming", "#spiritualawakening", "#manifestation", "#astrology"
+        ],
+    },
+    {
+        "id": "short_02",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_02_born_7_16_25.mp4",
+        "hook_box_text": "Born on the 7th, 16th, or 25th? Why standard numerology gets you wrong:",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 13.0,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the seventh, sixteenth, or twenty-fifth and feel pulled between deep connection "
+            "and wanting to disappear, it’s not a seven problem. It’s a clash between your Vedic number and your "
+            "Chinese Lo Shu grid. Run all five systems in my bio to see where your chart collides."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_01_window_reflection.mp4"),
+            (4.0, 7.5, "broll_07_journaling_ritual.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_loshu.png", 3.0),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 7th, 16th, or 25th? It’s not a '7 problem'—it’s a clash between your Vedic lens "
+            "and your Chinese Lo Shu grid 🔮✨ #numerology #lifepath7 #loshugrid #vedicnumerology "
+            "#overthinking #relationships #spiritualtiktok #introvertlife"
+        ),
+        "first_comment": "Are you a 7th, 16th, or 25th birthday—and do you feel that tug-of-war between connection and solitude? 👇",
+        "hashtags": [
+            "#numerology", "#lifepath7", "#loshugrid", "#vedicnumerology",
+            "#overthinking", "#relationships", "#spiritualtiktok", "#introvertlife"
+        ],
+    },
+    {
+        "id": "short_03",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_03_systems_fighting.mp4",
+        "hook_box_text": "Why your Life Path number feels like reading 1 page of a 20-page book",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Reading your Life Path number alone is like reading one page of a book. "
+            "The real breakthrough happens when you see where all five ancient systems agree—and where they fight "
+            "each other in your name and birthday. Try the five-system overlap calculator on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_03_thoughtful_woman.mp4"),
+            (4.0, 7.5, "broll_08_phone_discovery.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_mandala.png", 2.8),
+            ("image", "scenes_cache/scene_ledger.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why reading your Western Life Path number alone feels like reading 1 page of a 20-page book "
+            "(see where your 5 systems agree vs. fight) 📖✨ #numerology #lifepath #chaldean #kabbalah "
+            "#loshugrid #spiritualawakening #selfdiscovery #sacredgeometry"
+        ),
+        "first_comment": "Which two numbers feel like they are constantly fighting each other in your personality? Drop your birthday below 👇",
+        "hashtags": [
+            "#numerology", "#lifepath", "#chaldean", "#kabbalah",
+            "#loshugrid", "#spiritualawakening", "#selfdiscovery", "#sacredgeometry"
         ],
     },
 ]
@@ -157,7 +273,7 @@ class VideoFrameReader:
         if not self.cap.isOpened():
             raise RuntimeError(f"Could not open video {filepath}")
         self.last_idx = -1
-        self.last_img: Image.Image = None
+        self.last_img: Optional[Image.Image] = None
 
     def get_frame(self, local_t: float, darken_ratio: float = 0.85) -> Image.Image:
         target_idx = max(0, int(local_t * 30))
@@ -243,11 +359,22 @@ class BrollStoryGenerator:
         print(f"   [TTS] Built {len(cues)} 3-word CapCut-style caption cues.", flush=True)
         return cues
 
-    def mix_audio_with_subtle_pad(self, voice_path: str, out_mixed_path: str) -> float:
-        """Mixes the spoken story with a subtle 432Hz ambient pad and 1.2s tail hold."""
+    def mix_audio_with_subtle_pad(
+        self,
+        voice_path: str,
+        out_mixed_path: str,
+        cues: List[Dict[str, Any]],
+        tail_hold_sec: float = 1.2,
+        target_voice_sec: Optional[float] = None,
+    ) -> float:
+        """
+        Mixes the spoken story with a subtle 432Hz ambient pad and `tail_hold_sec` tail hold.
+        If `target_voice_sec` is specified and raw voice exceeds it, gently speeds up voice & cues
+        via FFmpeg `atempo` so Cohort C shorts stay strictly between 11.5s and 14.0s (<14.5s).
+        """
         cmd_probe0 = [FFMPEG_EXE, "-i", voice_path]
         r0 = subprocess.run(cmd_probe0, capture_output=True, text=True)
-        v_dur = 38.0
+        v_dur = 13.0
         for line in r0.stderr.splitlines():
             if "Duration:" in line:
                 part = line.split("Duration:")[1].split(",")[0].strip()
@@ -255,20 +382,36 @@ class BrollStoryGenerator:
                 v_dur = float(h) * 3600 + float(m) * 60 + float(s)
                 break
 
+        tempo = 1.0
+        if target_voice_sec and v_dur > target_voice_sec:
+            tempo = min(1.35, max(1.0, v_dur / target_voice_sec))
+            for c in cues:
+                c["start"] = c["start"] / tempo
+                c["end"] = c["end"] / tempo
+            v_dur = v_dur / tempo
+            print(f"   [TTS] Applied pace tempo={tempo:.3f}x -> voice={v_dur:.2f}s (+{tail_hold_sec:.1f}s tail)", flush=True)
+
         amb_path = voice_path + "_amb.wav"
         cmd_amb = [
             FFMPEG_EXE, "-y", "-f", "lavfi",
-            "-i", f"aevalsrc=0.25*sin(2*PI*108*t)+0.25*sin(2*PI*216*t)+0.25*sin(2*PI*324*t)+0.25*sin(2*PI*432*t):s=44100:d={v_dur + 2.0:.2f}",
+            "-i", f"aevalsrc=0.25*sin(2*PI*108*t)+0.25*sin(2*PI*216*t)+0.25*sin(2*PI*324*t)+0.25*sin(2*PI*432*t):s=44100:d={v_dur + tail_hold_sec + 1.0:.2f}",
             "-af", "lowpass=f=420,volume=0.08",
             amb_path,
         ]
         subprocess.run(cmd_amb, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+        atempo_filter = f"atempo={tempo:.4f}," if tempo > 1.001 else ""
+        filter_complex = (
+            f"[0:a]{atempo_filter}apad=pad_dur={tail_hold_sec:.2f}[vpad];"
+            f"[vpad]volume=1.0[v];"
+            f"[1:a]volume=0.09[bg];"
+            f"[v][bg]amix=inputs=2:duration=first:dropout_transition=1"
+        )
         cmd_mix = [
             FFMPEG_EXE, "-y",
             "-i", voice_path,
             "-i", amb_path,
-            "-filter_complex", "[0:a]apad=pad_dur=1.2[vpad];[vpad]volume=1.0[v];[1:a]volume=0.09[bg];[v][bg]amix=inputs=2:duration=first:dropout_transition=2",
+            "-filter_complex", filter_complex,
             "-c:a", "libmp3lame", "-b:a", "192k",
             out_mixed_path,
         ]
@@ -277,7 +420,7 @@ class BrollStoryGenerator:
             os.remove(amb_path)
 
         res = subprocess.run([FFMPEG_EXE, "-i", out_mixed_path], capture_output=True, text=True)
-        dur = v_dur + 1.2
+        dur = v_dur + tail_hold_sec
         for line in res.stderr.splitlines():
             if "Duration:" in line:
                 part = line.split("Duration:")[1].split(",")[0].strip()
@@ -289,7 +432,7 @@ class BrollStoryGenerator:
     def draw_native_tiktok_hook_box(self, draw: ImageDraw.ImageDraw, hook_text: str):
         """
         Draws an authentic native TikTok white rounded-rectangle text box sticker
-        centered in the upper-middle safe zone (y ~ 340).
+        centered in the upper-middle safe zone (y ~ 360).
         """
         lines = textwrap.wrap(hook_text, width=28)
         line_bboxes = [draw.textbbox((0, 0), ln, font=self.font_hook) for ln in lines]
@@ -332,7 +475,6 @@ class BrollStoryGenerator:
         if not words:
             return
 
-        # Pick at most 1 power word to highlight in warm gold (#FFD147)
         gold_idx = -1
         for idx, w_str in enumerate(words):
             clean = w_str.lower().strip(".,!?;:—-()'\"")
@@ -340,7 +482,6 @@ class BrollStoryGenerator:
                 gold_idx = idx
                 break
         if gold_idx == -1 and len(words) >= 2:
-            # Highlight the longest word if none in POWER_WORDS
             gold_idx = max(range(len(words)), key=lambda i: len(words[i]))
 
         font_use = self.font_cap
@@ -356,7 +497,6 @@ class BrollStoryGenerator:
         cur_x = cx - tot_w // 2
         for idx, (w_str, ww) in enumerate(zip(words, w_widths)):
             col = (255, 209, 71) if idx == gold_idx else (255, 255, 255)
-            # Drop shadow
             draw.text(
                 (cur_x + 4, cy + 5),
                 w_str,
@@ -366,7 +506,6 @@ class BrollStoryGenerator:
                 stroke_width=6,
                 stroke_fill=(0, 0, 0),
             )
-            # Foreground with thick black stroke
             draw.text(
                 (cur_x, cy),
                 w_str,
@@ -380,7 +519,7 @@ class BrollStoryGenerator:
 
     def draw_final_5s_cta_pill(self, draw: ImageDraw.ImageDraw):
         """
-        Displays the clean organic Call-To-Action pill ONLY in the final 5 seconds:
+        Displays the clean organic Call-To-Action pill in the closing seconds:
         'Tap @sacrednumberblueprint → Try the 5-System Overlap Calculator in our bio'
         """
         line1 = "Tap @sacrednumberblueprint"
@@ -416,17 +555,27 @@ class BrollStoryGenerator:
     ):
         fps = 30
         total_frames = int(total_dur * fps)
-        print(f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames)...", flush=True)
+        is_short = spec.get("format_type") == "cohort_c_short"
+        hook_end_sec = spec.get("hook_end_sec", 4.5 if is_short else 4.2)
+        cta_tail_sec = spec.get("cta_tail_sec", 3.5 if is_short else 5.0)
+        broll_cutoff = 7.5 if is_short else 15.0
 
-        # Preload human B-roll readers (0-15s)
+        print(
+            f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames, format={spec.get('format_type')})...",
+            flush=True,
+        )
+
+        # Preload human B-roll readers
         broll_readers = {}
         for _, _, b_fname in spec["broll_clips"]:
             b_path = os.path.join(BROLL_DIR, b_fname)
             if b_fname not in broll_readers:
                 broll_readers[b_fname] = VideoFrameReader(b_path, max_seconds=6.0)
 
-        # Preload calculator video segment (15.0-19.5s) and static product images (19.5s-end)
-        calc_reader = VideoFrameReader(os.path.join(BASE_DIR, "tiktok_promo_1.mp4"), max_seconds=5.5)
+        calc_reader = None
+        if not is_short:
+            calc_reader = VideoFrameReader(os.path.join(BASE_DIR, "tiktok_promo_1.mp4"), max_seconds=5.5)
+
         prod_images = {}
         for item in spec["product_scenes"]:
             if item[0] == "image":
@@ -454,19 +603,13 @@ class BrollStoryGenerator:
 
         cue_idx = 0
         t0 = time.time()
-
-        # Product scene timeline starting at t=15.0s
-        # 15.0 - 19.5s: live calculator video
-        # 19.5 - 27.0s: product image 1
-        # 27.0 - 34.0s: product image 2
-        # 34.0 - total_dur: product image 3
         p_imgs = [item[1] for item in spec["product_scenes"] if item[0] == "image"]
 
         for f_idx in range(total_frames):
             t = f_idx / float(fps)
 
-            # 1. Select background visual (0-15s Human B-Roll, 15s+ Product Solution Reveal)
-            if t < 15.0:
+            # 1. Background visual selection
+            if t < broll_cutoff:
                 active_broll = spec["broll_clips"][-1][2]
                 local_t = t
                 for b_start, b_end, b_fname in spec["broll_clips"]:
@@ -475,7 +618,25 @@ class BrollStoryGenerator:
                         local_t = t - b_start
                         break
                 frame = broll_readers[active_broll].get_frame(local_t, darken_ratio=0.84)
-            elif t < 19.5:
+            elif is_short:
+                # Cohort C (7.5s -> end): Fast dynamic zoom reveal across the 2 dossier scenes
+                reveal_dur = max(1.0, total_dur - 7.5)
+                mid_t = 7.5 + (reveal_dur * 0.48)
+                if t < mid_t or len(p_imgs) == 1:
+                    img_key = p_imgs[0]
+                    u = max(0.0, min(1.0, (t - 7.5) / max(0.5, mid_t - 7.5)))
+                    zoom = 1.0 + 0.065 * u
+                else:
+                    img_key = p_imgs[1]
+                    u = max(0.0, min(1.0, (t - mid_t) / max(0.5, total_dur - mid_t)))
+                    zoom = 1.055 - 0.045 * u
+
+                base_img = prod_images[img_key]
+                new_w, new_h = int(1080 / zoom), int(1920 / zoom)
+                x0 = (1080 - new_w) // 2
+                y0 = (1920 - new_h) // 2
+                frame = base_img.crop((x0, y0, x0 + new_w, y0 + new_h)).resize((1080, 1920), Image.Resampling.BILINEAR)
+            elif t < 19.5 and calc_reader is not None:
                 frame = calc_reader.get_frame(t - 15.0, darken_ratio=0.96)
             else:
                 if t < 27.0:
@@ -499,8 +660,8 @@ class BrollStoryGenerator:
 
             draw = ImageDraw.Draw(frame)
 
-            # 2. 0–4.2s: Native TikTok White Rounded-Rectangle Hook Box Over Real Human Footage
-            if t <= 4.2:
+            # 2. Native TikTok White Rounded-Rectangle Hook Box (0.0s - hook_end_sec)
+            if t <= hook_end_sec:
                 self.draw_native_tiktok_hook_box(draw, spec["hook_box_text"])
 
             # 3. Center 3-Word CapCut-Style Captions Throughout
@@ -513,15 +674,15 @@ class BrollStoryGenerator:
             if active_cue_text:
                 self.draw_capcut_caption(draw, active_cue_text)
 
-            # 4. Final 5 Seconds Only: Clean Organic Call-to-Action Pill
-            if t >= (total_dur - 5.0):
+            # 4. Closing Call-to-Action Pill
+            if t >= (total_dur - cta_tail_sec):
                 self.draw_final_5s_cta_pill(draw)
 
             buf = io.BytesIO()
             frame.save(buf, format="JPEG", quality=92)
             proc.stdin.write(buf.getvalue())
 
-            if (f_idx + 1) % 200 == 0 or (f_idx + 1) == total_frames:
+            if (f_idx + 1) % 150 == 0 or (f_idx + 1) == total_frames:
                 pct = (f_idx + 1) / total_frames * 100.0
                 fps_spd = (f_idx + 1) / max(0.01, time.time() - t0)
                 print(f"   Frame {f_idx + 1}/{total_frames} ({pct:.1f}%) | {fps_spd:.1f} fps", flush=True)
@@ -530,17 +691,23 @@ class BrollStoryGenerator:
         proc.wait()
         for rdr in broll_readers.values():
             rdr.close()
-        calc_reader.close()
+        if calc_reader is not None:
+            calc_reader.close()
 
         sz_mb = os.path.getsize(out_mp4) / (1024 * 1024)
         print(f"✓ Rendered {out_mp4} ({sz_mb:.2f} MB in {time.time() - t0:.1f}s)", flush=True)
 
-    def extract_audit_frames(self, mp4_path: str, prefix: str) -> List[str]:
-        """Extracts audit frames at 2.0s, 8.0s, and 20.0s and syncs to artifacts."""
+    def extract_audit_frames(self, mp4_path: str, prefix: str, is_short: bool = False) -> List[str]:
+        """Extracts audit frames for visual verification and syncs to artifacts."""
         cap = cv2.VideoCapture(mp4_path)
         fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
         saved = []
-        for sec, tag in [(2.0, "2s_hook"), (8.0, "8s_broll"), (20.0, "20s_reveal")]:
+        checkpoints = (
+            [(2.0, "2s_hook"), (5.5, "5s_broll"), (10.5, "10s_reveal")]
+            if is_short
+            else [(2.0, "2s_hook"), (8.0, "8s_broll"), (20.0, "20s_reveal")]
+        )
+        for sec, tag in checkpoints:
             f_num = int(sec * fps)
             cap.set(cv2.CAP_PROP_POS_FRAMES, f_num)
             ret, frame = cap.read()
@@ -556,7 +723,7 @@ class BrollStoryGenerator:
         return saved
 
     def update_tiktok_scripts_json(self):
-        """Registers Cohort-B videos in tiktok_scripts.json so tiktok_auto_uploader.py knows their captions."""
+        """Registers Cohort-B and Cohort-C videos in tiktok_scripts.json with their captions & first_comments."""
         scripts_path = os.path.join(BASE_DIR, "tiktok_scripts.json")
         data = {"scripts": []}
         if os.path.exists(scripts_path):
@@ -564,9 +731,10 @@ class BrollStoryGenerator:
                 data = json.load(f)
 
         by_fname = {s["filename"]: s for s in data.get("scripts", [])}
-        for spec in COHORT_B_SPECS:
-            by_fname[spec["filename"]] = {
+        for spec in COHORT_B_SPECS + COHORT_C_SPECS:
+            entry = {
                 "id": spec["id"],
+                "cohort": spec.get("cohort", "Cohort B"),
                 "filename": spec["filename"],
                 "hook_name": spec["hook_box_text"],
                 "lang": "en",
@@ -574,31 +742,47 @@ class BrollStoryGenerator:
                 "rate": spec["rate"],
                 "spoken_script": spec["spoken_script"],
                 "tiktok_caption": spec["tiktok_caption"],
+                "first_comment": spec.get("first_comment", ""),
                 "hashtags": spec["hashtags"],
             }
+            by_fname[spec["filename"]] = entry
         data["scripts"] = list(by_fname.values())
         with open(scripts_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         if os.path.exists(GDRIVE_QUEUE_DIR):
             shutil.copy2(scripts_path, os.path.join(GDRIVE_QUEUE_DIR, "tiktok_scripts.json"))
 
-    async def run(self):
+    async def run(self, cohort: str = "C"):
+        target_specs = (
+            COHORT_C_SPECS
+            if cohort.upper() == "C"
+            else (COHORT_B_SPECS if cohort.upper() == "B" else COHORT_B_SPECS + COHORT_C_SPECS)
+        )
         print("=" * 72, flush=True)
-        print("   STARTING COHORT-B HUMAN B-ROLL + PRODUCT REVEAL VIDEO GENERATOR", flush=True)
+        print(f"   STARTING HUMAN B-ROLL + PRODUCT REVEAL GENERATOR (COHORT: {cohort.upper()})", flush=True)
         print("=" * 72, flush=True)
 
-        for spec in COHORT_B_SPECS:
+        self.update_tiktok_scripts_json()
+
+        for spec in target_specs:
             vid_id = spec["id"]
             fname = spec["filename"]
+            is_short = spec.get("format_type") == "cohort_c_short"
             out_mp4 = os.path.join(VIDEOS_DIR, fname)
             v_mp3 = os.path.join(BASE_DIR, f"_voice_{vid_id}.mp3")
             m_mp3 = os.path.join(BASE_DIR, f"_mixed_{vid_id}.mp3")
 
-            print(f"\n▶ Generating Cohort-B Video [{vid_id}]: {fname}", flush=True)
+            print(f"\n▶ Generating [{spec.get('cohort', 'Video')}] [{vid_id}]: {fname}", flush=True)
             cues = await self.generate_voice_and_3word_cues(
                 spec["spoken_script"], spec["voice"], spec["rate"], v_mp3
             )
-            dur = self.mix_audio_with_subtle_pad(v_mp3, m_mp3)
+            dur = self.mix_audio_with_subtle_pad(
+                v_mp3,
+                m_mp3,
+                cues=cues,
+                tail_hold_sec=spec.get("tail_hold_sec", 0.5 if is_short else 1.2),
+                target_voice_sec=spec.get("target_voice_sec"),
+            )
             self.render_video(spec, cues, m_mp3, dur, out_mp4)
 
             for tmp in (v_mp3, m_mp3):
@@ -614,14 +798,16 @@ class BrollStoryGenerator:
             if os.path.exists(ARTIFACTS_DIR):
                 shutil.copy2(out_mp4, os.path.join(ARTIFACTS_DIR, fname))
 
-            self.extract_audit_frames(out_mp4, vid_id)
+            self.extract_audit_frames(out_mp4, vid_id, is_short=is_short)
 
-        self.update_tiktok_scripts_json()
         print("\n" + "=" * 72, flush=True)
-        print("   ✓ BOTH COHORT-B HUMAN B-ROLL VIDEOS RENDERED & SYNCED TO QUEUE!", flush=True)
+        print(f"   ✓ ALL COHORT-{cohort.upper()} VIDEOS RENDERED & SYNCED TO QUEUE!", flush=True)
         print("=" * 72, flush=True)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Render Cohort B or Cohort C TikTok videos.")
+    parser.add_argument("--cohort", type=str, default="C", help="Cohort to render: C, B, or ALL (default: C)")
+    args = parser.parse_args()
     gen = BrollStoryGenerator()
-    asyncio.run(gen.run())
+    asyncio.run(gen.run(cohort=args.cohort))
