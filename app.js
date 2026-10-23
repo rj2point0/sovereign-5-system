@@ -475,7 +475,7 @@ const CONFIG = {
     const vslSrc = CONFIG.VSL_URL || 'assets/vsl_briefing.mp4';
     const vslPoster = CONFIG.VSL_POSTER || 'assets/vsl_poster.jpg';
     if (vslSrc.endsWith('.mp4')) {
-      return `<div class="vsl-frame card p-2"><video src="${vslSrc}" poster="${vslPoster}" controls playsinline preload="metadata" class="w-full h-full rounded-lg object-cover"></video></div>`;
+      return `<div class="vsl-frame card p-2"><video id="vsl-video" src="${vslSrc}" poster="${vslPoster}" controls playsinline preload="metadata" class="w-full h-full rounded-lg object-cover"></video></div>`;
     }
     return `<div class="vsl-frame card p-2"><iframe src="${vslSrc}" class="w-full h-full rounded-lg" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
   }
