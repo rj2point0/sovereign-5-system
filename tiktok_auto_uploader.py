@@ -238,8 +238,29 @@ class TikTokAutoUploader:
                 f"Invalid --schedule format '{schedule_str}'. Expected 'YYYY-MM-DD HH:MM' (e.g. '2026-10-23 14:30')."
             ) from e
 
+    async def dismiss_joyride_overlays(self, page: Page):
+        """Safely hides TikTok Studio's react-joyride onboarding tooltips via CSS without mutating React's DOM tree."""
+        try:
+            await page.add_style_tag(
+                content="""
+                #react-joyride-portal,
+                .react-joyride__overlay,
+                .react-joyride__spotlight,
+                .react-joyride__tooltip,
+                div[data-test-id="overlay"] {
+                    pointer-events: none !important;
+                    display: none !important;
+                    visibility: hidden !important;
+                    opacity: 0 !important;
+                }
+                """
+            )
+        except Exception:
+            pass
+
     async def fill_caption_editor(self, page: Page, caption_text: str):
         """Fills the TikTok Studio DraftJS / contenteditable caption box."""
+        await self.dismiss_joyride_overlays(page)
         editor_selectors = [
             'div.public-DraftEditor-content[contenteditable="true"]',
             'div[contenteditable="true"][role="combobox"]',
@@ -249,15 +270,19 @@ class TikTokAutoUploader:
         for sel in editor_selectors:
             loc = page.locator(sel).first
             if await loc.count() > 0 and await loc.is_visible():
-                await loc.click()
-                await asyncio.sleep(0.3)
+                await self.dismiss_joyride_overlays(page)
+                await loc.click(force=True)
+                await asyncio.sleep(0.4)
                 # Select existing default filename text and replace with caption
                 await page.keyboard.press("Control+A")
-                await asyncio.sleep(0.1)
+                await asyncio.sleep(0.15)
                 await page.keyboard.press("Backspace")
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.25)
                 await page.keyboard.insert_text(caption_text)
                 await asyncio.sleep(0.5)
+                # Close any hashtag autocomplete dropdown by pressing Escape
+                await page.keyboard.press("Escape")
+                await asyncio.sleep(0.3)
                 print("   [Studio] ✓ Populated caption & hashtags in editor.", flush=True)
                 return True
         print("   [Studio] ⚠ Could not locate contenteditable caption box; continuing.", flush=True)
@@ -312,7 +337,8 @@ class TikTokAutoUploader:
     ) -> bool:
         print(f"\n▶ [UPLOAD] Uploading {item['filename']} ({item['size_mb']} MB)...", flush=True)
         await page.goto(TIKTOK_UPLOAD_URL, wait_until="domcontentloaded", timeout=45000)
-        await asyncio.sleep(3.5)
+        await asyncio.sleep(4.0)
+        await self.dismiss_joyride_overlays(page)
 
         if "login" in page.url.lower():
             print("   [Auth] Not logged in! Navigating to QR login...", flush=True)
@@ -330,45 +356,75 @@ class TikTokAutoUploader:
         print(f"   [Studio] ✓ Attached video file: {item['filepath']}", flush=True)
 
         # Wait for upload processing & caption editor to appear
-        await asyncio.sleep(6.0)
+        for _ in range(20):
+            await asyncio.sleep(1.5)
+            await self.dismiss_joyride_overlays(page)
+            if await page.locator('div.public-DraftEditor-content[contenteditable="true"], div[contenteditable="true"]').count() > 0:
+                break
+
+        await asyncio.sleep(2.0)
         await self.fill_caption_editor(page, item["caption"])
 
-        # Wait for video upload progress to finish (up to 60s)
-        for _ in range(20):
-            uploading_badge = page.locator('text="Uploading", text="Checking"').first
-            if await uploading_badge.count() == 0:
-                break
-            await asyncio.sleep(2.0)
+        # Wait for video upload progress to finish and Post button to be enabled (up to 90s)
+        print("   [Studio] Waiting for video upload & checks to complete...", flush=True)
+        for wait_i in range(36):
+            await self.dismiss_joyride_overlays(page)
+            post_btn = page.locator('button[data-e2e="post_video_button"]').first
+            if await post_btn.count() > 0:
+                is_disabled = await post_btn.get_attribute("disabled")
+                aria_disabled = await post_btn.get_attribute("aria-disabled")
+                if is_disabled is None and aria_disabled != "true":
+                    print(f"   [Studio] ✓ Video upload complete & Post button enabled (after {wait_i * 2.5:.1f}s).", flush=True)
+                    break
+            await asyncio.sleep(2.5)
 
         if mode == "schedule" and schedule_dt is not None:
             await self.configure_schedule_ui(page, schedule_dt)
             submit_selectors = [
                 'button[data-e2e="post_video_button"]',
-                'button:has-text("Schedule")',
-                'div[role="button"]:has-text("Schedule")',
+                'button:text-is("Schedule")',
             ]
         else:
             submit_selectors = [
                 'button[data-e2e="post_video_button"]',
-                'button:has-text("Post")',
-                'div[role="button"]:has-text("Post")',
+                'button.TUXButton--primary:text-is("Post")',
+                'button:text-is("Post")',
             ]
 
+        await self.dismiss_joyride_overlays(page)
+        await page.screenshot(path=os.path.abspath("tiktok_upload_before_post.png"))
         clicked = False
         for sel in submit_selectors:
-            btn = page.locator(sel).last
+            btn = page.locator(sel).first
             if await btn.count() > 0 and await btn.is_visible():
                 try:
                     await btn.scroll_into_view_if_needed()
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.8)
                     await btn.click()
                     clicked = True
                     print(f"   [Studio] ✓ Clicked submit button ({sel}).", flush=True)
                     break
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"   [Studio] Submit selector {sel} click exception: {e}", flush=True)
 
-        await asyncio.sleep(5.0)
+        await asyncio.sleep(2.5)
+        # Check if TikTok Studio shows a secondary 'Continue to post? -> Post now' confirmation modal
+        for _ in range(5):
+            confirm_btns = page.locator(
+                'button:has-text("Post now"), div[role="dialog"] button:has-text("Post now"), div.TUXModal button:has-text("Post now")'
+            )
+            if await confirm_btns.count() > 0 and await confirm_btns.first.is_visible():
+                try:
+                    await confirm_btns.first.click(force=True)
+                    print("   [Studio] ✓ Clicked secondary 'Post now' confirmation modal.", flush=True)
+                    await asyncio.sleep(5.0)
+                    break
+                except Exception as e:
+                    print(f"   [Studio] Confirm modal click error: {e}", flush=True)
+            await asyncio.sleep(1.0)
+
+        await asyncio.sleep(4.0)
+        await page.screenshot(path=os.path.abspath("tiktok_upload_after_post.png"))
         if clicked:
             sched_str = schedule_dt.strftime("%Y-%m-%d %H:%M") if schedule_dt else None
             self.tracker.mark_uploaded(

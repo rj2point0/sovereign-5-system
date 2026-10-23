@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-10-22T18:35:29.487684",
+  "updated_at": "2026-10-23T09:12:35.438374",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -32,6 +32,15 @@
       "mode": "published",
       "uploaded_at": "2026-10-22T16:55:00-07:00",
       "notes": "The '52-Day Timing & Somatic Energy' Hook"
+    },
+    "tiktok_broll_01_relationship_patterns.mp4": {
+      "filename": "tiktok_broll_01_relationship_patterns.mp4",
+      "ad_id": "broll_01",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-10-23T09:12:35.438374",
+      "caption_preview": "Why you keep attracting the exact same exhausting relationship patterns (and what the missing numbers in your Chinese Lo"
     }
   }
 }
