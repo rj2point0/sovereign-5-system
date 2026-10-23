@@ -3,10 +3,11 @@
 SACRED NUMBER BLUEPRINT · TIKTOK VIDEO FACTORY
 Automated Problem -> Solution -> CTA Talking Head / Luxury Dossier Video Generator
 Output: 1080x1920 9:16 Vertical MP4s with realistic AI Voiceover, 432Hz ambient pad,
-two-tone gold/white synced captions, and Ken Burns animated dossier cuts.
+two-tone gold/white synced captions (EN & ES), and Ken Burns animated dossier cuts.
 =============================================================================
 """
 
+import argparse
 import asyncio
 import io
 import json
@@ -27,6 +28,7 @@ if sys.platform == "win32":
 import edge_tts
 import imageio_ffmpeg
 from PIL import Image, ImageDraw, ImageFont
+from playwright.async_api import async_playwright
 
 # Set up FFmpeg binary
 FFMPEG_EXE = imageio_ffmpeg.get_ffmpeg_exe()
@@ -35,17 +37,27 @@ FFMPEG_EXE = imageio_ffmpeg.get_ffmpeg_exe()
 FONT_PATH_BOLD = r"C:\Windows\Fonts\segoeuib.ttf"
 FONT_PATH_REG = r"C:\Windows\Fonts\segoeui.ttf"
 
-# Gold keyword vocabulary for two-tone caption emphasis
+# Gold keyword vocabulary for two-tone caption emphasis (English + Spanish)
 GOLD_KEYWORDS = {
-    'generic', 'birthday', 'reading', 'zero', 'sacred', 'number', 'blueprint',
+    # English
+    'generic', 'birthday', 'reading', 'zero', 'sacred', 'number', 'numbers', 'blueprint',
     'five', 'ancient', 'systems', 'pythagorean', 'chaldean', 'kabbalah', 'vedic',
     'lo', 'shu', 'fifteen', 'three', 'overlap', 'anchors', 'wealth', 'relationships',
+    'relationship', 'patterns', 'missing', 'grid', 'square', 'karmic', 'loop',
     'free', 'test', 'bio', 'eighty', '80%', 'percent', 'sound', 'vibration',
-    'vibrations', 'frequencies', 'frequency', 'tree', 'life', 'sephirot', 'square',
+    'vibrations', 'frequencies', 'frequency', 'tree', 'life', 'sephirot',
     'hidden', 'timing', '52-day', 'cycle', 'cycles', 'rosicrucian', 'planetary',
     'periods', 'expansion', 'contracts', 'recovery', 'capital', 'biorhythm',
-    'somatic', 'effortlessly', 'personalized', 'governs', 'destiny', 'missing',
-    'unlocked', 'burnout', 'friction', 'preservation', 'solar', 'jupiterian'
+    'somatic', 'effortlessly', 'personalized', 'governs', 'destiny',
+    'unlocked', 'unlock', 'burnout', 'friction', 'preservation', 'solar', 'jupiterian',
+    '8', '4', '7', '8s', '4s', '7s', 'money', 'second', 'third', 'breakthrough',
+    # Spanish
+    'genérico', 'generico', 'veinte', 'millones', 'lectura', 'sagrado', 'mapa',
+    'cinco', 'sistemas', 'tradiciones', 'ancestrales', 'pitagórica', 'pitagorica',
+    'caldea', 'cábala', 'cabala', 'védica', 'vedica', 'cuadrícula', 'cuadricula',
+    'quince', 'cálculos', 'calculos', 'tres', 'números', 'numeros', 'maestros',
+    'riqueza', 'relaciones', 'ciclos', 'tiempo', 'biografía', 'biografia', 'gratis',
+    'vibración', 'vibracion', 'sonora', 'nombre', 'fecha', 'nacimiento', 'camino', 'vida'
 }
 
 
@@ -84,13 +96,113 @@ class TikTokVideoFactory:
             os.makedirs(self.queue_dir, exist_ok=True)
 
         # Load fonts
-        self.font_top = ImageFont.truetype(FONT_PATH_BOLD, 26)
+        self.font_top = ImageFont.truetype(FONT_PATH_BOLD, 25)
         self.font_cap = ImageFont.truetype(FONT_PATH_BOLD, 44)
         self.font_bot = ImageFont.truetype(FONT_PATH_BOLD, 30)
 
         # Load script specifications
         with open(self.scripts_file, "r", encoding="utf-8") as f:
             self.scripts_data = json.load(f)["scripts"]
+
+    async def ensure_scenes_cached(self):
+        """
+        Ensures all custom hook cards, CTA cards, and English/Spanish dossier scenes
+        referenced in tiktok_scripts.json exist in scenes_cache/.
+        """
+        missing_cards = []
+        for card_id in ("card_hook_ad_01", "card_hook_ad_02", "card_hook_ad_03", "card_hook_ad_04", "card_hook_ad_05", "card_hook_ad_06_es", "card_cta_screen", "card_cta_screen_es"):
+            out_path = os.path.join(self.scenes_dir, f"{card_id}.png")
+            if not os.path.exists(out_path):
+                missing_cards.append((card_id, out_path))
+
+        en_dossier_targets = [
+            ("scene_relationships.png", 16, ".grid"),
+            ("scene_wealth.png", 7, ".grid"),
+        ]
+        missing_en = [(fname, pg, sel) for fname, pg, sel in en_dossier_targets if not os.path.exists(os.path.join(self.scenes_dir, fname))]
+
+        es_dossier_targets = [
+            ("scene_mandala_es.png", 2, "svg"),
+            ("scene_ledger_es.png", 5, "table.lux-table"),
+            ("scene_anchors_es.png", 4, ".grid"),
+        ]
+        missing_es = [(fname, pg, sel) for fname, pg, sel in es_dossier_targets if not os.path.exists(os.path.join(self.scenes_dir, fname))]
+
+        if not missing_cards and not missing_en and not missing_es:
+            return
+
+        print("   [Scenes] Capturing new 1080x1920 Retina scene assets via Playwright...", flush=True)
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+
+            # 1. Capture Hook & CTA cards at 360x640 @ 3x = 1080x1920
+            if missing_cards:
+                ctx_cards = await browser.new_context(viewport={"width": 360, "height": 640}, device_scale_factor=3)
+                page_c = await ctx_cards.new_page()
+                for card_id, out_path in missing_cards:
+                    await page_c.goto(f"http://127.0.0.1:8080/ad_cards.html?card={card_id}", wait_until="networkidle")
+                    await asyncio.sleep(0.25)
+                    await page_c.screenshot(path=out_path, type="png")
+                    print(f"      ✓ Captured card: {out_path}", flush=True)
+                await ctx_cards.close()
+
+            # Helper to unlock dossier and strip sticky headers at 405x720 @ 3x (1215x2160 -> 1080x1920)
+            async def capture_dossier_scenes(lang_code: str, targets: List[Tuple[str, int, str]]):
+                ctx_d = await browser.new_context(
+                    viewport={"width": 405, "height": 720},
+                    device_scale_factor=3,
+                    is_mobile=True,
+                    has_touch=True
+                )
+                pg_d = await ctx_d.new_page()
+                await pg_d.goto(f"http://127.0.0.1:8080/?vip=adam&lang={lang_code}", wait_until="networkidle")
+                await pg_d.evaluate("""() => {
+                    window._disableToast = true;
+                    window.toast = () => {};
+                    document.documentElement.style.scrollBehavior = 'auto';
+                    document.body.style.scrollBehavior = 'auto';
+                }""")
+                await pg_d.click('button[data-action="sample"]')
+                await pg_d.click('button[type="submit"]')
+                await pg_d.wait_for_selector('#view-teaser:not(.hidden)', timeout=12000)
+                await pg_d.click('button[data-action="demo-unlock"]')
+                await pg_d.wait_for_selector('#view-dossier:not(.hidden)', timeout=12000)
+
+                await pg_d.evaluate("""() => {
+                    document.querySelectorAll('header, #claim-bar, #dossier-actions, #toast, .toast, .sticky-cta, #ritual').forEach(el => el.remove());
+                    document.querySelectorAll('*').forEach(el => {
+                        const s = getComputedStyle(el);
+                        if (s.position === 'fixed' || s.position === 'sticky') el.remove();
+                    });
+                    const vd = document.getElementById('view-dossier');
+                    if (vd) { vd.style.padding = '0'; vd.style.margin = '0'; }
+                }""")
+
+                for fname, page_num, sel in targets:
+                    scroll_y = await pg_d.evaluate(f"""() => {{
+                        const art = document.querySelector('article.page[data-page="{page_num}"]');
+                        if (!art) return 0;
+                        const el = art.querySelector('{sel}') || art;
+                        const rect = el.getBoundingClientRect();
+                        return Math.max(0, Math.round(rect.top + window.scrollY - (720 - Math.min(rect.height, 560)) / 2));
+                    }}""")
+                    await pg_d.evaluate(f"window.scrollTo(0, {scroll_y})")
+                    await asyncio.sleep(0.2)
+                    raw_bytes = await pg_d.screenshot(type="png")
+                    img = Image.open(io.BytesIO(raw_bytes)).convert("RGB")
+                    img_1080 = img.resize((1080, 1920), Image.Resampling.LANCZOS)
+                    out_p = os.path.join(self.scenes_dir, fname)
+                    img_1080.save(out_p, format="PNG")
+                    print(f"      ✓ Captured dossier scene ({lang_code.upper()} p.{page_num}): {out_p}", flush=True)
+
+                await ctx_d.close()
+
+            if missing_en:
+                await capture_dossier_scenes("en", missing_en)
+            if missing_es:
+                await capture_dossier_scenes("es", missing_es)
+
+            await browser.close()
 
     async def generate_voice_and_cues(self, script_text: str, voice: str, rate: str, out_voice_path: str) -> List[Dict]:
         """
@@ -193,7 +305,8 @@ class TikTokVideoFactory:
         t: float,
         scene_name: str,
         active_cue: str | None,
-        zoom_factor: float
+        zoom_factor: float,
+        lang: str = "en"
     ) -> bytes:
         """
         Applies Ken Burns zoom, renders persistent top banner (on dossier scenes), active two-tone caption pill,
@@ -213,7 +326,11 @@ class TikTokVideoFactory:
 
         # 2. Top Persistent Callout Banner (shown on dossier scenes: scenes 2, 3, 4)
         if scene_name not in ("hook", "cta"):
-            top_txt = "FREE 5-SYSTEM CALCULATOR -> LINK IN BIO (@sacrednumberblueprint)"
+            top_txt = (
+                "CALCULADORA DE 5 SISTEMAS -> LINK EN BIO (@sacrednumberblueprint)"
+                if lang == "es"
+                else "FREE 5-SYSTEM CALCULATOR -> LINK IN BIO (@sacrednumberblueprint)"
+            )
             t_bbox = draw.textbbox((0, 0), top_txt, font=self.font_top)
             tw, th = t_bbox[2] - t_bbox[0], t_bbox[3] - t_bbox[1]
             tx, ty = 540, 140
@@ -233,9 +350,9 @@ class TikTokVideoFactory:
         if active_cue:
             words = active_cue.split()
             space_w = draw.textbbox((0, 0), " ", font=self.font_cap)[2]
-            w_widths = [draw.textbbox((0, 0), w, font=self.font_cap)[2] for w in words]
+            w_widths = [draw.textbbox((0, 0), w_str, font=self.font_cap)[2] for w_str in words]
             tot_w = sum(w_widths) + (len(words) - 1) * space_w
-            ch = draw.textbbox((0, 0), "Hg", font=self.font_cap)[3]
+            ch = draw.textbbox((0, 0), "HgÁ¿", font=self.font_cap)[3]
             cx, cy = 540, 1260
             cpad_x, cpad_y = 28, 14
 
@@ -247,15 +364,20 @@ class TikTokVideoFactory:
                 width=2
             )
             cur_x = cx - tot_w // 2
-            for w, ww in zip(words, w_widths):
-                is_gold = w.lower().strip("?,.!:'\"()") in GOLD_KEYWORDS
+            for w_str, ww in zip(words, w_widths):
+                clean_w = w_str.lower().strip("¿?¡!,.—-:'\"()")
+                is_gold = clean_w in GOLD_KEYWORDS
                 col = (243, 198, 68) if is_gold else (255, 255, 255)
-                draw.text((cur_x, cy - ch // 2 - 2), w, fill=col, font=self.font_cap)
+                draw.text((cur_x, cy - ch // 2 - 2), w_str, fill=col, font=self.font_cap)
                 cur_x += ww + space_w
 
         # 4. Bottom Callout Banner (shown on dossier scenes: scenes 2, 3, 4)
         if scene_name not in ("hook", "cta"):
-            bot_txt = "LINK IN BIO (@sacrednumberblueprint)"
+            bot_txt = (
+                "TOCA EL LINK EN BIO (@sacrednumberblueprint)"
+                if lang == "es"
+                else "LINK IN BIO (@sacrednumberblueprint)"
+            )
             b_bbox = draw.textbbox((0, 0), bot_txt, font=self.font_bot)
             bw, bh = b_bbox[2] - b_bbox[0], b_bbox[3] - b_bbox[1]
             bx, by = 540, 1780
@@ -274,6 +396,35 @@ class TikTokVideoFactory:
         frame.save(buf, format="JPEG", quality=92)
         return buf.getvalue()
 
+    def build_scene_schedule(self, ad_cfg: Dict, total_dur: float) -> List[Tuple[float, float, str, str]]:
+        """
+        Builds a 5-scene timing schedule proportional to total_dur using the scene images defined in ad_cfg.
+        """
+        ad_id = ad_cfg["id"]
+        scenes = ad_cfg.get("scenes", [])
+        if len(scenes) == 5 and all("image" in s for s in scenes):
+            # Proportional breakpoints across the 5 scenes (Hook ~19%, S2 ~24%, S3 ~23%, S4 ~19%, CTA ~15%)
+            t1 = round(total_dur * 0.19, 2)
+            t2 = round(total_dur * 0.43, 2)
+            t3 = round(total_dur * 0.66, 2)
+            t4 = round(total_dur * 0.85, 2)
+            return [
+                (0.0, t1, "hook", scenes[0]["image"]),
+                (t1, t2, scenes[1]["id"], scenes[1]["image"]),
+                (t2, t3, scenes[2]["id"], scenes[2]["image"]),
+                (t3, t4, scenes[3]["id"], scenes[3]["image"]),
+                (t4, total_dur, "cta", scenes[4]["image"]),
+            ]
+
+        # Fallback legacy schedule
+        return [
+            (0.0, 7.55, "hook", f"scenes_cache/card_hook_{ad_id}.png"),
+            (7.55, 17.50, "mandala", "scenes_cache/scene_mandala.png"),
+            (17.50, 27.00, "ledger", "scenes_cache/scene_ledger.png"),
+            (27.00, 35.50, "anchors", "scenes_cache/scene_anchors.png"),
+            (35.50, total_dur, "cta", "scenes_cache/card_cta_screen.png")
+        ]
+
     def render_ad_video(
         self,
         ad_cfg: Dict,
@@ -285,37 +436,13 @@ class TikTokVideoFactory:
         """
         Orchestrates frame rendering and streams JPEG frames into FFmpeg at 30 fps.
         """
-        ad_id = ad_cfg["id"]
+        lang = ad_cfg.get("lang", "en")
         total_dur = audio_dur
         fps = 30
         total_frames = int(total_dur * fps)
-        print(f"\n[RENDER] Building {ad_cfg['filename']} ({total_dur:.2f}s, {total_frames} frames)...", flush=True)
+        print(f"\n[RENDER] Building {ad_cfg['filename']} ({total_dur:.2f}s, {total_frames} frames, lang={lang})...", flush=True)
 
-        # Map scene schedule based on ad_id
-        if ad_id == "ad_01":
-            scene_schedule = [
-                (0.0, 7.55, "hook", "scenes_cache/card_hook_ad_01.png"),
-                (7.55, 17.50, "mandala", "scenes_cache/scene_mandala.png"),
-                (17.50, 27.00, "ledger", "scenes_cache/scene_ledger.png"),
-                (27.00, 35.50, "anchors", "scenes_cache/scene_anchors.png"),
-                (35.50, total_dur, "cta", "scenes_cache/card_cta_screen.png")
-            ]
-        elif ad_id == "ad_02":
-            scene_schedule = [
-                (0.0, 7.50, "hook", "scenes_cache/card_hook_ad_02.png"),
-                (7.50, 16.50, "tree", "scenes_cache/scene_tree.png"),
-                (16.50, 26.00, "loshu", "scenes_cache/scene_loshu.png"),
-                (26.00, 33.45, "tally", "scenes_cache/scene_tally.png"),
-                (33.45, total_dur, "cta", "scenes_cache/card_cta_screen.png")
-            ]
-        else:  # ad_03
-            scene_schedule = [
-                (0.0, 8.00, "hook", "scenes_cache/card_hook_ad_03.png"),
-                (8.00, 17.50, "cycles", "scenes_cache/scene_cycles.png"),
-                (17.50, 26.00, "somatic", "scenes_cache/scene_somatic.png"),
-                (26.00, 30.50, "directives", "scenes_cache/scene_directives.png"),
-                (30.50, total_dur, "cta", "scenes_cache/card_cta_screen.png")
-            ]
+        scene_schedule = self.build_scene_schedule(ad_cfg, total_dur)
 
         # Load all scene images into memory
         loaded_scenes = {}
@@ -377,7 +504,7 @@ class TikTokVideoFactory:
             if cue_idx < len(cues) and cues[cue_idx]["start"] <= t <= cues[cue_idx]["end"]:
                 active_cue_text = cues[cue_idx]["text"]
 
-            frame_bytes = self.render_frame_overlay(base_img, t, s_name, active_cue_text, zoom)
+            frame_bytes = self.render_frame_overlay(base_img, t, s_name, active_cue_text, zoom, lang=lang)
             proc.stdin.write(frame_bytes)
 
             if (f_idx + 1) % 150 == 0 or (f_idx + 1) == total_frames:
@@ -395,20 +522,21 @@ class TikTokVideoFactory:
 
     def export_queue(self):
         """
-        Copies all 3 generated MP4s to Google Drive tiktok_queue,
+        Copies all generated MP4s and tiktok_scripts.json to Google Drive tiktok_queue,
         creates captions_and_hashtags.md and publish_queue.py.
         """
         print("\n[EXPORT] Copying MP4s and publishing guides to Queue...", flush=True)
-        # 1. Copy MP4s to output and queue
         for ad in self.scripts_data:
             local_src = os.path.join(self.output_dir, ad["filename"])
             if os.path.exists(local_src):
-                # Copy to local root as well
                 shutil.copy2(local_src, ad["filename"])
                 if os.path.exists(self.queue_dir):
                     g_dst = os.path.join(self.queue_dir, ad["filename"])
                     shutil.copy2(local_src, g_dst)
                     print(f"   ✓ Synced to G Drive: {g_dst}")
+
+        if os.path.exists(self.queue_dir) and os.path.exists(self.scripts_file):
+            shutil.copy2(self.scripts_file, os.path.join(self.queue_dir, "tiktok_scripts.json"))
 
         # 2. Generate captions_and_hashtags.md
         md_content = self.build_captions_markdown()
@@ -430,7 +558,7 @@ class TikTokVideoFactory:
 
     def build_captions_markdown(self) -> str:
         lines = [
-            "# ✦ SACRED NUMBER BLUEPRINT · TIKTOK POSTING QUEUE ✦",
+            "# ✦ SACRED NUMBER BLUEPRINT · TIKTOK POSTING QUEUE (6 ADS) ✦",
             f"**Account:** `@sacrednumberblueprint`  ",
             f"**Generated:** {time.strftime('%Y-%m-%d %H:%M:%S')}  ",
             f"**Target Link in Bio:** `https://rj2point0.github.io/sovereign-5-system/`  ",
@@ -443,7 +571,7 @@ class TikTokVideoFactory:
             lines.extend([
                 f"## 📹 VIDEO #{i}: {ad['filename']}",
                 f"**Angle / Hook:** {ad['hook_name']}  ",
-                f"**Audio Track:** Original Sound (`edge-tts` AvaNeural + 432Hz Ambient Harmonic Drone)  ",
+                f"**Language / Voice:** `{ad.get('lang', 'en').upper()}` (`{ad['voice']}` + 432Hz Ambient Harmonic Drone)  ",
                 "",
                 "### 📝 Copy-Paste TikTok Caption:",
                 "```text",
@@ -456,23 +584,15 @@ class TikTokVideoFactory:
                 "### 🎙️ Spoken Voiceover Script (Word-for-Word):",
                 f"> \"{ad['spoken_script']}\"",
                 "",
-                "### 🎬 Visual Scene Architecture (1080x1920 Full Bleed):",
-                "1. **0:00 - 0:07 Hook:** Luxury Problem Comparison Screen (1 System vs. 5 Systems).",
-                "2. **0:07 - 0:17 Convergence:** Page 2 Sacred 5-Ring Mandala (7 · 8 · 4) or Tree of Life / Cycles.",
-                "3. **0:17 - 0:27 Technical Proof:** Page 5 15-Calculation Ledger, Chinese Lo Shu Grid, or Somatic Health Box.",
-                "4. **0:27 - 0:35 Deep Personalization:** Page 4 Master Overlap Anchors & Frequency Tally.",
-                "5. **0:35 - 0:41 Clear CTA:** High-converting closing screen pointing to Link in Bio.",
-                "",
                 "---",
                 ""
             ])
 
         lines.extend([
-            "## 🚀 PROVEN TIKTOK POSTING PROTOCOL",
-            "1. **Sound:** Set audio to **Original Sound - Sacred Number Blueprint** (the 432Hz ambient chord will encourage repeat watches).",
-            "2. **Cover Frame:** Select the 0:03 frame displaying the golden hook comparison card.",
-            "3. **Pinned Comment:** `\"Test your full 5-system overlap code at the link in our bio (Pythagorean, Chaldean, Kabbalah, Vedic & Lo Shu) 👁️✨\"`",
-            "4. **Cadence:** Post 1 video every 24–48 hours to let the TikTok algorithm test diverse audience pools.",
+            "## 🚀 AUTOMATED UPLOADER COMMANDS (`tiktok_auto_uploader.py`)",
+            "- **Dry-Run Verification:** `python tiktok_auto_uploader.py --dry-run`",
+            "- **Post Next Queued Video Immediately:** `python tiktok_auto_uploader.py --post-now`",
+            "- **Schedule Specific Video:** `python tiktok_auto_uploader.py --video tiktok_ad_04_missing_loshu_numbers.mp4 --schedule \"2026-10-23 11:00\"`",
             ""
         ])
         return "\n".join(lines)
@@ -496,7 +616,6 @@ def inspect_queue():
     
     mp4s = sorted(glob.glob(os.path.join(QUEUE_DIR, "tiktok_ad_*.mp4")))
     if not mp4s:
-        # Check parent folder
         mp4s = sorted(glob.glob("tiktok_ad_*.mp4"))
     
     print(f"Found {len(mp4s)} videos ready for broadcast:")
@@ -504,26 +623,34 @@ def inspect_queue():
         sz_mb = os.path.getsize(f) / (1024 * 1024)
         print(f"  • {os.path.basename(f)}: {sz_mb:.2f} MB")
         
-    print("\\nPosting Instructions:")
-    print("  1. Log into TikTok Web Studio: https://www.tiktok.com/creator-center/upload")
-    print("  2. Upload desired MP4 video.")
-    print("  3. Copy caption & hashtags from captions_and_hashtags.md")
-    print("  4. Verify Link in Bio points to: https://rj2point0.github.io/sovereign-5-system/")
+    print("\\nAutomated Uploader Commands:")
+    print("  • Dry run:  python tiktok_auto_uploader.py --dry-run")
+    print("  • Post now: python tiktok_auto_uploader.py --post-now")
+    print("  • Schedule: python tiktok_auto_uploader.py --schedule \\"YYYY-MM-DD HH:MM\\"")
     print("=" * 65)
 
 if __name__ == "__main__":
     inspect_queue()
 '''
 
-    async def run(self):
+    async def run(self, only_ids: List[str] | None = None, force: bool = False):
         print("=" * 65)
-        print("   STARTING TIKTOK VIDEO FACTORY (3 FULL PRODUCTION ADS)")
+        print("   STARTING TIKTOK VIDEO FACTORY")
         print("=" * 65)
+
+        await self.ensure_scenes_cached()
 
         for ad in self.scripts_data:
             ad_id = ad["id"]
             filename = ad["filename"]
             out_mp4 = os.path.join(self.output_dir, filename)
+
+            if only_ids and ad_id not in only_ids and filename not in only_ids:
+                continue
+            if not force and not only_ids and os.path.exists(out_mp4) and os.path.getsize(out_mp4) > 500_000:
+                print(f"\n⏭ Skipping [{ad_id}] {filename} (already exists, use --force or --only to re-render).", flush=True)
+                continue
+
             voice_mp3 = f"voice_{ad_id}.mp3"
             ambient_wav = f"ambient_{ad_id}.wav"
             mixed_mp3 = f"mixed_{ad_id}.mp3"
@@ -539,7 +666,6 @@ if __name__ == "__main__":
             )
 
             # 2. Ambient Audio & Mix
-            # Estimate raw voice duration from last cue
             raw_dur = cues[-1]["end"] if cues else 40.0
             print(f"   [Audio] Synthesizing 432Hz ambient chord ({raw_dur:.1f}s)...", flush=True)
             self.generate_ambient_audio(raw_dur + 2.0, ambient_wav)
@@ -559,10 +685,16 @@ if __name__ == "__main__":
         self.export_queue()
 
         print("\n" + "=" * 65)
-        print("   ALL 3 TIKTOK ADS SUCCESSFULLY PRODUCED AND EXPORTED!")
+        print("   ALL TARGET TIKTOK ADS SUCCESSFULLY PRODUCED AND EXPORTED!")
         print("=" * 65)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Sacred Number Blueprint TikTok Video Factory")
+    parser.add_argument("--only", type=str, default=None, help="Comma-separated list of ad IDs to render (e.g. ad_04,ad_05,ad_06)")
+    parser.add_argument("--force", action="store_true", help="Force re-rendering of all ads even if MP4 already exists")
+    args = parser.parse_args()
+
+    only_list = [x.strip() for x in args.only.split(",") if x.strip()] if args.only else None
     factory = TikTokVideoFactory()
-    asyncio.run(factory.run())
+    asyncio.run(factory.run(only_ids=only_list, force=args.force))

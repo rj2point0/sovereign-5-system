@@ -16,7 +16,6 @@ def inspect_queue():
     
     mp4s = sorted(glob.glob(os.path.join(QUEUE_DIR, "tiktok_ad_*.mp4")))
     if not mp4s:
-        # Check parent folder
         mp4s = sorted(glob.glob("tiktok_ad_*.mp4"))
     
     print(f"Found {len(mp4s)} videos ready for broadcast:")
@@ -24,11 +23,10 @@ def inspect_queue():
         sz_mb = os.path.getsize(f) / (1024 * 1024)
         print(f"  • {os.path.basename(f)}: {sz_mb:.2f} MB")
         
-    print("\nPosting Instructions:")
-    print("  1. Log into TikTok Web Studio: https://www.tiktok.com/creator-center/upload")
-    print("  2. Upload desired MP4 video.")
-    print("  3. Copy caption & hashtags from captions_and_hashtags.md")
-    print("  4. Verify Link in Bio points to: https://rj2point0.github.io/sovereign-5-system/")
+    print("\nAutomated Uploader Commands:")
+    print("  • Dry run:  python tiktok_auto_uploader.py --dry-run")
+    print("  • Post now: python tiktok_auto_uploader.py --post-now")
+    print("  • Schedule: python tiktok_auto_uploader.py --schedule \"YYYY-MM-DD HH:MM\"")
     print("=" * 65)
 
 if __name__ == "__main__":
