@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
 """
 =============================================================================
-SOVEREIGN 5-SYSTEM · REAL-TIME LEAD CAPTURE & LUXURY EMAIL FOLLOW-UP WORKER
+SOVEREIGN 5-SYSTEM · REAL-TIME LEAD CAPTURE & 3-PART LUXURY EMAIL SEQUENCE
 lead_capture_worker.py
 -----------------------------------------------------------------------------
 1. Captures leads submitted from https://rj2point0.github.io/sovereign-5-system/
    via public cloud relay (ntfy.sh/sovereign_5_leads_mvv_991214754) and local
    HTTP webhook (http://127.0.0.1:8788/webhook).
-2. Computes exact 5-System Numerology numbers (matching engine.js 100%).
+2. Computes exact 5-System Numerology numbers (matching engine.js 100%):
+   - Proper compound reduction cap=52 (e.g. 99 -> 18/9)
+   - Strict system count vs. system list consistency (len(systems) <= count)
+   - Clean Vedic Moolank formatting (e.g. '7 · Ketu (South Node)')
 3. Logs every lead permanently to:
    - G:\\My Drive\\5_System_Numerology_MVP\\leads_captured.csv
    - c:\\Users\\User\\5numsystem\\leads_captured.csv
    - G:\\My Drive\\MVV_Memory_Vault\\03-Projects\\Leads_Captured_Dashboard.md
    - Supabase PostgreSQL (`public.numerology_leads`)
-4. Sends an instant, luxury Obsidian & Gold HTML follow-up email via
-   Google Workspace SMTP (adamvega@megavegaventures.com) with the user's
-   Big 3 Master Overlap Numbers and $37 Dossier Unlock + Teaser Session links.
+4. Runs an automated 3-part luxury HTML email sequence via Google Workspace SMTP
+   (Sacred Number Blueprint <adamvega@megavegaventures.com>):
+   - Email #1 (Instant): 5-System Overlap Teaser + Single-System Friction Alert
+     + Locked Systems II/III/V Curiosity Gap + 20-Page Value Stack
+   - Email #2 (24h later): Missing Chinese Lo Shu Grid Numbers & Relationship /
+     Wealth Engine (#2 Anchor) Follow-Up
+   - Email #3 (48h later): Active 52-Day Rosicrucian Cycle & Somatic Nervous
+     System Alignment Follow-Up
 =============================================================================
 """
 
@@ -23,6 +31,7 @@ import argparse
 import csv
 import html
 import json
+import math
 import os
 import re
 import smtplib
@@ -56,7 +65,7 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SMTP_USER = "adamvega@megavegaventures.com"
 SMTP_PASS = "msct rkqt xcwb inma"
-SENDER_DISPLAY = "Sacred Number Blueprint · Sovereign 5-System <adamvega@megavegaventures.com>"
+SENDER_DISPLAY = "Sacred Number Blueprint <adamvega@megavegaventures.com>"
 
 STRIPE_BASE_URL = "https://buy.stripe.com/6oU7sLek90MdbVechV38401"
 STRIPE_BUMP_URL = "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402"
@@ -79,6 +88,9 @@ CSV_COLUMNS = [
     "vedic_moolank",
     "chaldean_name",
     "email_sent",
+    "email_1_sent_at",
+    "email_2_sent_at",
+    "email_3_sent_at",
 ]
 
 # -----------------------------------------------------------------------------
@@ -96,15 +108,60 @@ for val, letters in [
 VOWELS = set("AEIOU")
 
 ARCHETYPES_EN = {
-    1: {"name": "The Sovereign Pioneer", "keywords": "Command · Originality · Will", "summary": "You are wired to initiate, lead from the front, and carve original paths where consensus hesitates."},
-    2: {"name": "The Diplomatic Oracle", "keywords": "Intuition · Resonance · Alliance", "summary": "You perceive the unspoken currents between people, turning subtle emotional intelligence into strategic harmony."},
-    3: {"name": "The Magnetic Catalyst", "keywords": "Expression · Synthesis · Charisma", "summary": "Your voice and creative fire translate complex truths into magnetic ideas that move rooms and markets."},
-    4: {"name": "The Master Architect", "keywords": "Structure · Endurance · Foundation", "summary": "You turn abstract vision into permanent, load-bearing systems, wealth structures, and unshakable order."},
-    5: {"name": "The Mercurial Alchemist", "keywords": "Velocity · Freedom · Pivot", "summary": "You thrive at the intersection of rapid change, sensory mastery, and high-leverage adaptability."},
-    6: {"name": "The Sovereign Guardian", "keywords": "Magnetism · Sanctuary · Devotion", "summary": "You command through beauty, loyalty, and protective stewardship over your family, capital, and legacy."},
-    7: {"name": "The Mystic Strategist", "keywords": "Pattern Analysis · Sovereignty · Depth", "summary": "You see beneath surface noise to decode the hidden mathematical and psychological laws governing outcomes."},
-    8: {"name": "The Executive Magnate", "keywords": "Capital · Authority · Scale", "summary": "You are built for high-stakes material execution, asymmetric wealth creation, and institutional command."},
-    9: {"name": "The Sage-Warrior", "keywords": "Mastery · Completion · Legacy", "summary": "You synthesize the wisdom of all preceding numbers into panoramic vision, decisive action, and lasting impact."},
+    1: {
+        "name": "The Sovereign Pioneer",
+        "keywords": "Command · Originality · Will",
+        "summary": "You are wired to initiate, lead from the front, and carve original paths where consensus hesitates.",
+        "single_trap": "pushing in isolation and carrying every burden on your own shoulders",
+    },
+    2: {
+        "name": "The Diplomatic Oracle",
+        "keywords": "Intuition · Resonance · Alliance",
+        "summary": "You perceive the unspoken currents between people, turning subtle emotional intelligence into strategic harmony.",
+        "single_trap": "over-adapting to others' emotions and second-guessing your own authority",
+    },
+    3: {
+        "name": "The Magnetic Catalyst",
+        "keywords": "Expression · Synthesis · Charisma",
+        "summary": "Your voice and creative fire translate complex truths into magnetic ideas that move rooms and markets.",
+        "single_trap": "scattering creative energy across too many fronts without structural leverage",
+    },
+    4: {
+        "name": "The Master Architect",
+        "keywords": "Structure · Endurance · Foundation",
+        "summary": "You turn abstract vision into permanent, load-bearing systems, wealth structures, and unshakable order.",
+        "single_trap": "overworking inside rigid systems while starving your higher intuitive strategy",
+    },
+    5: {
+        "name": "The Mercurial Alchemist",
+        "keywords": "Velocity · Freedom · Pivot",
+        "summary": "You thrive at the intersection of rapid change, sensory mastery, and high-leverage adaptability.",
+        "single_trap": "restless pivoting and nervous system overstimulation without an anchor",
+    },
+    6: {
+        "name": "The Sovereign Guardian",
+        "keywords": "Magnetism · Sanctuary · Devotion",
+        "summary": "You command through beauty, loyalty, and protective stewardship over your family, capital, and legacy.",
+        "single_trap": "over-extending yourself as a caretaker and harmonizer at the expense of your sovereign path",
+    },
+    7: {
+        "name": "The Mystic Strategist",
+        "keywords": "Pattern Analysis · Sovereignty · Depth",
+        "summary": "You see beneath surface noise to decode the hidden mathematical and psychological laws governing outcomes.",
+        "single_trap": "retreating into analysis paralysis when your wealth engine isn't activated",
+    },
+    8: {
+        "name": "The Executive Magnate",
+        "keywords": "Capital · Authority · Scale",
+        "summary": "You are built for high-stakes material execution, asymmetric wealth creation, and institutional command.",
+        "single_trap": "riding feast-or-famine material cycles by forcing outcomes through sheer willpower",
+    },
+    9: {
+        "name": "The Sage-Warrior",
+        "keywords": "Mastery · Completion · Legacy",
+        "summary": "You synthesize the wisdom of all preceding numbers into panoramic vision, decisive action, and lasting impact.",
+        "single_trap": "carrying karmic weight for others while delaying your own sovereign mission",
+    },
 }
 
 VEDIC_PLANETS = {
@@ -129,6 +186,16 @@ ELEMENTS = {
 ELEMENT_ORDER = ["Earth", "Metal", "Wood", "Water", "Fire"]
 SYSTEM_ORDER = ["Pythagorean", "Chaldean", "Kabbalistic", "Vedic", "Lo Shu"]
 
+ROSICRUCIAN_CYCLES = [
+    {"n": 1, "name": "The Solar Period", "planet": "Sun", "glyph": "☉", "theme": "Promotion, High Visibility & Leadership Seek"},
+    {"n": 2, "name": "The Lunar Period", "planet": "Moon", "glyph": "☽", "theme": "Travel, Short-Term Pivots & Fluid Calibration"},
+    {"n": 3, "name": "The Martial Period", "planet": "Mars", "glyph": "♂", "theme": "Aggressive Action, High-Variance Pushes & Competition"},
+    {"n": 4, "name": "The Mercurial Period", "planet": "Mercury", "glyph": "☿", "theme": "Deep Analysis, Systems Building & Intellectual Edge"},
+    {"n": 5, "name": "The Jupiterian Period", "planet": "Jupiter", "glyph": "♃", "theme": "Maximum Wealth Expansion, High-Stakes Execution & Scaling"},
+    {"n": 6, "name": "The Venusian Period", "planet": "Venus", "glyph": "♀", "theme": "Social Magnetism, Attraction, Luxury & Partnerships"},
+    {"n": 7, "name": "The Saturnian Period", "planet": "Saturn", "glyph": "♄", "theme": "Capital Preservation, Tightening Ranges, Pruning & Vault Defense"},
+]
+
 
 def digit_sum(n: int) -> int:
     return sum(int(d) for d in str(abs(int(n))))
@@ -141,14 +208,14 @@ def reduce_num(n: int) -> int:
     return x
 
 
-def compound_of(n: int, cap: int = 99) -> int:
+def compound_of(n: int, cap: int = 52) -> int:
     c = abs(int(n))
     while c > cap:
         c = digit_sum(c)
     return c
 
 
-def make_num(raw: int, cap: int = 99) -> Dict[str, Any]:
+def make_num(raw: int, cap: int = 52) -> Dict[str, Any]:
     comp = compound_of(raw, cap)
     val = reduce_num(raw)
     return {
@@ -182,6 +249,38 @@ def normalize_dob(dob_str: str) -> str:
     return s
 
 
+def compute_active_rosicrucian_cycle(m: int, d: int, now_dt: Optional[datetime] = None) -> Dict[str, Any]:
+    """Calculates the current 52-day Rosicrucian planetary period."""
+    t = now_dt or datetime.now(timezone.utc)
+    today_date = datetime(t.year, t.month, t.day, tzinfo=timezone.utc)
+
+    def bday_in_year(yr: int) -> datetime:
+        if m == 2 and d == 29 and not (yr % 4 == 0 and (yr % 100 != 0 or yr % 400 == 0)):
+            return datetime(yr, 2, 28, tzinfo=timezone.utc)
+        return datetime(yr, m, d, tzinfo=timezone.utc)
+
+    start = bday_in_year(today_date.year)
+    if start > today_date:
+        start = bday_in_year(today_date.year - 1)
+    nxt = bday_in_year(start.year + 1)
+    year_len = max(1, (nxt - start).days)
+    day_of_year = (today_date - start).days
+
+    active_idx = 6
+    days_rem = 1
+    for i in range(7):
+        s_off = math.floor(i * year_len / 7.0)
+        e_off = (year_len - 1) if i == 6 else (math.floor((i + 1) * year_len / 7.0) - 1)
+        if s_off <= day_of_year <= e_off:
+            active_idx = i
+            days_rem = (e_off - day_of_year) + 1
+            break
+
+    cyc = dict(ROSICRUCIAN_CYCLES[active_idx])
+    cyc["days_remaining"] = days_rem
+    return cyc
+
+
 def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
     """Exact Python implementation of engine.js `calculate()`."""
     iso_dob = normalize_dob(dob_str)
@@ -194,12 +293,12 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
     last_words = "".join(words[1:]) if len(words) > 1 else ""
     all_letters = "".join(words)
 
-    # 1. Pythagorean
-    lp = make_num(reduce_num(y) + reduce_num(m) + reduce_num(d))
-    expr = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in all_letters))
-    soul = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in all_letters if ch in VOWELS))
-    pers = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in all_letters if ch not in VOWELS))
-    first_cons = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in first_word if ch not in VOWELS))
+    # 1. Pythagorean (compound cap=52 so 99 reduces to 18/9)
+    lp = make_num(reduce_num(y) + reduce_num(m) + reduce_num(d), 52)
+    expr = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in all_letters), 52)
+    soul = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in all_letters if ch in VOWELS), 52)
+    pers = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in all_letters if ch not in VOWELS), 52)
+    first_cons = make_num(sum(PYTHAGOREAN_MAP.get(ch, 0) for ch in first_word if ch not in VOWELS), 52)
 
     # 2. Chaldean
     chal_first = make_num(sum(CHALDEAN_MAP.get(ch, 0) for ch in first_word), 52)
@@ -227,6 +326,7 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
         if 1 <= n <= 9:
             counts[n] += 1
 
+    missing_loshu = [n for n in range(1, 10) if counts[n] == 0]
     el_scores = {el: sum(counts[n] for n in nums) for el, nums in ELEMENTS.items()}
     max_el = max(el_scores.values())
     dom_element = next(el for el in ELEMENT_ORDER if el_scores[el] == max_el)
@@ -271,7 +371,9 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
     for n in range(1, 10):
         hits = [s for s in filtered if s[3] == n]
         sys_set = set(h[2] for h in hits)
-        if n in kab_nums:
+        # Only attribute a secondary Kabbalistic Sephirah system when hits has multiple entries
+        # so len(systems) NEVER exceeds count (len(hits)).
+        if n in kab_nums and len(hits) > len(sys_set):
             sys_set.add("Kabbalistic")
         first_idx = next((idx for idx, s in enumerate(filtered) if s[3] == n), 99)
         tally[n] = {
@@ -291,6 +393,7 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
         key=lambda a: (-a["count"], -len(a["systems"]), -a["loShuCount"], a["firstIndex"], a["number"])
     )
     anchors = ranking[:3]
+    active_cycle = compute_active_rosicrucian_cycle(m, d)
 
     return {
         "name": " ".join(w.capitalize() for w in full_name.strip().split()),
@@ -298,21 +401,46 @@ def calculate_5_systems(full_name: str, dob_str: str) -> Dict[str, Any]:
         "top_3_overlap_numbers": ", ".join(str(a["number"]) for a in anchors),
         "anchors": anchors,
         "life_path": lp["display"],
+        "life_path_val": lp["value"],
+        "life_path_archetype": ARCHETYPES_EN[lp["value"]]["name"],
+        "life_path_trap": ARCHETYPES_EN[lp["value"]]["single_trap"],
         "expression": expr["display"],
         "soul_urge": soul["display"],
-        "vedic_moolank": f"{moolank_val} ({VEDIC_PLANETS.get(moolank_val, 'Surya')})",
-        "vedic_bhagyank": f"{bhagyank_val} ({VEDIC_PLANETS.get(bhagyank_val, 'Surya')})",
+        "vedic_moolank": f"{moolank_val} · {VEDIC_PLANETS.get(moolank_val, 'Surya (Sun)')}",
+        "vedic_bhagyank": f"{bhagyank_val} · {VEDIC_PLANETS.get(bhagyank_val, 'Surya (Sun)')}",
         "chaldean_name": chal_total["display"],
         "dominant_element": f"{dom_element} (#{dom_number})",
+        "missing_loshu": missing_loshu,
+        "active_cycle_name": active_cycle["name"],
+        "active_cycle_planet": active_cycle["planet"],
+        "active_cycle_glyph": active_cycle["glyph"],
+        "active_cycle_theme": active_cycle["theme"],
+        "active_cycle_days_remaining": active_cycle["days_remaining"],
         "total_sources": len(filtered),
     }
 
 
+def build_teaser_deep_link(name: str, dob: str, email_addr: str) -> str:
+    """
+    Constructs the exact cross-browser session-restoring Teaser URL:
+    https://rj2point0.github.io/sovereign-5-system/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com
+    """
+    query = urllib.parse.urlencode(
+        [
+            ("view", "teaser"),
+            ("name", name),
+            ("dob", dob),
+            ("email", email_addr),
+        ]
+    )
+    return f"{APP_BASE_URL}?{query}"
+
+
 # -----------------------------------------------------------------------------
-# LUXURY HTML FOLLOW-UP EMAIL BUILDER & SENDER
+# EMAIL #1 (INSTANT): 5-SYSTEM OVERLAP TEASER + FRICTION ALERT + VALUE STACK
 # -----------------------------------------------------------------------------
 def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
-    """Returns (subject, plain_text, html_body) for the captured lead."""
+    """Returns (subject, plain_text, html_body) for Email #1 (Instant Teaser)."""
     name = lead["name"]
     first_name = name.split()[0] if name else "Friend"
     dob = lead["dob"]
@@ -321,47 +449,70 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
     anchors = calc["anchors"]
     a1, a2, a3 = anchors[0], anchors[1], anchors[2]
 
-    # Format birth date nicely
     try:
         dt_obj = datetime.strptime(dob, "%Y-%m-%d")
         dob_formatted = dt_obj.strftime("%B %d, %Y")
     except Exception:
         dob_formatted = dob
 
-    teaser_url = (
-        f"{APP_BASE_URL}?name={urllib.parse.quote(name)}"
-        f"&dob={urllib.parse.quote(dob)}"
-        f"&email={urllib.parse.quote(email_addr)}&view=teaser"
-    )
+    teaser_url = build_teaser_deep_link(name, dob, email_addr)
     stripe_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
 
     subject = f"✦ Your 5-System Numerology Code: Master Overlap #{a1['number']} ({a1['archetype']})"
 
+    lp_disp = calc["life_path"]
+    lp_val = calc.get("life_path_val", reduce_num(int(lp_disp.split("/")[-1])))
+    lp_arch = calc.get("life_path_archetype", ARCHETYPES_EN.get(lp_val, ARCHETYPES_EN[6])["name"])
+    lp_trap = calc.get("life_path_trap", ARCHETYPES_EN.get(lp_val, ARCHETYPES_EN[6])["single_trap"])
+
+    if lp_val != a1["number"]:
+        friction_headline = f"Western Life Path {lp_disp} vs. Master Overlap #{a1['number']}"
+        friction_text = (
+            f"Standard Western numerology apps only calculate your birth date, labeling you a "
+            f"<strong>Life Path {html.escape(lp_disp)} ({html.escape(lp_arch)})</strong>—which pushes you toward "
+            f"{html.escape(lp_trap)}. Yet when we cross-reference your full birth name and birth date across all 5 ancient "
+            f"traditions, your true <strong>#1 Master Overlap Anchor is #{a1['number']} ({html.escape(a1['archetype'])})</strong> "
+            f"({a1['count']}× across {len(a1['systems'])} systems). Living by your single-system Life Path creates invisible "
+            f"friction against your true #{a1['number']} sovereign nature."
+        )
+    else:
+        friction_headline = f"Single-System Life Path {lp_disp} vs. Your #2 Wealth Engine (#{a2['number']})"
+        friction_text = (
+            f"While Western numerology correctly identifies your primary #{a1['number']} ({html.escape(a1['archetype'])}) "
+            f"frequency, relying on that single number alone leaves you stuck in {html.escape(lp_trap)}. Your real material "
+            f"breakthrough requires activating your <strong>#2 Wealth &amp; Strategy Engine: Anchor #{a2['number']} "
+            f"({html.escape(a2['archetype'])})</strong> ({a2['count']}× across {len(a2['systems'])} systems)."
+        )
+
+    a2_sys_label = f"{len(a2['systems'])} system" + ("s" if len(a2["systems"]) != 1 else "")
+    a3_sys_label = f"{len(a3['systems'])} system" + ("s" if len(a3["systems"]) != 1 else "")
+
     plain_text = (
-        f"THE SOVEREIGN 5-SYSTEM BLUEPRINT\n"
+        f"SACRED NUMBER BLUEPRINT · THE SOVEREIGN 5-SYSTEM CODE\n"
         f"Decoded for {name} (Born {dob_formatted})\n"
         f"============================================================\n\n"
         f"{first_name}, we cross-referenced your full birth name and birth date across all 5 ancient mathematical traditions "
         f"(Pythagorean, Babylonian Chaldean, Kabbalistic Tree of Life, Vedic Planetary Council & Chinese Lo Shu).\n\n"
-        f"YOUR BIG THREE MASTER OVERLAP NUMBERS:\n"
-        f"1. PRIMARY SIGNATURE ANCHOR: #{a1['number']} — {a1['archetype']}\n"
-        f"   Appeared {a1['count']} times across {len(a1['systems'])} systems ({', '.join(a1['systems'])})\n"
-        f"   {a1['summary']}\n\n"
-        f"2. WEALTH & STRATEGY ENGINE: #{a2['number']} — {a2['archetype']}\n"
-        f"   Appeared {a2['count']} times across {', '.join(a2['systems'])}\n\n"
-        f"3. SANCTUARY & STRUCTURAL FOUNDATION: #{a3['number']} — {a3['archetype']}\n"
-        f"   Appeared {a3['count']} times across {', '.join(a3['systems'])}\n\n"
-        f"CROSS-SYSTEM SNAPSHOT:\n"
-        f"• Pythagorean Life Path: {calc['life_path']}\n"
-        f"• Expression / Destiny: {calc['expression']}\n"
-        f"• Soul Urge: {calc['soul_urge']}\n"
-        f"• Vedic Planetary Moolank: {calc['vedic_moolank']}\n"
-        f"• Chaldean Name Vibration: {calc['chaldean_name']}\n\n"
+        f"YOUR #1 PRIMARY SIGNATURE ANCHOR: #{a1['number']} — {a1['archetype']}\n"
+        f"Appeared {a1['count']} times across {len(a1['systems'])} of 5 ancient systems ({', '.join(a1['systems'])})\n"
+        f"\"{a1['summary']}\"\n\n"
+        f"⚠️ SINGLE-SYSTEM FRICTION ALERT ({friction_headline}):\n"
+        f"Western Life Path {lp_disp} ({lp_arch}) only tells 20% of your code. Your true multi-system center of gravity "
+        f"is #{a1['number']} ({a1['archetype']}), supported by:\n"
+        f"• #2 WEALTH & STRATEGY ENGINE: Anchor #{a2['number']} · {a2['archetype']} ({a2['count']}× across {a2_sys_label}: {', '.join(a2['systems'])})\n"
+        f"• #3 SANCTUARY & FOUNDATION: Anchor #{a3['number']} · {a3['archetype']} ({a3['count']}× across {a3_sys_label}: {', '.join(a3['systems'])})\n\n"
+        f"YOUR 5-SYSTEM MATHEMATICAL SNAPSHOT:\n"
+        f"• System I (Pythagorean Life Path): {calc['life_path']}\n"
+        f"• System IV (Vedic Planetary Moolank): {calc['vedic_moolank']}\n"
+        f"• System II (Babylonian Chaldean Compound Name): 🔒 Locked in Full 20-Page Dossier\n"
+        f"• System III (Kabbalistic Tree of Life & Sephirot): 🔒 Locked in Full 20-Page Dossier\n"
+        f"• System V (Chinese Lo Shu Grid & Missing Numbers): 🔒 Locked in Full 20-Page Dossier\n"
+        f"• Active 52-Day Rosicrucian Planetary Cycle: 🔒 Locked in Full 20-Page Dossier\n\n"
         f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37):\n"
         f"{stripe_url}\n\n"
-        f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER:\n"
+        f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER & WATCH VIDEO BRIEFING:\n"
         f"{teaser_url}\n\n"
-        f"— Sacred Number Blueprint · Sovereign 5-System\n"
+        f"— Sacred Number Blueprint (@sacrednumberblueprint)\n"
     )
 
     a1_systems_badges = "".join(
@@ -371,6 +522,11 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
         for s in a1["systems"]
     )
 
+    preheader_text = (
+        f"Your #1 Master Overlap Anchor is #{a1['number']} ({a1['archetype']}) across {len(a1['systems'])} systems — "
+        f"see why your Western Life Path {lp_disp} only tells 20% of your code..."
+    )
+
     html_body = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -378,6 +534,11 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="margin:0;padding:0;background-color:#0A0A0C;font-family:'Georgia',serif;color:#F5F5F7;">
+  <!-- Hidden Preheader Snippet -->
+  <div style="display:none;max-height:0px;overflow:hidden;mso-hide:all;font-size:1px;color:#0A0A0C;line-height:1px;opacity:0;">
+    {html.escape(preheader_text)}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+  </div>
+
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0A0A0C;padding:28px 12px;">
     <tr>
       <td align="center">
@@ -387,7 +548,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <tr>
             <td align="center" style="padding:28px 24px 18px;border-bottom:1px solid rgba(212,175,55,0.2);background:radial-gradient(circle at 50% 0%,#241f11,#121318 75%);">
               <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:#D4AF37;font-weight:700;">
-                ✦ SOVEREIGN · 5 ANCIENT SYSTEMS ✦
+                ✦ SACRED NUMBER BLUEPRINT · 5 ANCIENT SYSTEMS ✦
               </div>
               <h1 style="margin:12px 0 6px;font-size:26px;line-height:1.25;color:#F5F5F7;font-weight:600;letter-spacing:0.5px;">
                 {html.escape(first_name)}, Your 5-System Overlap Is Decoded.
@@ -400,7 +561,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
 
           <!-- #1 Master Overlap Anchor Card -->
           <tr>
-            <td align="center" style="padding:28px 24px 20px;">
+            <td align="center" style="padding:28px 24px 18px;">
               <div style="font-family:'Arial',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#D4AF37;margin-bottom:12px;">
                 YOUR #1 PRIMARY SIGNATURE ANCHOR
               </div>
@@ -425,6 +586,24 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
             </td>
           </tr>
 
+          <!-- ⚠️ SINGLE-SYSTEM FRICTION ALERT -->
+          <tr>
+            <td style="padding:0 24px 20px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:linear-gradient(145deg,#231215 0%,#151218 100%);border:1px solid rgba(248,113,113,0.42);border-left:4px solid #F87171;border-radius:12px;padding:16px 18px;">
+                <tr>
+                  <td>
+                    <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#FCA5A5;font-weight:700;margin-bottom:6px;">
+                      ⚠️ SINGLE-SYSTEM FRICTION ALERT · {html.escape(friction_headline)}
+                    </div>
+                    <p style="margin:0;font-family:'Arial',sans-serif;font-size:13px;line-height:1.58;color:#E4E4E7;">
+                      {friction_text}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
           <!-- #2 and #3 Overlap Anchors -->
           <tr>
             <td style="padding:0 24px 22px;">
@@ -437,7 +616,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
                     <div style="font-size:17px;color:#F5F5F7;font-weight:600;margin-top:3px;">
                       Anchor #{a2['number']} · {html.escape(a2['archetype'])}
                       <span style="font-family:'Arial',sans-serif;font-size:12px;color:#A1A1AA;font-weight:400;">
-                        ({a2['count']}× across {', '.join(a2['systems'])})
+                        ({a2['count']}× across {a2_sys_label}: {html.escape(', '.join(a2['systems']))})
                       </span>
                     </div>
                   </td>
@@ -450,7 +629,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
                     <div style="font-size:17px;color:#F5F5F7;font-weight:600;margin-top:3px;">
                       Anchor #{a3['number']} · {html.escape(a3['archetype'])}
                       <span style="font-family:'Arial',sans-serif;font-size:12px;color:#A1A1AA;font-weight:400;">
-                        ({a3['count']}× across {', '.join(a3['systems'])})
+                        ({a3['count']}× across {a3_sys_label}: {html.escape(', '.join(a3['systems']))})
                       </span>
                     </div>
                   </td>
@@ -459,32 +638,73 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
             </td>
           </tr>
 
-          <!-- 5-System Snapshot Grid -->
+          <!-- 5-System Snapshot Grid (With Curiosity Gap Locks on Systems II, III, V) -->
           <tr>
-            <td style="padding:0 24px 24px;">
+            <td style="padding:0 24px 22px;">
               <div style="font-family:'Arial',sans-serif;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:#A1A1AA;margin-bottom:10px;text-align:center;">
                 YOUR 5-SYSTEM MATHEMATICAL SNAPSHOT
               </div>
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="8" border="0" style="font-family:'Arial',sans-serif;font-size:13px;background-color:#0D0E12;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="9" border="0" style="font-family:'Arial',sans-serif;font-size:13px;background-color:#0D0E12;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
                 <tr>
-                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">Pythagorean Life Path</td>
-                  <td align="right" style="color:#F3E5AB;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);">{html.escape(calc['life_path'])}</td>
+                  <td style="color:#E4E4E7;border-bottom:1px solid rgba(255,255,255,0.06);">System I · Pythagorean Life Path</td>
+                  <td align="right" style="color:#F3E5AB;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);">{html.escape(calc['life_path'])} · {html.escape(lp_arch)}</td>
                 </tr>
                 <tr>
-                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">Pythagorean Expression / Destiny</td>
-                  <td align="right" style="color:#F3E5AB;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);">{html.escape(calc['expression'])}</td>
-                </tr>
-                <tr>
-                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">Babylonian Chaldean Full Name</td>
-                  <td align="right" style="color:#F3E5AB;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);">{html.escape(calc['chaldean_name'])}</td>
-                </tr>
-                <tr>
-                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">Vedic Planetary Driver (Moolank)</td>
+                  <td style="color:#E4E4E7;border-bottom:1px solid rgba(255,255,255,0.06);">System IV · Vedic Planetary Driver (Moolank)</td>
                   <td align="right" style="color:#F3E5AB;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.06);">{html.escape(calc['vedic_moolank'])}</td>
                 </tr>
                 <tr>
-                  <td style="color:#A1A1AA;">Lo Shu Dominant Element</td>
-                  <td align="right" style="color:#F3E5AB;font-weight:700;">{html.escape(calc.get('dominant_element', 'Earth'))}</td>
+                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">System II · Babylonian Chaldean Name Compound</td>
+                  <td align="right" style="color:#D4AF37;font-size:12px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">🔒 Locked in Full 20-Page Dossier</td>
+                </tr>
+                <tr>
+                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">System III · Kabbalistic Tree of Life &amp; Sephirot</td>
+                  <td align="right" style="color:#D4AF37;font-size:12px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">🔒 Locked in Full 20-Page Dossier</td>
+                </tr>
+                <tr>
+                  <td style="color:#A1A1AA;border-bottom:1px solid rgba(255,255,255,0.06);">System V · Chinese Lo Shu &amp; Missing Numbers</td>
+                  <td align="right" style="color:#D4AF37;font-size:12px;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">🔒 Locked in Full 20-Page Dossier</td>
+                </tr>
+                <tr>
+                  <td style="color:#A1A1AA;">Current 52-Day Rosicrucian Timing Window</td>
+                  <td align="right" style="color:#D4AF37;font-size:12px;font-weight:600;">🔒 Locked in Full 20-Page Dossier</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- What's Inside Your 20-Page Sovereign Dossier Value Stack -->
+          <tr>
+            <td style="padding:0 24px 20px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:radial-gradient(circle at 50% 0%,#1f1b10 0%,#0E0F14 100%);border:1px solid rgba(212,175,55,0.38);border-radius:14px;padding:18px 20px;">
+                <tr>
+                  <td>
+                    <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#D4AF37;font-weight:700;margin-bottom:12px;text-align:center;">
+                      ✦ WHAT’S INSIDE YOUR 20-PAGE SOVEREIGN DOSSIER ✦
+                    </div>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="5" border="0" style="font-family:'Arial',sans-serif;font-size:12.5px;line-height:1.5;color:#E4E4E7;">
+                      <tr>
+                        <td valign="top" style="color:#D4AF37;font-weight:700;width:18px;">✦</td>
+                        <td><strong>Pages 1–5 · 5-Ring Convergence Mandala &amp; 15-Point Audit:</strong> Complete mathematical proof of all 15 source calculations and your 1–9 Frequency Tally.</td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="color:#D4AF37;font-weight:700;">✦</td>
+                        <td><strong>Pages 6–8 · Deep-Dive Into Your Big 3 Overlap Anchors (#{a1['number']}, #{a2['number']}, #{a3['number']}):</strong> Your Signature Identity, Wealth Engine, and Sanctuary Blueprint.</td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="color:#D4AF37;font-weight:700;">✦</td>
+                        <td><strong>Pages 9–14 · All 5 Ancient Systems Unredacted:</strong> Full Pythagorean, Babylonian Chaldean (10–52 compounds), Kabbalistic Tree of Life SVG, Vedic Navagraha, and 3×3 Chinese Lo Shu Grid.</td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="color:#D4AF37;font-weight:700;">✦</td>
+                        <td><strong>Pages 15–17 · Somatic Vitality &amp; Daily Operating Code:</strong> Wu Xing organ resilience, Ayurvedic Dosha reset, power days, and lucky coordinates.</td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="color:#D4AF37;font-weight:700;">✦</td>
+                        <td><strong>Pages 18–20 · 365-Day Rosicrucian 52-Day Cycles Calendar:</strong> Exact date windows for capital expansion vs. nervous system preservation.</td>
+                      </tr>
+                    </table>
+                  </td>
                 </tr>
               </table>
             </td>
@@ -493,11 +713,8 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <!-- Primary CTA Buttons -->
           <tr>
             <td align="center" style="padding:4px 24px 28px;">
-              <p style="margin:0 0 16px;font-family:'Arial',sans-serif;font-size:13px;line-height:1.55;color:#D4D4D8;">
-                Your free teaser only unlocks System I. Unlock your complete <strong>20-Page Luxury Sovereign Dossier PDF</strong> (including your 5-Ring Convergence Mandala, 15-Point Calculation Ledger, Somatic Health Architecture, and Rosicrucian 52-Day Cycles):
-              </p>
-              <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:15px 28px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:12px;">
-                ✦ Unlock My Full 20-Page Sovereign Dossier ($37)
+              <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:14px;box-shadow:0 8px 25px rgba(212,175,55,0.3);">
+                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
@@ -509,7 +726,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <!-- Footer -->
           <tr>
             <td align="center" style="padding:18px 24px;background-color:#09090B;border-top:1px solid rgba(255,255,255,0.07);font-family:'Arial',sans-serif;font-size:11px;color:#71717A;line-height:1.5;">
-              © {datetime.now().year} Sovereign 5-System · Sacred Number Blueprint (@sacrednumberblueprint)<br>
+              © {datetime.now().year} Sacred Number Blueprint (@sacrednumberblueprint)<br>
               Mega Vega Ventures LLC · For self-reflection and educational purposes.
             </td>
           </tr>
@@ -524,13 +741,245 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
     return subject, plain_text, html_body
 
 
-def send_followup_email(lead: Dict[str, Any]) -> bool:
-    """Dispatches the luxury HTML follow-up email via Google Workspace SMTP."""
-    recipient = lead["email"].strip()
+# -----------------------------------------------------------------------------
+# EMAIL #2 (24H LATER): MISSING CHINESE LO SHU NUMBERS & WEALTH ENGINE
+# -----------------------------------------------------------------------------
+def build_followup_email_2_loshu(lead: Dict[str, Any]) -> Tuple[str, str, str]:
+    """Returns (subject, plain_text, html_body) for Email #2 (24-Hour Follow-Up)."""
+    name = lead["name"]
+    first_name = name.split()[0] if name else "Friend"
+    dob = lead["dob"]
+    email_addr = lead["email"]
+    calc = lead["calc"]
+    a1, a2, a3 = calc["anchors"][0], calc["anchors"][1], calc["anchors"][2]
+    missing_count = len(calc.get("missing_loshu", []))
+
+    try:
+        dob_formatted = datetime.strptime(dob, "%Y-%m-%d").strftime("%B %d, %Y")
+    except Exception:
+        dob_formatted = dob
+
+    teaser_url = build_teaser_deep_link(name, dob, email_addr)
+    stripe_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+
+    subject = f"✦ {first_name}, the missing numbers in your Chinese Lo Shu Grid..."
+    preheader = (
+        f"Your birth date ({dob_formatted}) leaves {missing_count} empty squares in your 3x3 Chinese Lo Shu Grid — "
+        f"here is how they affect your relationships and Anchor #{a2['number']} Wealth Engine..."
+    )
+
+    plain_text = (
+        f"SACRED NUMBER BLUEPRINT · SYSTEM V (IMPERIAL CHINESE LO SHU)\n"
+        f"Prepared for {name} (Born {dob_formatted})\n"
+        f"============================================================\n\n"
+        f"{first_name}, yesterday we decoded your #1 Primary Signature Anchor (#{a1['number']} · {a1['archetype']}).\n\n"
+        f"Today, look closely at System V of your chart: the ancient 3x3 Chinese Lo Shu Magic Square.\n"
+        f"When we map the digits of your birth date ({dob}) alongside your core numbers, your chart reveals:\n"
+        f"• Dominant Lo Shu Element: {calc.get('dominant_element', 'Metal')}\n"
+        f"• Missing Lo Shu Numbers: {missing_count} of the 9 squares are completely absent in your natal grid.\n"
+        f"• #2 Wealth & Strategy Engine: Anchor #{a2['number']} · {a2['archetype']} ({a2['count']}× across {', '.join(a2['systems'])})\n\n"
+        f"In Chinese Five-Element (Wu Xing) science, empty squares in your Lo Shu grid act like subconscious magnets—"
+        f"explaining why you repeatedly attract the same relationship friction or hit invisible ceilings when trying to "
+        f"monetize your #{a2['number']} ({a2['archetype']}) Wealth Engine.\n\n"
+        f"Pages 14 and 16 of your 20-Page Sovereign Dossier map your exact 3x3 Lo Shu Grid, reveal which numbers your "
+        f"Chaldean birth name bridges, and give you the exact elemental remedies.\n\n"
+        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37):\n{stripe_url}\n\n"
+        f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER:\n{teaser_url}\n"
+    )
+
+    html_body = f"""<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#0A0A0C;font-family:'Georgia',serif;color:#F5F5F7;">
+  <div style="display:none;max-height:0px;overflow:hidden;mso-hide:all;font-size:1px;color:#0A0A0C;line-height:1px;opacity:0;">
+    {html.escape(preheader)}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+  </div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0A0A0C;padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background-color:#121318;border:1px solid rgba(212,175,55,0.38);border-radius:18px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:26px 24px 18px;border-bottom:1px solid rgba(212,175,55,0.2);background:radial-gradient(circle at 50% 0%,#241f11,#121318 75%);">
+              <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#D4AF37;font-weight:700;">
+                ✦ SYSTEM V · IMPERIAL CHINESE LO SHU AUDIT ✦
+              </div>
+              <h1 style="margin:10px 0 6px;font-size:24px;color:#F5F5F7;font-weight:600;">
+                {html.escape(first_name)}, Why {missing_count} Numbers Are Missing From Your Lo Shu Grid
+              </h1>
+              <p style="margin:0;font-family:'Arial',sans-serif;font-size:13px;color:#A1A1AA;">
+                Profile: <strong style="color:#F3E5AB;">{html.escape(name)}</strong> · Born {html.escape(dob_formatted)}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 24px 18px;font-family:'Arial',sans-serif;font-size:14px;line-height:1.65;color:#E4E4E7;">
+              <p style="margin:0 0 14px;">
+                When most people check their numerology, they only look at their Western Life Path (<strong>{html.escape(calc['life_path'])}</strong>). They never see which digits are <strong>completely missing</strong> from their birth chart.
+              </p>
+              <p style="margin:0 0 16px;">
+                When we place your birth date inside the ancient <strong>3×3 Chinese Lo Shu Magic Square</strong>, your chart shows a dominant <strong>{html.escape(calc.get('dominant_element', 'Metal'))}</strong> concentration—while leaving <strong>{missing_count} of the 9 elemental chambers empty</strong>.
+              </p>
+              <div style="background-color:#0D0E12;border:1px solid rgba(212,175,55,0.32);border-radius:12px;padding:16px;margin-bottom:16px;">
+                <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#D4AF37;font-weight:700;margin-bottom:6px;">
+                  YOUR #2 WEALTH &amp; RELATIONSHIP ENGINE
+                </div>
+                <div style="font-family:'Georgia',serif;font-size:18px;color:#F3E5AB;font-weight:600;margin-bottom:6px;">
+                  Anchor #{a2['number']} · {html.escape(a2['archetype'])} ({a2['count']}× across {len(a2['systems'])} systems)
+                </div>
+                <p style="margin:0;font-size:13px;color:#D4D4D8;">
+                  In Five-Element (Wu Xing) architecture, empty Lo Shu squares create subconscious relationship loops and block your #{a2['number']} Wealth Engine unless bridged by your Chaldean Name frequency.
+                </p>
+              </div>
+              <p style="margin:0;">
+                <strong>Pages 14, 16, and 17</strong> of your 20-Page Sovereign Dossier reveal your complete 3×3 Lo Shu Grid, your Arrows of Strength, and the exact elemental remedies to balance your chart.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:6px 24px 28px;">
+              <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:12px;">
+                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
+              </a>
+              <br>
+              <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
+                ↻ Return to Your Interactive 5-System Teaser &amp; Watch Video Briefing
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
+
+    return subject, plain_text, html_body
+
+
+# -----------------------------------------------------------------------------
+# EMAIL #3 (48H LATER): ACTIVE 52-DAY ROSICRUCIAN CYCLE & SOMATIC ALIGNMENT
+# -----------------------------------------------------------------------------
+def build_followup_email_3_cycles(lead: Dict[str, Any]) -> Tuple[str, str, str]:
+    """Returns (subject, plain_text, html_body) for Email #3 (48-Hour Follow-Up)."""
+    name = lead["name"]
+    first_name = name.split()[0] if name else "Friend"
+    dob = lead["dob"]
+    email_addr = lead["email"]
+    calc = lead["calc"]
+    a1, a2, a3 = calc["anchors"][0], calc["anchors"][1], calc["anchors"][2]
+
+    cyc_name = calc.get("active_cycle_name", "The Solar Period")
+    cyc_planet = calc.get("active_cycle_planet", "Sun")
+    cyc_glyph = calc.get("active_cycle_glyph", "☉")
+    cyc_theme = calc.get("active_cycle_theme", "Strategic Alignment")
+    cyc_days = calc.get("active_cycle_days_remaining", 24)
+
+    try:
+        dob_formatted = datetime.strptime(dob, "%Y-%m-%d").strftime("%B %d, %Y")
+    except Exception:
+        dob_formatted = dob
+
+    teaser_url = build_teaser_deep_link(name, dob, email_addr)
+    stripe_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+
+    subject = f"⏳ {first_name}, your current 52-Day Rosicrucian Cycle is active"
+    preheader = (
+        f"You are currently in {cyc_name} ({cyc_days} days remaining) — see how to align your "
+        f"#{a1['number']} Signature Anchor and nervous system..."
+    )
+
+    plain_text = (
+        f"SACRED NUMBER BLUEPRINT · 52-DAY ROSICRUCIAN TIMING ALERT\n"
+        f"Prepared for {name} (Born {dob_formatted})\n"
+        f"============================================================\n\n"
+        f"{first_name}, in ancient Rosicrucian and Vedic timing science, your personal year from birthday to birthday "
+        f"is divided into seven 52-day planetary periods.\n\n"
+        f"Based on your birth date ({dob_formatted}), you are currently inside:\n"
+        f"• ACTIVE WINDOW: {cyc_glyph} {cyc_name} (Ruled by {cyc_planet} · {cyc_days} days remaining)\n"
+        f"• CORE THEME: {cyc_theme}\n"
+        f"• SOMATIC FOUNDATION: Anchor #{a3['number']} · {a3['archetype']}\n\n"
+        f"Pushing for aggressive expansion during a preservation cycle—or hesitating during a Solar/Jupiterian wealth "
+        f"window—is the #1 cause of burnout and stalled momentum.\n\n"
+        f"Pages 15–20 of your 20-Page Sovereign Dossier map out all 7 of your 52-day cycles for the next 365 days, "
+        f"complete with your Somatic Nervous System Reset protocol.\n\n"
+        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37):\n{stripe_url}\n\n"
+        f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER:\n{teaser_url}\n"
+    )
+
+    html_body = f"""<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#0A0A0C;font-family:'Georgia',serif;color:#F5F5F7;">
+  <div style="display:none;max-height:0px;overflow:hidden;mso-hide:all;font-size:1px;color:#0A0A0C;line-height:1px;opacity:0;">
+    {html.escape(preheader)}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+  </div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0A0A0C;padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background-color:#121318;border:1px solid rgba(212,175,55,0.38);border-radius:18px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:26px 24px 18px;border-bottom:1px solid rgba(212,175,55,0.2);background:radial-gradient(circle at 50% 0%,#241f11,#121318 75%);">
+              <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#D4AF37;font-weight:700;">
+                ⏳ ROSICRUCIAN 52-DAY BIORHYTHM ALERT ⏳
+              </div>
+              <h1 style="margin:10px 0 6px;font-size:24px;color:#F5F5F7;font-weight:600;">
+                {html.escape(first_name)}, Your Current 52-Day Planetary Window Is Active
+              </h1>
+              <p style="margin:0;font-family:'Arial',sans-serif;font-size:13px;color:#A1A1AA;">
+                Profile: <strong style="color:#F3E5AB;">{html.escape(name)}</strong> · Born {html.escape(dob_formatted)}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 24px 18px;font-family:'Arial',sans-serif;font-size:14px;line-height:1.65;color:#E4E4E7;">
+              <p style="margin:0 0 14px;">
+                In ancient Rosicrucian science, your year is not a flat line—it is divided into <strong>seven distinct 52-day planetary periods</strong> starting on your birthday.
+              </p>
+              <div style="background-color:#0D0E12;border:1px solid rgba(212,175,55,0.38);border-radius:12px;padding:16px;margin-bottom:16px;">
+                <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#D4AF37;font-weight:700;margin-bottom:6px;">
+                  ACTIVE TODAY ({cyc_days} DAYS REMAINING)
+                </div>
+                <div style="font-family:'Georgia',serif;font-size:20px;color:#F3E5AB;font-weight:600;margin-bottom:4px;">
+                  {html.escape(cyc_glyph)} {html.escape(cyc_name)} · Ruled by {html.escape(cyc_planet)}
+                </div>
+                <p style="margin:0;font-size:13px;color:#D4D4D8;">
+                  <strong>Window Directive:</strong> {html.escape(cyc_theme)}
+                </p>
+              </div>
+              <p style="margin:0 0 14px;">
+                When you align your <strong>#1 Signature Anchor (#{a1['number']} · {html.escape(a1['archetype'])})</strong> and your <strong>#3 Sanctuary Foundation (#{a3['number']} · {html.escape(a3['archetype'])})</strong> with your active 52-day window, resistance drops away.
+              </p>
+              <p style="margin:0;">
+                Unlock your complete <strong>20-Page Sovereign Dossier PDF</strong> now to get your full 365-day Rosicrucian Calendar (Pages 18–20) and Somatic Nervous System Architecture (Page 15).
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:6px 24px 28px;">
+              <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:12px;">
+                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
+              </a>
+              <br>
+              <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
+                ↻ Return to Your Interactive 5-System Teaser &amp; Watch Video Briefing
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
+
+    return subject, plain_text, html_body
+
+
+def send_email_via_smtp(recipient: str, subject: str, plain_text: str, html_body: str, step_num: int = 1) -> bool:
+    """Dispatches a luxury HTML email via Google Workspace SMTP."""
+    recipient = recipient.strip()
     if not recipient or "@" not in recipient:
         return False
-
-    subject, plain_text, html_body = build_luxury_followup_email(lead)
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -546,11 +995,22 @@ def send_followup_email(lead: Dict[str, Any]) -> bool:
             server.starttls()
             server.login(SMTP_USER, SMTP_PASS)
             server.sendmail(SMTP_USER, [recipient, SMTP_USER], msg.as_string())
-        print(f"✓ Luxury HTML Follow-Up Email sent to {recipient} (and copy to {SMTP_USER})", flush=True)
+        print(f"✓ Luxury HTML Follow-Up Email #{step_num} sent to {recipient} (and copy to {SMTP_USER})", flush=True)
         return True
     except Exception as e:
-        print(f"✗ SMTP send error for {recipient}: {e}", flush=True)
+        print(f"✗ SMTP send error (Email #{step_num}) for {recipient}: {e}", flush=True)
         return False
+
+
+def send_followup_email(lead: Dict[str, Any], step: int = 1) -> bool:
+    """Builds and sends Email #1 (Instant), Email #2 (24h), or Email #3 (48h)."""
+    if step == 2:
+        subject, plain_text, html_body = build_followup_email_2_loshu(lead)
+    elif step == 3:
+        subject, plain_text, html_body = build_followup_email_3_cycles(lead)
+    else:
+        subject, plain_text, html_body = build_luxury_followup_email(lead)
+    return send_email_via_smtp(lead["email"], subject, plain_text, html_body, step_num=step)
 
 
 # -----------------------------------------------------------------------------
@@ -599,6 +1059,10 @@ def save_lead_to_supabase(lead: Dict[str, Any], email_sent: bool):
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT (lead_key) DO UPDATE SET
                 captured_at = EXCLUDED.captured_at,
+                top_3_overlap_numbers = EXCLUDED.top_3_overlap_numbers,
+                life_path = EXCLUDED.life_path,
+                vedic_moolank = EXCLUDED.vedic_moolank,
+                chaldean_name = EXCLUDED.chaldean_name,
                 email_sent = EXCLUDED.email_sent,
                 raw_payload = EXCLUDED.raw_payload;
         """, (
@@ -636,6 +1100,9 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
         "vedic_moolank": calc["vedic_moolank"],
         "chaldean_name": calc["chaldean_name"],
         "email_sent": "YES" if email_sent else "NO",
+        "email_1_sent_at": lead.get("email_1_sent_at") or "",
+        "email_2_sent_at": lead.get("email_2_sent_at") or "",
+        "email_3_sent_at": lead.get("email_3_sent_at") or "",
     }
 
     for csv_path in [LOCAL_CSV_PATH, GDRIVE_CSV_PATH]:
@@ -643,13 +1110,32 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
             parent = os.path.dirname(csv_path)
             if parent and not os.path.exists(parent):
                 continue
-            file_exists = os.path.exists(csv_path) and os.path.getsize(csv_path) > 0
-            with open(csv_path, "a", newline="", encoding="utf-8") as f:
-                writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
-                if not file_exists:
-                    writer.writeheader()
-                writer.writerow(row)
-            print(f"✓ Lead appended to CSV: {csv_path}", flush=True)
+            existing_rows = []
+            if os.path.exists(csv_path) and os.path.getsize(csv_path) > 0:
+                with open(csv_path, "r", encoding="utf-8") as rf:
+                    reader = csv.DictReader(rf)
+                    existing_rows = list(reader)
+
+            # Deduplicate by (email, dob, name) so re-sends update the row cleanly
+            updated = False
+            for idx, r in enumerate(existing_rows):
+                if (
+                    r.get("email", "").lower() == row["email"].lower()
+                    and r.get("dob", "") == row["dob"]
+                    and r.get("name", "").lower() == row["name"].lower()
+                ):
+                    existing_rows[idx] = row
+                    updated = True
+                    break
+            if not updated:
+                existing_rows.append(row)
+
+            with open(csv_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
+                writer.writeheader()
+                for r in existing_rows:
+                    writer.writerow(r)
+            print(f"✓ Lead synced to CSV: {csv_path}", flush=True)
         except Exception as e:
             print(f"  [Notice] Could not write CSV {csv_path}: {e}", flush=True)
 
@@ -676,15 +1162,18 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
                 "",
                 "# 📬 Sacred Number Blueprint — Live Captured Leads Dashboard",
                 "",
-                "> [!INFO] Central Lead Capture & Automated Email Log",
-                "> Every visitor who submits their Name, Birth Date, and Email on `https://rj2point0.github.io/sovereign-5-system/` is logged below, synced to `G:\\My Drive\\5_System_Numerology_MVP\\leads_captured.csv` and Supabase (`public.numerology_leads`), and automatically sent their personalized 5-System HTML Teaser Email.",
+                "> [!INFO] Central Lead Capture & Automated 3-Part Email Sequence Log",
+                "> Every visitor who submits their Name, Birth Date, and Email on `https://rj2point0.github.io/sovereign-5-system/` is logged below, synced to `G:\\My Drive\\5_System_Numerology_MVP\\leads_captured.csv` and Supabase (`public.numerology_leads`), and enrolled in the 3-part automated luxury HTML email sequence (Instant + 24h Lo Shu + 48h Rosicrucian Cycles).",
                 "",
-                "| Timestamp (UTC) | Full Birth Name | DOB | Email | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email Sent |",
-                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+                "| Timestamp (UTC) | Full Birth Name | DOB | Email | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email #1 (Instant) | Email #2 (24h) | Email #3 (48h) |",
+                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
             ]
             for r in reversed(rows):
+                e1 = "✅" if r.get("email_1_sent_at") or r.get("email_sent") == "YES" else "⏳"
+                e2 = "✅" if r.get("email_2_sent_at") else "⏳"
+                e3 = "✅" if r.get("email_3_sent_at") else "⏳"
                 md_lines.append(
-                    f"| `{r.get('timestamp', '')[:19]}` | **{r.get('name', '')}** | `{r.get('dob', '')}` | `{r.get('email', '')}` | `{r.get('lang', 'en')}` | **{r.get('top_3_overlap_numbers', '')}** | `{r.get('life_path', '')}` | `{r.get('vedic_moolank', '')}` | `{r.get('chaldean_name', '')}` | `{r.get('email_sent', '')}` |"
+                    f"| `{r.get('timestamp', '')[:19]}` | **{r.get('name', '')}** | `{r.get('dob', '')}` | `{r.get('email', '')}` | `{r.get('lang', 'en')}` | **{r.get('top_3_overlap_numbers', '')}** | `{r.get('life_path', '')}` | `{r.get('vedic_moolank', '')}` | `{r.get('chaldean_name', '')}` | {e1} | {e2} | {e3} |"
                 )
             md_lines.append("")
             with open(OBSIDIAN_DASHBOARD_PATH, "w", encoding="utf-8") as f:
@@ -695,7 +1184,7 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
 
 
 # -----------------------------------------------------------------------------
-# DEDUPLICATION & LEAD PROCESSOR
+# DEDUPLICATION, LEAD PROCESSOR & 24H / 48H DRIP SCHEDULER
 # -----------------------------------------------------------------------------
 def load_processed_state() -> Dict[str, Any]:
     if os.path.exists(PROCESSED_LEADS_PATH):
@@ -729,12 +1218,15 @@ def process_lead(
     dedup_key = f"{clean_email.lower()}::{iso_dob}::{clean_name.lower()}"
 
     processed = load_processed_state()
-    if not force_send and dedup_key in processed:
+    if not force_send and dedup_key in processed and processed[dedup_key].get("email_1_sent_at"):
         print(f"  [Skip] Lead already processed & emailed: {clean_name} ({clean_email})", flush=True)
         return processed[dedup_key]
 
     calc = calculate_5_systems(clean_name, iso_dob)
-    ts = timestamp or datetime.now(timezone.utc).isoformat()
+    now_iso = datetime.now(timezone.utc).isoformat()
+    ts = timestamp or now_iso
+    existing_entry = processed.get(dedup_key, {})
+
     lead_record = {
         "timestamp": ts,
         "name": clean_name,
@@ -742,9 +1234,15 @@ def process_lead(
         "email": clean_email,
         "lang": lang or "en",
         "calc": calc,
+        "email_1_sent_at": existing_entry.get("email_1_sent_at"),
+        "email_2_sent_at": existing_entry.get("email_2_sent_at"),
+        "email_3_sent_at": existing_entry.get("email_3_sent_at"),
     }
 
-    email_sent = send_followup_email(lead_record)
+    email_sent = send_followup_email(lead_record, step=1)
+    if email_sent:
+        lead_record["email_1_sent_at"] = now_iso
+
     append_lead_to_csv_and_obsidian(lead_record, email_sent)
     save_lead_to_supabase(lead_record, email_sent)
 
@@ -753,18 +1251,101 @@ def process_lead(
         "name": clean_name,
         "dob": iso_dob,
         "email": clean_email,
+        "lang": lang or "en",
         "top_3_overlap_numbers": calc["top_3_overlap_numbers"],
         "life_path": calc["life_path"],
+        "expression": calc["expression"],
         "vedic_moolank": calc["vedic_moolank"],
         "chaldean_name": calc["chaldean_name"],
         "email_sent": email_sent,
+        "email_1_sent_at": lead_record["email_1_sent_at"],
+        "email_2_sent_at": lead_record["email_2_sent_at"],
+        "email_3_sent_at": lead_record["email_3_sent_at"],
     }
     save_processed_state(processed)
     return processed[dedup_key]
 
 
+def check_and_send_scheduled_followups(now_utc: Optional[datetime] = None) -> int:
+    """
+    Checks all leads in processed_leads_state.json and automatically sends:
+    - Email #2 (Lo Shu Missing Numbers & Wealth Engine) when >= 24h after email_1_sent_at
+    - Email #3 (52-Day Rosicrucian Cycle) when >= 48h after email_1_sent_at
+    """
+    now = now_utc or datetime.now(timezone.utc)
+    processed = load_processed_state()
+    sent_count = 0
+
+    for dedup_key, entry in list(processed.items()):
+        e1_str = entry.get("email_1_sent_at") or entry.get("timestamp")
+        if not e1_str:
+            continue
+        try:
+            e1_dt = datetime.fromisoformat(e1_str.replace("Z", "+00:00"))
+            if e1_dt.tzinfo is None:
+                e1_dt = e1_dt.replace(tzinfo=timezone.utc)
+        except Exception:
+            continue
+
+        elapsed_hours = (now - e1_dt).total_seconds() / 3600.0
+        name = entry.get("name", "")
+        dob = entry.get("dob", "")
+        email_addr = entry.get("email", "")
+        lang = entry.get("lang", "en")
+        if not (name and dob and email_addr):
+            continue
+
+        # Check 24h Follow-Up (Email #2)
+        if elapsed_hours >= 24.0 and not entry.get("email_2_sent_at"):
+            calc = calculate_5_systems(name, dob)
+            lead_record = {
+                "timestamp": entry.get("timestamp", now.isoformat()),
+                "name": name,
+                "dob": dob,
+                "email": email_addr,
+                "lang": lang,
+                "calc": calc,
+                "email_1_sent_at": entry.get("email_1_sent_at"),
+                "email_2_sent_at": None,
+                "email_3_sent_at": entry.get("email_3_sent_at"),
+            }
+            if send_followup_email(lead_record, step=2):
+                entry["email_2_sent_at"] = now.isoformat()
+                lead_record["email_2_sent_at"] = entry["email_2_sent_at"]
+                processed[dedup_key] = entry
+                save_processed_state(processed)
+                append_lead_to_csv_and_obsidian(lead_record, True)
+                save_lead_to_supabase(lead_record, True)
+                sent_count += 1
+
+        # Check 48h Follow-Up (Email #3)
+        if elapsed_hours >= 48.0 and not entry.get("email_3_sent_at"):
+            calc = calculate_5_systems(name, dob)
+            lead_record = {
+                "timestamp": entry.get("timestamp", now.isoformat()),
+                "name": name,
+                "dob": dob,
+                "email": email_addr,
+                "lang": lang,
+                "calc": calc,
+                "email_1_sent_at": entry.get("email_1_sent_at"),
+                "email_2_sent_at": entry.get("email_2_sent_at"),
+                "email_3_sent_at": None,
+            }
+            if send_followup_email(lead_record, step=3):
+                entry["email_3_sent_at"] = now.isoformat()
+                lead_record["email_3_sent_at"] = entry["email_3_sent_at"]
+                processed[dedup_key] = entry
+                save_processed_state(processed)
+                append_lead_to_csv_and_obsidian(lead_record, True)
+                save_lead_to_supabase(lead_record, True)
+                sent_count += 1
+
+    return sent_count
+
+
 def poll_cloud_relay_once() -> int:
-    """Polls ntfy.sh cloud relay for any new lead_capture payloads from mobile/desktop visitors."""
+    """Polls ntfy.sh cloud relay for any new lead_capture payloads and runs 24h/48h drip checks."""
     count = 0
     try:
         req = urllib.request.Request(NTFY_POLL_URL, headers={"User-Agent": "Sovereign5-LeadWorker/1.0"})
@@ -788,7 +1369,6 @@ def poll_cloud_relay_once() -> int:
                     lang = payload.get("lang", "en")
                     ts = payload.get("timestamp")
                     if full_name and dob and email_addr and "@" in email_addr:
-                        # Skip automated test dummy emails if needed, except real user emails
                         if email_addr.lower().endswith("@sovereign5.com") or email_addr.lower() == "test@example.com":
                             continue
                         process_lead(full_name, dob, email_addr, lang=lang, timestamp=ts, force_send=False)
@@ -797,6 +1377,9 @@ def poll_cloud_relay_once() -> int:
                     continue
     except Exception as e:
         print(f"  [Notice] Cloud relay poll error: {e}", flush=True)
+
+    # Also process any due 24h / 48h follow-up emails
+    check_and_send_scheduled_followups()
     return count
 
 
@@ -851,14 +1434,14 @@ def run_daemon(port: int = 8788, poll_interval: int = 15):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Sovereign 5-System Lead Capture & Email Follow-Up Worker")
+    parser = argparse.ArgumentParser(description="Sovereign 5-System Lead Capture & 3-Part Email Sequence Worker")
     parser.add_argument("--backfill-lead", action="store_true", help="Manually process & email a specific lead")
     parser.add_argument("--name", type=str, help="Full Birth Name for backfill")
     parser.add_argument("--dob", type=str, help="Date of Birth (YYYY-MM-DD or MM/DD/YYYY)")
     parser.add_argument("--email", type=str, help="Email address for backfill")
     parser.add_argument("--lang", type=str, default="en", help="Language (en or es)")
     parser.add_argument("--force", action="store_true", help="Force re-sending email even if already in dedup store")
-    parser.add_argument("--poll-once", action="store_true", help="Poll cloud relay once and exit")
+    parser.add_argument("--poll-once", action="store_true", help="Poll cloud relay + check 24h/48h followups once and exit")
     parser.add_argument("--daemon", action="store_true", help="Run continuous webhook & cloud relay polling daemon")
     args = parser.parse_args()
 

@@ -127,6 +127,27 @@ async def test_all():
         assert pages_vip == 20
         print("[OK] Secret Founder VIP Bypass (?vip=adam) works 100% perfectly!")
 
+        # TEST 6: Cross-Browser Email Teaser Link Session Restore & Compound/System Count Consistency
+        print("\n--- Test 6: Cross-Browser Email Teaser Link & Cowen Math Consistency ---")
+        context_email = await browser.new_context()
+        page_email = await context_email.new_page()
+        await page_email.goto("http://127.0.0.1:8080/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com")
+        await page_email.wait_for_selector('#view-teaser:not(.hidden)', timeout=5000)
+        vsl_vis = await page_email.is_visible('#vsl-video')
+        assert vsl_vis is True, "Native VSL video player must be visible on restored Teaser view!"
+        cowen_check = await page_email.evaluate('''() => {
+            const r = window.S5Engine.calculate('Cowen Airo Celestin Vega', '2017-07-07');
+            return {
+                expr: r.pythagorean.expression.display,
+                anchors: r.overlap.anchors.map(a => ({ n: a.number, c: a.count, s: a.systems }))
+            };
+        }''')
+        print(f"Cowen Engine Check: Expression={cowen_check['expr']}, Anchors={cowen_check['anchors']}")
+        assert cowen_check['expr'] == '18/9', f"Expected 18/9 for Cowen Expression, got {cowen_check['expr']}"
+        for a in cowen_check['anchors']:
+            assert len(a['s']) <= a['c'], f"System count {len(a['s'])} exceeds hit count {a['c']} for anchor {a}"
+        print("[OK] Cross-browser Teaser session restore & compound/system math verified!")
+
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")
 

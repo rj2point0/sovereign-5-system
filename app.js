@@ -261,8 +261,8 @@ const CONFIG = {
           life_path: r.pythagorean.lifePath.display,
           expression: r.pythagorean.expression.display,
           soul_urge: r.pythagorean.soulUrge.display,
-          vedic_moolank: `${r.vedic.moolank.value} (${r.vedic.moolank.ruler.planet})`,
-          vedic_bhagyank: `${r.vedic.bhagyank.value} (${r.vedic.bhagyank.ruler.planet})`,
+          vedic_moolank: `${r.vedic.moolank.value} · ${r.vedic.moolank.ruler.planet} (${r.vedic.moolank.ruler.english})`,
+          vedic_bhagyank: `${r.vedic.bhagyank.value} · ${r.vedic.bhagyank.ruler.planet} (${r.vedic.bhagyank.ruler.english})`,
           chaldean_name: r.chaldean.total.display,
           active_cycle: `${r.cycles.current.name} (${r.cycles.daysRemaining}d remaining)`,
         } : {},
@@ -1733,10 +1733,25 @@ const CONFIG = {
     if (urlTier) store.del(KEYS.pending);
 
     let prof = store.get(KEYS.profile);
-    // Optional deep-link prefill: ?name=Adam%20Vega&dob=1978-08-19&email=...
-    if (q.get('name') && q.get('dob') && E.validate(q.get('name'), q.get('dob')).valid) {
-      const same = prof && prof.fullName === q.get('name') && prof.birthDate === q.get('dob');
-      prof = same ? prof : { id: leadId(), fullName: q.get('name'), birthDate: q.get('dob'), email: q.get('email') || '', tier: urlTier || null, createdAt: new Date().toISOString(), utm: utm() };
+    // Optional deep-link prefill & cross-browser session restore: ?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=...
+    const qName = (q.get('name') || '').trim();
+    let qDob = (q.get('dob') || '').trim();
+    const mUsDob = /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/.exec(qDob);
+    if (mUsDob) {
+      qDob = `${mUsDob[3]}-${String(mUsDob[1]).padStart(2, '0')}-${String(mUsDob[2]).padStart(2, '0')}`;
+    }
+    const hasUrlProfile = Boolean(qName && qDob && E.validate(qName, qDob).valid);
+    if (hasUrlProfile) {
+      const same = prof && prof.fullName === qName && prof.birthDate === qDob;
+      prof = same ? Object.assign({}, prof, { email: q.get('email') || prof.email || '' }) : {
+        id: leadId(),
+        fullName: qName,
+        birthDate: qDob,
+        email: q.get('email') || '',
+        tier: urlTier || (same && prof ? prof.tier : null) || null,
+        createdAt: new Date().toISOString(),
+        utm: utm(),
+      };
     }
 
     if (prof && E.validate(prof.fullName, prof.birthDate).valid) {
@@ -1752,7 +1767,7 @@ const CONFIG = {
           toast(state.lang === 'es' ? '✦ ¡Acceso confirmado! Haz clic en "Descargar / Imprimir PDF" para guardar tu dossier.' : '✦ Access confirmed! Click "Download / Print Luxury PDF" to save your dossier.', 6000);
         }
         return;
-      } else if (q.get('view') === 'teaser') {
+      } else if (q.get('view') === 'teaser' || hasUrlProfile) {
         state.result = E.calculate(prof.fullName, prof.birthDate);
         openTeaser();
         return;

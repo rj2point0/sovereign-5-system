@@ -112,7 +112,7 @@
   }
   /** Build a number record: raw total, preserved compound, reduced root, "25/7" display. */
   function makeNum(raw, cap) {
-    const compound = compoundOf(raw, cap || 99);
+    const compound = compoundOf(raw, cap || 52);
     const value = reduce(raw);
     return { raw, compound, value, display: compound > 9 ? `${compound}/${value}` : String(value) };
   }
@@ -401,7 +401,7 @@
     for (let n = 1; n <= 9; n++) {
       const hits = filteredSources.filter((s) => s.value === n);
       const sys = new Set(hits.map((h) => h.system));
-      if (kabbalahNums.has(n)) sys.add('Kabbalistic');
+      if (kabbalahNums.has(n) && hits.length > sys.size) sys.add('Kabbalistic');
       tally[n] = {
         number: n,
         count: hits.length,

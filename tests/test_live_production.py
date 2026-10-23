@@ -50,6 +50,16 @@ async def verify_live_pages():
         assert share_btn is True, "Dossier Share button should be visible"
         print("Live Dossier Share button verified!")
 
+        # Test 5: Cross-browser email teaser link restoration (clean browser context, zero localStorage)
+        ctx_clean = await browser.new_context()
+        page_clean = await ctx_clean.new_page()
+        await page_clean.goto("https://rj2point0.github.io/sovereign-5-system/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com")
+        await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
+        vsl_live = await page_clean.is_visible("#vsl-video")
+        assert vsl_live is True, "Live VSL video player should be visible on Teaser deep-link!"
+        print("Cross-browser email Teaser deep-link and VSL video verified on live site!")
+        await ctx_clean.close()
+
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")
         await browser.close()
 
