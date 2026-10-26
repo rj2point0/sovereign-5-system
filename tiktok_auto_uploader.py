@@ -324,23 +324,28 @@ class TikTokAutoUploader:
             try:
                 await date_inputs.first.click(force=True)
                 await asyncio.sleep(0.8)
-                # Try clicking the day cell in the calendar popup
-                day_cells = page.locator(f'span.day:text-is("{day_str}"), div[class*="calendar"] span:text-is("{day_str}"), td:text-is("{day_str}")')
+                # Prefer span.day.valid (current month active day) over previous/next month overflow cells
+                valid_day_cells = page.locator(f'span.day.valid:text-is("{day_str}")')
                 clicked_day = False
-                for i in range(await day_cells.count()):
-                    cell = day_cells.nth(i)
-                    if await cell.is_visible():
-                        cls = (await cell.get_attribute("class") or "").lower()
-                        if "disabled" not in cls:
+                if await valid_day_cells.count() > 0:
+                    for i in range(await valid_day_cells.count()):
+                        cell = valid_day_cells.nth(i)
+                        if await cell.is_visible():
                             await cell.click(force=True)
                             clicked_day = True
                             await asyncio.sleep(0.6)
                             break
                 if not clicked_day:
-                    await page.keyboard.press("Control+A")
-                    await page.keyboard.insert_text(date_str)
-                    await page.keyboard.press("Enter")
-                    await asyncio.sleep(0.5)
+                    day_cells = page.locator(f'span.day:text-is("{day_str}"), div[class*="calendar"] span:text-is("{day_str}"), td:text-is("{day_str}")')
+                    for i in range(await day_cells.count() - 1, -1, -1):
+                        cell = day_cells.nth(i)
+                        if await cell.is_visible():
+                            cls = (await cell.get_attribute("class") or "").lower()
+                            if "disabled" not in cls:
+                                await cell.click(force=True)
+                                clicked_day = True
+                                await asyncio.sleep(0.6)
+                                break
             except Exception as e:
                 print(f"   [Studio] Date picker note: {e}", flush=True)
 

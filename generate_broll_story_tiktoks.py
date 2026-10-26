@@ -64,7 +64,12 @@ POWER_WORDS = {
     "eighth", "seventeenth", "twenty-sixth", "finances", "nothing", "conflict",
     "frequency", "fighting", "five-system", "seventh", "sixteenth", "twenty-fifth",
     "connection", "disappear", "seven", "clash", "vedic", "collides", "book",
-    "breakthrough", "agree", "fight",
+    "breakthrough", "agree", "fight", "first", "tenth", "nineteenth", "twenty-eighth",
+    "fourth", "thirteenth", "twenty-second", "thirty-first", "second", "eleventh",
+    "twentieth", "twenty-ninth", "third", "twelfth", "twenty-first", "thirtieth",
+    "fifth", "fourteenth", "twenty-third", "sixth", "fifteenth", "twenty-fourth",
+    "ninth", "eighteenth", "twenty-seventh", "hundred", "brilliant", "jupiter",
+    "routine", "mercury", "healing", "venus", "mars",
 }
 
 COHORT_B_SPECS: List[Dict[str, Any]] = [
@@ -367,6 +372,114 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "hashtags": [
             "#numerology", "#masternumber11", "#lifepath2", "#empath",
             "#kabbalah", "#intuition", "#spiritualtiktok", "#energyhealing"
+        ],
+    },
+    {
+        "id": "short_07",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_07_born_3_12_21_30.mp4",
+        "hook_box_text": "Born on the 3rd, 12th, 21st, or 30th? Why you have 100 ideas but feel scattered:",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the third, twelfth, twenty-first, or thirtieth, your mind generates "
+            "a hundred brilliant ideas at once, yet finishing one feels impossible. That’s a clash between "
+            "your Vedic Jupiter number and your Chaldean name frequency. Test your chart on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_07_journaling_ritual.mp4"),
+            (4.0, 7.5, "broll_06_laptop_focus.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_mandala.png", 2.8),
+            ("image", "scenes_cache/scene_anchors.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 3rd, 12th, 21st, or 30th? Why you have 100 brilliant ideas at once but feel "
+            "scattered (Vedic Jupiter 3 vs. Chaldean Name frequency) ⚡🧠 #numerology #lifepath3 "
+            "#bornonthe3rd #bornonthe21st #creativeburnout #chaldean #vedicnumerology #spiritualtiktok"
+        ),
+        "first_comment": "Were you born on the 3rd, 12th, 21st, or 30th—and how many unfinished projects do you have open right now? 👇",
+        "hashtags": [
+            "#numerology", "#lifepath3", "#bornonthe3rd", "#bornonthe21st",
+            "#creativeburnout", "#chaldean", "#vedicnumerology", "#spiritualtiktok"
+        ],
+    },
+    {
+        "id": "short_08",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_08_born_5_14_23.mp4",
+        "hook_box_text": "Born on the 5th, 14th, or 23rd? Why routine slowly kills your spirit:",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the fifth, fourteenth, or twenty-third, strict routine slowly drains "
+            "your spirit, yet chaos exhausts your nervous system. That’s a tug-of-war between your Mercury "
+            "birth number and your Chinese Lo Shu center. Run the five-system calculator on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_02_late_night_phone.mp4"),
+            (4.0, 7.5, "broll_08_phone_discovery.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_loshu.png", 2.8),
+            ("image", "scenes_cache/scene_somatic.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 5th, 14th, or 23rd of any month? Why strict routine drains your spirit yet "
+            "chaos exhausts you (Vedic Mercury 5 vs. Chinese Lo Shu Center) 🌪️✨ #numerology #lifepath5 "
+            "#bornonthe5th #bornonthe23rd #loshugrid #restlesssoul #spiritualawakening #nervoussystem"
+        ),
+        "first_comment": "Are you a 5th, 14th, or 23rd birthday—and how fast do you get bored when life feels too predictable? 👇",
+        "hashtags": [
+            "#numerology", "#lifepath5", "#bornonthe5th", "#bornonthe23rd",
+            "#loshugrid", "#restlesssoul", "#spiritualawakening", "#nervoussystem"
+        ],
+    },
+    {
+        "id": "short_09",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_09_born_6_15_24_9_18_27.mp4",
+        "hook_box_text": "Born on the 6th, 15th, 24th—or 9th, 18th, 27th? Why you heal everyone else:",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the sixth, fifteenth, twenty-fourth—or the ninth, eighteenth, or twenty-seventh—"
+            "you always end up healing everyone else while nobody checks on you. That’s where your Venus and Mars "
+            "numbers collide across five systems. Check the calculator on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_01_window_reflection.mp4"),
+            (4.0, 7.5, "broll_03_thoughtful_woman.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_mandala.png", 2.8),
+            ("image", "scenes_cache/scene_ledger.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 6th, 15th, 24th—or the 9th, 18th, 27th? Why you always end up healing everyone "
+            "else while nobody checks on you (Venus 6 & Mars 9 across 5 systems) 💛🔥 #numerology #lifepath6 "
+            "#lifepath9 #healer #peoplepleaser #empath #spiritualtiktok #relationships"
+        ),
+        "first_comment": "Were you born on the 6th, 15th, 24th or the 9th, 18th, 27th—and are you always the therapist friend? 👇",
+        "hashtags": [
+            "#numerology", "#lifepath6", "#lifepath9", "#healer",
+            "#peoplepleaser", "#empath", "#spiritualtiktok", "#relationships"
         ],
     },
 ]

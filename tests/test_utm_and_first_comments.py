@@ -43,8 +43,12 @@ def test_tiktok_scripts_first_comments_are_automod_safe():
             assert is_automod_safe_first_comment(fc), f"Script {s['id']} first_comment failed: {fc}"
         if s.get("cohort") == "Cohort C":
             cohort_c_ids.add(s["id"])
-    assert found_fc >= 8
-    assert {"short_01", "short_02", "short_03", "short_04", "short_05", "short_06"}.issubset(cohort_c_ids)
+    assert found_fc >= 11
+    assert {
+        "short_01", "short_02", "short_03",
+        "short_04", "short_05", "short_06",
+        "short_07", "short_08", "short_09",
+    }.issubset(cohort_c_ids)
 
 
 def test_utm_and_cohort_attribution():
