@@ -261,6 +261,114 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#loshugrid", "#spiritualawakening", "#selfdiscovery", "#sacredgeometry"
         ],
     },
+    {
+        "id": "short_04",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_04_born_1_10_19_28.mp4",
+        "hook_box_text": "Born on the 1st, 10th, 19th, or 28th? (The Lone Wolf Leader Paradox)",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the first, tenth, nineteenth, or twenty-eighth, everyone leans on you, "
+            "yet you feel completely alone at the top. That’s not a number one curse—it’s a clash between "
+            "your Vedic Sun number and your Chaldean name frequency. Check the five-system calculator on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_06_laptop_focus.mp4"),
+            (4.0, 7.5, "broll_05_working_late.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_mandala.png", 2.8),
+            ("image", "scenes_cache/scene_anchors.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 1st, 10th, 19th, or 28th of any month? Why everyone leans on you yet you feel "
+            "like a lone wolf (Vedic Sun vs. Chaldean Name frequency) ☀️🐺 #numerology #lifepath1 "
+            "#bornonthe1st #bornonthe19th #chaldean #vedicnumerology #leadership #spiritualtiktok"
+        ),
+        "first_comment": "Were you born on the 1st, 10th, 19th, or 28th—and do you always end up leading on your own? 👇",
+        "hashtags": [
+            "#numerology", "#lifepath1", "#bornonthe1st", "#bornonthe19th",
+            "#chaldean", "#vedicnumerology", "#leadership", "#spiritualtiktok"
+        ],
+    },
+    {
+        "id": "short_05",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_05_born_4_13_22_31.mp4",
+        "hook_box_text": "Born on the 4th, 13th, 22nd, or 31st? Why you carry everyone else's weight:",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the fourth, thirteenth, twenty-second, or thirty-first, you build the "
+            "foundation for everyone else while carrying invisible stress. That’s a friction point between "
+            "your Rahu birth number and your missing Lo Shu grid numbers. Try the five-system calculator on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_04_stressed_temples.mp4"),
+            (4.0, 7.5, "broll_02_late_night_phone.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_loshu.png", 2.8),
+            ("image", "scenes_cache/scene_ledger.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 4th, 13th, 22nd, or 31st? Why you always end up carrying everyone else's weight "
+            "(Rahu 4 vs. Chinese Lo Shu Grid) 🏛️⚡ #numerology #lifepath4 #masternumber22 #loshugrid "
+            "#vedicnumerology #burnout #spiritualawakening #overachiever"
+        ),
+        "first_comment": "Are you a 4th, 13th, 22nd, or 31st birthday—and do you feel like the builder everyone relies on? 👇",
+        "hashtags": [
+            "#numerology", "#lifepath4", "#masternumber22", "#loshugrid",
+            "#vedicnumerology", "#burnout", "#spiritualawakening", "#overachiever"
+        ],
+    },
+    {
+        "id": "short_06",
+        "cohort": "Cohort C",
+        "format_type": "cohort_c_short",
+        "filename": "tiktok_short_06_born_2_11_20_29.mp4",
+        "hook_box_text": "Born on the 2nd, 11th, 20th, or 29th? Why you absorb everyone's energy:",
+        "hook_end_sec": 4.5,
+        "cta_tail_sec": 3.5,
+        "tail_hold_sec": 0.5,
+        "target_voice_sec": 12.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on the second, eleventh, twentieth, or twenty-ninth, you sense everyone’s "
+            "emotions before they even speak. Standard numerology calls you overly sensitive, but five-system "
+            "math shows where your Moon number and Kabbalistic tree collide. Test your chart on my profile."
+        ),
+        "broll_clips": [
+            (0.0, 4.0, "broll_01_window_reflection.mp4"),
+            (4.0, 7.5, "broll_03_thoughtful_woman.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_tree.png", 2.8),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 2nd, 11th, 20th, or 29th? Why you absorb everyone else's emotions before they "
+            "even speak (Vedic Moon vs. Kabbalistic Tree of Life) 🌙✨ #numerology #masternumber11 "
+            "#lifepath2 #empath #kabbalah #intuition #spiritualtiktok #energyhealing"
+        ),
+        "first_comment": "Were you born on the 2nd, 11th, 20th, or 29th—and can you read a room before anyone speaks? 👇",
+        "hashtags": [
+            "#numerology", "#masternumber11", "#lifepath2", "#empath",
+            "#kabbalah", "#intuition", "#spiritualtiktok", "#energyhealing"
+        ],
+    },
 ]
 
 
@@ -752,12 +860,15 @@ class BrollStoryGenerator:
         if os.path.exists(GDRIVE_QUEUE_DIR):
             shutil.copy2(scripts_path, os.path.join(GDRIVE_QUEUE_DIR, "tiktok_scripts.json"))
 
-    async def run(self, cohort: str = "C"):
+    async def run(self, cohort: str = "C", only_ids: Optional[str] = None):
         target_specs = (
             COHORT_C_SPECS
             if cohort.upper() == "C"
             else (COHORT_B_SPECS if cohort.upper() == "B" else COHORT_B_SPECS + COHORT_C_SPECS)
         )
+        if only_ids:
+            allowed = {x.strip() for x in only_ids.split(",") if x.strip()}
+            target_specs = [s for s in target_specs if s["id"] in allowed or s["filename"] in allowed]
         print("=" * 72, flush=True)
         print(f"   STARTING HUMAN B-ROLL + PRODUCT REVEAL GENERATOR (COHORT: {cohort.upper()})", flush=True)
         print("=" * 72, flush=True)
@@ -808,6 +919,7 @@ class BrollStoryGenerator:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Render Cohort B or Cohort C TikTok videos.")
     parser.add_argument("--cohort", type=str, default="C", help="Cohort to render: C, B, or ALL (default: C)")
+    parser.add_argument("--only", type=str, default=None, help="Comma-separated video IDs to render (e.g., short_04,short_05,short_06)")
     args = parser.parse_args()
     gen = BrollStoryGenerator()
-    asyncio.run(gen.run(cohort=args.cohort))
+    asyncio.run(gen.run(cohort=args.cohort, only_ids=args.only))

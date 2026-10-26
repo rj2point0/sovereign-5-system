@@ -54,8 +54,14 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
-        "id": "short_01",
+        "id": "short_04",
         "video_id": None,
+        "title_match": "Born on the 1st, 10th, 19th, or 28th of any month",
+        "comment": "Were you born on the 1st, 10th, 19th, or 28th—and do you always end up leading on your own? 👇",
+    },
+    {
+        "id": "short_01",
+        "video_id": "7700014438883052813",
         "title_match": "Born on the 8th, 17th, or 26th of any month",
         "comment": "Were you born on the 8th, 17th, or 26th—or is 8 your Life Path number? Drop your birthday month and day below 👇",
     },

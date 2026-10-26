@@ -4,12 +4,17 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from lead_capture_worker import extract_utm_from_payload, format_attribution_source
+from lead_capture_worker import (
+    classify_visitor_browser,
+    extract_utm_from_payload,
+    format_attribution_source,
+    record_telemetry_event,
+)
 from seed_first_comments import TARGET_FIRST_COMMENTS, is_automod_safe_first_comment
 
 
 def test_target_first_comments_are_automod_safe():
-    assert len(TARGET_FIRST_COMMENTS) >= 4
+    assert len(TARGET_FIRST_COMMENTS) >= 5
     for item in TARGET_FIRST_COMMENTS:
         assert is_automod_safe_first_comment(item["comment"]), f"Failed automod check: {item['comment']}"
 
@@ -38,8 +43,8 @@ def test_tiktok_scripts_first_comments_are_automod_safe():
             assert is_automod_safe_first_comment(fc), f"Script {s['id']} first_comment failed: {fc}"
         if s.get("cohort") == "Cohort C":
             cohort_c_ids.add(s["id"])
-    assert found_fc >= 5
-    assert {"short_01", "short_02", "short_03"}.issubset(cohort_c_ids)
+    assert found_fc >= 8
+    assert {"short_01", "short_02", "short_03", "short_04", "short_05", "short_06"}.issubset(cohort_c_ids)
 
 
 def test_utm_and_cohort_attribution():
@@ -47,14 +52,17 @@ def test_utm_and_cohort_attribution():
     assert format_attribution_source({}) == "Organic Bio"
     assert format_attribution_source({"utm_source": "tiktok", "utm_medium": "bio"}) == "Organic Bio"
 
-    # Cohort B organic
+    # Cohort B & C organic
     assert format_attribution_source({"utm_source": "tiktok", "utm_medium": "bio", "cohort": "B"}) == "Organic Bio · Cohort B"
     assert format_attribution_source({"cohort": "broll_01"}) == "Cohort B"
+    assert format_attribution_source({"utm_source": "tiktok", "utm_medium": "bio", "cohort": "C"}) == "Organic Bio · Cohort C"
+    assert format_attribution_source({"cohort": "short_04"}) == "Cohort C"
 
     # TikTok Promote
     assert format_attribution_source({"utm_source": "tiktok", "utm_medium": "promote"}) == "TikTok Promote"
     assert format_attribution_source({"utm_source": "tiktok", "utm_medium": "promote", "cohort": "B"}) == "TikTok Promote (Cohort B)"
     assert format_attribution_source({"ttclid": "E.C.P.12345", "cohort": "broll_01"}) == "TikTok Promote (Cohort B)"
+    assert format_attribution_source({"ttclid": "E.C.P.99999", "cohort": "short_02"}) == "TikTok Promote (Cohort C)"
 
 
 def test_extract_utm_from_payload():
@@ -75,11 +83,30 @@ def test_extract_utm_from_payload():
     assert format_attribution_source(u) == "TikTok Promote (Cohort B)"
 
 
+def test_telemetry_browser_detection_and_bot_filter():
+    # TikTok In-App Browser (iOS)
+    tt_info = classify_visitor_browser({
+        "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 musical_ly_34.1.0 JsSdk/2.0 NetType/WIFI Channel/App Store ByteLocale/en Region/US BytedanceWebview/d8a21c6",
+    })
+    assert tt_info["is_tiktok_inapp"] is True
+    assert tt_info["device_type"] == "Mobile"
+    assert "TikTok In-App" in tt_info["browser_label"]
+
+    # Headless Playwright bot should be ignored by record_telemetry_event
+    bot_res = record_telemetry_event({
+        "event_type": "page_view",
+        "session_id": "test_bot_sess",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/124.0.0.0 Safari/537.36",
+    })
+    assert bot_res is None
+
+
 if __name__ == "__main__":
     test_target_first_comments_are_automod_safe()
     test_automod_validator_blocks_spam_triggers()
     test_tiktok_scripts_first_comments_are_automod_safe()
     test_utm_and_cohort_attribution()
     test_extract_utm_from_payload()
-    print("ALL 5 TEST SUITES PASSED!")
+    test_telemetry_browser_detection_and_bot_filter()
+    print("ALL 6 TEST SUITES PASSED!")
 

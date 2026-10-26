@@ -76,6 +76,8 @@ LOCAL_CSV_PATH = os.path.join(BASE_DIR, "leads_captured.csv")
 GDRIVE_CSV_PATH = r"G:\My Drive\5_System_Numerology_MVP\leads_captured.csv"
 OBSIDIAN_DASHBOARD_PATH = r"G:\My Drive\MVV_Memory_Vault\03-Projects\Leads_Captured_Dashboard.md"
 PROCESSED_LEADS_PATH = os.path.join(BASE_DIR, "processed_leads_state.json")
+TELEMETRY_STATE_PATH = os.path.join(BASE_DIR, "telemetry_events.json")
+GDRIVE_TELEMETRY_PATH = r"G:\My Drive\5_System_Numerology_MVP\telemetry_events.json"
 
 CSV_COLUMNS = [
     "timestamp",
@@ -1135,6 +1137,12 @@ def format_attribution_source(utm: Optional[Dict[str, Any]] = None) -> str:
         or "paid" in camp
         or bool(ttclid)
     )
+    is_cohort_c = (
+        cohort_low in ("c", "cohort_c", "cohort-c", "short", "short_01", "short_02", "short_03", "short_04", "short_05", "short_06")
+        or "cohort_c" in camp
+        or "cohort-c" in camp
+        or "short_" in camp
+    )
     is_cohort_b = (
         cohort_low in ("b", "cohort_b", "cohort-b", "broll", "broll_01", "broll_02")
         or "cohort_b" in camp
@@ -1148,6 +1156,8 @@ def format_attribution_source(utm: Optional[Dict[str, Any]] = None) -> str:
     )
 
     if is_promote:
+        if is_cohort_c:
+            return "TikTok Promote (Cohort C)"
         if is_cohort_b:
             return "TikTok Promote (Cohort B)"
         if is_cohort_a:
@@ -1155,6 +1165,11 @@ def format_attribution_source(utm: Optional[Dict[str, Any]] = None) -> str:
         if camp and camp not in ("promote", "tiktok_promote"):
             return f"TikTok Promote ({u.get('utm_campaign')})"
         return "TikTok Promote"
+
+    if is_cohort_c:
+        if med == "bio" or src == "tiktok":
+            return "Organic Bio · Cohort C"
+        return "Cohort C"
 
     if is_cohort_b:
         if med == "bio" or src == "tiktok":
@@ -1253,7 +1268,181 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
         except Exception as e:
             print(f"  [Notice] Could not write CSV {csv_path}: {e}", flush=True)
 
-    # Also regenerate Obsidian Markdown Dashboard from LOCAL_CSV_PATH
+    # Also regenerate Obsidian Markdown Dashboard from LOCAL_CSV_PATH and TELEMETRY_STATE_PATH
+    update_obsidian_dashboard()
+
+
+def load_telemetry_events() -> List[Dict[str, Any]]:
+    if os.path.exists(TELEMETRY_STATE_PATH):
+        try:
+            with open(TELEMETRY_STATE_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    return data
+        except Exception:
+            pass
+    return []
+
+
+def save_telemetry_events(events: List[Dict[str, Any]]):
+    for p in (TELEMETRY_STATE_PATH, GDRIVE_TELEMETRY_PATH):
+        try:
+            parent = os.path.dirname(p)
+            if parent and os.path.exists(parent):
+                with open(p, "w", encoding="utf-8") as f:
+                    json.dump(events, f, indent=2, ensure_ascii=False)
+        except Exception:
+            pass
+
+
+def classify_visitor_browser(payload: Dict[str, Any]) -> Dict[str, Any]:
+    ua = str(payload.get("user_agent") or "").strip()
+    is_tt = bool(payload.get("is_tiktok_inapp")) or bool(
+        re.search(r"BytedanceWebview|musical_ly|TikTok|trill|ByteLocale", ua, re.IGNORECASE)
+    )
+    is_ig = bool(re.search(r"Instagram", ua, re.IGNORECASE))
+    is_fb = bool(re.search(r"FBAN|FBAV", ua, re.IGNORECASE))
+    is_ios = bool(re.search(r"iPhone|iPad|iPod", ua, re.IGNORECASE))
+    is_android = bool(re.search(r"Android", ua, re.IGNORECASE))
+    is_mobile = is_ios or is_android or bool(re.search(r"Mobile", ua, re.IGNORECASE)) or payload.get("device_type") == "Mobile"
+    os_tag = "iOS" if is_ios else ("Android" if is_android else ("Mobile" if is_mobile else "Desktop"))
+
+    label = str(payload.get("browser_label") or "").strip()
+    if not label or label in ("Desktop Browser", "Mobile Browser"):
+        if is_tt:
+            label = f"TikTok In-App ({os_tag})"
+        elif is_ig:
+            label = f"Instagram In-App ({os_tag})"
+        elif is_fb:
+            label = f"Facebook In-App ({os_tag})"
+        elif re.search(r"CriOS|Chrome", ua, re.IGNORECASE) and not re.search(r"Edg", ua, re.IGNORECASE):
+            label = f"{os_tag} Chrome"
+        elif re.search(r"Safari", ua, re.IGNORECASE) and not re.search(r"Chrome|CriOS", ua, re.IGNORECASE):
+            label = f"{os_tag} Safari"
+        else:
+            label = f"{os_tag} Browser"
+
+    return {
+        "user_agent": ua,
+        "is_tiktok_inapp": is_tt,
+        "device_type": "Mobile" if is_mobile else "Desktop",
+        "browser_label": label,
+        "referrer": str(payload.get("referrer") or "Direct / Bio Link").strip(),
+    }
+
+
+def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    Records a funnel telemetry event (`page_view`, `calc_started`, `calc_preview`,
+    `lead_submitted`, `checkout_clicked`, `purchase_return`) into telemetry_events.json
+    and refreshes Leads_Captured_Dashboard.md.
+    Filters out headless Playwright / bot traffic so automated tests never pollute metrics.
+    """
+    raw_ev = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
+    ev_map = {
+        "page_view": "page_view",
+        "calc_started": "calc_started",
+        "calc_preview": "calc_preview",
+        "lead_capture": "lead_submitted",
+        "lead_submitted": "lead_submitted",
+        "checkout_click": "checkout_clicked",
+        "checkout_clicked": "checkout_clicked",
+        "purchase_return": "purchase_return",
+    }
+    event_type = ev_map.get(raw_ev)
+    if not event_type:
+        return None
+
+    ua = str(payload.get("user_agent") or "")
+    extra = payload.get("extra") if isinstance(payload.get("extra"), dict) else {}
+    if not extra.get("force_telemetry") and re.search(r"HeadlessChrome|Playwright|PhantomJS", ua, re.IGNORECASE):
+        return None
+
+    prof = payload.get("profile") if isinstance(payload.get("profile"), dict) else {}
+    raw_name = str(prof.get("fullName") or "").strip()
+    raw_dob = str(prof.get("birthDate") or "").strip()
+    raw_email = str(prof.get("email") or "").strip()
+
+    if raw_email.lower().endswith("@sovereign5.com") or raw_email.lower() == "test@example.com":
+        return None
+    if raw_name.lower() == "adam vega" and normalize_dob(raw_dob) == "1978-08-19" and not extra.get("force_telemetry"):
+        return None
+
+    clean_name = " ".join(w.capitalize() for w in raw_name.split()) if raw_name else ""
+    iso_dob = normalize_dob(raw_dob) if raw_dob else ""
+    nums = payload.get("numbers") if isinstance(payload.get("numbers"), dict) else {}
+    top3 = str(nums.get("top_3_overlap_numbers") or "").strip()
+    lp_str = str(nums.get("life_path") or "").strip()
+    vedic_str = str(nums.get("vedic_moolank") or "").strip()
+    chal_str = str(nums.get("chaldean_name") or "").strip()
+
+    if clean_name and re.match(r"^\d{4}-\d{2}-\d{2}$", iso_dob) and not top3:
+        try:
+            c = calculate_5_systems(clean_name, iso_dob)
+            top3 = c["top_3_overlap_numbers"]
+            lp_str = c["life_path"]
+            vedic_str = c["vedic_moolank"]
+            chal_str = c["chaldean_name"]
+        except Exception:
+            pass
+
+    utm_data = extract_utm_from_payload(payload)
+    source_attr = format_attribution_source(utm_data)
+    b_info = classify_visitor_browser(payload)
+    session_id = str(payload.get("session_id") or prof.get("id") or "").strip() or f"anon_{(payload.get('timestamp') or '')[:16]}"
+    tier_label = str(extra.get("tier_label") or extra.get("tier") or "").strip()
+    if event_type == "checkout_clicked" and not tier_label:
+        total_p = extra.get("total") or (84 if extra.get("bump") else 37)
+        tier_label = f"${total_p} ({'Bundle' if extra.get('bump') else 'Base'})"
+
+    if event_type in ("page_view", "calc_started"):
+        dedup_key = f"{session_id}::{event_type}"
+    elif event_type == "calc_preview":
+        dedup_key = f"{session_id}::calc_preview::{clean_name.lower()}::{iso_dob}"
+    elif event_type == "checkout_clicked":
+        dedup_key = f"{session_id}::checkout_clicked::{tier_label}::{(payload.get('timestamp') or '')[:16]}"
+    else:
+        dedup_key = f"{session_id}::{event_type}::{clean_name.lower()}::{iso_dob}::{raw_email.lower()}"
+
+    events = load_telemetry_events()
+    for existing in events:
+        if existing.get("dedup_key") == dedup_key:
+            return existing
+
+    record = {
+        "dedup_key": dedup_key,
+        "timestamp": str(payload.get("timestamp") or datetime.now(timezone.utc).isoformat()),
+        "session_id": session_id,
+        "event_type": event_type,
+        "browser_label": b_info["browser_label"],
+        "is_tiktok_inapp": b_info["is_tiktok_inapp"],
+        "device_type": b_info["device_type"],
+        "referrer": b_info["referrer"],
+        "source_attribution": source_attr,
+        "utm": utm_data,
+        "name": clean_name,
+        "dob": iso_dob,
+        "email": raw_email,
+        "top_3_overlap_numbers": top3,
+        "life_path": lp_str,
+        "vedic_moolank": vedic_str,
+        "chaldean_name": chal_str,
+        "tier_label": tier_label,
+    }
+    events.append(record)
+    save_telemetry_events(events)
+    update_obsidian_dashboard()
+    print(f"✓ Telemetry [{event_type}] logged: {b_info['browser_label']} | {clean_name or 'Visitor'} {iso_dob}", flush=True)
+    return record
+
+
+def update_obsidian_dashboard():
+    """
+    Regenerates G:\\My Drive\\MVV_Memory_Vault\\03-Projects\\Leads_Captured_Dashboard.md with:
+    1. Live Funnel Conversion Telemetry Summary table (page_view, calc_started, calc_preview, lead_submitted, checkout_clicked)
+    2. Recent Visitor Activity & Name/DOB Preview Log table
+    3. Captured Email Leads & 3-Part Drip Sequence Log table
+    """
     try:
         rows = []
         if os.path.exists(LOCAL_CSV_PATH):
@@ -1261,27 +1450,93 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
                 reader = csv.DictReader(f)
                 rows = list(reader)
 
+        events = load_telemetry_events()
+        page_views = [e for e in events if e.get("event_type") == "page_view"]
+        tt_views = [e for e in page_views if e.get("is_tiktok_inapp")]
+        other_views = [e for e in page_views if not e.get("is_tiktok_inapp")]
+        calc_started = [e for e in events if e.get("event_type") == "calc_started"]
+        calc_previews = [e for e in events if e.get("event_type") == "calc_preview"]
+        lead_submits = [e for e in events if e.get("event_type") == "lead_submitted"]
+        checkout_clicks = [e for e in events if e.get("event_type") == "checkout_clicked"]
+
+        total_leads_count = max(len(rows), len(lead_submits))
+
         if os.path.exists(os.path.dirname(OBSIDIAN_DASHBOARD_PATH)):
             md_lines = [
                 "---",
-                "title: Sacred Number Blueprint — Captured Leads Dashboard",
+                "title: Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "project: Sacred Number Blueprint (@sacrednumberblueprint)",
                 f"date_updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                f"total_page_views: {len(page_views)}",
+                f"tiktok_inapp_views: {len(tt_views)}",
+                f"calc_previews: {len(calc_previews)}",
                 f"total_leads: {len(rows)}",
+                f"checkout_clicks: {len(checkout_clicks)}",
                 "tags:",
                 "  - leads",
+                "  - telemetry",
                 "  - sacred-number-blueprint",
                 "  - funnel-crm",
                 "---",
                 "",
-                "# 📬 Sacred Number Blueprint — Live Captured Leads Dashboard",
+                "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
-                "> [!INFO] Central Lead Capture, UTM/Cohort Attribution & Automated 3-Part Email Sequence Log",
-                "> Every visitor who submits their Name, Birth Date, and Email on `https://rj2point0.github.io/sovereign-5-system/` is logged below with their attribution source (`Organic Bio`, `Cohort B`, or `TikTok Promote`), synced to `G:\\My Drive\\5_System_Numerology_MVP\\leads_captured.csv` and Supabase (`public.numerology_leads`), and enrolled in the 3-part automated luxury HTML email sequence (Instant + 24h Lo Shu + 48h Rosicrucian Cycles).",
+                "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://rj2point0.github.io/sovereign-5-system/`)",
+                "> Tracks every real visitor session from the moment they tap the TikTok bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
+                "",
+                "## 1. Live Funnel Conversion Telemetry Summary",
+                "",
+                "| Funnel Stage | Event Key | Total Count | Breakdown / Conversion Notes |",
+                "| :--- | :--- | :---: | :--- |",
+                f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App Browser:** `{len(tt_views)}` · **Other Browsers:** `{len(other_views)}` |",
+                f"| **2. Calculator Interactions** | `calc_started` | **{len(calc_started)}** | Visitors who tapped into the Name or Birth Date input field |",
+                f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
+                f"| **4. Full Email Leads Captured** | `lead_submitted` | **{total_leads_count}** | Enrolled in automated 3-part luxury HTML email sequence |",
+                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$37` Base, `$84` Bundle, or `$47` Cycles Upgrade |",
+                "",
+                "---",
+                "",
+                "## 2. Recent Visitor Activity & Name/DOB Preview Log",
+                "",
+                "| Timestamp (UTC) | Funnel Event | Device & Browser | Source / Cohort | Tested Name | Tested DOB | Big 3 Overlap / Life Path | Checkout Tier Clicked |",
+                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+            ]
+
+            stage_badges = {
+                "page_view": "👀 `page_view`",
+                "calc_started": "✍️ `calc_started`",
+                "calc_preview": "🔮 `calc_preview`",
+                "lead_submitted": "📩 `lead_submitted`",
+                "checkout_clicked": "💳 `checkout_clicked`",
+                "purchase_return": "🏆 `purchase_return`",
+            }
+            if events:
+                for ev in reversed(events[-100:]):
+                    ts_short = str(ev.get("timestamp") or "")[:19]
+                    st_label = stage_badges.get(ev.get("event_type", ""), f"`{ev.get('event_type', '')}`")
+                    br_label = ev.get("browser_label") or "Browser"
+                    src_attr = ev.get("source_attribution") or "Organic Bio"
+                    t_name = f"**{ev['name']}**" if ev.get("name") else "—"
+                    t_dob = f"`{ev['dob']}`" if ev.get("dob") else "—"
+                    num_summary = "—"
+                    if ev.get("top_3_overlap_numbers"):
+                        num_summary = f"**{ev['top_3_overlap_numbers']}** (LP `{ev.get('life_path', '')}`)"
+                    tier_col = f"**{ev['tier_label']}**" if ev.get("tier_label") else "—"
+                    md_lines.append(
+                        f"| `{ts_short}` | {st_label} | `{br_label}` | **{src_attr}** | {t_name} | {t_dob} | {num_summary} | {tier_col} |"
+                    )
+            else:
+                md_lines.append("| *(Waiting for next live visitor...)* | — | — | — | — | — | — | — |")
+
+            md_lines.extend([
+                "",
+                "---",
+                "",
+                "## 3. Captured Email Leads & 3-Part Drip Sequence Log",
                 "",
                 "| Timestamp (UTC) | Full Birth Name | DOB | Email | Source / Cohort | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email #1 (Instant) | Email #2 (24h) | Email #3 (48h) |",
                 "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
-            ]
+            ])
             for r in reversed(rows):
                 e1 = "✅" if r.get("email_1_sent_at") or r.get("email_sent") == "YES" else "⏳"
                 e2 = "✅" if r.get("email_2_sent_at") else "⏳"
@@ -1293,7 +1548,7 @@ def append_lead_to_csv_and_obsidian(lead: Dict[str, Any], email_sent: bool):
             md_lines.append("")
             with open(OBSIDIAN_DASHBOARD_PATH, "w", encoding="utf-8") as f:
                 f.write("\n".join(md_lines))
-            print(f"✓ Obsidian Leads Dashboard updated: {OBSIDIAN_DASHBOARD_PATH}", flush=True)
+            print(f"✓ Obsidian Leads & Telemetry Dashboard updated: {OBSIDIAN_DASHBOARD_PATH}", flush=True)
     except Exception as e:
         print(f"  [Notice] Could not update Obsidian Leads Dashboard: {e}", flush=True)
 
@@ -1491,7 +1746,10 @@ def poll_cloud_relay_once() -> int:
                         continue
                     msg_str = envelope.get("message", "")
                     payload = json.loads(msg_str)
-                    if payload.get("event") not in ("lead_capture", "purchase_return"):
+                    ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
+                    if ev_name in ("page_view", "calc_started", "calc_preview", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
+                        record_telemetry_event(payload)
+                    if ev_name not in ("lead_capture", "lead_submitted", "purchase_return"):
                         continue
                     prof = payload.get("profile") or {}
                     full_name = prof.get("fullName", "").strip()
@@ -1518,8 +1776,9 @@ def poll_cloud_relay_once() -> int:
     except Exception as e:
         print(f"  [Notice] Cloud relay poll error: {e}", flush=True)
 
-    # Also process any due 24h / 48h follow-up emails
+    # Also process any due 24h / 48h follow-up emails and refresh dashboard
     check_and_send_scheduled_followups()
+    update_obsidian_dashboard()
     return count
 
 
@@ -1545,6 +1804,8 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
         try:
             payload = json.loads(raw)
+            record_telemetry_event(payload)
+            ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
             prof = payload.get("profile") or {}
             full_name = prof.get("fullName", "").strip()
             dob = prof.get("birthDate", "").strip()
@@ -1552,7 +1813,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
             lang = payload.get("lang", "en")
             ts = payload.get("timestamp")
             utm_data = extract_utm_from_payload(payload)
-            if full_name and dob and email_addr and "@" in email_addr:
+            if ev_name in ("lead_capture", "lead_submitted", "purchase_return", "") and full_name and dob and email_addr and "@" in email_addr:
                 if not email_addr.lower().endswith("@sovereign5.com") and email_addr.lower() != "test@example.com":
                     process_lead(
                         full_name,

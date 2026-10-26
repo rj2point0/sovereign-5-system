@@ -220,8 +220,47 @@ const CONFIG = {
       : 'The Sovereign 5-System Blueprint · Numerology & Rosicrucian Cycles';
   }
 
-  /* ---------------- lead capture ---------------- */
+  /* ---------------- lead capture & funnel telemetry ---------------- */
   function leadId() { return 'lead_' + Math.random().toString(36).slice(2, 9); }
+  function sessionId() {
+    let sid = store.get('s5_session_id');
+    if (!sid) {
+      sid = 'sess_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+      store.set('s5_session_id', sid);
+    }
+    return sid;
+  }
+  function isAutomatedOrLocalTest() {
+    const q = new URLSearchParams(location.search);
+    if (q.get('force_telemetry') === '1') return false;
+    const host = (location.hostname || '').toLowerCase();
+    const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host === '';
+    const isBot = Boolean(navigator.webdriver) || /HeadlessChrome|Playwright|PhantomJS/i.test(navigator.userAgent || '');
+    return isLocal || isBot;
+  }
+  function detectBrowserEnv() {
+    const ua = navigator.userAgent || '';
+    const isTikTok = /BytedanceWebview|musical_ly|TikTok|trill|ByteLocale/i.test(ua);
+    const isIG = /Instagram/i.test(ua);
+    const isFB = /FBAN|FBAV/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    const isMobile = isIOS || isAndroid || /Mobile/i.test(ua);
+    const osTag = isIOS ? 'iOS' : (isAndroid ? 'Android' : (isMobile ? 'Mobile' : 'Desktop'));
+    let browserLabel = osTag + ' Browser';
+    if (isTikTok) browserLabel = `TikTok In-App (${osTag})`;
+    else if (isIG) browserLabel = `Instagram In-App (${osTag})`;
+    else if (isFB) browserLabel = `Facebook In-App (${osTag})`;
+    else if (/CriOS|Chrome/i.test(ua) && !/Edg/i.test(ua)) browserLabel = `${osTag} Chrome`;
+    else if (/Safari/i.test(ua) && !/Chrome|CriOS/i.test(ua)) browserLabel = `${osTag} Safari`;
+    return {
+      user_agent: ua,
+      is_tiktok_inapp: isTikTok,
+      device_type: isMobile ? 'Mobile' : 'Desktop',
+      browser_label: browserLabel,
+      referrer: document.referrer || 'Direct / Bio Link',
+    };
+  }
   function utm() {
     const q = new URLSearchParams(location.search);
     const cached = store.get('sovereign5_utm_v1') || {};
@@ -241,10 +280,15 @@ const CONFIG = {
     if (idx >= 0) leads[idx] = p; else leads.push(p);
     store.set(KEYS.leads, leads);
   }
-  function sendWebhook(event, extra) {
+  function sendWebhook(event, extra, customProfile) {
     if (!CONFIG.WEBHOOK_URL && !CONFIG.LOCAL_WEBHOOK_URL) return;
     try {
-      const r = state.result || (state.profile && state.profile.fullName && state.profile.birthDate ? E.calculate(state.profile.fullName, state.profile.birthDate) : null);
+      const envInfo = detectBrowserEnv();
+      const skipPublicRelay = isAutomatedOrLocalTest();
+      const activeProf = customProfile || state.profile || {};
+      const r = (customProfile && customProfile.fullName && customProfile.birthDate)
+        ? E.calculate(customProfile.fullName, customProfile.birthDate)
+        : (state.result || (activeProf.fullName && activeProf.birthDate ? E.calculate(activeProf.fullName, activeProf.birthDate) : null));
       const C_LANG = C.get(state.lang || 'en');
       const anchors = r && r.overlap && r.overlap.anchors ? r.overlap.anchors.slice(0, 3).map((a) => ({
         number: a.number,
@@ -253,18 +297,25 @@ const CONFIG = {
         systems: a.systems,
       })) : [];
       const top3Str = anchors.map((a) => a.number).join(', ');
-      const activeUtm = Object.assign({}, (state.profile && state.profile.utm) || {}, utm());
+      const activeUtm = Object.assign({}, activeProf.utm || {}, utm());
 
       const payload = {
         event,
+        event_type: event,
+        session_id: sessionId(),
         timestamp: new Date().toISOString(),
         lang: state.lang || 'en',
+        referrer: envInfo.referrer,
+        user_agent: envInfo.user_agent,
+        browser_label: envInfo.browser_label,
+        is_tiktok_inapp: envInfo.is_tiktok_inapp,
+        device_type: envInfo.device_type,
         utm: activeUtm,
         utm_source: activeUtm.utm_source || '',
         utm_medium: activeUtm.utm_medium || '',
         utm_campaign: activeUtm.utm_campaign || '',
         cohort: activeUtm.cohort || '',
-        profile: Object.assign({}, state.profile, { utm: activeUtm }),
+        profile: Object.assign({}, activeProf, { utm: activeUtm }),
         numbers: r ? {
           top_3_overlap_numbers: top3Str,
           anchors,
@@ -279,15 +330,15 @@ const CONFIG = {
         extra: extra || {},
       };
       const bodyStr = JSON.stringify(payload);
-      if (CONFIG.WEBHOOK_URL) {
+      if (CONFIG.WEBHOOK_URL && !skipPublicRelay) {
         fetch(CONFIG.WEBHOOK_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=UTF-8', 'Title': `New 5-System Lead: ${(state.profile && state.profile.fullName) || 'Visitor'}` },
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8', 'Title': `S5 [${event}]: ${activeProf.fullName || envInfo.browser_label}` },
           body: bodyStr,
           keepalive: true,
         }).catch(() => {});
       }
-      if (CONFIG.LOCAL_WEBHOOK_URL) {
+      if (CONFIG.LOCAL_WEBHOOK_URL && !skipPublicRelay) {
         fetch(CONFIG.LOCAL_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -296,6 +347,32 @@ const CONFIG = {
           keepalive: true,
         }).catch(() => {});
       }
+    } catch (e) { /* ignore */ }
+  }
+
+  let _lastPreviewKey = '';
+  function maybeFireCalcPreview(triggerSource) {
+    try {
+      const fNameEl = $('#fullName');
+      const dobEl = $('#birthDate');
+      if (!fNameEl || !dobEl) return;
+      const fName = fNameEl.value.trim();
+      const dob = dobEl.value.trim();
+      if (!fName || !dob) return;
+      const chk = E.validate(fName, dob);
+      if (!chk.valid) return;
+      const key = `${fName.toLowerCase()}::${dob}`;
+      if (key === _lastPreviewKey) return;
+      _lastPreviewKey = key;
+      const emailEl = $('#email');
+      const em = emailEl ? emailEl.value.trim() : '';
+      sendWebhook('calc_preview', { trigger: triggerSource || 'field_blur' }, {
+        id: (state.profile && state.profile.id) || leadId(),
+        fullName: fName,
+        birthDate: dob,
+        email: em,
+        utm: utm(),
+      });
     } catch (e) { /* ignore */ }
   }
 
@@ -418,7 +495,7 @@ const CONFIG = {
     };
     const check = E.validate(data.fullName, data.birthDate);
     const errs = Object.assign({}, check.errors);
-    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       errs.email = state.lang === 'es' ? 'Ingresa un correo electrónico válido' : 'Enter a valid email address';
     }
     showErrors(errs);
@@ -433,7 +510,11 @@ const CONFIG = {
     state.result = E.calculate(prof.fullName, prof.birthDate);
     saveProfile(prof);
 
-    sendWebhook('lead_capture');
+    if (data.email) {
+      sendWebhook('lead_submitted');
+    } else {
+      sendWebhook('calc_preview', { trigger: 'submit_no_email' });
+    }
 
     // Calculation ritual
     const ritual = $('#ritual');
@@ -540,6 +621,16 @@ const CONFIG = {
           <span data-i18n="share_btn">${UI.share_btn}</span>
         </button>
       </div>
+
+      ${!(state.profile && state.profile.email) ? `
+      <!-- 1-STEP MICRO-COMMITMENT EMAIL SAVE BAR -->
+      <div id="teaser-email-box" class="card-soft mt-5 p-4 sm:p-5 border border-gold/30 max-w-xl mx-auto text-center">
+        <p class="text-xs sm:text-sm text-champagne font-medium">${state.lang === 'es' ? '✦ ¿Quieres recibir este resumen de tus 5 Sistemas y tu Alerta de Fricción en tu correo?' : '✦ Want a copy of your 5-System Summary & Friction Alert emailed to you?'}</p>
+        <div class="mt-3 flex flex-col sm:flex-row gap-2">
+          <input id="teaser-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2.5 text-sm flex-1" placeholder="${state.lang === 'es' ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
+          <button type="button" data-action="save-teaser-email" class="btn-gold !py-2.5 !px-5 sm:w-auto text-xs whitespace-nowrap">${state.lang === 'es' ? 'Enviar Mi Resumen Gratis' : 'Email My Free Summary'}</button>
+        </div>
+      </div>` : ''}
 
       <!-- MATRIX -->
       <div class="mt-12">
@@ -701,7 +792,9 @@ const CONFIG = {
 
   function checkout() {
     const link = state.bump ? CONFIG.STRIPE_LINK_BUMP : CONFIG.STRIPE_LINK_BASE;
-    sendWebhook('checkout_click', { bump: state.bump, total: CONFIG.PRICE_BASE + (state.bump ? CONFIG.PRICE_BUMP : 0) });
+    const total = CONFIG.PRICE_BASE + (state.bump ? CONFIG.PRICE_BUMP : 0);
+    const tierLabel = state.bump ? `$${total} Bundle (20-Page Dossier + 52-Day Cycles)` : `$${total} Base (20-Page Dossier)`;
+    sendWebhook('checkout_clicked', { bump: state.bump, total, tier: state.bump ? 'full_bundle' : 'base', tier_label: tierLabel });
     if (!link) {
       const msg = state.lang === 'es'
         ? '<b class="text-gold">Enlace de Stripe no configurado.</b><br/>Pega tus enlaces de pago en <code>CONFIG</code> dentro de app.js' + (CONFIG.DEMO_MODE ? ', o usa el Modo Demo abajo para desbloquear el dossier completo.' : '.')
@@ -1624,11 +1717,30 @@ const CONFIG = {
         : 'The Sovereign 5-System Blueprint';
     }
     else if (a === 'checkout') checkout();
+    else if (a === 'save-teaser-email') {
+      const emInput = $('#teaser-email-input');
+      const emVal = emInput ? emInput.value.trim() : '';
+      if (!emVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emVal)) {
+        toast(state.lang === 'es' ? 'Ingresa un correo electrónico válido.' : 'Please enter a valid email address.');
+        return;
+      }
+      if (state.profile) {
+        state.profile.email = emVal;
+        saveProfile(state.profile);
+        sendWebhook('lead_submitted', { trigger: 'teaser_email_bar' });
+        const box = $('#teaser-email-box');
+        if (box) {
+          box.innerHTML = `<p class="text-xs sm:text-sm text-gold font-medium">${state.lang === 'es' ? '✦ ¡Resumen enviado a ' + esc(emVal) + '! Revisa tu bandeja de entrada.' : '✦ Summary sent to ' + esc(emVal) + '! Check your inbox.'}</p>`;
+        }
+        toast(state.lang === 'es' ? '✦ ¡Resumen de 5 Sistemas enviado a tu correo!' : '✦ 5-System Summary emailed to you!');
+      }
+    }
     else if (a === 'demo-unlock') demoUnlock();
     else if (a === 'print') window.print();
     else if (a === 'share-code') shareCode();
     else if (a === 'scroll-checkout') $('#checkout').scrollIntoView({ behavior: 'smooth', block: 'start' });
     else if (a === 'upgrade') {
+      sendWebhook('checkout_clicked', { bump: true, total: CONFIG.PRICE_BUMP, tier: 'upgrade_cycles', tier_label: `$${CONFIG.PRICE_BUMP} Upgrade (52-Day Cycles Add-On)` });
       if (CONFIG.STRIPE_LINK_UPGRADE) goToStripe(CONFIG.STRIPE_LINK_UPGRADE, 'full');
       else if (CONFIG.DEMO_MODE) {
         state.profile.tier = 'full';
@@ -1731,6 +1843,25 @@ const CONFIG = {
     setLanguage(state.lang);
 
     $('#calc-form').addEventListener('submit', onSubmit);
+
+    // Real-time funnel telemetry: calc_started & calc_preview
+    let _calcStartedFired = false;
+    const fireCalcStartedOnce = (fieldId) => {
+      if (_calcStartedFired) return;
+      _calcStartedFired = true;
+      sendWebhook('calc_started', { field: fieldId });
+    };
+    ['fullName', 'birthDate'].forEach((fid) => {
+      const el = $('#' + fid);
+      if (!el) return;
+      el.addEventListener('focus', () => fireCalcStartedOnce(fid), { once: true });
+      el.addEventListener('input', () => fireCalcStartedOnce(fid), { once: true });
+      el.addEventListener('change', () => maybeFireCalcPreview(fid + '_change'));
+      el.addEventListener('blur', () => maybeFireCalcPreview(fid + '_blur'));
+    });
+
+    // Fire page_view telemetry on load for real visitor sessions
+    sendWebhook('page_view', { path: location.pathname + location.search });
 
     // Determine target tier from URL (?tier=base&unlocked=true, ?tier=full&unlocked=true)
     const isUnlockedParam = q.get('unlocked') === 'true';
