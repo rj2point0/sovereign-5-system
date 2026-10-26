@@ -256,6 +256,7 @@ const CONFIG = {
     return {
       user_agent: ua,
       is_tiktok_inapp: isTikTok,
+      is_instagram_inapp: isIG,
       device_type: isMobile ? 'Mobile' : 'Desktop',
       browser_label: browserLabel,
       referrer: document.referrer || 'Direct / Bio Link',
@@ -309,6 +310,7 @@ const CONFIG = {
         user_agent: envInfo.user_agent,
         browser_label: envInfo.browser_label,
         is_tiktok_inapp: envInfo.is_tiktok_inapp,
+        is_instagram_inapp: envInfo.is_instagram_inapp,
         device_type: envInfo.device_type,
         utm: activeUtm,
         utm_source: activeUtm.utm_source || '',

@@ -93,8 +93,19 @@ def test_telemetry_browser_detection_and_bot_filter():
         "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 musical_ly_34.1.0 JsSdk/2.0 NetType/WIFI Channel/App Store ByteLocale/en Region/US BytedanceWebview/d8a21c6",
     })
     assert tt_info["is_tiktok_inapp"] is True
+    assert tt_info["is_instagram_inapp"] is False
     assert tt_info["device_type"] == "Mobile"
     assert "TikTok In-App" in tt_info["browser_label"]
+
+    # Instagram In-App Browser (iOS)
+    ig_info = classify_visitor_browser({
+        "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/21F79 Instagram 334.0.0.23.94 (iPhone15,3; iOS 17_5; en_US; en; scale=3.00; 1290x2796; 598765432)",
+    })
+    assert ig_info["is_instagram_inapp"] is True
+    assert ig_info["is_tiktok_inapp"] is False
+    assert ig_info["device_type"] == "Mobile"
+    assert "Instagram In-App" in ig_info["browser_label"]
+    assert format_attribution_source({"utm_source": "ig_bio", "cohort": "ig_reels"}) == "Instagram Bio · Reels"
 
     # Headless Playwright bot should be ignored by record_telemetry_event
     bot_res = record_telemetry_event({

@@ -1181,6 +1181,11 @@ def format_attribution_source(utm: Optional[Dict[str, Any]] = None) -> str:
             return "Organic Bio · Cohort A"
         return "Cohort A"
 
+    if src in ("ig", "ig_bio", "instagram") or cohort_low in ("ig_reels", "ig", "instagram"):
+        if cohort_low == "ig_reels":
+            return "Instagram Bio · Reels"
+        return "Instagram Bio"
+
     if cohort_raw:
         return f"Cohort {cohort_raw}"
 
@@ -1300,7 +1305,7 @@ def classify_visitor_browser(payload: Dict[str, Any]) -> Dict[str, Any]:
     is_tt = bool(payload.get("is_tiktok_inapp")) or bool(
         re.search(r"BytedanceWebview|musical_ly|TikTok|trill|ByteLocale", ua, re.IGNORECASE)
     )
-    is_ig = bool(re.search(r"Instagram", ua, re.IGNORECASE))
+    is_ig = bool(payload.get("is_instagram_inapp")) or bool(re.search(r"Instagram", ua, re.IGNORECASE))
     is_fb = bool(re.search(r"FBAN|FBAV", ua, re.IGNORECASE))
     is_ios = bool(re.search(r"iPhone|iPad|iPod", ua, re.IGNORECASE))
     is_android = bool(re.search(r"Android", ua, re.IGNORECASE))
@@ -1325,6 +1330,7 @@ def classify_visitor_browser(payload: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "user_agent": ua,
         "is_tiktok_inapp": is_tt,
+        "is_instagram_inapp": is_ig,
         "device_type": "Mobile" if is_mobile else "Desktop",
         "browser_label": label,
         "referrer": str(payload.get("referrer") or "Direct / Bio Link").strip(),
@@ -1416,6 +1422,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "event_type": event_type,
         "browser_label": b_info["browser_label"],
         "is_tiktok_inapp": b_info["is_tiktok_inapp"],
+        "is_instagram_inapp": b_info["is_instagram_inapp"],
         "device_type": b_info["device_type"],
         "referrer": b_info["referrer"],
         "source_attribution": source_attr,
@@ -1453,7 +1460,8 @@ def update_obsidian_dashboard():
         events = load_telemetry_events()
         page_views = [e for e in events if e.get("event_type") == "page_view"]
         tt_views = [e for e in page_views if e.get("is_tiktok_inapp")]
-        other_views = [e for e in page_views if not e.get("is_tiktok_inapp")]
+        ig_views = [e for e in page_views if e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", ""))]
+        other_views = [e for e in page_views if not e.get("is_tiktok_inapp") and not (e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")))]
         calc_started = [e for e in events if e.get("event_type") == "calc_started"]
         calc_previews = [e for e in events if e.get("event_type") == "calc_preview"]
         lead_submits = [e for e in events if e.get("event_type") == "lead_submitted"]
@@ -1469,6 +1477,7 @@ def update_obsidian_dashboard():
                 f"date_updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
                 f"total_page_views: {len(page_views)}",
                 f"tiktok_inapp_views: {len(tt_views)}",
+                f"instagram_inapp_views: {len(ig_views)}",
                 f"calc_previews: {len(calc_previews)}",
                 f"total_leads: {len(rows)}",
                 f"checkout_clicks: {len(checkout_clicks)}",
@@ -1482,13 +1491,13 @@ def update_obsidian_dashboard():
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
                 "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://rj2point0.github.io/sovereign-5-system/`)",
-                "> Tracks every real visitor session from the moment they tap the TikTok bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
+                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
                 "",
                 "## 1. Live Funnel Conversion Telemetry Summary",
                 "",
                 "| Funnel Stage | Event Key | Total Count | Breakdown / Conversion Notes |",
                 "| :--- | :--- | :---: | :--- |",
-                f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App Browser:** `{len(tt_views)}` · **Other Browsers:** `{len(other_views)}` |",
+                f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App:** `{len(tt_views)}` · **Instagram In-App:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` |",
                 f"| **2. Calculator Interactions** | `calc_started` | **{len(calc_started)}** | Visitors who tapped into the Name or Birth Date input field |",
                 f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
                 f"| **4. Full Email Leads Captured** | `lead_submitted` | **{total_leads_count}** | Enrolled in automated 3-part luxury HTML email sequence |",
