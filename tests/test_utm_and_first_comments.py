@@ -11,6 +11,7 @@ from lead_capture_worker import (
     record_telemetry_event,
 )
 from seed_first_comments import TARGET_FIRST_COMMENTS, is_automod_safe_first_comment
+from ig_comment_responder import IGCommentReplyGenerator
 
 
 def test_target_first_comments_are_automod_safe():
@@ -116,6 +117,30 @@ def test_telemetry_browser_detection_and_bot_filter():
     assert bot_res is None
 
 
+def test_ig_comment_responder_generator():
+    gen = IGCommentReplyGenerator()
+
+    # 1. Birthday comment
+    res_bday = gen.generate_ig_reply("07/16/1995", author="lily092185")
+    assert res_bday is not None
+    assert res_bday["bucket"] == "A_BIRTHDAY"
+    assert "@sacrednumberblueprint" in res_bday["reply_text"]
+    assert "link in our bio" in res_bday["reply_text"]
+
+    # 2. Life Path / single number comment
+    res_num = gen.generate_ig_reply("I am a Life Path 8", author="wealthseeker")
+    assert res_num is not None
+    assert res_num["bucket"] == "B_NUMBER"
+    assert "8" in res_num["reply_text"]
+    assert "@sacrednumberblueprint" in res_num["reply_text"]
+
+    # 3. OVERLAP keyword comment
+    res_kw = gen.generate_ig_reply("OVERLAP", author="seeker99")
+    assert res_kw is not None
+    assert res_kw["bucket"] == "C_KEYWORD_OVERLAP"
+    assert "@sacrednumberblueprint" in res_kw["reply_text"]
+
+
 if __name__ == "__main__":
     test_target_first_comments_are_automod_safe()
     test_automod_validator_blocks_spam_triggers()
@@ -123,5 +148,6 @@ if __name__ == "__main__":
     test_utm_and_cohort_attribution()
     test_extract_utm_from_payload()
     test_telemetry_browser_detection_and_bot_filter()
-    print("ALL 6 TEST SUITES PASSED!")
+    test_ig_comment_responder_generator()
+    print("ALL 7 TEST SUITES PASSED!")
 

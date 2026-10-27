@@ -415,7 +415,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "cohort": "Cohort C",
         "format_type": "cohort_c_short",
         "filename": "tiktok_short_08_born_5_14_23.mp4",
-        "hook_box_text": "Born on the 5th, 14th, or 23rd? Why routine slowly kills your spirit:",
+        "hook_box_text": "Born on the 5th, 14th, or 23rd? Why normal 9-to-5 routine drains your spirit:",
         "hook_end_sec": 4.5,
         "cta_tail_sec": 3.5,
         "tail_hold_sec": 0.5,
@@ -423,7 +423,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "voice": "en-US-AvaNeural",
         "rate": "+12%",
         "spoken_script": (
-            "If you were born on the fifth, fourteenth, or twenty-third, strict routine slowly drains "
+            "If you were born on the fifth, fourteenth, or twenty-third, normal nine-to-five routine slowly drains "
             "your spirit, yet chaos exhausts your nervous system. That’s a tug-of-war between your Mercury "
             "birth number and your Chinese Lo Shu center. Run the five-system calculator on my profile."
         ),
@@ -436,11 +436,11 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             ("image", "scenes_cache/scene_somatic.png", 99.0),
         ],
         "tiktok_caption": (
-            "Born on the 5th, 14th, or 23rd of any month? Why strict routine drains your spirit yet "
-            "chaos exhausts you (Vedic Mercury 5 vs. Chinese Lo Shu Center) 🌪️✨ #numerology #lifepath5 "
+            "Born on the 5th, 14th, or 23rd of any month? Why normal 9-to-5 routine slowly drains your spirit "
+            "(Vedic Mercury 5 vs. Chinese Lo Shu Center) 🌪️✨ #numerology #lifepath5 "
             "#bornonthe5th #bornonthe23rd #loshugrid #restlesssoul #spiritualawakening #nervoussystem"
         ),
-        "first_comment": "Are you a 5th, 14th, or 23rd birthday—and how fast do you get bored when life feels too predictable? 👇",
+        "first_comment": "Are you a 5th, 14th, or 23rd birthday—and do you instantly rebel whenever someone tries to box you in? 👇",
         "hashtags": [
             "#numerology", "#lifepath5", "#bornonthe5th", "#bornonthe23rd",
             "#loshugrid", "#restlesssoul", "#spiritualawakening", "#nervoussystem"
@@ -451,7 +451,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "cohort": "Cohort C",
         "format_type": "cohort_c_short",
         "filename": "tiktok_short_09_born_6_15_24_9_18_27.mp4",
-        "hook_box_text": "Born on the 6th, 15th, 24th—or 9th, 18th, 27th? Why you heal everyone else:",
+        "hook_box_text": "Born on the 6th, 15th, 24th—or 9th, 18th, 27th? Why you carry everyone's emotional weight:",
         "hook_end_sec": 4.5,
         "cta_tail_sec": 3.5,
         "tail_hold_sec": 0.5,
@@ -460,7 +460,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "rate": "+12%",
         "spoken_script": (
             "If you were born on the sixth, fifteenth, twenty-fourth—or the ninth, eighteenth, or twenty-seventh—"
-            "you always end up healing everyone else while nobody checks on you. That’s where your Venus and Mars "
+            "you always end up carrying everyone else’s emotional weight while nobody checks on you. That’s where your Venus and Mars "
             "numbers collide across five systems. Check the calculator on my profile."
         ),
         "broll_clips": [
@@ -472,11 +472,11 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             ("image", "scenes_cache/scene_ledger.png", 99.0),
         ],
         "tiktok_caption": (
-            "Born on the 6th, 15th, 24th—or the 9th, 18th, 27th? Why you always end up healing everyone "
-            "else while nobody checks on you (Venus 6 & Mars 9 across 5 systems) 💛🔥 #numerology #lifepath6 "
+            "Born on the 6th, 15th, 24th—or the 9th, 18th, 27th? Why you always end up carrying everyone "
+            "else's emotional weight (Venus 6 & Mars 9 across 5 systems) 💛🔥 #numerology #lifepath6 "
             "#lifepath9 #healer #peoplepleaser #empath #spiritualtiktok #relationships"
         ),
-        "first_comment": "Were you born on the 6th, 15th, 24th or the 9th, 18th, 27th—and are you always the therapist friend? 👇",
+        "first_comment": "Were you born on the 6th, 15th, 24th (or 9th, 18th, 27th)—and are you always the therapist friend in your circle? 👇",
         "hashtags": [
             "#numerology", "#lifepath6", "#lifepath9", "#healer",
             "#peoplepleaser", "#empath", "#spiritualtiktok", "#relationships"

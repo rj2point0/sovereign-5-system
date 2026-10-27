@@ -4,37 +4,48 @@
       "video_id": "7699896747476225293",
       "title_match": "Why you keep attracting the exact same exhausting relationship patterns",
       "comment": "Which numbers from 1 to 9 are missing from your birthday—and have you noticed that same pattern in relationships? 👇",
-      "seeded_at": "2026-10-26T05:31:23.094510"
+      "seeded_at": "2026-10-27T10:08:35.762637"
     },
     "ad_01": {
       "video_id": "7699586451800984846",
       "title_match": "Why your Life Path number feels way too generic",
       "comment": "What Life Path number did you get when you only used your birthday—and did it actually feel accurate for you? 👇",
-      "seeded_at": "2026-10-26T05:31:32.743910"
+      "seeded_at": "2026-10-27T10:08:45.070519"
     },
     "ad_02": {
       "video_id": "7699587106246610189",
       "title_match": "Why your birth date alone is only 20% of your numerology blueprint",
       "comment": "Does your first name start with a 1, 7, 8, or 9 vibration in Chaldean math? Drop your birth month and day below 👇",
-      "seeded_at": "2026-10-26T05:31:41.937542"
+      "seeded_at": "2026-10-27T10:08:54.266232"
     },
     "short_01": {
       "video_id": "7700014438883052813",
       "title_match": "Born on the 8th, 17th, or 26th of any month",
       "comment": "Were you born on the 8th, 17th, or 26th—or is 8 your Life Path number? Drop your birthday month and day below 👇",
-      "seeded_at": "2026-10-26T05:31:13.345150"
+      "seeded_at": "2026-10-27T10:08:26.364599"
     },
     "short_04": {
       "video_id": "7700952448457870605",
       "title_match": "Born on the 1st, 10th, 19th, or 28th of any month",
       "comment": "Were you born on the 1st, 10th, 19th, or 28th—and do you always end up leading on your own? 👇",
-      "seeded_at": "2026-10-26T05:31:04.206028"
+      "seeded_at": "2026-10-27T10:08:16.600155"
+    },
+    "short_05": {
+      "video_id": "7700952693455555854",
+      "title_match": "Born on the 4th, 13th, 22nd, or 31st of any month",
+      "comment": "Were you born on the 4th, 13th, 22nd, or 31st—and do you carry everything on your own shoulders? 👇",
+      "seeded_at": "2026-10-27T10:08:06.585595"
     }
   },
-  "updated_at": "2026-10-26T05:33:43.329097",
+  "updated_at": "2026-10-27T10:10:09.595076",
   "last_verification": {
-    "checked_at": "2026-10-26T05:32:42.272232",
+    "checked_at": "2026-10-27T10:08:59.610517",
     "videos": {
+      "short_05": {
+        "browse_comment_count": "1",
+        "comment_intact": true,
+        "in_studio_comment_feed": false
+      },
       "short_04": {
         "browse_comment_count": "1",
         "comment_intact": true,

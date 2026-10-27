@@ -54,6 +54,12 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_05",
+        "video_id": None,
+        "title_match": "Born on the 4th, 13th, 22nd, or 31st of any month",
+        "comment": "Were you born on the 4th, 13th, 22nd, or 31st—and do you carry everything on your own shoulders? 👇",
+    },
+    {
         "id": "short_04",
         "video_id": None,
         "title_match": "Born on the 1st, 10th, 19th, or 28th of any month",
