@@ -13,7 +13,9 @@ const CONFIG = {
   GUARANTEE_DAYS: 30,          // set 0 to hide the guarantee badge
 
   WEBHOOK_URL: 'https://ntfy.sh/sovereign_5_leads_mvv_991214754',
-  LOCAL_WEBHOOK_URL: 'http://127.0.0.1:8788/webhook',
+  LOCAL_WEBHOOK_URL: (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
+    ? 'http://127.0.0.1:8788/webhook'
+    : '',
   VSL_URL: 'assets/vsl_briefing.mp4',
   VSL_POSTER: 'assets/vsl_poster.jpg',
 
@@ -332,6 +334,8 @@ const CONFIG = {
         extra: extra || {},
       };
       const bodyStr = JSON.stringify(payload);
+      const hostNow = (location.hostname || '').toLowerCase();
+      const isLocalHostNow = hostNow === 'localhost' || hostNow === '127.0.0.1';
       if (CONFIG.WEBHOOK_URL && !skipPublicRelay) {
         fetch(CONFIG.WEBHOOK_URL, {
           method: 'POST',
@@ -340,7 +344,7 @@ const CONFIG = {
           keepalive: true,
         }).catch(() => {});
       }
-      if (CONFIG.LOCAL_WEBHOOK_URL && !skipPublicRelay) {
+      if (CONFIG.LOCAL_WEBHOOK_URL && isLocalHostNow && !skipPublicRelay) {
         fetch(CONFIG.LOCAL_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1896,6 +1900,23 @@ const CONFIG = {
         createdAt: new Date().toISOString(),
         utm: utm(),
       };
+    }
+
+    // If the visitor clicked our bio link (?utm_source=ig_bio or ?utm_source=tiktok) without explicit view/vip/paid params,
+    // always land cleanly on the fresh Hero Input Form instead of restoring a cached dossier from localStorage!
+    const isFreshBioLanding = Boolean(
+      q.get('utm_source') &&
+      !q.get('view') &&
+      !q.get('vip') &&
+      !q.get('paid') &&
+      !q.get('tier') &&
+      !isUnlockedParam &&
+      !hasUrlProfile
+    );
+    if (isFreshBioLanding) {
+      fillForm({});
+      showView('hero');
+      return;
     }
 
     if (prof && E.validate(prof.fullName, prof.birthDate).valid) {

@@ -148,6 +148,60 @@ async def test_all():
             assert len(a['s']) <= a['c'], f"System count {len(a['s'])} exceeds hit count {a['c']} for anchor {a}"
         print("[OK] Cross-browser Teaser session restore & compound/system math verified!")
 
+        # TEST 7: Bio Link Landing (?utm_source=ig_bio&cohort=ig_reels) Always Opens Hero Form & Public Domain Never Calls 127.0.0.1
+        print("\n--- Test 7: Bio Link Landing (?utm_source=...) & Zero Private-Network 127.0.0.1 Calls on Public Domain ---")
+        # First, verify that even when s5_profile with tier='full' is cached in localStorage,
+        # visiting ?utm_source=ig_bio&cohort=ig_reels opens the fresh Hero Input Form (#view-hero) instead of the cached dossier!
+        await page_pub.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels")
+        await page_pub.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        dossier_hidden = await page_pub.locator('#view-dossier').evaluate('el => el.classList.contains("hidden")')
+        hero_name_val = await page_pub.input_value('#fullName')
+        assert dossier_hidden is True, "Cached dossier MUST be hidden when landing via ?utm_source=ig_bio!"
+        assert hero_name_val == '', f"Expected empty #fullName on fresh bio link landing, got '{hero_name_val}'"
+        print("[OK] Bio link (?utm_source=ig_bio&cohort=ig_reels) opens fresh Hero Input Form even with cached VIP dossier!")
+
+        # Second, verify in app.js source & via simulated public domain route that 127.0.0.1:8788 is NEVER called on public hostname
+        import os
+        app_js_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "app.js")
+        with open(app_js_path, "r", encoding="utf-8") as f:
+            app_js_src = f.read()
+        assert "window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'" in app_js_src
+        assert "CONFIG.LOCAL_WEBHOOK_URL && isLocalHostNow" in app_js_src
+
+        # Intercept a simulated public domain https://rj2point0.github.io/sovereign-5-system/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        context_prod = await browser.new_context()
+        page_prod = await context_prod.new_page()
+        prod_requests = []
+        page_prod.on("request", lambda req: prod_requests.append(req.url))
+
+        async def handle_prod_route(route):
+            url = route.request.url
+            if "ntfy.sh" in url:
+                await route.fulfill(status=200, body="ok")
+                return
+            if "rj2point0.github.io/sovereign-5-system/" in url:
+                rel = url.split("rj2point0.github.io/sovereign-5-system/")[1].split("?")[0]
+                if not rel or rel == "/":
+                    rel = "index.html"
+                fpath = os.path.join(base_dir, rel.replace("/", os.sep))
+                if os.path.exists(fpath) and os.path.isfile(fpath):
+                    ctype = "text/html" if fpath.endswith(".html") else ("application/javascript" if fpath.endswith(".js") else "text/css")
+                    with open(fpath, "rb") as rf:
+                        body_bytes = rf.read()
+                    await route.fulfill(status=200, content_type=ctype, body=body_bytes)
+                    return
+            await route.abort()
+
+        await page_prod.route("**/*", handle_prod_route)
+        await page_prod.goto("https://rj2point0.github.io/sovereign-5-system/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
+        await page_prod.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        prod_local_url = await page_prod.evaluate("() => CONFIG.LOCAL_WEBHOOK_URL")
+        assert prod_local_url == "", f"Expected CONFIG.LOCAL_WEBHOOK_URL to be empty on rj2point0.github.io, got '{prod_local_url}'"
+        illegal_local_calls = [u for u in prod_requests if "127.0.0.1" in u or "localhost" in u]
+        assert len(illegal_local_calls) == 0, f"Public domain made illegal private-network calls: {illegal_local_calls}"
+        print("[OK] Simulated public domain (rj2point0.github.io) verified: CONFIG.LOCAL_WEBHOOK_URL='' and 0 calls to 127.0.0.1!")
+
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")
 
