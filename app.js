@@ -188,6 +188,9 @@ const CONFIG = {
     // Update DOM static i18n text
     applyI18nToDOM();
 
+    // Re-populate DOB month dropdown labels for current language
+    initDobDropdowns();
+
     // Re-render systems strip
     renderSystemsStrip();
 
@@ -462,6 +465,96 @@ const CONFIG = {
   }
 
   /* ---------------- hero ---------------- */
+  const DOB_MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const DOB_MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+  function initDobDropdowns() {
+    const mEl = $('#dobMonth');
+    const dEl = $('#dobDay');
+    const yEl = $('#dobYear');
+    if (!mEl || !dEl || !yEl) return;
+
+    const curM = mEl.value;
+    const curD = dEl.value;
+    const curY = yEl.value;
+    const months = state.lang === 'es' ? DOB_MONTHS_ES : DOB_MONTHS_EN;
+    const mLabel = state.lang === 'es' ? 'Mes' : 'Month';
+    const dLabel = state.lang === 'es' ? 'Día' : 'Day';
+    const yLabel = state.lang === 'es' ? 'Año' : 'Year';
+
+    mEl.innerHTML = `<option value="">${mLabel}</option>` + months.map((m, idx) => {
+      const val = String(idx + 1).padStart(2, '0');
+      return `<option value="${val}">${val} · ${m}</option>`;
+    }).join('');
+
+    if (dEl.options.length <= 1) {
+      let dHtml = `<option value="">${dLabel}</option>`;
+      for (let d = 1; d <= 31; d++) {
+        const val = String(d).padStart(2, '0');
+        dHtml += `<option value="${val}">${d}</option>`;
+      }
+      dEl.innerHTML = dHtml;
+    } else if (dEl.options[0]) {
+      dEl.options[0].textContent = dLabel;
+    }
+
+    if (yEl.options.length <= 1) {
+      const maxYear = Math.max(2026, new Date().getFullYear());
+      let yHtml = `<option value="">${yLabel}</option>`;
+      // Start with adult birth years (2006 down to 1930) so 1990 is immediately visible in the initial mobile scroll viewport, followed by 2026–2007
+      for (let y = 2006; y >= 1930; y--) {
+        yHtml += `<option value="${y}">${y}</option>`;
+      }
+      for (let y = maxYear; y >= 2007; y--) {
+        yHtml += `<option value="${y}">${y}</option>`;
+      }
+      yEl.innerHTML = yHtml;
+    } else if (yEl.options[0]) {
+      yEl.options[0].textContent = yLabel;
+    }
+
+    if (curM) mEl.value = curM;
+    if (curD) dEl.value = curD;
+    if (curY) yEl.value = curY;
+  }
+
+  function syncDobFromDropdowns(triggerField) {
+    const mEl = $('#dobMonth');
+    const dEl = $('#dobDay');
+    const yEl = $('#dobYear');
+    const dobInput = $('#birthDate');
+    if (!mEl || !dEl || !yEl || !dobInput) return;
+
+    // Default year dropdown scroll near 1990 when month & day are selected and year is opened/focused
+    const m = mEl.value;
+    const d = dEl.value;
+    const y = yEl.value;
+    if (m && d && y) {
+      dobInput.value = `${y}-${m}-${d}`;
+      showErrors({});
+      maybeFireCalcPreview(triggerField || 'dob_select');
+    } else {
+      dobInput.value = '';
+    }
+  }
+
+  function syncDropdownsFromDob(isoStr) {
+    const mEl = $('#dobMonth');
+    const dEl = $('#dobDay');
+    const yEl = $('#dobYear');
+    if (!mEl || !dEl || !yEl) return;
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(isoStr || '').trim());
+    if (match) {
+      yEl.value = match[1];
+      mEl.value = match[2];
+      dEl.value = match[3];
+    } else {
+      mEl.value = '';
+      dEl.value = '';
+      yEl.value = '';
+    }
+  }
+
   function renderSystemsStrip() {
     const C_LANG = C.get(state.lang);
     $('#systems-strip').innerHTML = C_LANG.SYSTEM_INFO.map((s, i) => `
@@ -475,6 +568,7 @@ const CONFIG = {
   function fillForm(p) {
     $('#fullName').value = p.fullName || '';
     $('#birthDate').value = p.birthDate || '';
+    syncDropdownsFromDob(p.birthDate || '');
     $('#email').value = p.email || '';
   }
 
@@ -482,11 +576,18 @@ const CONFIG = {
     ['fullName', 'birthDate', 'email'].forEach((k) => {
       const field = $('#' + k);
       const msg = $(`[data-error="${k}"]`);
+      if (!field || !msg) return;
       if (errs[k]) {
         field.classList.add('error');
+        if (k === 'birthDate') {
+          ['#dobMonth', '#dobDay', '#dobYear'].forEach((sel) => { const el = $(sel); if (el) el.classList.add('error'); });
+        }
         msg.textContent = errs[k];
       } else {
         field.classList.remove('error');
+        if (k === 'birthDate') {
+          ['#dobMonth', '#dobDay', '#dobYear'].forEach((sel) => { const el = $(sel); if (el) el.classList.remove('error'); });
+        }
         msg.textContent = '';
       }
     });
@@ -1850,20 +1951,58 @@ const CONFIG = {
 
     $('#calc-form').addEventListener('submit', onSubmit);
 
-    // Real-time funnel telemetry: calc_started & calc_preview
+    // Real-time funnel telemetry: calc_started, granular field_progress & instant calc_preview
     let _calcStartedFired = false;
-    const fireCalcStartedOnce = (fieldId) => {
-      if (_calcStartedFired) return;
-      _calcStartedFired = true;
-      sendWebhook('calc_started', { field: fieldId });
+    const _fieldsTouched = new Set();
+    const fireFieldTelemetry = (fieldKey) => {
+      if (!_calcStartedFired) {
+        _calcStartedFired = true;
+        sendWebhook('calc_started', { field: fieldKey, fields_touched: [fieldKey] });
+      }
+      if (!_fieldsTouched.has(fieldKey)) {
+        _fieldsTouched.add(fieldKey);
+        if (_fieldsTouched.size > 1) {
+          sendWebhook('field_progress', { field: fieldKey, fields_touched: Array.from(_fieldsTouched) });
+        }
+      }
     };
-    ['fullName', 'birthDate'].forEach((fid) => {
-      const el = $('#' + fid);
-      if (!el) return;
-      el.addEventListener('focus', () => fireCalcStartedOnce(fid), { once: true });
-      el.addEventListener('input', () => fireCalcStartedOnce(fid), { once: true });
-      el.addEventListener('change', () => maybeFireCalcPreview(fid + '_change'));
-      el.addEventListener('blur', () => maybeFireCalcPreview(fid + '_blur'));
+
+    const fullNameEl = $('#fullName');
+    if (fullNameEl) {
+      fullNameEl.addEventListener('focus', () => fireFieldTelemetry('name'), { once: true });
+      fullNameEl.addEventListener('input', () => {
+        fireFieldTelemetry('name');
+        maybeFireCalcPreview('name_input');
+      });
+      fullNameEl.addEventListener('change', () => maybeFireCalcPreview('name_change'));
+      fullNameEl.addEventListener('blur', () => maybeFireCalcPreview('name_blur'));
+    }
+
+    const birthDateEl = $('#birthDate');
+    if (birthDateEl) {
+      birthDateEl.addEventListener('input', () => {
+        syncDropdownsFromDob(birthDateEl.value);
+        fireFieldTelemetry('dob');
+        maybeFireCalcPreview('dob_input');
+      });
+      birthDateEl.addEventListener('change', () => {
+        syncDropdownsFromDob(birthDateEl.value);
+        maybeFireCalcPreview('dob_change');
+      });
+    }
+
+    [
+      ['dobMonth', 'dob_month'],
+      ['dobDay', 'dob_day'],
+      ['dobYear', 'dob_year'],
+    ].forEach(([selId, telemetryKey]) => {
+      const sel = $('#' + selId);
+      if (!sel) return;
+      sel.addEventListener('focus', () => fireFieldTelemetry(telemetryKey), { once: true });
+      sel.addEventListener('change', () => {
+        fireFieldTelemetry(telemetryKey);
+        syncDobFromDropdowns(telemetryKey);
+      });
     });
 
     // Fire page_view telemetry on load for real visitor sessions

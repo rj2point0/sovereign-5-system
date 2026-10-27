@@ -156,8 +156,8 @@
     const errors = {};
     const norm = normalizeName(fullName);
     const words = norm.split(' ').filter((w) => onlyLetters(w).length);
-    if (!words.length) errors.fullName = 'Please enter your full name.';
-    else if (words.length < 2) errors.fullName = 'Please enter both your first and last name.';
+    const totalLetters = onlyLetters(norm).length;
+    if (!words.length || totalLetters < 2) errors.fullName = 'Please enter your first name (or full name).';
     const b = parseBirthDate(birthDate);
     if (!b) errors.birthDate = 'Please enter a valid date of birth.';
     else {

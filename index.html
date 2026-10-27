@@ -76,13 +76,24 @@
         </div>
         <div class="space-y-4">
           <div>
-            <label class="field-label" for="fullName" data-i18n="form_label_name">Full Birth Name</label>
-            <input id="fullName" name="fullName" class="field" type="text" autocomplete="name" placeholder="First and last name" data-i18n-ph="form_placeholder_name" required />
+            <label class="field-label" for="fullName" data-i18n="form_label_name">Your First Name (or Full Name)</label>
+            <input id="fullName" name="fullName" class="field" type="text" autocomplete="name" placeholder="e.g., Sarah or Sarah Marie Jenkins" data-i18n-ph="form_placeholder_name" required />
             <div class="field-error" data-error="fullName"></div>
           </div>
           <div>
-            <label class="field-label" for="birthDate" data-i18n="form_label_dob">Date of Birth</label>
-            <input id="birthDate" name="birthDate" class="field" type="date" required />
+            <label class="field-label" for="dobMonth" data-i18n="form_label_dob">Date of Birth</label>
+            <div class="grid grid-cols-3 gap-2.5" id="dob-select-group">
+              <select id="dobMonth" class="field !px-3" aria-label="Birth Month">
+                <option value="" data-i18n="form_dob_month">Month</option>
+              </select>
+              <select id="dobDay" class="field !px-3" aria-label="Birth Day">
+                <option value="" data-i18n="form_dob_day">Day</option>
+              </select>
+              <select id="dobYear" class="field !px-3" aria-label="Birth Year">
+                <option value="" data-i18n="form_dob_year">Year</option>
+              </select>
+            </div>
+            <input id="birthDate" name="birthDate" type="date" class="sr-only" tabindex="-1" aria-hidden="true" required />
             <div class="field-error" data-error="birthDate"></div>
           </div>
           <div>

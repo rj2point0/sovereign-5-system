@@ -54,9 +54,33 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_09",
+        "video_id": None,
+        "title_match": "Born on the 6th, 15th, 24th—or the 9th, 18th, 27th",
+        "comment": "Were you born on the 6th, 15th, 24th (or 9th, 18th, 27th)—and are you always the therapist friend in your circle? 👇",
+    },
+    {
+        "id": "short_08",
+        "video_id": None,
+        "title_match": "Born on the 5th, 14th, or 23rd of any month",
+        "comment": "Are you a 5th, 14th, or 23rd birthday—and do you instantly rebel whenever someone tries to box you in? 👇",
+    },
+    {
+        "id": "short_07",
+        "video_id": None,
+        "title_match": "Born on the 3rd, 12th, 21st, or 30th",
+        "comment": "Were you born on the 3rd, 12th, 21st, or 30th—and how many unfinished projects do you have open right now? 👇",
+    },
+    {
+        "id": "short_06",
+        "video_id": None,
+        "title_match": "Born on the 2nd, 11th, 20th, or 29th",
+        "comment": "Were you born on the 2nd, 11th, 20th, or 29th—and can you read a room before anyone speaks? 👇",
+    },
+    {
         "id": "short_05",
         "video_id": None,
-        "title_match": "Born on the 4th, 13th, 22nd, or 31st of any month",
+        "title_match": "Born on the 4th, 13th, 22nd, or 31st",
         "comment": "Were you born on the 4th, 13th, 22nd, or 31st—and do you carry everything on your own shoulders? 👇",
     },
     {
@@ -64,6 +88,18 @@ TARGET_FIRST_COMMENTS = [
         "video_id": None,
         "title_match": "Born on the 1st, 10th, 19th, or 28th of any month",
         "comment": "Were you born on the 1st, 10th, 19th, or 28th—and do you always end up leading on your own? 👇",
+    },
+    {
+        "id": "short_03",
+        "video_id": None,
+        "title_match": "Why reading your Western Life Path number alone feels like reading 1 page",
+        "comment": "Which two numbers feel like they are constantly fighting each other in your personality? Drop your birthday below 👇",
+    },
+    {
+        "id": "short_02",
+        "video_id": None,
+        "title_match": "Born on the 7th, 16th, or 25th",
+        "comment": "Are you a 7th, 16th, or 25th birthday—and do you feel that tug-of-war between connection and solitude? 👇",
     },
     {
         "id": "short_01",
@@ -353,7 +389,11 @@ async def run_seeder(wait_seconds: int = 60, dry_run: bool = False):
         )
         page = ctx.pages[0] if ctx.pages else await ctx.new_page()
 
+        newly_seeded_targets = []
         for t in TARGET_FIRST_COMMENTS:
+            if t["id"] in tracker.get("seeded", {}) and tracker["seeded"][t["id"]].get("video_id"):
+                print(f"  ✓ [{t['id']}] Already seeded in seeded_first_comments.json ({tracker['seeded'][t['id']]['video_id']}), skipping.", flush=True)
+                continue
             print(f"\n▶ Seeding First Comment on [{t['id']}] ({t['title_match'][:48]}...)...", flush=True)
             vid = await seed_comment_on_video_from_profile(
                 page,
@@ -362,6 +402,8 @@ async def run_seeder(wait_seconds: int = 60, dry_run: bool = False):
                 video_id_hint=t.get("video_id"),
             )
             if vid:
+                t["video_id"] = vid
+                newly_seeded_targets.append(t)
                 tracker["seeded"][t["id"]] = {
                     "video_id": vid,
                     "title_match": t["title_match"],
@@ -373,9 +415,10 @@ async def run_seeder(wait_seconds: int = 60, dry_run: bool = False):
         await ctx.close()
 
     # Wait 60 seconds and verify comments survived TikTok's automod
-    verify_res = await verify_comments_after_delay(wait_seconds=wait_seconds, targets=TARGET_FIRST_COMMENTS)
-    tracker["last_verification"] = verify_res
-    save_seeded_tracker(tracker)
+    if newly_seeded_targets:
+        verify_res = await verify_comments_after_delay(wait_seconds=wait_seconds, targets=newly_seeded_targets)
+        tracker["last_verification"] = verify_res
+        save_seeded_tracker(tracker)
     print("\n" + "=" * 72, flush=True)
     print("   ✓ FIRST COMMENT SEEDING & 60s AUTOMOD SURVIVAL CHECK COMPLETE!", flush=True)
     print("=" * 72, flush=True)

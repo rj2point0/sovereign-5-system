@@ -1348,6 +1348,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     ev_map = {
         "page_view": "page_view",
         "calc_started": "calc_started",
+        "field_progress": "calc_started",
         "calc_preview": "calc_preview",
         "lead_capture": "lead_submitted",
         "lead_submitted": "lead_submitted",
@@ -1410,9 +1411,20 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     else:
         dedup_key = f"{session_id}::{event_type}::{clean_name.lower()}::{iso_dob}::{raw_email.lower()}"
 
+    field_touched = str(extra.get("field") or "").strip()
+    fields_touched_list = extra.get("fields_touched") if isinstance(extra.get("fields_touched"), list) else ([field_touched] if field_touched else [])
+
     events = load_telemetry_events()
     for existing in events:
         if existing.get("dedup_key") == dedup_key:
+            if event_type == "calc_started" and fields_touched_list:
+                prev_fields = existing.get("fields_touched") or []
+                for ft in fields_touched_list:
+                    if ft and ft not in prev_fields:
+                        prev_fields.append(ft)
+                existing["fields_touched"] = prev_fields
+                save_telemetry_events(events)
+                update_obsidian_dashboard()
             return existing
 
     record = {
@@ -1435,6 +1447,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "vedic_moolank": vedic_str,
         "chaldean_name": chal_str,
         "tier_label": tier_label,
+        "fields_touched": [f for f in fields_touched_list if f],
     }
     events.append(record)
     save_telemetry_events(events)
@@ -1523,6 +1536,8 @@ def update_obsidian_dashboard():
                 for ev in reversed(events[-100:]):
                     ts_short = str(ev.get("timestamp") or "")[:19]
                     st_label = stage_badges.get(ev.get("event_type", ""), f"`{ev.get('event_type', '')}`")
+                    if ev.get("event_type") == "calc_started" and ev.get("fields_touched"):
+                        st_label += f" ({', '.join(f'`{x}`' for x in ev['fields_touched'])})"
                     br_label = ev.get("browser_label") or "Browser"
                     src_attr = ev.get("source_attribution") or "Organic Bio"
                     t_name = f"**{ev['name']}**" if ev.get("name") else "—"
@@ -1756,7 +1771,7 @@ def poll_cloud_relay_once() -> int:
                     msg_str = envelope.get("message", "")
                     payload = json.loads(msg_str)
                     ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
-                    if ev_name in ("page_view", "calc_started", "calc_preview", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
+                    if ev_name in ("page_view", "calc_started", "field_progress", "calc_preview", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
                         record_telemetry_event(payload)
                     if ev_name not in ("lead_capture", "lead_submitted", "purchase_return"):
                         continue

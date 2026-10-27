@@ -202,6 +202,53 @@ async def test_all():
         assert len(illegal_local_calls) == 0, f"Public domain made illegal private-network calls: {illegal_local_calls}"
         print("[OK] Simulated public domain (rj2point0.github.io) verified: CONFIG.LOCAL_WEBHOOK_URL='' and 0 calls to 127.0.0.1!")
 
+        # TEST 8: Fast Mobile Month/Day/Year Dropdowns + Single First-Name Submission + Instant calc_preview
+        print("\n--- Test 8: Fast Mobile Month/Day/Year Dropdowns & First-Name-Only Friction Fix ---")
+        ntfy_payloads = []
+
+        async def handle_prod_route_with_capture(route):
+            url = route.request.url
+            if "ntfy.sh" in url:
+                if route.request.method == "POST":
+                    try:
+                        import json as _json
+                        ntfy_payloads.append(_json.loads(route.request.post_data or "{}"))
+                    except Exception:
+                        pass
+                await route.fulfill(status=200, body="ok")
+                return
+            await handle_prod_route(route)
+
+        await page_prod.unroute("**/*")
+        await page_prod.route("**/*", handle_prod_route_with_capture)
+        await page_prod.goto("https://rj2point0.github.io/sovereign-5-system/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
+        await page_prod.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+
+        # Verify label & placeholder lowered friction
+        name_label = await page_prod.locator('label[for="fullName"]').inner_text()
+        assert "first name" in name_label.lower(), f"Expected First Name in label, got '{name_label}'"
+
+        # Type ONLY First Name ("Sarah") and select Month/Day/Year via dropdowns
+        await page_prod.fill('#fullName', 'Sarah')
+        await page_prod.select_option('#dobMonth', '07')
+        await page_prod.select_option('#dobDay', '16')
+        await page_prod.select_option('#dobYear', '1990')
+
+        synced_dob = await page_prod.input_value('#birthDate')
+        assert synced_dob == '1990-07-16', f"Expected #birthDate to sync to '1990-07-16', got '{synced_dob}'"
+
+        # Wait briefly for instant calc_preview telemetry to fire BEFORE clicking submit
+        await asyncio.sleep(0.3)
+        event_types_fired = [p.get("event_type") for p in ntfy_payloads]
+        print(f"Telemetry events fired before submit: {event_types_fired}")
+        assert "calc_started" in event_types_fired, f"Expected calc_started in {event_types_fired}"
+        assert "calc_preview" in event_types_fired, f"Expected instant calc_preview in {event_types_fired}"
+
+        # Submit with just First Name ("Sarah") + DOB and zero email
+        await page_prod.click('#calc-form button[type="submit"]')
+        await page_prod.wait_for_selector('#view-teaser:not(.hidden)', timeout=6000)
+        print("[OK] Mobile Month/Day/Year dropdowns, single First Name ('Sarah'), and instant calc_preview verified!")
+
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")
 
