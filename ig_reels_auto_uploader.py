@@ -63,6 +63,47 @@ IG_CTA_FOOTER = (
 )
 
 
+def fetch_latest_ig_email_code(max_age_minutes: int = 10) -> str:
+    """Fetches the latest 6-digit Instagram security code sent to adamvega@megavegaventures.com via IMAP."""
+    imap_user = os.environ.get("SMTP_USER", "adamvega@megavegaventures.com")
+    imap_pass = os.environ.get("SMTP_PASS", "msct rkqt xcwb inma")
+    try:
+        import email
+        import imaplib
+        import re
+
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(imap_user, imap_pass)
+        mail.select("inbox")
+        _, messages = mail.search(None, "ALL")
+        msg_ids = messages[0].split()
+        for mid in reversed(msg_ids[-8:]):
+            _, msg_data = mail.fetch(mid, "(RFC822)")
+            msg = email.message_from_bytes(msg_data[0][1])
+            subj = str(msg.get("Subject", ""))
+            frm = str(msg.get("From", ""))
+            body = ""
+            if msg.is_multipart():
+                for part in msg.walk():
+                    if part.get_content_type() in ("text/plain", "text/html"):
+                        payload = part.get_payload(decode=True)
+                        if payload:
+                            body += payload.decode("utf-8", errors="ignore")
+            else:
+                payload = msg.get_payload(decode=True)
+                if payload:
+                    body = payload.decode("utf-8", errors="ignore")
+            if "instagram" in (subj + frm + body).lower():
+                codes = re.findall(r"\b\d{6}\b", subj + " " + body)
+                if codes:
+                    mail.logout()
+                    return codes[0]
+        mail.logout()
+    except Exception:
+        pass
+    return ""
+
+
 def force_ig_window_to_foreground():
     """Uses Win32 API on Windows to bring the Instagram Chromium window to the very front (topmost briefly)."""
     if sys.platform != "win32":
@@ -307,20 +348,39 @@ class InstagramReelsUploader:
                 pass_inp = page.locator('input[name="password"], input[type="password"]').first
                 if await user_inp.count() > 0 and await pass_inp.count() > 0:
                     await user_inp.fill(ig_user)
-                    await asyncio.sleep(0.4)
+                    await asyncio.sleep(0.5)
                     await pass_inp.fill(ig_pass)
-                    await asyncio.sleep(0.4)
+                    await asyncio.sleep(0.5)
                     submit_btn = page.locator('button[type="submit"], div[role="button"]:has-text("Log in")').first
                     if await submit_btn.count() > 0:
                         await submit_btn.click(force=True)
-                        print(f"   [IG Auth] Auto-filled login for {ig_user}; waiting for redirect or 2FA...", flush=True)
+                    else:
+                        await page.keyboard.press("Enter")
+                    print(f"   [IG Auth] Auto-filled login for {ig_user}; waiting 5s for redirect or 2FA challenge...", flush=True)
+                    await asyncio.sleep(5.0)
+                    # If Instagram shows a "Send security code" / "Continue" button to trigger the email code, click it automatically
+                    send_btns = page.locator(
+                        'button:has-text("Send security code"), div[role="button"]:has-text("Send security code"), button:has-text("Send code"), div[role="button"]:has-text("Send code"), button:has-text("Continue"), div[role="button"]:has-text("Continue")'
+                    )
+                    if await send_btns.count() > 0 and await send_btns.first.is_visible():
+                        await send_btns.first.click(force=True)
+                        print("   [IG Auth] Clicked 'Send security code / Continue' button to dispatch email verification code.", flush=True)
+                        await asyncio.sleep(3.5)
+                    await page.screenshot(path="ig_login_prompt.png")
             except Exception as e:
                 print(f"   [IG Auth] Auto-fill note: {e}", flush=True)
 
         print("=" * 72, flush=True)
-        print("⚠ [IG Auth] Instagram is not logged in yet in ig_browser_profile.", flush=True)
-        print(f"Waiting up to {wait_seconds}s for you to sign in to @sacrednumberblueprint in the open Chromium window...", flush=True)
+        print("⚠ [IG Auth] Waiting for Instagram login / 2FA verification...", flush=True)
+        print(f"Waiting up to {wait_seconds}s (or drop your 6-digit code into ig_2fa_code.txt)...", flush=True)
         print("=" * 72, flush=True)
+
+        code_file_path = os.path.join(BASE_DIR, "ig_2fa_code.txt")
+        if os.path.exists(code_file_path):
+            try:
+                os.remove(code_file_path)
+            except Exception:
+                pass
 
         try:
             await page.bring_to_front()
@@ -331,6 +391,8 @@ class InstagramReelsUploader:
 
         start = time.time()
         last_shot = 0.0
+        last_imap_check = 0.0
+        tried_imap_codes = set()
         while time.time() - start < wait_seconds:
             await asyncio.sleep(2.5)
             await self.dismiss_ig_popups(page)
@@ -340,7 +402,54 @@ class InstagramReelsUploader:
                 await self.dismiss_ig_popups(page)
                 await page.screenshot(path="ig_auth_verified.png")
                 return True
-            if time.time() - last_shot >= 15.0:
+
+            # Automatically poll IMAP every 8s if a 2FA code input box is visible on screen
+            if time.time() - last_imap_check >= 8.0 and not os.path.exists(code_file_path):
+                last_imap_check = time.time()
+                code_inputs_check = page.locator(
+                    'input[name="verificationCode"], input[name="security_code"], input[aria-label*="Code"], input[placeholder*="Code"], input[placeholder*="code"]'
+                )
+                if await code_inputs_check.count() > 0:
+                    auto_code = fetch_latest_ig_email_code()
+                    if auto_code and auto_code not in tried_imap_codes:
+                        tried_imap_codes.add(auto_code)
+                        with open(code_file_path, "w", encoding="utf-8") as cf:
+                            cf.write(auto_code)
+                        print(f"   [IG IMAP] Auto-fetched 6-digit security code '{auto_code}' from adamvega@megavegaventures.com!", flush=True)
+
+            # Check if a 2FA / Email Verification Code was provided in ig_2fa_code.txt
+            if os.path.exists(code_file_path):
+                try:
+                    with open(code_file_path, "r", encoding="utf-8") as cf:
+                        raw_code = cf.read().strip()
+                    os.remove(code_file_path)
+                    if raw_code:
+                        print(f"   [IG 2FA] Found verification code '{raw_code}'; submitting into Instagram...", flush=True)
+                        # Click "Send security code" / "Continue" first if Instagram is on the challenge selection screen
+                        send_code_btns = page.locator(
+                            'button:has-text("Send security code"), div[role="button"]:has-text("Send security code"), button:has-text("Continue"), div[role="button"]:has-text("Continue")'
+                        )
+                        code_inputs = page.locator(
+                            'input[name="verificationCode"], input[name="security_code"], input[aria-label*="Code"], input[placeholder*="Code"], input[placeholder*="code"], input[type="tel"], input[type="number"], input[type="text"]'
+                        )
+                        if await code_inputs.count() > 0:
+                            await code_inputs.first.click(force=True)
+                            await asyncio.sleep(0.3)
+                            await code_inputs.first.fill(raw_code)
+                            await asyncio.sleep(0.5)
+                            confirm_btns = page.locator(
+                                'button:has-text("Confirm"), div[role="button"]:has-text("Confirm"), button:has-text("Continue"), div[role="button"]:has-text("Continue"), button:has-text("Submit"), button[type="submit"]'
+                            )
+                            if await confirm_btns.count() > 0:
+                                await confirm_btns.first.click(force=True)
+                            else:
+                                await page.keyboard.press("Enter")
+                            await asyncio.sleep(5.0)
+                            await page.screenshot(path="ig_login_prompt.png")
+                except Exception as e:
+                    print(f"   [IG 2FA] Note submitting code: {e}", flush=True)
+
+            if time.time() - last_shot >= 10.0:
                 last_shot = time.time()
                 try:
                     await page.screenshot(path="ig_login_prompt.png")
@@ -485,7 +594,7 @@ class InstagramReelsUploader:
         caption_selectors = [
             'div[aria-label="Write a caption..."][contenteditable="true"]',
             'div[aria-label="Write a caption..."]',
-            'div[role="dialog"] div[contenteditable="true"][ role="textbox"]',
+            'div[role="dialog"] div[contenteditable="true"][role="textbox"]',
             'div[role="dialog"] div[contenteditable="true"]',
         ]
         caption_filled = False
@@ -496,14 +605,23 @@ class InstagramReelsUploader:
                 await asyncio.sleep(0.4)
                 await page.keyboard.insert_text(item["ig_caption"])
                 await asyncio.sleep(0.6)
-                await page.keyboard.press("Escape")
-                await asyncio.sleep(0.4)
+                # Click neutral header "New reel" inside dialog instead of pressing Escape (Escape triggers 'Discard post?' modal!)
+                header_title = page.locator('div[role="dialog"] :text-is("New reel"), div[role="dialog"] :text-is("Create new post")').first
+                if await header_title.count() > 0 and await header_title.is_visible():
+                    await header_title.click(force=True)
+                    await asyncio.sleep(0.3)
                 caption_filled = True
                 print("   [IG] ✓ Populated Instagram Reel caption & hashtags.", flush=True)
                 break
 
         if not caption_filled:
             print("   [IG] ⚠ Warning: Could not locate caption input box.", flush=True)
+
+        # Ensure any accidental 'Discard post?' dialog is cancelled before clicking Share
+        cancel_discard = page.locator('button:text-is("Cancel"), div[role="button"]:text-is("Cancel")').first
+        if await cancel_discard.count() > 0 and await cancel_discard.is_visible():
+            await cancel_discard.click(force=True)
+            await asyncio.sleep(0.8)
 
         await page.screenshot(path=f"ig_step2_caption_{item['ad_id']}.png")
 
@@ -516,7 +634,7 @@ class InstagramReelsUploader:
         ]
         shared_clicked = False
         for sel in share_selectors:
-            loc = page.locator(sel).last
+            loc = page.locator(sel).first
             if await loc.count() > 0 and await loc.is_visible():
                 await loc.click(force=True)
                 shared_clicked = True
@@ -539,6 +657,13 @@ class InstagramReelsUploader:
                 confirmed = True
                 print(f"   [IG] ✓ Confirmed: 'Your reel has been shared.' (after {(wait_i + 1) * 2}s)!", flush=True)
                 break
+            # If the Share button is still visible on the first check, click it again to ensure submission started
+            if wait_i == 2 and "sharing" not in body_txt:
+                for sel in share_selectors:
+                    loc = page.locator(sel).first
+                    if await loc.count() > 0 and await loc.is_visible():
+                        await loc.click(force=True)
+                        break
 
         await page.screenshot(path=f"ig_step3_shared_{item['ad_id']}.png")
         if not confirmed:
