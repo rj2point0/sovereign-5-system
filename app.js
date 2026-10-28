@@ -404,7 +404,7 @@ const CONFIG = {
       ? state.result.overlap.anchors[0].number
       : (state.profile && state.profile.anchor1 ? state.profile.anchor1 : '7');
     const shareTitle = 'The Sovereign Blueprint';
-    const shareUrl = 'https://rj2point0.github.io/sovereign-5-system/';
+    const shareUrl = 'https://blueprint.megavegaventures.com/';
     const shareText = state.lang === 'es'
       ? `Acabo de analizar mi nombre y fecha de nacimiento en los 5 sistemas ancestrales — mi Ancla de Coincidencia Maestra es #${anchor1}. Descifra el tuyo aquí:`
       : `I just ran my name and birth date through all 5 ancient numerology systems — my Master Overlap Anchor is #${anchor1}. Run yours here:`;

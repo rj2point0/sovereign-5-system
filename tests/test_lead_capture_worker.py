@@ -39,7 +39,7 @@ class TestLeadCaptureWorkerUpgrades(unittest.TestCase):
         url = w.build_teaser_deep_link("Cowen Airo Celestin Vega", "2017-07-07", "getshoes7@gmail.com")
         self.assertEqual(
             url,
-            "https://rj2point0.github.io/sovereign-5-system/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com",
+            "https://blueprint.megavegaventures.com/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com",
         )
 
     def test_email_1_conversion_elements(self):
@@ -58,7 +58,7 @@ class TestLeadCaptureWorkerUpgrades(unittest.TestCase):
         self.assertIn("WHAT’S INSIDE YOUR 20-PAGE SOVEREIGN DOSSIER", html_body)
         self.assertIn("UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)", html_body)
         self.assertIn(
-            "https://rj2point0.github.io/sovereign-5-system/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com",
+            "https://blueprint.megavegaventures.com/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com",
             html_body,
         )
         self.assertIn("3× across 3 systems: Pythagorean, Chaldean, Vedic", html_body)

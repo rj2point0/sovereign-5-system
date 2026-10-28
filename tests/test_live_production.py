@@ -2,15 +2,23 @@ import asyncio
 from playwright.async_api import async_playwright
 
 async def verify_live_pages():
-    print("Testing live site: https://rj2point0.github.io/sovereign-5-system/")
+    base_url = "https://blueprint.megavegaventures.com/"
+    print(f"Testing live site: {base_url}")
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
 
         # Test 1: Live site loads
-        resp = await page.goto("https://rj2point0.github.io/sovereign-5-system/")
+        resp = await page.goto(base_url)
         assert resp.status == 200, f"Expected 200, got {resp.status}"
         print("Live site returned HTTP 200 OK!")
+
+        # Test 1b: Legacy GitHub Pages URL 301-redirects cleanly to blueprint.megavegaventures.com
+        page_legacy = await browser.new_page()
+        await page_legacy.goto("https://rj2point0.github.io/sovereign-5-system/?utm_source=ig_bio&cohort=ig_reels")
+        assert "blueprint.megavegaventures.com" in page_legacy.url, f"Expected redirect to blueprint.megavegaventures.com, got {page_legacy.url}"
+        print(f"Legacy URL 301-redirected cleanly to: {page_legacy.url}")
+        await page_legacy.close()
 
         # Test 2: Verify Founder Sample button is HIDDEN on public landing page
         sample_pub_vis = await page.is_visible('#btn-sample')
@@ -20,22 +28,24 @@ async def verify_live_pages():
 
         # Verify Founder Sample button IS visible with ?vip=adam
         page_vip = await browser.new_page()
-        await page_vip.goto("https://rj2point0.github.io/sovereign-5-system/?vip=adam")
+        await page_vip.goto(f"{base_url}?vip=adam")
         sample_vip_vis = await page_vip.is_visible('#btn-sample')
         print(f"VIP visitor sees Founder Sample button: {sample_vip_vis}")
         assert sample_vip_vis is True, "Founder Sample button MUST be visible with ?vip=adam!"
         await page_vip.close()
 
-        # Fill form as public user and verify calculation ritual
+        # Fill form as public user using Month/Day/Year dropdowns + First Name and verify calculation ritual
         await page.fill('#fullName', 'Adam Vega')
-        await page.fill('#birthDate', '1978-08-19')
+        await page.select_option('#dobMonth', '08')
+        await page.select_option('#dobDay', '19')
+        await page.select_option('#dobYear', '1978')
         await page.fill('#email', 'adam@sovereign5.com')
         await page.click('button[type="submit"]')
         await page.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
         print("Calculation ritual and 20% teaser reveal verified on live site!")
 
         # Test 3: Post-payment redirect verification
-        await page.goto("https://rj2point0.github.io/sovereign-5-system/?tier=full&unlocked=true")
+        await page.goto(f"{base_url}?tier=full&unlocked=true")
         await page.wait_for_selector("#view-dossier:not(.hidden)", timeout=8000)
         pages_count = await page.locator(".page").count()
         print(f"Post-payment unlocked dossier rendered: {pages_count} pages!")
@@ -53,7 +63,7 @@ async def verify_live_pages():
         # Test 5: Cross-browser email teaser link restoration (clean browser context, zero localStorage)
         ctx_clean = await browser.new_context()
         page_clean = await ctx_clean.new_page()
-        await page_clean.goto("https://rj2point0.github.io/sovereign-5-system/?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com")
+        await page_clean.goto(f"{base_url}?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com")
         await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
         vsl_live = await page_clean.is_visible("#vsl-video")
         assert vsl_live is True, "Live VSL video player should be visible on Teaser deep-link!"

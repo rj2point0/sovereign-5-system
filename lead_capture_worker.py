@@ -69,7 +69,8 @@ SENDER_DISPLAY = "Sacred Number Blueprint <adamvega@megavegaventures.com>"
 
 STRIPE_BASE_URL = "https://buy.stripe.com/6oU7sLek90MdbVechV38401"
 STRIPE_BUMP_URL = "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402"
-APP_BASE_URL = "https://rj2point0.github.io/sovereign-5-system/"
+BASE_FUNNEL_URL = "https://blueprint.megavegaventures.com/"
+APP_BASE_URL = BASE_FUNNEL_URL
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOCAL_CSV_PATH = os.path.join(BASE_DIR, "leads_captured.csv")
@@ -1503,7 +1504,7 @@ def update_obsidian_dashboard():
                 "",
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
-                "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://rj2point0.github.io/sovereign-5-system/`)",
+                "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
                 "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
                 "",
                 "## 1. Live Funnel Conversion Telemetry Summary",
