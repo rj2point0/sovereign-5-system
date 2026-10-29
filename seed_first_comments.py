@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_12",
+        "video_id": None,
+        "title_match": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th",
+        "comment": "Are you on this list (1, 3, 5, 8, 10, 12, 14, 17, 19, 21, 23, 26, 28, 30)—and do you struggle to let your guard down in love? 👇",
+    },
+    {
+        "id": "short_11",
+        "video_id": None,
+        "title_match": "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th",
+        "comment": "Were you born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st—and are you tired of caring more than they do? 👇",
+    },
+    {
+        "id": "short_10",
+        "video_id": None,
+        "title_match": "Born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th",
+        "comment": "Were you born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th—and do you always fall for people who pull away? 👇",
+    },
+    {
         "id": "short_09",
         "video_id": None,
         "title_match": "Born on the 6th, 15th, 24th—or the 9th, 18th, 27th",
