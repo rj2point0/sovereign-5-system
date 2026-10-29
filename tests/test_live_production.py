@@ -13,17 +13,21 @@ async def verify_live_pages():
         assert resp.status == 200, f"Expected 200, got {resp.status}"
         live_title = await page.title()
         assert live_title == "Uncover Your Hidden Relationship Pattern & Love Code", f"Expected new title, got {live_title}"
+        og_title = await page.locator('meta[property="og:title"]').get_attribute('content')
+        assert og_title == "Your Hidden Relationship & Love Code" and len(og_title) <= 38, f"Expected <=38 char og:title, got {og_title}"
         og_img = await page.locator('meta[property="og:image"]').get_attribute('content')
+        og_desc = await page.locator('meta[property="og:description"]').get_attribute('content')
         assert og_img == "https://blueprint.megavegaventures.com/og-preview.png"
+        assert og_desc == "Attracting partners who pull away? Find out right now which birthdays are your true soulmate match and what the next 12 months hold for your love life.", f"Unexpected og_desc: {og_desc}"
         faq_count = await page.locator('#hero-faq details.faq-item').count()
-        assert faq_count == 6, f"Expected 6 FAQ items on live site, got {faq_count}"
-        print("Live site returned HTTP 200 OK with benefit-first Title, OpenGraph tags & 6-item FAQ accordion!")
+        assert faq_count == 13, f"Expected 13 FAQ items on live site, got {faq_count}"
+        print("Live site returned HTTP 200 OK with Problem-First -> Solution -> Certainty copy, <=38-char og:title, OpenGraph tags & 13-item FAQ accordion (All Birthdays 1-31)!")
 
-        # Verify og-preview.png, llms.txt, robots.txt, and sitemap.xml return HTTP 200 on live domain
-        for asset_path in ["og-preview.png", "llms.txt", "robots.txt", "sitemap.xml"]:
+        # Verify og-preview.png, favicon.svg, llms.txt, robots.txt, and sitemap.xml return HTTP 200 on live domain
+        for asset_path in ["og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"]:
             r_asset = await page.request.get(f"{base_url}{asset_path}")
             assert r_asset.status == 200, f"Expected HTTP 200 for {asset_path}, got {r_asset.status}"
-        print("Verified og-preview.png, llms.txt, robots.txt, and sitemap.xml all return HTTP 200 on live domain!")
+        print("Verified og-preview.png, favicon.svg, llms.txt, robots.txt, and sitemap.xml all return HTTP 200 on live domain!")
 
         # Test 1b: Legacy GitHub Pages URL 301-redirects cleanly to blueprint.megavegaventures.com
         page_legacy = await browser.new_page()
@@ -54,7 +58,15 @@ async def verify_live_pages():
         await page.fill('#email', 'adam@sovereign5.com')
         await page.click('button[type="submit"]')
         await page.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
-        print("Calculation ritual and 20% teaser reveal verified on live site!")
+        assert await page.is_visible("#teaser-relationship-clash") is True
+        assert await page.is_visible("#teaser-problem-triangle") is True
+        assert await page.is_visible("#partner-compat-box") is True
+        await page.select_option("#partnerDobMonth", "07")
+        await page.select_option("#partnerDobDay", "16")
+        await page.select_option("#partnerDobYear", "1990")
+        await asyncio.sleep(0.2)
+        assert await page.is_visible("#partner-compat-result") is True
+        print("Calculation ritual, 20% teaser reveal, 3-Part Problem Triangle & live Partner Compatibility Checker verified on live site!")
 
         # Test 3: Post-payment redirect verification
         await page.goto(f"{base_url}?tier=full&unlocked=true")

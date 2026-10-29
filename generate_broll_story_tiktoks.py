@@ -482,7 +482,189 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#peoplepleaser", "#empath", "#spiritualtiktok", "#relationships"
         ],
     },
+    {
+        "id": "short_10",
+        "cohort": "Cohort C · Jenny Hoyos Relationship",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_10_attract_unavailable.mp4",
+        "hook_box_text": "Born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th? Why you fall for people who pull away:",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Born on the second, seventh, sixteenth, or twenty-fifth? "
+            "You always fall for people who pull away. "
+            "Your birth day says who you fall for, but your full birth code says who can actually love you back. "
+            "Tap my bio to test your love code now."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_02_late_night_phone.mp4"),
+            (4.2, 8.0, "broll_01_window_reflection.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th? Why you keep falling for people who pull away "
+            "(your birth day says who you chase, but your full birth code shows who loves you back) 💔✨ "
+            "#relationships #attachmentstyle #numerology #datingadvice #lifepath7 #lifepath2 #twinflame #lovecode"
+        ),
+        "first_comment": "Were you born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th—and do you always fall for people who pull away? 👇",
+        "hashtags": [
+            "#relationships", "#attachmentstyle", "#numerology", "#datingadvice",
+            "#lifepath7", "#lifepath2", "#twinflame", "#lovecode"
+        ],
+    },
+    {
+        "id": "short_11",
+        "cohort": "Cohort C · Jenny Hoyos Relationship",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_11_overgiver_in_love.mp4",
+        "hook_box_text": "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st? Why you ALWAYS care more in love:",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on one of these days, you are always the one who cares more in love. "
+            "You fix their whole life, but no one takes care of you. "
+            "Therefore, your chart attracts takers until you know your real partner numbers. "
+            "Tap my bio to see your love code."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_03_thoughtful_woman.mp4"),
+            (4.2, 8.0, "broll_07_journaling_ritual.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st? Why you are ALWAYS the one "
+            "who cares more in relationships (and how to find the birth numbers that give back) 💛✨ "
+            "#relationships #overgiver #peoplepleaser #numerology #datingadvice #lifepath6 #lifepath4 #lovecode"
+        ),
+        "first_comment": "Were you born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st—and are you tired of caring more than they do? 👇",
+        "hashtags": [
+            "#relationships", "#overgiver", "#peoplepleaser", "#numerology",
+            "#datingadvice", "#lifepath6", "#lifepath4", "#lovecode"
+        ],
+    },
+    {
+        "id": "short_12",
+        "cohort": "Cohort C · Jenny Hoyos Relationship",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_12_power_struggle_love.mp4",
+        "hook_box_text": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th, 19th, 21st, 23rd, 26th, 28th, or 30th? Why you fight for control in love:",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you were born on one of these days, you want a strong partner. "
+            "But the second they get close, you fight them for control. "
+            "Your birth day wants to lead, yet your heart just wants to feel safe. "
+            "Tap my bio to check your love code right now."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_08_phone_discovery.mp4"),
+            (4.2, 8.0, "broll_02_late_night_phone.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_anchors.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th, 19th, 21st, 23rd, 26th, 28th, or 30th? "
+            "Why you want someone strong—but fight them for control the second they get close ⚡❤️‍🔥 "
+            "#relationships #hyperindependence #numerology #datingadvice #lifepath1 #lifepath8 #attachmentstyle #lovecode"
+        ),
+        "first_comment": "Are you on this list (1, 3, 5, 8, 10, 12, 14, 17, 19, 21, 23, 26, 28, 30)—and do you struggle to let your guard down in love? 👇",
+        "hashtags": [
+            "#relationships", "#hyperindependence", "#numerology", "#datingadvice",
+            "#lifepath1", "#lifepath8", "#attachmentstyle", "#lovecode"
+        ],
+    },
 ]
+
+
+BANNED_JENNY_HOYOS_JARGON = {
+    "pythagorean", "moolank", "bhagyank", "namank", "sephirot",
+    "rosicrucian", "kabbalistic", "navagraha", "babylonian",
+}
+
+
+def count_syllables_word(word: str) -> int:
+    import re
+    w = re.sub(r"[^a-z]", "", word.lower())
+    if not w:
+        return 0
+    if len(w) <= 3:
+        return 1
+    if w.endswith("es") or w.endswith("ed"):
+        if not w.endswith("ted") and not w.endswith("ded") and not w.endswith("ses"):
+            w = w[:-2]
+    elif w.endswith("e") and not w.endswith("le"):
+        w = w[:-1]
+    groups = re.findall(r"[aeiouy]+", w)
+    return max(1, len(groups))
+
+
+def compute_flesch_kincaid_grade(text: str) -> float:
+    import re
+    sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
+    words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
+    if not sentences or not words:
+        return 0.0
+    total_syllables = sum(count_syllables_word(w) for w in words)
+    fk = 0.39 * (len(words) / len(sentences)) + 11.8 * (total_syllables / len(words)) - 15.59
+    return round(fk, 2)
+
+
+def validate_jenny_hoyos_readability(spec: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Enforces Jenny Hoyos's Viral Shorts Gate:
+    1. Flesch-Kincaid Grade Level <= 5.5
+    2. Zero banned academic jargon in spoken_script
+    3. But/Therefore/Yet twist connector present
+    4. Zero-dead-air abrupt payoff (tail_hold_sec <= 0.35)
+    """
+    script = spec.get("spoken_script", "")
+    fk_grade = compute_flesch_kincaid_grade(script)
+    lower_words = set(script.lower().replace(",", " ").replace(".", " ").replace("?", " ").split())
+    jargon_found = sorted(lower_words.intersection(BANNED_JENNY_HOYOS_JARGON))
+    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so"))
+    tail_hold = float(spec.get("tail_hold_sec", 0.5))
+
+    if fk_grade > 5.5:
+        raise ValueError(f"[{spec['id']}] Jenny Hoyos Gate FAILED: Flesch-Kincaid Grade={fk_grade} > 5.5")
+    if jargon_found:
+        raise ValueError(f"[{spec['id']}] Jenny Hoyos Gate FAILED: Banned jargon found: {jargon_found}")
+    if not has_twist:
+        raise ValueError(f"[{spec['id']}] Jenny Hoyos Gate FAILED: Missing But/Therefore twist connector")
+    if tail_hold > 0.35:
+        raise ValueError(f"[{spec['id']}] Jenny Hoyos Gate FAILED: tail_hold_sec={tail_hold} > 0.35s")
+
+    res = {
+        "id": spec["id"],
+        "fk_grade": fk_grade,
+        "jargon_found": jargon_found,
+        "has_twist": has_twist,
+        "tail_hold_sec": tail_hold,
+    }
+    print(f"   ✓ [Jenny Hoyos Gate PASSED] [{spec['id']}] FK Grade={fk_grade} (<=5.5) | Twist={has_twist} | Jargon=0 | Tail={tail_hold}s", flush=True)
+    return res
 
 
 class VideoFrameReader:
@@ -962,6 +1144,7 @@ class BrollStoryGenerator:
                 "voice": spec["voice"],
                 "rate": spec["rate"],
                 "spoken_script": spec["spoken_script"],
+                "flesch_kincaid_grade": compute_flesch_kincaid_grade(spec["spoken_script"]),
                 "tiktok_caption": spec["tiktok_caption"],
                 "first_comment": spec.get("first_comment", ""),
                 "hashtags": spec["hashtags"],
@@ -997,6 +1180,8 @@ class BrollStoryGenerator:
             m_mp3 = os.path.join(BASE_DIR, f"_mixed_{vid_id}.mp3")
 
             print(f"\n▶ Generating [{spec.get('cohort', 'Video')}] [{vid_id}]: {fname}", flush=True)
+            if spec.get("jenny_hoyos_gate"):
+                validate_jenny_hoyos_readability(spec)
             cues = await self.generate_voice_and_3word_cues(
                 spec["spoken_script"], spec["voice"], spec["rate"], v_mp3
             )

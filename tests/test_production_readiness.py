@@ -39,14 +39,14 @@ async def test_all():
 
         await page.click('button[data-lang="en"]')
         en_hero = await page.locator('h1[data-i18n="hero_title"]').inner_text()
-        assert "Relationship Pattern" in en_hero and "Attachment Blindspot" in en_hero
+        assert "Stop Falling For Partners Who Pull Away" in en_hero and "See Who You're Actually Meant To Be With." in en_hero, f"Unexpected en_hero: {en_hero}"
         en_sub = await page.locator('p[data-i18n="hero_sub"]').inner_text()
-        assert "20%" in en_sub and "80%" in en_sub
+        assert "You attract partners who pull away!" in en_sub and "which birthdays are your true soulmate match" in en_sub and "we check all 5" in en_sub, f"Unexpected en_sub: {en_sub}"
         en_btn = await page.locator('#calc-form button[type="submit"]').inner_text()
-        assert "reveal my relationship & birth code now" in en_btn.lower()
+        assert "reveal my soulmate match & love timing now" in en_btn.lower(), f"Unexpected en_btn: {en_btn}"
         assert "free teaser" not in en_btn.lower()
-        print(f"English switch & benefit-first Hero verified: {en_hero[:45]}...")
-        print("[OK] Language switcher and benefit-first copy verified!")
+        print(f"English switch & Problem-First -> Solution -> Certainty Hero verified: {en_hero[:55]}...")
+        print("[OK] Language switcher and Problem-First -> Solution -> Certainty copy verified!")
 
         # TEST 3: Post-Payment Redirect with localStorage
         print("\n--- Test 3: Post-Payment Redirect (Customer with localStorage) ---")
@@ -252,10 +252,38 @@ async def test_all():
         # Submit with just First Name ("Sarah") + DOB and zero email
         await page_prod.click('#calc-form button[type="submit"]')
         await page_prod.wait_for_selector('#view-teaser:not(.hidden)', timeout=6000)
-        print("[OK] Mobile Month/Day/Year dropdowns, single First Name ('Sarah'), and instant calc_preview (Name -> DOB) verified!")
 
-        # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO Verification
-        print("\n--- Test 9: Reverse Order (DOB -> Name) calc_preview & SEO/OpenGraph/AEO Verification ---")
+        # Verify Priority #1A on Teaser View:
+        # 1) Instant Relationship & Attachment Blindspot Reveal (#teaser-relationship-clash)
+        clash_vis = await page_prod.is_visible('#teaser-relationship-clash')
+        assert clash_vis is True, "Expected #teaser-relationship-clash to be visible on Teaser view!"
+        clash_txt = await page_prod.locator('#teaser-relationship-clash').inner_text()
+        assert "Chase at 2 AM" in clash_txt and "#7" in clash_txt, f"Unexpected clash text: {clash_txt[:80]}"
+
+        # 2) Ollie Carson's 3-Part Problem Triangle Briefing Cards (#teaser-problem-triangle)
+        tri_count = await page_prod.locator('#teaser-problem-triangle [data-triangle-part]').count()
+        assert tri_count == 3, f"Expected 3 Problem Triangle cards, got {tri_count}"
+        await page_prod.click('button[data-action="play-triangle-part"][data-part="1"]')
+        tri_status_vis = await page_prod.is_visible('#triangle-audio-status')
+        assert tri_status_vis is True, "Expected #triangle-audio-status to appear when Part 1 briefing is clicked!"
+
+        # 3) Optional Partner / Crush Birthday Compatibility Calculator (#partner-compat-box)
+        compat_box_vis = await page_prod.is_visible('#partner-compat-box')
+        assert compat_box_vis is True, "Expected #partner-compat-box to be visible on Teaser view!"
+        await page_prod.select_option('#partnerDobMonth', '10')
+        await page_prod.select_option('#partnerDobDay', '26')
+        await page_prod.select_option('#partnerDobYear', '1988')
+        await asyncio.sleep(0.2)
+        compat_res_vis = await page_prod.is_visible('#partner-compat-result')
+        assert compat_res_vis is True, "Expected #partner-compat-result to auto-render when partner Month/Day/Year are selected!"
+        compat_res_txt = await page_prod.locator('#partner-compat-result').inner_text()
+        assert "%" in compat_res_txt and "#8" in compat_res_txt, f"Unexpected partner compat output: {compat_res_txt[:100]}"
+        event_types_after_compat = [p.get("event_type") for p in ntfy_payloads]
+        assert "partner_compat_checked" in event_types_after_compat, f"Expected partner_compat_checked in {event_types_after_compat}"
+        print("[OK] Mobile Month/Day/Year dropdowns, Teaser Relationship Clash, 3-Part Triangle, and Partner Compatibility Checker verified!")
+
+        # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO + Jenny Hoyos Gate Verification
+        print("\n--- Test 9: Reverse Order (DOB -> Name) calc_preview, <=38-Char og:title, 5-Circle Logo & Jenny Hoyos Gate ---")
         ntfy_payloads.clear()
         await page_prod.goto("https://rj2point0.github.io/sovereign-5-system/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
         await page_prod.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
@@ -273,22 +301,37 @@ async def test_all():
         progress_events = [p for p in ntfy_payloads if p.get("event_type") == "field_progress"]
         assert any("dob_preview" in (p.get("extra") or {}) and "name_length" in (p.get("extra") or {}) for p in progress_events), "Expected dob_preview and name_length in field_progress extra!"
 
-        # Check SEO Title, OpenGraph tags, JSON-LD FAQPage, and 6-item Accordion
+        # Check SEO Title, <=38-char OpenGraph title, 5-Circle Venn favicon.svg, JSON-LD FAQPage, and 6-item Accordion
         doc_title = await page_prod.title()
         assert doc_title == "Uncover Your Hidden Relationship Pattern & Love Code", f"Unexpected title: {doc_title}"
         og_title = await page_prod.locator('meta[property="og:title"]').get_attribute('content')
+        tw_title = await page_prod.locator('meta[name="twitter:title"]').get_attribute('content')
         og_image = await page_prod.locator('meta[property="og:image"]').get_attribute('content')
-        assert og_title == "Uncover Your Hidden Relationship Pattern & Love Code"
+        og_desc = await page_prod.locator('meta[property="og:description"]').get_attribute('content')
+        assert og_title == "Your Hidden Relationship & Love Code" and len(og_title) <= 38, f"Unexpected og_title: {og_title} (len={len(og_title)})"
+        assert tw_title == "Your Hidden Relationship & Love Code" and len(tw_title) <= 38
+        assert og_desc == "Attracting partners who pull away? Find out right now which birthdays are your true soulmate match and what the next 12 months hold for your love life.", f"Unexpected og_desc: {og_desc}"
         assert og_image == "https://blueprint.megavegaventures.com/og-preview.png"
+        favicon_href = await page_prod.locator('link[rel="icon"]').get_attribute('href')
+        assert favicon_href == "favicon.svg", f"Expected favicon.svg, got {favicon_href}"
         faq_items_count = await page_prod.locator('#hero-faq details.faq-item').count()
-        assert faq_items_count == 6, f"Expected 6 FAQ accordion items, got {faq_items_count}"
+        assert faq_items_count == 13, f"Expected 13 FAQ accordion items (all 9 birthday love groups 1-31 + 4 core Q&As), got {faq_items_count}"
         json_ld_raw = await page_prod.locator('script[type="application/ld+json"]').inner_text()
-        assert '"FAQPage"' in json_ld_raw and '"WebApplication"' in json_ld_raw
-        assert os.path.exists(os.path.join(base_dir, "og-preview.png"))
-        assert os.path.exists(os.path.join(base_dir, "llms.txt"))
-        assert os.path.exists(os.path.join(base_dir, "robots.txt"))
-        assert os.path.exists(os.path.join(base_dir, "sitemap.xml"))
-        print("[OK] Reverse order (DOB -> Name) calc_preview, SEO/OG tags, JSON-LD FAQPage, og-preview.png, and AEO files verified!")
+        assert '"FAQPage"' in json_ld_raw and '"WebApplication"' in json_ld_raw and "Born on the 1st, 10th, 19th, or 28th" in json_ld_raw and "Born on the 9th, 18th, or 27th" in json_ld_raw
+        for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
+            assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
+
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10, short_11, short_12
+        import sys as _sys
+        if base_dir not in _sys.path:
+            _sys.path.insert(0, base_dir)
+        from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12")]
+        assert len(jh_specs) == 3, f"Expected 3 Jenny Hoyos specs, found {len(jh_specs)}"
+        for s in jh_specs:
+            gate_res = validate_jenny_hoyos_readability(s)
+            assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
+        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate verified!")
 
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")

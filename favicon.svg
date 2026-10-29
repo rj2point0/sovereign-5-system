@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.28"/>
+      <stop offset="70%" stop-color="#D4AF37" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#0A0A0C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldRing" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F3E5AB"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#9A7B2C"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="26" fill="#0A0A0C"/>
+  <circle cx="60" cy="60" r="54" fill="url(#bgGlow)"/>
+  <circle cx="60" cy="60" r="50" stroke="url(#goldRing)" stroke-width="1.2" stroke-opacity="0.55" stroke-dasharray="3 3"/>
+  <circle cx="60" cy="60" r="45" stroke="url(#goldRing)" stroke-width="1.5" stroke-opacity="0.85"/>
+  <!-- 5 Interlocking Sacred Venn Circles -->
+  <circle cx="60" cy="38" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
+  <circle cx="81" cy="53" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
+  <circle cx="73" cy="78" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
+  <circle cx="47" cy="78" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
+  <circle cx="39" cy="53" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
+  <!-- Center Medallion -->
+  <circle cx="60" cy="60" r="11" fill="#0D0E13" stroke="url(#goldRing)" stroke-width="2"/>
+  <circle cx="60" cy="60" r="3.5" fill="#D4AF37"/>
+</svg>

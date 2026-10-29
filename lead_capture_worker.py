@@ -595,7 +595,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
             </td>
           </tr>
 
-          <!-- ⚠️ SINGLE-SYSTEM FRICTION ALERT -->
+          <!-- ⚠️ SINGLE-SYSTEM FRICTION ALERT (EDGE 1: WHY PARTNERS PULL AWAY + MINI CASE STUDY) -->
           <tr>
             <td style="padding:0 24px 20px;">
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:linear-gradient(145deg,#231215 0%,#151218 100%);border:1px solid rgba(248,113,113,0.42);border-left:4px solid #F87171;border-radius:12px;padding:16px 18px;">
@@ -604,9 +604,12 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
                     <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#FCA5A5;font-weight:700;margin-bottom:6px;">
                       ⚠️ SINGLE-SYSTEM FRICTION ALERT · {html.escape(friction_headline)}
                     </div>
-                    <p style="margin:0;font-family:'Arial',sans-serif;font-size:13px;line-height:1.58;color:#E4E4E7;">
+                    <p style="margin:0 0 10px;font-family:'Arial',sans-serif;font-size:13px;line-height:1.58;color:#E4E4E7;">
                       {friction_text}
                     </p>
+                    <div style="margin-top:10px;padding:10px 12px;background:rgba(10,10,12,0.55);border-radius:8px;border:1px solid rgba(212,175,55,0.22);font-family:'Arial',sans-serif;font-size:12px;line-height:1.55;color:#D4D4D8;">
+                      <strong style="color:#F3E5AB;">Edge 1 · Relationship Case Study (Why Partners Pull Away):</strong> When your outer Western Life Path (<strong>{html.escape(calc['life_path'])}</strong>) clashes with your inner Vedic Birth Day Driver (<strong>{html.escape(calc['vedic_moolank'])}</strong> — who you instinctively chase at 2 AM), you broadcast one signal on first dates while secretly craving the opposite in intimacy. Checking all 5 systems reveals your true soulmate match birthdays so you stop repeating this loop.
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -836,11 +839,11 @@ def build_followup_email_2_loshu(lead: Dict[str, Any]) -> Tuple[str, str, str]:
                   Anchor #{a2['number']} · {html.escape(a2['archetype'])} ({a2['count']}× across {len(a2['systems'])} systems)
                 </div>
                 <p style="margin:0;font-size:13px;color:#D4D4D8;">
-                  In Five-Element (Wu Xing) architecture, empty Lo Shu squares create subconscious relationship loops and block your #{a2['number']} Wealth Engine unless bridged by your Chaldean Name frequency.
+                  In Five-Element (Wu Xing) architecture, empty Lo Shu squares create subconscious relationship loops—causing you to project your missing numbers onto emotionally unavailable partners who pull away—and block your #{a2['number']} Wealth Engine unless bridged by your Chaldean Name frequency and true soulmate match birthdays.
                 </p>
               </div>
               <p style="margin:0;">
-                <strong>Pages 14, 16, and 17</strong> of your 20-Page Sovereign Dossier reveal your complete 3×3 Lo Shu Grid, your Arrows of Strength, and the exact elemental remedies to balance your chart.
+                <strong>Pages 14, 16, and 17</strong> of your 20-Page Sovereign Dossier reveal your complete 3×3 Lo Shu Grid, which partner birth dates fill your missing love squares, and the exact elemental remedies to balance your chart.
               </p>
             </td>
           </tr>
@@ -956,10 +959,10 @@ def build_followup_email_3_cycles(lead: Dict[str, Any]) -> Tuple[str, str, str]:
                 </p>
               </div>
               <p style="margin:0 0 14px;">
-                When you align your <strong>#1 Signature Anchor (#{a1['number']} · {html.escape(a1['archetype'])})</strong> and your <strong>#3 Sanctuary Foundation (#{a3['number']} · {html.escape(a3['archetype'])})</strong> with your active 52-day window, resistance drops away.
+                Pushing for a relationship commitment or major decision during a preservation window—or hesitating when your Venusian/Lunar bonding window opens—is why even high-chemistry connections stall out. When you align your <strong>#1 Signature Anchor (#{a1['number']} · {html.escape(a1['archetype'])})</strong> and your <strong>#3 Sanctuary Foundation (#{a3['number']} · {html.escape(a3['archetype'])})</strong> with your active 52-day window, resistance drops away.
               </p>
               <p style="margin:0;">
-                Unlock your complete <strong>20-Page Sovereign Dossier PDF</strong> now to get your full 365-day Rosicrucian Calendar (Pages 18–20) and Somatic Nervous System Architecture (Page 15).
+                Unlock your complete <strong>20-Page Sovereign Dossier PDF</strong> now to see what the next 12 months hold for your love life and wealth across all 7 of your 52-day Rosicrucian Cycles (Pages 18–20) and Somatic Nervous System Architecture (Page 15).
               </p>
             </td>
           </tr>

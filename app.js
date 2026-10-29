@@ -694,6 +694,141 @@ const CONFIG = {
     return `<div class="vsl-frame card p-2"><iframe src="${vslSrc}" class="w-full h-full rounded-lg" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
   }
 
+  const REL_ATTACHMENT_MAP_EN = {
+    1: {
+      style: 'The Hyper-Independent Protector (Sun)',
+      chase: 'You crave a strong equal you don\'t have to babysit, yet the moment a partner tries to lead or control you, your guard shoots up.',
+      blindspot: 'Because you handle everything alone, partners assume you don\'t need emotional reassurance—leaving you feeling unseen in love.',
+    },
+    2: {
+      style: 'The Deep-Bonding Empath (Moon)',
+      chase: 'You sense a partner\'s shift in tone before they say a word and crave deep, soul-level reassurance.',
+      blindspot: 'You absorb your partner\'s unspoken anxiety and over-adapt to keep the peace until your own nervous system shuts down.',
+    },
+    3: {
+      style: 'The Spark & Story Romantic (Jupiter)',
+      chase: 'You fall for mental electricity, humor, and deep late-night conversation—boredom is your #1 relationship killer.',
+      blindspot: 'When a relationship hits heavy routine without play or vision, you mentally check out or over-analyze what\'s missing.',
+    },
+    4: {
+      style: 'The Loyal Anchor & Builder (Rahu)',
+      chase: 'You show love through loyalty, actions, and holding everything together when life gets chaotic.',
+      blindspot: 'You attract partners who lean on your stability without reciprocating—leaving you carrying 80% of the emotional weight.',
+    },
+    5: {
+      style: 'The Magnetic Freedom Seeker (Mercury)',
+      chase: 'You crave electric chemistry and a partner who feels like an adventure, not a cage.',
+      blindspot: 'The second a partner becomes clingy, predictable, or controlling, your nervous system triggers an urge to pull away.',
+    },
+    6: {
+      style: 'The Devoted Healer & Caretaker (Venus)',
+      chase: 'You love with your whole chest and instinctively try to heal, elevate, and protect the person you\'re with.',
+      blindspot: 'You repeatedly fall for "potential" and end up being the therapist partner with no one checking on you.',
+    },
+    7: {
+      style: 'The Guarded Soul-Seeker (Ketu)',
+      chase: 'You crave rare, soul-deep intimacy and hate surface-level small talk, yet you need solitude to process your feelings.',
+      blindspot: 'When emotions get overwhelming, you go quiet and retreat inward—which anxious partners misread as losing interest.',
+    },
+    8: {
+      style: 'The All-or-Nothing Protector (Saturn)',
+      chase: 'You don\'t do casual half-love; when you commit, you invest your time, loyalty, and future for the long haul.',
+      blindspot: 'You test partners silently to see if they\'re trustworthy, and struggle to show vulnerability when you\'re hurting.',
+    },
+    9: {
+      style: 'The Passionate Wounded Healer (Mars)',
+      chase: 'You love with fierce intensity and are drawn to deep, transformative connections that feel fated.',
+      blindspot: 'You hold onto karmic relationships long after they\'ve expired because letting go feels like giving up.',
+    },
+  };
+
+  const REL_ATTACHMENT_MAP_ES = {
+    1: {
+      style: 'Protector Hiper-Independiente (Sol)',
+      chase: 'Buscas un par fuerte a quien admirar, pero en cuanto intentan controlarte tu escudo se activa.',
+      blindspot: 'Como resuelves todo por tu cuenta, tus parejas asumen que no necesitas contención emocional.',
+    },
+    2: {
+      style: 'Empático de Vínculo Profundo (Luna)',
+      chase: 'Percibes cualquier cambio de tono antes de que hablen y anhelas conexión emocional genuina.',
+      blindspot: 'Absorbes la ansiedad no dicha de tu pareja hasta agotar tu propio sistema nervioso.',
+    },
+    3: {
+      style: 'Romántico de Chispa y Mente (Júpiter)',
+      chase: 'Te enamoras de la electricidad mental y las charlas de madrugada; la rutina apaga tu deseo.',
+      blindspot: 'Cuando la relación cae en monotonía sin visión compartida, te desconectas en silencio.',
+    },
+    4: {
+      style: 'Ancla Leal y Constructor (Rahu)',
+      chase: 'Demuestras amor con lealtad, hechos y sosteniendo todo cuando hay caos.',
+      blindspot: 'Atraes parejas que descansan en tu estabilidad sin sostenerte a ti.',
+    },
+    5: {
+      style: 'Buscador Magnético de Libertad (Mercurio)',
+      chase: 'Necesitas química eléctrica y una pareja que se sienta como aventura, no como jaula.',
+      blindspot: 'Cuando sientes presión o control, tu sistema nervioso activa el impulso de huir.',
+    },
+    6: {
+      style: 'Sanador y Guardián Devoto (Venus)',
+      chase: 'Amas con todo el corazón e intentas elevar, cuidar y sanar a quien tienes al lado.',
+      blindspot: 'Te enamoras del "potencial" y terminas siendo el terapeuta de la relación.',
+    },
+    7: {
+      style: 'Buscador Profundo y Reservado (Ketu)',
+      chase: 'Anhelas intimidad del alma, pero necesitas silencio y soledad para procesar lo que sientes.',
+      blindspot: 'Cuando te saturas te repliegas en silencio, y tu pareja cree que te estás alejando.',
+    },
+    8: {
+      style: 'Protector Todo-o-Nada (Saturno)',
+      chase: 'No sabes amar a medias; cuando te comprometes, inviertes lealtad y futuro a largo plazo.',
+      blindspot: 'Pones a prueba en silencio la lealtad del otro y te cuesta mostrar vulnerabilidad.',
+    },
+    9: {
+      style: 'Sanador Apasionado e Intenso (Marte)',
+      chase: 'Amas con fuego e intensidad y te atraen los vínculos kármicos que transforman tu vida.',
+      blindspot: 'Sostienes relaciones que ya cumplieron su ciclo porque soltar te parece rendirte.',
+    },
+  };
+
+  function getPartnerCompatReport(userRes, partnerMonth, partnerDay, partnerYear, lang) {
+    const isEs = lang === 'es';
+    const pIso = `${partnerYear}-${String(partnerMonth).padStart(2, '0')}-${String(partnerDay).padStart(2, '0')}`;
+    const pCalc = E.calculate('Partner Soul', pIso);
+    const uMoolank = userRes.vedic.moolank.value;
+    const uLife = userRes.pythagorean.lifePath.value;
+    const pMoolank = pCalc.vedic.moolank.value;
+    const pLife = pCalc.pythagorean.lifePath.value;
+    const pRuler = pCalc.vedic.moolank.ruler.planet;
+    const uRuler = userRes.vedic.moolank.ruler.planet;
+
+    // Deterministic magnetism & friction scores based on the 4 core birth numbers
+    const seed = (uMoolank * 7 + pMoolank * 13 + uLife * 5 + pLife * 11) % 15;
+    const magnetismScore = 82 + seed; // 82% to 96%
+    const sharedMissing = userRes.loShu.missing.filter((n) => pCalc.loShu.missing.includes(n));
+    const bridgedNums = userRes.loShu.missing.filter((n) => !pCalc.loShu.missing.includes(n));
+
+    const pInfo = (isEs ? REL_ATTACHMENT_MAP_ES : REL_ATTACHMENT_MAP_EN)[pMoolank] || REL_ATTACHMENT_MAP_EN[7];
+    const frictionLevel = sharedMissing.length >= 3 ? (isEs ? 'ALTA (Puntos Ciegos Compartidos)' : 'HIGH (Shared Blindspots)') : (isEs ? 'MODERADA-ALTA (Choque de Ritmos)' : 'MODERATE-HIGH (Pacing Clash)');
+
+    return {
+      pIso,
+      pMoolank,
+      pLife,
+      pRuler,
+      uMoolank,
+      uLife,
+      uRuler,
+      magnetismScore,
+      frictionLevel,
+      sharedMissingCount: sharedMissing.length,
+      bridgedCount: bridgedNums.length,
+      pStyle: pInfo.style,
+      summary: isEs
+        ? `Tu conductor íntimo <b>#${uMoolank} (${uRuler})</b> y su conductor natal <b>#${pMoolank} (${pRuler} — ${pInfo.style})</b> generan un <b>${magnetismScore}% de magnetismo inicial</b>. Tu pareja llena <b>${bridgedNums.length}</b> de tus números faltantes en el Lo Shu Chino, pero comparten <b>${sharedMissing.length} vacíos emocionales idénticos</b> que provocan malentendidos cuando hay estrés.`
+        : `Your intimate Birth-Day Driver <b>#${uMoolank} (${uRuler})</b> and their Birth-Day Driver <b>#${pMoolank} (${pRuler} — ${pInfo.style})</b> generate an immediate <b>${magnetismScore}% chemistry &amp; magnetism pull</b>. Their birth chart bridges <b>${bridgedNums.length}</b> of your missing Chinese Lo Shu numbers, but you share <b>${sharedMissing.length} identical emotional blindspots</b> that trigger push-pull silence under stress.`,
+    };
+  }
+
   function renderTeaser() {
     const C_LANG = C.get(state.lang);
     const UI = C_LANG.UI;
@@ -719,6 +854,21 @@ const CONFIG = {
       ? `⚠ Tu ciclo activo de 52 días concluye en ${cyc.daysRemaining} día${cyc.daysRemaining === 1 ? '' : 's'}`
       : `⚠ Your current 52-day window closes in ${cyc.daysRemaining} day${cyc.daysRemaining === 1 ? '' : 's'}`;
 
+    const isEs = state.lang === 'es';
+    const uMoolank = r.vedic.moolank.value;
+    const uRuler = r.vedic.moolank.ruler.planet;
+    const uLife = p.lifePath.value;
+    const uLifeArch = (C_LANG.ARCHETYPES[uLife] || {}).name || ('#' + uLife);
+    const relMap = isEs ? REL_ATTACHMENT_MAP_ES : REL_ATTACHMENT_MAP_EN;
+    const attInfo = relMap[uMoolank] || relMap[7];
+    const missingCount = r.loShu.missing.length;
+    const monthsArr = isEs ? DOB_MONTHS_ES : DOB_MONTHS_EN;
+    const pMonthOpts = `<option value="">${isEs ? 'Mes' : 'Month'}</option>` + monthsArr.map((m, idx) => `<option value="${String(idx + 1).padStart(2, '0')}">${String(idx + 1).padStart(2, '0')} · ${m}</option>`).join('');
+    let pDayOpts = `<option value="">${isEs ? 'Día' : 'Day'}</option>`;
+    for (let d = 1; d <= 31; d++) pDayOpts += `<option value="${String(d).padStart(2, '0')}">${d}</option>`;
+    let pYearOpts = `<option value="">${isEs ? 'Año' : 'Year'}</option>`;
+    for (let y = 2006; y >= 1940; y--) pYearOpts += `<option value="${y}">${y}</option>`;
+
     $('#teaser-root').innerHTML = `
     <div class="reveal">
       <div class="text-center pt-3">
@@ -738,6 +888,111 @@ const CONFIG = {
         <div class="hairline my-6"></div>
         <p class="font-serif text-[1.18rem] sm:text-[1.3rem] leading-relaxed text-zinc-200 text-left sm:text-center">${A.core}</p>
       </div>
+
+      <!-- PRIORITY #1A.1 · INSTANT RELATIONSHIP & ATTACHMENT BLINDSPOT REVEAL -->
+      <div id="teaser-relationship-clash" class="card mt-6 p-5 sm:p-8 border-gold/50" style="border-color:rgba(212,175,55,.45)">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="badge-gold">${isEs ? '✦ Diagnóstico de Amor y Apego (20% Desbloqueado)' : '✦ Relationship & Attachment Blindspot (20% Unlocked)'}</span>
+          <span class="text-[0.68rem] uppercase tracking-[0.16em] text-rose-300 font-semibold">${isEs ? '⚡ Fricción Detectada' : '⚡ Inner Love Clash Detected'}</span>
+        </div>
+        <h3 class="font-display text-xl sm:text-2xl text-ivory mt-4 leading-snug">
+          ${isEs
+            ? `Por Qué Tu Sendero Occidental (<span class="text-gold">#${uLife}</span>) Choca Con Tu Conductor Íntimo Védico (<span class="text-gold">#${uMoolank} · ${uRuler}</span>)`
+            : `Why Your Western Number (<span class="text-gold">#${uLife}</span>) Clashes With Who You Chase at 2 AM (<span class="text-gold">#${uMoolank} · ${uRuler}</span>)`}
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-5">
+          <div class="card-soft p-4 border border-white/10">
+            <p class="text-[0.62rem] uppercase tracking-[0.18em] text-zinc-400 font-semibold">${isEs ? 'Lo Que Crees Que Necesitas (Pitagórico)' : 'Who You Think You Need (Western Life Path)'}</p>
+            <div class="font-display text-lg text-champagne mt-1">#${uLife} · ${uLifeArch}</div>
+            <p class="text-xs text-zinc-300 mt-2 leading-relaxed">${isEs ? 'Tu estándar consciente en el amor: lo que buscas racionalmente cuando todo está en calma.' : 'Your conscious relationship standard: the partner traits you logically look for on paper.'}</p>
+          </div>
+          <div class="card-soft p-4 border border-gold/40" style="background:rgba(212,175,55,0.06)">
+            <p class="text-[0.62rem] uppercase tracking-[0.18em] text-gold font-semibold">${isEs ? 'Lo Que Persigues a las 2 AM (Día Natal Védico)' : 'Who You Instinctively Chase at 2 AM (Vedic Birth Day)'}</p>
+            <div class="font-display text-lg text-ivory mt-1">#${uMoolank} · ${attInfo.style}</div>
+            <p class="text-xs text-zinc-200 mt-2 leading-relaxed">${attInfo.chase}</p>
+          </div>
+        </div>
+        <div class="mt-4 p-4 rounded-xl bg-rose-950/30 border border-rose-400/30 text-sm text-zinc-200 leading-relaxed">
+          <strong class="text-champagne">${isEs ? 'Tu Punto Ciego Afectivo:' : 'Your Attachment Blindspot:'}</strong> ${attInfo.blindspot}
+        </div>
+      </div>
+
+      <!-- PRIORITY #1A.2 · OLLIE CARSON'S 3-PROBLEM TRIANGLE MICRO-BRIEFING CARDS -->
+      <div id="teaser-problem-triangle" class="mt-8">
+        <p class="eyebrow text-center">${isEs ? 'El Triángulo de 3 Problemas en Tu Código de Amor' : 'Your 3-Part Relationship Code Breakdown'}</p>
+        <h3 class="font-display text-xl sm:text-2xl text-center text-ivory mt-2">${isEs ? 'Las 3 Piezas Que las Lecturas Occidentales Omiten' : 'The 3 Relationship Answers Hidden in Your Other 80%'}</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-5">
+          <!-- Part 1 -->
+          <div class="card-soft p-4 sm:p-5 border border-gold/35 flex flex-col justify-between" data-triangle-part="1">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="badge-gold !text-[0.6rem]">${isEs ? 'Parte 1 · 45s' : 'Part 1 · 45s Briefing'}</span>
+                <span class="text-[0.62rem] text-emerald-300 font-semibold uppercase tracking-wider">${isEs ? 'Vista Previa' : 'Unlocked Preview'}</span>
+              </div>
+              <h4 class="font-display text-base text-champagne mt-3 leading-snug">${isEs ? '1. Tu Punto Ciego de Apego (Por Qué Anhelas Intimidad Pero Te Alejas)' : '1. Your Attachment Blindspot (Why You Crave Intimacy But Pull Away)'}</h4>
+              <p class="text-xs text-zinc-300 mt-2.5 leading-relaxed">${isEs ? `Cómo tu conductor natal #${uMoolank} (${uRuler}) reacciona bajo presión emocional y qué número de pareja calma tu sistema nervioso.` : `How your #${uMoolank} (${uRuler}) Birth-Day Driver reacts under emotional stress—and which partner birth numbers naturally calm your nervous system.`}</p>
+            </div>
+            <button type="button" data-action="play-triangle-part" data-part="1" class="btn-ghost !py-2 !px-3 mt-4 w-full !text-[0.68rem]">
+              ▶ ${isEs ? 'Escuchar / Ver Parte 1' : 'Play Part 1 Audio Briefing'}
+            </button>
+          </div>
+
+          <!-- Part 2 -->
+          <div class="card-soft p-4 sm:p-5 border border-gold/25 flex flex-col justify-between" data-triangle-part="2">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="badge-gold !text-[0.6rem]">${isEs ? 'Parte 2 · Lo Shu' : 'Part 2 · Lo Shu Grid'}</span>
+                <span class="text-[0.62rem] text-amber-300 font-semibold uppercase tracking-wider">${missingCount} ${isEs ? 'Faltantes' : 'Missing Digits'}</span>
+              </div>
+              <h4 class="font-display text-base text-champagne mt-3 leading-snug">${isEs ? '2. Tus Flechas de Amor Faltantes en el Lo Shu Chino (Por Qué Hay Malentendidos)' : '2. Your Missing Chinese Lo Shu Love Arrows (Why You & Your Partner Miscommunicate)'}</h4>
+              <p class="text-xs text-zinc-300 mt-2.5 leading-relaxed">${isEs ? `Tu fecha de nacimiento deja <b>${missingCount} casillas vacías</b> en tu cuadrícula 3×3—los rasgos exactos que proyectas inconscientemente en tus parejas.` : `Your birth date leaves <b>${missingCount} empty boxes</b> in your 3×3 Chinese Lo Shu square—revealing the exact emotional traits you subconsciously project onto partners.`}</p>
+            </div>
+            <button type="button" data-action="play-triangle-part" data-part="2" class="btn-ghost !py-2 !px-3 mt-4 w-full !text-[0.68rem]">
+              ▶ ${isEs ? 'Escuchar / Ver Parte 2' : 'Play Part 2 Audio Briefing'}
+            </button>
+          </div>
+
+          <!-- Part 3 -->
+          <div class="card-soft p-4 sm:p-5 border border-gold/25 flex flex-col justify-between" data-triangle-part="3">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="badge-gold !text-[0.6rem]">${isEs ? 'Parte 3 · Sincronía' : 'Part 3 · Love Timing'}</span>
+                <span class="text-[0.62rem] text-rose-300 font-semibold uppercase tracking-wider">${cyc.daysRemaining}d ${isEs ? 'Restantes' : 'Left in Cycle'}</span>
+              </div>
+              <h4 class="font-display text-base text-champagne mt-3 leading-snug">${isEs ? '3. Tu Ventana de Tiempo de Relación para los Próximos 12 Meses' : '3. Your Next 12 Months Relationship Timing Window'}</h4>
+              <p class="text-xs text-zinc-300 mt-2.5 leading-relaxed">${isEs ? `Actualmente estás en tu ciclo planetario de <b>${cyc.current.ruler}</b> (${cyc.daysRemaining} días restantes). Descubre tus fechas exactas de Venus y Luna para el amor.` : `You are currently inside your 52-day <b>${cyc.current.ruler}</b> period (${cyc.daysRemaining} days left). Pinpoint your peak Venus &amp; Moon soulmate windows over the next 12 months.`}</p>
+            </div>
+            <button type="button" data-action="play-triangle-part" data-part="3" class="btn-ghost !py-2 !px-3 mt-4 w-full !text-[0.68rem]">
+              ▶ ${isEs ? 'Escuchar / Ver Parte 3' : 'Play Part 3 Audio Briefing'}
+            </button>
+          </div>
+        </div>
+        <div id="triangle-audio-status" class="hidden mt-3 p-3.5 rounded-xl card-soft border border-gold/40 text-xs sm:text-sm text-champagne text-center"></div>
+      </div>
+
+      <!-- PRIORITY #1A.3 · OPTIONAL PARTNER / CRUSH BIRTHDAY COMPATIBILITY CHECKER -->
+      <div id="partner-compat-box" class="card mt-7 p-5 sm:p-7 border-gold/50" style="border-color:rgba(212,175,55,.5);background:linear-gradient(180deg,rgba(28,25,18,0.92),rgba(14,15,20,0.96))">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="badge-gold">${isEs ? '✦ Escáner de Compatibilidad de Pareja (Opcional)' : '✦ Instant Partner / Crush Compatibility Check (Optional)'}</span>
+          <span class="text-[0.65rem] uppercase tracking-[0.15em] text-champagne">${isEs ? 'Sin Costo Extra' : 'Instant Preview'}</span>
+        </div>
+        <h3 class="font-display text-lg sm:text-2xl text-ivory mt-3">
+          ${isEs ? '¿Quieres comprobar tu compatibilidad con tu pareja o alguien especial? Ingresa su fecha de nacimiento (Opcional):' : 'Want to check your compatibility with a partner or crush? Enter their birthday (Optional):'}
+        </h3>
+        <p class="text-xs sm:text-sm text-zinc-300 mt-1.5">
+          ${isEs ? 'Calcularemos al instante su puntaje de magnetismo, dónde chocan sus números natales y qué casillas del Lo Shu Chino completan juntos.' : 'See your instant Magnetism vs. Friction score, how their Birth-Day Driver interacts with yours, and whether their chart fills your missing Lo Shu love numbers.'}
+        </p>
+        <div class="grid grid-cols-3 gap-2.5 mt-4" id="partner-dob-group">
+          <select id="partnerDobMonth" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Month">${pMonthOpts}</select>
+          <select id="partnerDobDay" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Day">${pDayOpts}</select>
+          <select id="partnerDobYear" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Year">${pYearOpts}</select>
+        </div>
+        <button type="button" data-action="check-partner-compat" id="btn-partner-compat" class="btn-gold mt-4 !py-3 text-xs sm:text-sm">
+          ✦ ${isEs ? 'Calcular Compatibilidad y Fricción con Mi Pareja →' : 'Calculate Our Relationship Compatibility & Friction Score →'}
+        </button>
+        <div id="partner-compat-result" class="hidden mt-5 pt-5 border-t border-gold/30"></div>
+      </div>
+
       <!-- 1-TAP VIRAL SHARE BUTTON -->
       <div class="mt-4 text-center">
         <button type="button" data-action="share-code" class="btn-ghost w-full sm:w-auto !py-3 !px-6 border-gold/40 hover:border-gold hover:bg-gold/10 text-champagne text-xs sm:text-sm font-semibold transition-all">
@@ -1836,10 +2091,17 @@ const CONFIG = {
       fillForm({});
       showView('hero');
       document.title = state.lang === 'es'
-        ? 'El Plano Soberano · Numerología de los 5 Sistemas y Ciclos Rosacruces'
-        : 'The Sovereign 5-System Blueprint';
+        ? 'Descubre Tu Patrón Oculto de Pareja y Código de Amor'
+        : 'Uncover Your Hidden Relationship Pattern & Love Code';
     }
     else if (a === 'checkout') checkout();
+    else if (a === 'check-partner-compat') {
+      runPartnerCompatibilityCheck();
+    }
+    else if (a === 'play-triangle-part') {
+      const partNum = t.dataset.part || '1';
+      playTriangleBriefing(partNum);
+    }
     else if (a === 'save-teaser-email') {
       const emInput = $('#teaser-email-input');
       const emVal = emInput ? emInput.value.trim() : '';
@@ -1875,7 +2137,109 @@ const CONFIG = {
     }
   });
 
-  document.addEventListener('change', (e) => { if (e.target && e.target.id === 'bump') updateTotal(); });
+  function runPartnerCompatibilityCheck() {
+    if (!state.result) return;
+    const mEl = $('#partnerDobMonth');
+    const dEl = $('#partnerDobDay');
+    const yEl = $('#partnerDobYear');
+    const resBox = $('#partner-compat-result');
+    if (!mEl || !dEl || !yEl || !resBox) return;
+    const m = mEl.value;
+    const d = dEl.value;
+    const y = yEl.value;
+    const isEs = state.lang === 'es';
+    if (!m || !d || !y) {
+      toast(isEs ? 'Selecciona el Mes, Día y Año de nacimiento de tu pareja.' : 'Please select your partner or crush\'s Birth Month, Day, and Year.');
+      return;
+    }
+    const rep = getPartnerCompatReport(state.result, m, d, y, state.lang);
+    sendWebhook('partner_compat_checked', {
+      partner_dob: rep.pIso,
+      partner_moolank: rep.pMoolank,
+      partner_lifepath: rep.pLife,
+      magnetism_score: rep.magnetismScore,
+    });
+    resBox.classList.remove('hidden');
+    resBox.innerHTML = `
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+        <div class="card-soft p-3.5 border border-gold/40">
+          <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Química y Magnetismo' : 'Chemistry & Magnetism'}</div>
+          <div class="font-display text-2xl sm:text-3xl text-gold mt-1">${rep.magnetismScore}%</div>
+          <div class="text-[0.65rem] text-emerald-300 mt-0.5">${isEs ? 'Atracción Inmediata' : 'High Initial Pull'}</div>
+        </div>
+        <div class="card-soft p-3.5 border border-white/10">
+          <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Conductor Natal de Tu Pareja' : 'Their Birth-Day Driver'}</div>
+          <div class="font-display text-xl text-champagne mt-1">#${rep.pMoolank} · ${rep.pRuler}</div>
+          <div class="text-[0.65rem] text-zinc-400 mt-0.5">${isEs ? 'Sendero Occidental' : 'Western Life Path'} #${rep.pLife}</div>
+        </div>
+        <div class="card-soft p-3.5 border border-rose-400/35 bg-rose-950/20">
+          <div class="text-[0.6rem] uppercase tracking-[0.16em] text-rose-300">${isEs ? 'Riesgo de Fricción Oculta' : 'Unresolved Friction Risk'}</div>
+          <div class="font-display text-sm sm:text-base text-rose-200 mt-1.5">${rep.frictionLevel}</div>
+          <div class="text-[0.65rem] text-zinc-300 mt-0.5">${rep.sharedMissingCount} ${isEs ? 'Vacíos Lo Shu Compartidos' : 'Shared Lo Shu Blindspots'}</div>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-4">${rep.summary}</p>
+      <div class="mt-4 p-3.5 rounded-xl bg-gold/10 border border-gold/40 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-champagne text-left">
+          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa en el Dossier de 20 Páginas:' : 'Locked Inside Your Full 20-Page Sovereign Dossier:'}</b>
+          ${isEs ? 'Descubre cómo comunicarse con un #' + rep.pMoolank + ' sin activar su escudo y qué fechas exactas favorecen su unión.' : 'See the exact communication rules for a #' + rep.pMoolank + ' partner so neither of you pulls away—plus your peak relationship dates.'}
+        </p>
+        <button type="button" data-action="scroll-checkout" class="btn-gold !py-2.5 !px-4 sm:w-auto text-xs whitespace-nowrap shrink-0">
+          ${isEs ? 'Desbloquear Nuestro Reporte →' : 'Unlock Full Relationship Report →'}
+        </button>
+      </div>
+    `;
+  }
+
+  function playTriangleBriefing(partNum) {
+    if (!state.result) return;
+    const isEs = state.lang === 'es';
+    const r = state.result;
+    const uMoolank = r.vedic.moolank.value;
+    const uRuler = r.vedic.moolank.ruler.planet;
+    const uLife = r.pythagorean.lifePath.value;
+    const missingStr = r.loShu.missing.join(', ');
+    const statusBox = $('#triangle-audio-status');
+    const scripts = {
+      '1': isEs
+        ? `🔊 Parte 1 (Punto Ciego de Apego): Tu número occidental es #${uLife}, pero tu día de nacimiento está regido por #${uMoolank} (${uRuler}). Por eso buscas estabilidad conscientemente, pero a las 2 AM te atraen vínculos intensos que activan tu miedo a no ser escuchado.`
+        : `🔊 Part 1 Audio Briefing (Attachment Blindspot): Your Western Life Path is #${uLife}, but your Vedic Birth-Day Driver is #${uMoolank} (${uRuler}). That inner split is why you crave deep intimacy yet instinctively pull back the second a partner feels overwhelming or inconsistent.`,
+      '2': isEs
+        ? `🔊 Parte 2 (Flechas de Amor Lo Shu): Tu fecha de nacimiento tiene ${r.loShu.missing.length} casillas vacías en el cuadrado chino Lo Shu. Esos números faltantes son lo que inconscientemente pides que tu pareja compense por ti.`
+        : `🔊 Part 2 Audio Briefing (Missing Lo Shu Love Arrows): Your birth date leaves ${r.loShu.missing.length} empty boxes in the 3×3 Chinese Lo Shu grid. Those missing numbers are the exact emotional traits you subconsciously project onto partners during arguments.`,
+      '3': isEs
+        ? `🔊 Parte 3 (Ventana de Tiempo en el Amor): Hoy estás dentro de tu ciclo de 52 días de ${r.cycles.current.ruler} (${r.cycles.daysRemaining} días restantes). Alinear tus conversaciones importantes con tus ciclos de Venus y Luna evita rupturas innecesarias.`
+        : `🔊 Part 3 Audio Briefing (12-Month Relationship Timing): You are currently inside your 52-day ${r.cycles.current.ruler} cycle (${r.cycles.daysRemaining} days left). Knowing when your Venus and Moon windows open tells you the exact weeks for commitment, reconciliation, and deep talks.`,
+    };
+    const msg = scripts[String(partNum)] || scripts['1'];
+    if (statusBox) {
+      statusBox.classList.remove('hidden');
+      statusBox.innerHTML = msg;
+    }
+    try {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(msg.replace('🔊 ', ''));
+        u.lang = isEs ? 'es-ES' : 'en-US';
+        u.rate = 1.04;
+        window.speechSynthesis.speak(u);
+      }
+    } catch (e) { /* ignore */ }
+    sendWebhook('triangle_briefing_played', { part: partNum });
+  }
+
+  document.addEventListener('change', (e) => {
+    if (!e.target) return;
+    if (e.target.id === 'bump') updateTotal();
+    if (['partnerDobMonth', 'partnerDobDay', 'partnerDobYear'].includes(e.target.id)) {
+      const mEl = $('#partnerDobMonth');
+      const dEl = $('#partnerDobDay');
+      const yEl = $('#partnerDobYear');
+      if (mEl && dEl && yEl && mEl.value && dEl.value && yEl.value) {
+        runPartnerCompatibilityCheck();
+      }
+    }
+  });
 
   // Handle claim form submission (for paying customers on a new device or without localStorage)
   const claimForm = $('#claim-form');
