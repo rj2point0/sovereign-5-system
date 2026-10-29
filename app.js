@@ -209,7 +209,7 @@ const CONFIG = {
 
     $$('[data-i18n]').forEach((el) => {
       const key = el.dataset.i18n;
-      if (UI[key]) {
+      if (UI[key] !== undefined) {
         el.innerHTML = UI[key].replace('${year}', new Date().getFullYear());
       }
     });
@@ -221,8 +221,8 @@ const CONFIG = {
 
     // Update page title
     document.title = state.lang === 'es'
-      ? 'El Plano Soberano · Numerología de los 5 Sistemas y Ciclos Rosacruces'
-      : 'The Sovereign 5-System Blueprint · Numerology & Rosicrucian Cycles';
+      ? 'Descubre Tu Patrón Oculto de Pareja y Código de Amor'
+      : 'Uncover Your Hidden Relationship Pattern & Love Code';
   }
 
   /* ---------------- lead capture & funnel telemetry ---------------- */
@@ -359,9 +359,24 @@ const CONFIG = {
     } catch (e) { /* ignore */ }
   }
 
+  function syncDobValueOnly() {
+    const mEl = $('#dobMonth');
+    const dEl = $('#dobDay');
+    const yEl = $('#dobYear');
+    const dobInput = $('#birthDate');
+    if (!mEl || !dEl || !yEl || !dobInput) return;
+    const m = mEl.value;
+    const d = dEl.value;
+    const y = yEl.value;
+    if (m && d && y) {
+      dobInput.value = `${y}-${m}-${d}`;
+    }
+  }
+
   let _lastPreviewKey = '';
   function maybeFireCalcPreview(triggerSource) {
     try {
+      syncDobValueOnly();
       const fNameEl = $('#fullName');
       const dobEl = $('#birthDate');
       if (!fNameEl || !dobEl) return;
@@ -595,6 +610,7 @@ const CONFIG = {
 
   async function onSubmit(e) {
     e.preventDefault();
+    syncDobValueOnly();
     const data = {
       fullName: $('#fullName').value,
       birthDate: $('#birthDate').value,
@@ -1954,39 +1970,64 @@ const CONFIG = {
     // Real-time funnel telemetry: calc_started, granular field_progress & instant calc_preview
     let _calcStartedFired = false;
     const _fieldsTouched = new Set();
-    const fireFieldTelemetry = (fieldKey) => {
+    const getFieldProgressSnapshot = () => {
+      const mEl = $('#dobMonth');
+      const dEl = $('#dobDay');
+      const yEl = $('#dobYear');
+      const nEl = $('#fullName');
+      const m = mEl && mEl.value ? mEl.value : '--';
+      const d = dEl && dEl.value ? dEl.value : '--';
+      const y = yEl && yEl.value ? yEl.value : '----';
+      return {
+        dob_preview: `${y}-${m}-${d}`,
+        name_length: nEl && nEl.value ? nEl.value.trim().length : 0,
+      };
+    };
+    const fireFieldTelemetry = (fieldKey, isValueChange) => {
+      const snap = getFieldProgressSnapshot();
       if (!_calcStartedFired) {
         _calcStartedFired = true;
-        sendWebhook('calc_started', { field: fieldKey, fields_touched: [fieldKey] });
+        _fieldsTouched.add(fieldKey);
+        sendWebhook('calc_started', Object.assign({ field: fieldKey, fields_touched: Array.from(_fieldsTouched) }, snap));
+        return;
       }
-      if (!_fieldsTouched.has(fieldKey)) {
+      if (!_fieldsTouched.has(fieldKey) || isValueChange) {
         _fieldsTouched.add(fieldKey);
         if (_fieldsTouched.size > 1) {
-          sendWebhook('field_progress', { field: fieldKey, fields_touched: Array.from(_fieldsTouched) });
+          sendWebhook('field_progress', Object.assign({ field: fieldKey, fields_touched: Array.from(_fieldsTouched) }, snap));
         }
       }
     };
 
     const fullNameEl = $('#fullName');
     if (fullNameEl) {
-      fullNameEl.addEventListener('focus', () => fireFieldTelemetry('name'), { once: true });
+      fullNameEl.addEventListener('focus', () => fireFieldTelemetry('name', false), { once: true });
       fullNameEl.addEventListener('input', () => {
-        fireFieldTelemetry('name');
+        syncDobValueOnly();
+        fireFieldTelemetry('name', false);
         maybeFireCalcPreview('name_input');
       });
-      fullNameEl.addEventListener('change', () => maybeFireCalcPreview('name_change'));
-      fullNameEl.addEventListener('blur', () => maybeFireCalcPreview('name_blur'));
+      fullNameEl.addEventListener('change', () => {
+        syncDobValueOnly();
+        fireFieldTelemetry('name', true);
+        maybeFireCalcPreview('name_change');
+      });
+      fullNameEl.addEventListener('blur', () => {
+        syncDobValueOnly();
+        maybeFireCalcPreview('name_blur');
+      });
     }
 
     const birthDateEl = $('#birthDate');
     if (birthDateEl) {
       birthDateEl.addEventListener('input', () => {
         syncDropdownsFromDob(birthDateEl.value);
-        fireFieldTelemetry('dob');
+        fireFieldTelemetry('dob', true);
         maybeFireCalcPreview('dob_input');
       });
       birthDateEl.addEventListener('change', () => {
         syncDropdownsFromDob(birthDateEl.value);
+        fireFieldTelemetry('dob', true);
         maybeFireCalcPreview('dob_change');
       });
     }
@@ -1998,11 +2039,14 @@ const CONFIG = {
     ].forEach(([selId, telemetryKey]) => {
       const sel = $('#' + selId);
       if (!sel) return;
-      sel.addEventListener('focus', () => fireFieldTelemetry(telemetryKey), { once: true });
-      sel.addEventListener('change', () => {
-        fireFieldTelemetry(telemetryKey);
+      sel.addEventListener('focus', () => fireFieldTelemetry(telemetryKey, false), { once: true });
+      const onDobSelectUpdate = () => {
         syncDobFromDropdowns(telemetryKey);
-      });
+        fireFieldTelemetry(telemetryKey, true);
+        maybeFireCalcPreview(telemetryKey);
+      };
+      sel.addEventListener('change', onDobSelectUpdate);
+      sel.addEventListener('input', onDobSelectUpdate);
     });
 
     // Fire page_view telemetry on load for real visitor sessions

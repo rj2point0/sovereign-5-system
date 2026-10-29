@@ -8,10 +8,22 @@ async def verify_live_pages():
         browser = await p.chromium.launch()
         page = await browser.new_page()
 
-        # Test 1: Live site loads
+        # Test 1: Live site loads & Benefit-First SEO / OpenGraph / AEO verified
         resp = await page.goto(base_url)
         assert resp.status == 200, f"Expected 200, got {resp.status}"
-        print("Live site returned HTTP 200 OK!")
+        live_title = await page.title()
+        assert live_title == "Uncover Your Hidden Relationship Pattern & Love Code", f"Expected new title, got {live_title}"
+        og_img = await page.locator('meta[property="og:image"]').get_attribute('content')
+        assert og_img == "https://blueprint.megavegaventures.com/og-preview.png"
+        faq_count = await page.locator('#hero-faq details.faq-item').count()
+        assert faq_count == 6, f"Expected 6 FAQ items on live site, got {faq_count}"
+        print("Live site returned HTTP 200 OK with benefit-first Title, OpenGraph tags & 6-item FAQ accordion!")
+
+        # Verify og-preview.png, llms.txt, robots.txt, and sitemap.xml return HTTP 200 on live domain
+        for asset_path in ["og-preview.png", "llms.txt", "robots.txt", "sitemap.xml"]:
+            r_asset = await page.request.get(f"{base_url}{asset_path}")
+            assert r_asset.status == 200, f"Expected HTTP 200 for {asset_path}, got {r_asset.status}"
+        print("Verified og-preview.png, llms.txt, robots.txt, and sitemap.xml all return HTTP 200 on live domain!")
 
         # Test 1b: Legacy GitHub Pages URL 301-redirects cleanly to blueprint.megavegaventures.com
         page_legacy = await browser.new_page()

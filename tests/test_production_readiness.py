@@ -30,18 +30,23 @@ async def test_all():
         assert res['harmonics'] == [9, 6], f"Expected [9, 6], got {res['harmonics']}"
         print("[OK] Founder sample and math verified!")
 
-        # TEST 2: EN | ES toggle
-        print("\n--- Test 2: Language Toggle ---")
+        # TEST 2: EN | ES toggle & Benefit-First Hero Copy
+        print("\n--- Test 2: Language Toggle & Benefit-First Hero Copy ---")
         await page.click('button[data-lang="es"]')
         es_hero = await page.locator('h1[data-i18n="hero_title"]').inner_text()
-        assert "20%" in es_hero
-        print(f"Spanish switch verified: {es_hero[:40]}...")
+        assert "Patrón Oculto de Pareja" in es_hero
+        print(f"Spanish switch verified: {es_hero[:45]}...")
 
         await page.click('button[data-lang="en"]')
         en_hero = await page.locator('h1[data-i18n="hero_title"]').inner_text()
-        assert "Western Numerology" in en_hero
-        print(f"English switch verified: {en_hero[:40]}...")
-        print("[OK] Language switcher verified!")
+        assert "Relationship Pattern" in en_hero and "Attachment Blindspot" in en_hero
+        en_sub = await page.locator('p[data-i18n="hero_sub"]').inner_text()
+        assert "20%" in en_sub and "80%" in en_sub
+        en_btn = await page.locator('#calc-form button[type="submit"]').inner_text()
+        assert "reveal my relationship & birth code now" in en_btn.lower()
+        assert "free teaser" not in en_btn.lower()
+        print(f"English switch & benefit-first Hero verified: {en_hero[:45]}...")
+        print("[OK] Language switcher and benefit-first copy verified!")
 
         # TEST 3: Post-Payment Redirect with localStorage
         print("\n--- Test 3: Post-Payment Redirect (Customer with localStorage) ---")
@@ -247,7 +252,43 @@ async def test_all():
         # Submit with just First Name ("Sarah") + DOB and zero email
         await page_prod.click('#calc-form button[type="submit"]')
         await page_prod.wait_for_selector('#view-teaser:not(.hidden)', timeout=6000)
-        print("[OK] Mobile Month/Day/Year dropdowns, single First Name ('Sarah'), and instant calc_preview verified!")
+        print("[OK] Mobile Month/Day/Year dropdowns, single First Name ('Sarah'), and instant calc_preview (Name -> DOB) verified!")
+
+        # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO Verification
+        print("\n--- Test 9: Reverse Order (DOB -> Name) calc_preview & SEO/OpenGraph/AEO Verification ---")
+        ntfy_payloads.clear()
+        await page_prod.goto("https://rj2point0.github.io/sovereign-5-system/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
+        await page_prod.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+
+        # Select DOB dropdowns FIRST, then type Name ("Elena")
+        await page_prod.select_option('#dobMonth', '11')
+        await page_prod.select_option('#dobDay', '25')
+        await page_prod.select_option('#dobYear', '1994')
+        await page_prod.fill('#fullName', 'Elena')
+        await asyncio.sleep(0.3)
+
+        reverse_events = [p.get("event_type") for p in ntfy_payloads]
+        print(f"Reverse order (DOB -> Name) telemetry events: {reverse_events}")
+        assert "calc_preview" in reverse_events, f"Expected calc_preview on reverse order (DOB -> Name), got {reverse_events}"
+        progress_events = [p for p in ntfy_payloads if p.get("event_type") == "field_progress"]
+        assert any("dob_preview" in (p.get("extra") or {}) and "name_length" in (p.get("extra") or {}) for p in progress_events), "Expected dob_preview and name_length in field_progress extra!"
+
+        # Check SEO Title, OpenGraph tags, JSON-LD FAQPage, and 6-item Accordion
+        doc_title = await page_prod.title()
+        assert doc_title == "Uncover Your Hidden Relationship Pattern & Love Code", f"Unexpected title: {doc_title}"
+        og_title = await page_prod.locator('meta[property="og:title"]').get_attribute('content')
+        og_image = await page_prod.locator('meta[property="og:image"]').get_attribute('content')
+        assert og_title == "Uncover Your Hidden Relationship Pattern & Love Code"
+        assert og_image == "https://blueprint.megavegaventures.com/og-preview.png"
+        faq_items_count = await page_prod.locator('#hero-faq details.faq-item').count()
+        assert faq_items_count == 6, f"Expected 6 FAQ accordion items, got {faq_items_count}"
+        json_ld_raw = await page_prod.locator('script[type="application/ld+json"]').inner_text()
+        assert '"FAQPage"' in json_ld_raw and '"WebApplication"' in json_ld_raw
+        assert os.path.exists(os.path.join(base_dir, "og-preview.png"))
+        assert os.path.exists(os.path.join(base_dir, "llms.txt"))
+        assert os.path.exists(os.path.join(base_dir, "robots.txt"))
+        assert os.path.exists(os.path.join(base_dir, "sitemap.xml"))
+        print("[OK] Reverse order (DOB -> Name) calc_preview, SEO/OG tags, JSON-LD FAQPage, og-preview.png, and AEO files verified!")
 
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")
