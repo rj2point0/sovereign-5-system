@@ -35,38 +35,47 @@
       "title_match": "Born on the 4th, 13th, 22nd, or 31st of any month",
       "comment": "Were you born on the 4th, 13th, 22nd, or 31st—and do you carry everything on your own shoulders? 👇",
       "seeded_at": "2026-10-27T10:08:06.585595"
+    },
+    "short_09": {
+      "video_id": "7701041271451733261",
+      "title_match": "Born on the 6th, 15th, 24th—or the 9th, 18th, 27th",
+      "comment": "Were you born on the 6th, 15th, 24th (or 9th, 18th, 27th)—and are you always the therapist friend in your circle? 👇",
+      "seeded_at": "2026-10-28T20:39:25.045305"
+    },
+    "short_08": {
+      "video_id": "7701041134310558989",
+      "title_match": "Born on the 5th, 14th, or 23rd of any month",
+      "comment": "Are you a 5th, 14th, or 23rd birthday—and do you instantly rebel whenever someone tries to box you in? 👇",
+      "seeded_at": "2026-10-29T07:12:11.027741"
+    },
+    "short_07": {
+      "video_id": "7701041016211590413",
+      "title_match": "Born on the 3rd, 12th, 21st, or 30th",
+      "comment": "Were you born on the 3rd, 12th, 21st, or 30th—and how many unfinished projects do you have open right now? 👇",
+      "seeded_at": "2026-10-29T07:12:20.244095"
+    },
+    "short_06": {
+      "video_id": "7701040898263502093",
+      "title_match": "Born on the 2nd, 11th, 20th, or 29th",
+      "comment": "Were you born on the 2nd, 11th, 20th, or 29th—and can you read a room before anyone speaks? 👇",
+      "seeded_at": "2026-10-29T07:12:29.832126"
     }
   },
-  "updated_at": "2026-10-27T10:10:09.595076",
+  "updated_at": "2026-10-29T07:13:39.156912",
   "last_verification": {
-    "checked_at": "2026-10-27T10:08:59.610517",
+    "checked_at": "2026-10-29T07:12:53.279158",
     "videos": {
-      "short_05": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": false
-      },
-      "short_04": {
+      "short_08": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
       },
-      "short_01": {
+      "short_07": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
       },
-      "broll_01": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": true
-      },
-      "ad_01": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": true
-      },
-      "ad_02": {
+      "short_06": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true

@@ -47,6 +47,7 @@ if sys.platform == "win32":
 
 IG_HOME_URL = "https://www.instagram.com/"
 IG_PROFILE_URL = "https://www.instagram.com/sacrednumberblueprint/"
+FUNNEL_BIO_URL = "https://blueprint.megavegaventures.com/?utm_source=ig_bio&cohort=ig_reels"
 DEFAULT_IG_PROFILE_DIR = os.path.join(
     os.path.expanduser("~"), ".gemini", "antigravity", "ig_browser_profile"
 )

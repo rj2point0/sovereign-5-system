@@ -210,14 +210,27 @@ async def seed_comment_on_video_from_profile(
         await thumb.wait_for(state="attached", timeout=15000)
     except Exception:
         pass
-    if await thumb.count() == 0:
+    if await thumb.count() > 0:
+        box = await page.evaluate(
+            """(vid) => {
+                const a = document.querySelector(`a[href*="${vid}"]`);
+                if (!a) return null;
+                const card = a.closest('[data-e2e="user-post-item"]') || a.parentElement || a;
+                card.scrollIntoView({block: 'center'});
+                const r = card.getBoundingClientRect();
+                return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+            }""",
+            matched_vid,
+        )
+        await asyncio.sleep(0.5)
+        if box:
+            await page.mouse.click(box["x"], box["y"])
+        else:
+            await thumb.click(force=True)
+        await asyncio.sleep(4.5)
+    else:
         print(f"   [Seed] ⚠ Video thumbnail {matched_vid} not found on profile grid.", flush=True)
         return None
-
-    await thumb.scroll_into_view_if_needed()
-    await asyncio.sleep(0.5)
-    await thumb.click()
-    await asyncio.sleep(4.5)
 
     # Check if our comment snippet is already visible in the comment list (excluding the input box)
     snippet = comment_text[:28].lower()
@@ -334,7 +347,20 @@ async def verify_comments_after_delay(
             in_studio_feed = snip in studio_text
             thumb = page.locator(f'a[href*="{vid}"]').first
             if await thumb.count() > 0:
-                await thumb.click()
+                box = await page.evaluate(
+                    """(v) => {
+                        const a = document.querySelector(`a[href*="${v}"]`);
+                        if (!a) return null;
+                        const card = a.closest('[data-e2e="user-post-item"]') || a.parentElement || a;
+                        card.scrollIntoView({block: 'center'});
+                        const r = card.getBoundingClientRect();
+                        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+                    }""",
+                    vid,
+                )
+                await asyncio.sleep(0.5)
+                if box:
+                    await page.mouse.click(box["x"], box["y"])
                 await asyncio.sleep(4.0)
                 modal_info = await page.evaluate(
                     """(snippet) => {
