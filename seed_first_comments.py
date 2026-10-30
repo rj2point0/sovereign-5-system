@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_15",
+        "video_id": None,
+        "title_match": "You don't actually miss your ex. You miss the person they faked",
+        "comment": "Do you fall in love with who someone actually is—or their potential? Drop your birth day below 👇",
+    },
+    {
+        "id": "short_14",
+        "video_id": None,
+        "title_match": "Test your crush's birthday right now: if your birth days clash",
+        "comment": "What day of the month were you born, and what day was your partner or crush born? Drop both below 👇",
+    },
+    {
+        "id": "short_13",
+        "video_id": None,
+        "title_match": "Why do they act obsessed with you in week two, then go cold",
+        "comment": "Have you ever had someone act obsessed in week 2 and go cold by week 6? Drop your birthday month & day below 👇",
+    },
+    {
         "id": "short_12",
         "video_id": None,
         "title_match": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th",

@@ -64,6 +64,7 @@ main, header, footer { position: relative; z-index: 1; }
 .field:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18); }
 .field.error { border-color: #b4534b; }
 .field-error { color: #e0857c; font-size: .78rem; margin-top: .35rem; min-height: 1em; }
+.field-error:empty { display: none; min-height: 0; margin-top: 0; }
 
 /* ---------- Buttons ---------- */
 .btn-gold {
@@ -360,6 +361,76 @@ main, header, footer { position: relative; z-index: 1; }
 .cover { min-height: 1050px; display: flex; flex-direction: column; justify-content: space-between; text-align: center;
   background: radial-gradient(ellipse 70% 50% at 50% 35%, rgba(212,175,55,.14), transparent 70%), linear-gradient(180deg, #0f0f12, #08080a); }
 .seal { width: 120px; height: 120px; margin: 0 auto; }
+
+@media (max-width: 600px) {
+  header > div {
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+  }
+  #view-hero {
+    padding-top: 0.3rem !important;
+    padding-bottom: 2.25rem !important;
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+  }
+  #view-hero .badge-gold {
+    margin-bottom: 0.25rem !important;
+    padding: 0.18rem 0.55rem !important;
+    font-size: 0.56rem !important;
+    letter-spacing: 0.08em !important;
+  }
+  #view-hero h1[data-i18n="hero_title"] {
+    margin-top: 0.28rem !important;
+    font-size: 1.28rem !important;
+    line-height: 1.15 !important;
+  }
+  #view-hero p[data-i18n="hero_sub"] {
+    margin-top: 0.3rem !important;
+    font-size: 0.76rem !important;
+    line-height: 1.3 !important;
+  }
+  #view-hero > div.grid-cols-5 {
+    margin-top: 0.4rem !important;
+  }
+  #view-hero > div.grid-cols-5 > div > div:last-child {
+    margin-top: 0.2rem !important;
+    font-size: 0.52rem !important;
+  }
+  #calc-form {
+    margin-top: 0.45rem !important;
+    padding: 0.7rem 0.8rem !important;
+    border-radius: 14px !important;
+  }
+  #hero-fields-stack > * + * {
+    margin-top: 0.42rem !important;
+  }
+  #calc-form .field-label {
+    font-size: 0.62rem !important;
+    margin-bottom: 0.18rem !important;
+    letter-spacing: 0.14em !important;
+  }
+  #calc-form .field {
+    padding: 0.48rem 0.65rem !important;
+    font-size: 16px !important;
+    border-radius: 9px !important;
+  }
+  #calc-form button[type="submit"].btn-gold {
+    margin-top: 0.5rem !important;
+    padding: 0.68rem 0.8rem !important;
+    font-size: 0.76rem !important;
+    line-height: 1.2 !important;
+    border-radius: 10px !important;
+  }
+  #hero-micro-badge {
+    margin-top: 0.38rem !important;
+    padding: 0.28rem 0.5rem !important;
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+  }
+  #sample-row {
+    margin-top: 0.3rem !important;
+  }
+}
 
 @media (max-width: 640px) {
   html, body, #view-dossier {

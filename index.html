@@ -226,47 +226,52 @@
 
       <!-- Form -->
       <form id="calc-form" class="card max-w-xl mx-auto mt-8 p-5 sm:p-7 reveal" style="animation-delay:.18s" novalidate>
-        <div id="unlock-notice" class="hidden mb-5 p-3 rounded-xl border border-olive/70 bg-olive/20 text-sm text-lime-100/90" data-i18n="unlock_notice">
-          ✦ Purchase confirmed. Enter (or confirm) your details below to generate your full Sovereign Dossier.
-        </div>
-        <div class="space-y-4">
-          <div>
-            <label class="field-label" for="fullName" data-i18n="form_label_name">Your First Name (or Full Name)</label>
-            <input id="fullName" name="fullName" class="field" type="text" autocomplete="name" placeholder="e.g., Sarah or Sarah Marie Jenkins" data-i18n-ph="form_placeholder_name" required />
-            <div class="field-error" data-error="fullName"></div>
+        <div id="heroForm">
+          <div id="unlock-notice" class="hidden mb-5 p-3 rounded-xl border border-olive/70 bg-olive/20 text-sm text-lime-100/90" data-i18n="unlock_notice">
+            ✦ Purchase confirmed. Enter (or confirm) your details below to generate your full Sovereign Dossier.
           </div>
-          <div>
-            <label class="field-label" for="dobMonth" data-i18n="form_label_dob">Date of Birth</label>
-            <div class="grid grid-cols-3 gap-2.5" id="dob-select-group">
-              <select id="dobMonth" class="field !px-3" aria-label="Birth Month">
-                <option value="" data-i18n="form_dob_month">Month</option>
-              </select>
-              <select id="dobDay" class="field !px-3" aria-label="Birth Day">
-                <option value="" data-i18n="form_dob_day">Day</option>
-              </select>
-              <select id="dobYear" class="field !px-3" aria-label="Birth Year">
-                <option value="" data-i18n="form_dob_year">Year</option>
-              </select>
+          <div class="space-y-4" id="hero-fields-stack">
+            <div>
+              <label class="field-label" for="fullName" data-i18n="form_label_name">Your First Name (or Full Name)</label>
+              <input id="fullName" name="fullName" class="field" type="text" autocomplete="name" placeholder="e.g., Sarah or Sarah Marie Jenkins" data-i18n-ph="form_placeholder_name" required />
+              <div class="field-error" data-error="fullName"></div>
             </div>
-            <input id="birthDate" name="birthDate" type="date" class="sr-only" tabindex="-1" aria-hidden="true" required />
-            <div class="field-error" data-error="birthDate"></div>
+            <div>
+              <label class="field-label" for="dobMonth" data-i18n="form_label_dob">Date of Birth</label>
+              <div class="grid grid-cols-3 gap-2.5" id="dob-select-group">
+                <select id="dobMonth" class="field !px-3" aria-label="Birth Month">
+                  <option value="" data-i18n="form_dob_month">Month</option>
+                </select>
+                <select id="dobDay" class="field !px-3" aria-label="Birth Day">
+                  <option value="" data-i18n="form_dob_day">Day</option>
+                </select>
+                <select id="dobYear" class="field !px-3" aria-label="Birth Year">
+                  <option value="" data-i18n="form_dob_year">Year</option>
+                </select>
+              </div>
+              <input id="birthDate" name="birthDate" type="date" class="sr-only" tabindex="-1" aria-hidden="true" required />
+              <div class="field-error" data-error="birthDate"></div>
+            </div>
+            <div>
+              <label class="field-label" for="email"><span data-i18n="form_label_email">Email Address</span> <span class="text-[0.65rem] text-zinc-500 font-normal tracking-normal normal-case">(Optional — to email your 5-System summary)</span></label>
+              <input id="email" name="email" class="field" type="email" autocomplete="email" inputmode="email" placeholder="Optional: where should we send your 5-System report?" data-i18n-ph="form_placeholder_email" />
+              <div class="field-error" data-error="email"></div>
+            </div>
           </div>
-          <div>
-            <label class="field-label" for="email"><span data-i18n="form_label_email">Email Address</span> <span class="text-[0.65rem] text-zinc-500 font-normal tracking-normal normal-case">(Optional — to email your 5-System summary)</span></label>
-            <input id="email" name="email" class="field" type="email" autocomplete="email" inputmode="email" placeholder="Optional: where should we send your 5-System report?" data-i18n-ph="form_placeholder_email" />
-            <div class="field-error" data-error="email"></div>
+          <button type="submit" class="btn-gold mt-5">
+            <span data-i18n="form_submit">✦ Reveal My Soulmate Match &amp; Love Timing Now →</span>
+            <span class="opacity-70 text-[0.7rem] font-semibold hidden" data-i18n="form_submit_sub"></span>
+          </button>
+          <div id="hero-micro-badge" class="mt-2.5 px-3 py-1.5 rounded-lg border border-gold/25 bg-gold/5 text-center text-[0.72rem] sm:text-xs text-champagne/95 font-medium leading-snug" data-i18n="form_micro_badge">
+            ⚡ Takes 5 seconds · No birth time needed · Instant Partner Compatibility check on next screen
           </div>
-        </div>
-        <button type="submit" class="btn-gold mt-5">
-          <span data-i18n="form_submit">✦ Reveal My Soulmate Match &amp; Love Timing Now →</span>
-          <span class="opacity-70 text-[0.7rem] font-semibold hidden" data-i18n="form_submit_sub"></span>
-        </button>
-        <div id="sample-row" class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button type="button" data-action="sample" id="btn-sample" class="btn-ghost w-full sm:w-auto hidden" data-i18n="founder_sample" style="display:none">✦ Load Founder Sample (Adam Vega)</button>
-          <span class="text-[0.7rem] text-zinc-500 flex items-center gap-1.5" data-i18n="privacy_notice">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-            Private. Never shared.
-          </span>
+          <div id="sample-row" class="mt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button type="button" data-action="sample" id="btn-sample" class="btn-ghost w-full sm:w-auto hidden" data-i18n="founder_sample" style="display:none">✦ Load Founder Sample (Adam Vega)</button>
+            <span class="text-[0.7rem] text-zinc-500 flex items-center gap-1.5" data-i18n="privacy_notice">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              Private. Never shared.
+            </span>
+          </div>
         </div>
       </form>
 

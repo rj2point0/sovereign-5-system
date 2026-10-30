@@ -324,6 +324,16 @@ class TikTokAutoUploader:
             try:
                 await date_inputs.first.click(force=True)
                 await asyncio.sleep(0.8)
+                # If target date is in a future month relative to today, click the next-month arrow on the calendar header
+                now_dt = datetime.now()
+                month_diff = (dt.year - now_dt.year) * 12 + (dt.month - now_dt.month)
+                for _ in range(max(0, month_diff)):
+                    next_arrows = page.locator(
+                        'span.arrow:last-child, div[class*="calendar"] svg:last-of-type, button[aria-label*="Next"], span[class*="next"]'
+                    )
+                    if await next_arrows.count() > 0:
+                        await next_arrows.last.click(force=True)
+                        await asyncio.sleep(0.6)
                 # Prefer span.day.valid (current month active day) over previous/next month overflow cells
                 valid_day_cells = page.locator(f'span.day.valid:text-is("{day_str}")')
                 clicked_day = False

@@ -346,17 +346,37 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10, short_11, short_12
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_15
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12")]
-        assert len(jh_specs) == 3, f"Expected 3 Jenny Hoyos specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15")]
+        assert len(jh_specs) == 6, f"Expected 6 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
-        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate verified!")
+            if s["id"] == "short_13":
+                assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for short_13, got {gate_res['fk_grade']}"
+            elif s["id"] in ("short_14", "short_15"):
+                assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
+        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-15) verified!")
+
+        # TEST 10: 390x844 iPhone Mobile Viewport Above-The-Fold Audit (Submit Button bottom <= 780px / 800px)
+        print("\n--- Test 10: 390x844 Mobile Viewport Above-The-Fold Audit & Micro-Badge Verification ---")
+        page_mob = await browser.new_page(viewport={"width": 390, "height": 844})
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels")
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge'):
+            box = await page_mob.locator(sel).first.bounding_box()
+            assert box is not None, f"Missing bounding box for {sel} at 390x844"
+            bottom_y = box["y"] + box["height"]
+            assert bottom_y <= 780, f"Expected {sel} bottom <= 780px on 390x844 iPhone viewport, got {bottom_y:.1f}px"
+            assert bottom_y <= 800, f"Expected {sel} bottom <= 800px on 390x844 iPhone viewport, got {bottom_y:.1f}px"
+        micro_txt = await page_mob.locator('#hero-micro-badge').inner_text()
+        assert "Takes 5 seconds" in micro_txt and "No birth time needed" in micro_txt and "Instant Partner Compatibility check on next screen" in micro_txt, f"Unexpected micro-badge: {micro_txt}"
+        await page_mob.close()
+        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit passed (Submit button & micro-badge 100% above fold <= 780px)!")
 
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")

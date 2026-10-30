@@ -596,6 +596,120 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#lifepath1", "#lifepath8", "#attachmentstyle", "#lovecode"
         ],
     },
+    {
+        "id": "short_13",
+        "cohort": "Cohort C · Outlier Batch 3",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_13_hot_then_cold_6weeks.mp4",
+        "hook_box_text": "Why do they act obsessed with you in week two, then go cold in week six?",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Why do they act obsessed with you in week two, then go cold in week six? "
+            "You think they just lost feelings. But if you were born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th, "
+            "your birth day pulls in runners. Therefore, the moment you get close, they panic and pull back. "
+            "Test your birthday and theirs at the link in bio to see your real love match."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_02_late_night_phone.mp4"),
+            (4.2, 8.0, "broll_01_window_reflection.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why do they act obsessed with you in week two, then go cold in week six? "
+            "(Born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th—here is why your birth day pulls in runners) 💔✨ "
+            "#relationships #attachmentstyle #avoidantattachment #numerology #datingadvice #situationship #lovecode #twinflame"
+        ),
+        "first_comment": "Have you ever had someone act obsessed in week 2 and go cold by week 6? Drop your birthday month & day below 👇",
+        "hashtags": [
+            "#relationships", "#attachmentstyle", "#avoidantattachment", "#numerology",
+            "#datingadvice", "#situationship", "#lovecode", "#twinflame"
+        ],
+    },
+    {
+        "id": "short_14",
+        "cohort": "Cohort C · Outlier Batch 3",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_14_test_crush_birthday.mp4",
+        "hook_box_text": "Test your crush's birthday right now: if your birth days clash here, one of you will always chase.",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Test your crush's birthday right now: if your birth days clash here, one of you will always chase. "
+            "Most apps only check your zodiac sign. But your birth day number shows how you fight at 2 AM, "
+            "while your Life Path shows how you love. Therefore, when those two numbers clash, one person begs while the other shuts down. "
+            "Plug in both birthdays at the link in bio to see your compatibility score in 10 seconds."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_08_phone_discovery.mp4"),
+            (4.2, 8.0, "broll_03_thoughtful_woman.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Test your crush's birthday right now: if your birth days clash here, one of you will always chase "
+            "(Birth Day = how you fight at 2 AM vs. Life Path = how you love) 🔮❤️‍🔥 "
+            "#relationships #compatibility #crush #numerology #datingadvice #zodiaccompatibility #lovecode #soulmate"
+        ),
+        "first_comment": "What day of the month were you born, and what day was your partner or crush born? Drop both below 👇",
+        "hashtags": [
+            "#relationships", "#compatibility", "#crush", "#numerology",
+            "#datingadvice", "#zodiaccompatibility", "#lovecode", "#soulmate"
+        ],
+    },
+    {
+        "id": "short_15",
+        "cohort": "Cohort C · Outlier Batch 3",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_15_miss_fake_version.mp4",
+        "hook_box_text": "You don't actually miss your ex. You miss the person they faked for the first 30 days.",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "You don't actually miss your ex. You miss the person they faked for the first 30 days. "
+            "If you were born on the 1st, 4th, 6th, 8th, 9th, 13th, 15th, 18th, 22nd, or 27th, you fall in love with potential. "
+            "But your Chinese birth grid is missing its boundary arrow. Therefore, you give ten chances to someone who only deserved one. "
+            "Check your 5-system love code at the link in bio before you text them back."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_01_window_reflection.mp4"),
+            (4.2, 8.0, "broll_07_journaling_ritual.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_loshu.png", 2.8),
+            ("image", "scenes_cache/scene_relationships.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "You don't actually miss your ex. You miss the person they faked for the first 30 days "
+            "(Born on the 1st, 4th, 6th, 8th, 9th, 13th, 15th, 18th, 22nd, or 27th—why you fall in love with potential) 💔🕯️ "
+            "#relationships #breakupadvice #nocontact #numerology #loshugrid #datingadvice #overgiver #lovecode"
+        ),
+        "first_comment": "Do you fall in love with who someone actually is—or their potential? Drop your birth day below 👇",
+        "hashtags": [
+            "#relationships", "#breakupadvice", "#nocontact", "#numerology",
+            "#loshugrid", "#datingadvice", "#overgiver", "#lovecode"
+        ],
+    },
 ]
 
 
@@ -623,7 +737,7 @@ def count_syllables_word(word: str) -> int:
 
 def compute_flesch_kincaid_grade(text: str) -> float:
     import re
-    sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
+    sentences = [s.strip() for s in re.split(r"[.!?:;]+", text) if s.strip()]
     words = [w for w in re.findall(r"[A-Za-z']+", text) if w]
     if not sentences or not words:
         return 0.0
