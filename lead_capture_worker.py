@@ -496,6 +496,50 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
     a2_sys_label = f"{len(a2['systems'])} system" + ("s" if len(a2["systems"]) != 1 else "")
     a3_sys_label = f"{len(a3['systems'])} system" + ("s" if len(a3["systems"]) != 1 else "")
 
+    raw_partner_dob = str(lead.get("partner_dob") or (lead.get("extra") or {}).get("partner_dob") or "").strip()
+    partner_dob_iso = normalize_dob(raw_partner_dob) if raw_partner_dob else ""
+    partner_plain_block = ""
+    partner_html_block = ""
+    if partner_dob_iso and re.match(r"^\d{4}-\d{2}-\d{2}$", partner_dob_iso):
+        try:
+            p_calc = calculate_5_systems("Partner Soul", partner_dob_iso)
+            try:
+                p_dob_fmt = datetime.strptime(partner_dob_iso, "%Y-%m-%d").strftime("%B %d, %Y")
+            except Exception:
+                p_dob_fmt = partner_dob_iso
+            p_moolank_str = p_calc["vedic_moolank"]
+            p_lp_str = p_calc["life_path"]
+            u_moolank_num = int(str(calc["vedic_moolank"]).split()[0])
+            p_moolank_num = int(str(p_moolank_str).split()[0])
+            p_lp_num = reduce_num(int(str(p_lp_str).split("/")[-1]))
+            compat_score = 82 + ((u_moolank_num * 7 + p_moolank_num * 13 + lp_val * 5 + p_lp_num * 11) % 15)
+            partner_plain_block = (
+                f"\n💑 PARTNER / CRUSH COMPATIBILITY SNAPSHOT (Partner Born {p_dob_fmt}):\n"
+                f"• Your Birth-Day Driver ({calc['vedic_moolank']}) + Partner Birth-Day Driver ({p_moolank_str} · Life Path {p_lp_str})\n"
+                f"• Initial Magnetism & Chemistry Pull: {compat_score}%\n"
+                f"• Unlock your Full 20-Page Sovereign Dossier to see the exact communication rules for a #{p_moolank_num} partner and your peak 12-month relationship dates.\n"
+            )
+            partner_html_block = f"""
+          <!-- 💑 PARTNER / CRUSH COMPATIBILITY SNAPSHOT -->
+          <tr>
+            <td style="padding:0 24px 20px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:linear-gradient(145deg,#1d1910 0%,#121318 100%);border:1px solid rgba(212,175,55,0.48);border-left:4px solid #D4AF37;border-radius:12px;padding:16px 18px;">
+                <tr>
+                  <td>
+                    <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#F3E5AB;font-weight:700;margin-bottom:6px;">
+                      💑 PARTNER / CRUSH COMPATIBILITY SNAPSHOT · {compat_score}% INITIAL MAGNETISM
+                    </div>
+                    <p style="margin:0;font-family:'Arial',sans-serif;font-size:13px;line-height:1.58;color:#E4E4E7;">
+                      We also saved the partner birthday you tested (<strong>{html.escape(p_dob_fmt)} · {html.escape(partner_dob_iso)}</strong>). Your Birth Code (<strong>#{a1['number']} {html.escape(a1['archetype'])}</strong> · Vedic <strong>{html.escape(calc['vedic_moolank'])}</strong>) paired with their Birth-Day Driver (<strong>{html.escape(p_moolank_str)}</strong> · Life Path <strong>{html.escape(p_lp_str)}</strong>) generates an immediate <strong>{compat_score}% chemistry pull</strong>. Unlock your full 20-Page Sovereign Dossier below to reveal the exact communication rules for a <strong>#{p_moolank_num}</strong> partner so neither of you pulls away.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>"""
+        except Exception:
+            pass
+
     plain_text = (
         f"SACRED NUMBER BLUEPRINT · THE SOVEREIGN 5-SYSTEM CODE\n"
         f"Decoded for {name} (Born {dob_formatted})\n"
@@ -509,7 +553,8 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
         f"Western Life Path {lp_disp} ({lp_arch}) only tells 20% of your code. Your true multi-system center of gravity "
         f"is #{a1['number']} ({a1['archetype']}), supported by:\n"
         f"• #2 WEALTH & STRATEGY ENGINE: Anchor #{a2['number']} · {a2['archetype']} ({a2['count']}× across {a2_sys_label}: {', '.join(a2['systems'])})\n"
-        f"• #3 SANCTUARY & FOUNDATION: Anchor #{a3['number']} · {a3['archetype']} ({a3['count']}× across {a3_sys_label}: {', '.join(a3['systems'])})\n\n"
+        f"• #3 SANCTUARY & FOUNDATION: Anchor #{a3['number']} · {a3['archetype']} ({a3['count']}× across {a3_sys_label}: {', '.join(a3['systems'])})\n"
+        f"{partner_plain_block}\n"
         f"YOUR 5-SYSTEM MATHEMATICAL SNAPSHOT:\n"
         f"• System I (Pythagorean Life Path): {calc['life_path']}\n"
         f"• System IV (Vedic Planetary Moolank): {calc['vedic_moolank']}\n"
@@ -615,7 +660,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
               </table>
             </td>
           </tr>
-
+{partner_html_block}
           <!-- #2 and #3 Overlap Anchors -->
           <tr>
             <td style="padding:0 24px 22px;">
@@ -1354,6 +1399,8 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "calc_started": "calc_started",
         "field_progress": "calc_started",
         "calc_preview": "calc_preview",
+        "partner_check_run": "partner_check_run",
+        "partner_compat_checked": "partner_check_run",
         "lead_capture": "lead_submitted",
         "lead_submitted": "lead_submitted",
         "checkout_click": "checkout_clicked",
@@ -1406,10 +1453,16 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         total_p = extra.get("total") or (84 if extra.get("bump") else 37)
         tier_label = f"${total_p} ({'Bundle' if extra.get('bump') else 'Base'})"
 
+    raw_partner_dob = str(extra.get("partner_dob") or payload.get("partner_dob") or prof.get("partner_dob") or prof.get("partnerDob") or "").strip()
+    partner_dob = normalize_dob(raw_partner_dob) if raw_partner_dob else ""
+    compat_score = extra.get("compatibility_score") or extra.get("magnetism_score") or ""
+
     if event_type in ("page_view", "calc_started"):
         dedup_key = f"{session_id}::{event_type}"
     elif event_type == "calc_preview":
         dedup_key = f"{session_id}::calc_preview::{clean_name.lower()}::{iso_dob}"
+    elif event_type == "partner_check_run":
+        dedup_key = f"{session_id}::partner_check_run::{iso_dob}::{partner_dob}"
     elif event_type == "checkout_clicked":
         dedup_key = f"{session_id}::checkout_clicked::{tier_label}::{(payload.get('timestamp') or '')[:16]}"
     else:
@@ -1451,6 +1504,8 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "vedic_moolank": vedic_str,
         "chaldean_name": chal_str,
         "tier_label": tier_label,
+        "partner_dob": partner_dob,
+        "compatibility_score": compat_score,
         "fields_touched": [f for f in fields_touched_list if f],
     }
     events.append(record)
@@ -1481,6 +1536,7 @@ def update_obsidian_dashboard():
         other_views = [e for e in page_views if not e.get("is_tiktok_inapp") and not (e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")))]
         calc_started = [e for e in events if e.get("event_type") == "calc_started"]
         calc_previews = [e for e in events if e.get("event_type") == "calc_preview"]
+        partner_checks = [e for e in events if e.get("event_type") in ("partner_check_run", "partner_compat_checked")]
         lead_submits = [e for e in events if e.get("event_type") == "lead_submitted"]
         checkout_clicks = [e for e in events if e.get("event_type") == "checkout_clicked"]
 
@@ -1496,6 +1552,7 @@ def update_obsidian_dashboard():
                 f"tiktok_inapp_views: {len(tt_views)}",
                 f"instagram_inapp_views: {len(ig_views)}",
                 f"calc_previews: {len(calc_previews)}",
+                f"partner_checks: {len(partner_checks)}",
                 f"total_leads: {len(rows)}",
                 f"checkout_clicks: {len(checkout_clicks)}",
                 "tags:",
@@ -1508,7 +1565,7 @@ def update_obsidian_dashboard():
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
                 "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
-                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
+                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
                 "",
                 "## 1. Live Funnel Conversion Telemetry Summary",
                 "",
@@ -1517,6 +1574,7 @@ def update_obsidian_dashboard():
                 f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App:** `{len(tt_views)}` · **Instagram In-App:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` |",
                 f"| **2. Calculator Interactions** | `calc_started` | **{len(calc_started)}** | Visitors who tapped into the Name or Birth Date input field |",
                 f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
+                f"| **3b. Partner Compatibility Checks** | `partner_check_run` | **{len(partner_checks)}** | Visitors who tested a Partner / Crush birthday on the Teaser view |",
                 f"| **4. Full Email Leads Captured** | `lead_submitted` | **{total_leads_count}** | Enrolled in automated 3-part luxury HTML email sequence |",
                 f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$37` Base, `$84` Bundle, or `$47` Cycles Upgrade |",
                 "",
@@ -1532,6 +1590,7 @@ def update_obsidian_dashboard():
                 "page_view": "👀 `page_view`",
                 "calc_started": "✍️ `calc_started`",
                 "calc_preview": "🔮 `calc_preview`",
+                "partner_check_run": "💑 `partner_check_run`",
                 "lead_submitted": "📩 `lead_submitted`",
                 "checkout_clicked": "💳 `checkout_clicked`",
                 "purchase_return": "🏆 `purchase_return`",
@@ -1542,6 +1601,9 @@ def update_obsidian_dashboard():
                     st_label = stage_badges.get(ev.get("event_type", ""), f"`{ev.get('event_type', '')}`")
                     if ev.get("event_type") == "calc_started" and ev.get("fields_touched"):
                         st_label += f" ({', '.join(f'`{x}`' for x in ev['fields_touched'])})"
+                    elif ev.get("event_type") == "partner_check_run" and ev.get("partner_dob"):
+                        sc_str = f" · {ev['compatibility_score']}%" if ev.get("compatibility_score") else ""
+                        st_label += f" (Partner `{ev['partner_dob']}`{sc_str})"
                     br_label = ev.get("browser_label") or "Browser"
                     src_attr = ev.get("source_attribution") or "Organic Bio"
                     t_name = f"**{ev['name']}**" if ev.get("name") else "—"
@@ -1610,6 +1672,7 @@ def process_lead(
     timestamp: Optional[str] = None,
     force_send: bool = False,
     utm: Optional[Dict[str, Any]] = None,
+    partner_dob: Optional[str] = None,
 ) -> Dict[str, Any]:
     iso_dob = normalize_dob(dob_str)
     clean_email = email_addr.strip()
@@ -1632,6 +1695,7 @@ def process_lead(
             if v:
                 merged_utm[k] = str(v).strip()
     source_attribution = format_attribution_source(merged_utm)
+    norm_partner_dob = normalize_dob(partner_dob) if partner_dob else existing_entry.get("partner_dob", "")
 
     lead_record = {
         "timestamp": ts,
@@ -1641,6 +1705,7 @@ def process_lead(
         "lang": lang or "en",
         "utm": merged_utm,
         "source_attribution": source_attribution,
+        "partner_dob": norm_partner_dob,
         "calc": calc,
         "email_1_sent_at": existing_entry.get("email_1_sent_at"),
         "email_2_sent_at": existing_entry.get("email_2_sent_at"),
@@ -1662,6 +1727,7 @@ def process_lead(
         "lang": lang or "en",
         "utm": merged_utm,
         "source_attribution": source_attribution,
+        "partner_dob": norm_partner_dob,
         "top_3_overlap_numbers": calc["top_3_overlap_numbers"],
         "life_path": calc["life_path"],
         "expression": calc["expression"],
@@ -1775,14 +1841,16 @@ def poll_cloud_relay_once() -> int:
                     msg_str = envelope.get("message", "")
                     payload = json.loads(msg_str)
                     ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
-                    if ev_name in ("page_view", "calc_started", "field_progress", "calc_preview", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
+                    if ev_name in ("page_view", "calc_started", "field_progress", "calc_preview", "partner_check_run", "partner_compat_checked", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
                         record_telemetry_event(payload)
                     if ev_name not in ("lead_capture", "lead_submitted", "purchase_return"):
                         continue
                     prof = payload.get("profile") or {}
+                    extra_dict = payload.get("extra") if isinstance(payload.get("extra"), dict) else {}
                     full_name = prof.get("fullName", "").strip()
                     dob = prof.get("birthDate", "").strip()
                     email_addr = prof.get("email", "").strip()
+                    p_dob = str(payload.get("partner_dob") or prof.get("partner_dob") or prof.get("partnerDob") or extra_dict.get("partner_dob") or "").strip()
                     lang = payload.get("lang", "en")
                     ts = payload.get("timestamp")
                     utm_data = extract_utm_from_payload(payload)
@@ -1797,6 +1865,7 @@ def poll_cloud_relay_once() -> int:
                             timestamp=ts,
                             force_send=False,
                             utm=utm_data,
+                            partner_dob=p_dob,
                         )
                         count += 1
                 except Exception:
@@ -1835,9 +1904,11 @@ class WebhookHandler(BaseHTTPRequestHandler):
             record_telemetry_event(payload)
             ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
             prof = payload.get("profile") or {}
+            extra_dict = payload.get("extra") if isinstance(payload.get("extra"), dict) else {}
             full_name = prof.get("fullName", "").strip()
             dob = prof.get("birthDate", "").strip()
             email_addr = prof.get("email", "").strip()
+            p_dob = str(payload.get("partner_dob") or prof.get("partner_dob") or prof.get("partnerDob") or extra_dict.get("partner_dob") or "").strip()
             lang = payload.get("lang", "en")
             ts = payload.get("timestamp")
             utm_data = extract_utm_from_payload(payload)
@@ -1851,6 +1922,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
                         timestamp=ts,
                         force_send=False,
                         utm=utm_data,
+                        partner_dob=p_dob,
                     )
         except Exception as e:
             print(f"  [Webhook Error] {e}", flush=True)

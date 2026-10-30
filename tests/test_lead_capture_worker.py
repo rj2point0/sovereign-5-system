@@ -80,6 +80,39 @@ class TestLeadCaptureWorkerUpgrades(unittest.TestCase):
         self.assertEqual(s3, "⏳ Cowen, your current 52-Day Rosicrucian Cycle is active")
         self.assertIn("ROSICRUCIAN 52-DAY BIORHYTHM ALERT", h3)
 
+    def test_partner_dob_personalization_in_email_1(self):
+        calc = w.calculate_5_systems("Sarah Jenkins", "1990-07-16")
+        lead = {
+            "name": "Sarah Jenkins",
+            "dob": "1990-07-16",
+            "email": "sarah.real.test@gmail.com",
+            "partner_dob": "1988-10-26",
+            "calc": calc,
+        }
+        subj, plain, html_body = w.build_luxury_followup_email(lead)
+        self.assertIn("PARTNER / CRUSH COMPATIBILITY SNAPSHOT", html_body)
+        self.assertIn("1988-10-26", html_body)
+        self.assertIn("8 · Shani (Saturn)", html_body)
+        self.assertIn("PARTNER / CRUSH COMPATIBILITY SNAPSHOT", plain)
+
+    def test_viral_outlier_finder_sqlite_and_scripts(self):
+        import sqlite3
+        import viral_outlier_finder as vof
+
+        self.assertTrue(os.path.exists(vof.DB_PATH))
+        conn = sqlite3.connect(vof.DB_PATH)
+        cur = conn.cursor()
+        acc_count = cur.execute("SELECT COUNT(*) FROM accounts").fetchone()[0]
+        post_count = cur.execute("SELECT COUNT(*) FROM posts").fetchone()[0]
+        outlier_count = cur.execute("SELECT COUNT(*) FROM posts WHERE outlier_ratio >= 3.0").fetchone()[0]
+        conn.close()
+        self.assertGreaterEqual(acc_count, 6)
+        self.assertGreaterEqual(post_count, 20)
+        self.assertGreaterEqual(outlier_count, 10)
+        for sc in vof.READY_SCRIPT_CONCEPTS:
+            fk = vof.flesch_kincaid_grade(f"{sc['hook_line']} {sc['but_therefore_twist']} {sc['cta_line']}")
+            self.assertLessEqual(fk, 5.5)
+
 
 if __name__ == "__main__":
     unittest.main()

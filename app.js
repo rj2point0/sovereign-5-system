@@ -56,6 +56,7 @@ const CONFIG = {
   const state = {
     profile: null,
     result: null,
+    partnerDob: '',
     bump: false,
     pendingTier: null,
     lang: initialLang,
@@ -304,6 +305,14 @@ const CONFIG = {
       })) : [];
       const top3Str = anchors.map((a) => a.number).join(', ');
       const activeUtm = Object.assign({}, activeProf.utm || {}, utm());
+      const partnerDobVal = (extra && extra.partner_dob) || state.partnerDob || activeProf.partner_dob || activeProf.partnerDob || '';
+      const mergedExtra = Object.assign({}, extra || {});
+      if (partnerDobVal && !mergedExtra.partner_dob) mergedExtra.partner_dob = partnerDobVal;
+      const mergedProfile = Object.assign({}, activeProf, { utm: activeUtm });
+      if (partnerDobVal) {
+        mergedProfile.partner_dob = partnerDobVal;
+        mergedProfile.partnerDob = partnerDobVal;
+      }
 
       const payload = {
         event,
@@ -322,7 +331,8 @@ const CONFIG = {
         utm_medium: activeUtm.utm_medium || '',
         utm_campaign: activeUtm.utm_campaign || '',
         cohort: activeUtm.cohort || '',
-        profile: Object.assign({}, activeProf, { utm: activeUtm }),
+        partner_dob: partnerDobVal,
+        profile: mergedProfile,
         numbers: r ? {
           top_3_overlap_numbers: top3Str,
           anchors,
@@ -334,7 +344,7 @@ const CONFIG = {
           chaldean_name: r.chaldean.total.display,
           active_cycle: `${r.cycles.current.name} (${r.cycles.daysRemaining}d remaining)`,
         } : {},
-        extra: extra || {},
+        extra: mergedExtra,
       };
       const bodyStr = JSON.stringify(payload);
       const hostNow = (location.hostname || '').toLowerCase();
@@ -2124,6 +2134,37 @@ const CONFIG = {
     else if (a === 'print') window.print();
     else if (a === 'share-code') shareCode();
     else if (a === 'scroll-checkout') $('#checkout').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    else if (a === 'partner-checkout') {
+      const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
+      if (state.profile && pDob) {
+        state.profile.partner_dob = pDob;
+        state.profile.partnerDob = pDob;
+        saveProfile(state.profile);
+      }
+      const coEl = $('#checkout');
+      if (coEl && pDob) {
+        let banner = $('#checkout-partner-banner');
+        if (!banner) {
+          banner = document.createElement('div');
+          banner.id = 'checkout-partner-banner';
+          banner.className = 'mt-4 p-3 rounded-xl border border-gold/50 bg-gold/10 text-xs sm:text-sm text-champagne text-center font-medium';
+          coEl.insertBefore(banner, coEl.children[2] || null);
+        }
+        banner.innerHTML = state.lang === 'es'
+          ? `✦ <b>Sinastría de Pareja Activada:</b> Fecha de pareja (<b>${esc(pDob)}</b>) vinculada a tu Dossier de 20 Páginas y Calendario de Sincronía.`
+          : `✦ <b>Partner Synastry Linked:</b> Partner birthday (<b>${esc(pDob)}</b>) saved to your 20-Page Dossier &amp; Soulmate Timing Report.`;
+      }
+      const total = CONFIG.PRICE_BASE + (state.bump ? CONFIG.PRICE_BUMP : 0);
+      sendWebhook('checkout_clicked', {
+        trigger: 'partner_compat_cta',
+        partner_dob: pDob,
+        bump: state.bump,
+        total,
+        tier: state.bump ? 'full_bundle' : 'base',
+        tier_label: `Partner Synastry CTA ($${total})`,
+      });
+      if (coEl) coEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     else if (a === 'upgrade') {
       sendWebhook('checkout_clicked', { bump: true, total: CONFIG.PRICE_BUMP, tier: 'upgrade_cycles', tier_label: `$${CONFIG.PRICE_BUMP} Upgrade (52-Day Cycles Add-On)` });
       if (CONFIG.STRIPE_LINK_UPGRADE) goToStripe(CONFIG.STRIPE_LINK_UPGRADE, 'full');
@@ -2153,11 +2194,20 @@ const CONFIG = {
       return;
     }
     const rep = getPartnerCompatReport(state.result, m, d, y, state.lang);
-    sendWebhook('partner_compat_checked', {
+    state.partnerDob = rep.pIso;
+    if (state.profile) {
+      state.profile.partner_dob = rep.pIso;
+      state.profile.partnerDob = rep.pIso;
+      saveProfile(state.profile);
+    }
+    const userDobStr = (state.result && state.result.input && state.result.input.birthDate) || (state.profile && state.profile.birthDate) || '';
+    sendWebhook('partner_check_run', {
+      user_dob: userDobStr,
       partner_dob: rep.pIso,
+      compatibility_score: rep.magnetismScore,
+      magnetism_score: rep.magnetismScore,
       partner_moolank: rep.pMoolank,
       partner_lifepath: rep.pLife,
-      magnetism_score: rep.magnetismScore,
     });
     resBox.classList.remove('hidden');
     resBox.innerHTML = `
@@ -2179,13 +2229,13 @@ const CONFIG = {
         </div>
       </div>
       <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-4">${rep.summary}</p>
-      <div class="mt-4 p-3.5 rounded-xl bg-gold/10 border border-gold/40 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p class="text-xs text-champagne text-left">
+      <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
+        <p class="text-xs sm:text-sm text-champagne text-left leading-relaxed">
           🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa en el Dossier de 20 Páginas:' : 'Locked Inside Your Full 20-Page Sovereign Dossier:'}</b>
-          ${isEs ? 'Descubre cómo comunicarse con un #' + rep.pMoolank + ' sin activar su escudo y qué fechas exactas favorecen su unión.' : 'See the exact communication rules for a #' + rep.pMoolank + ' partner so neither of you pulls away—plus your peak relationship dates.'}
+          ${isEs ? 'Descubre cómo comunicarte con un #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo y qué fechas exactas favorecen su unión en los próximos 12 meses.' : 'See the exact communication rules for a #' + rep.pMoolank + ' (' + rep.pRuler + ') partner so neither of you pulls away—plus your peak relationship dates over the next 12 months.'}
         </p>
-        <button type="button" data-action="scroll-checkout" class="btn-gold !py-2.5 !px-4 sm:w-auto text-xs whitespace-nowrap shrink-0">
-          ${isEs ? 'Desbloquear Nuestro Reporte →' : 'Unlock Full Relationship Report →'}
+        <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
+          ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
         </button>
       </div>
     `;

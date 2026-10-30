@@ -66,7 +66,8 @@ async def verify_live_pages():
         await page.select_option("#partnerDobYear", "1990")
         await asyncio.sleep(0.2)
         assert await page.is_visible("#partner-compat-result") is True
-        print("Calculation ritual, 20% teaser reveal, 3-Part Problem Triangle & live Partner Compatibility Checker verified on live site!")
+        assert await page.is_visible("#btn-partner-checkout-cta") is True
+        print("Calculation ritual, 20% teaser reveal, 3-Part Problem Triangle, live Partner Compatibility Checker & Dynamic Partner Checkout CTA verified on live site!")
 
         # Test 3: Post-payment redirect verification
         await page.goto(f"{base_url}?tier=full&unlocked=true")

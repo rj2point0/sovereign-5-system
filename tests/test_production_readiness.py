@@ -278,9 +278,34 @@ async def test_all():
         assert compat_res_vis is True, "Expected #partner-compat-result to auto-render when partner Month/Day/Year are selected!"
         compat_res_txt = await page_prod.locator('#partner-compat-result').inner_text()
         assert "%" in compat_res_txt and "#8" in compat_res_txt, f"Unexpected partner compat output: {compat_res_txt[:100]}"
-        event_types_after_compat = [p.get("event_type") for p in ntfy_payloads]
-        assert "partner_compat_checked" in event_types_after_compat, f"Expected partner_compat_checked in {event_types_after_compat}"
-        print("[OK] Mobile Month/Day/Year dropdowns, Teaser Relationship Clash, 3-Part Triangle, and Partner Compatibility Checker verified!")
+        partner_cta_vis = await page_prod.is_visible('#btn-partner-checkout-cta')
+        assert partner_cta_vis is True, "Expected #btn-partner-checkout-cta to be visible inside #partner-compat-result!"
+        partner_cta_txt = await page_prod.locator('#btn-partner-checkout-cta').inner_text()
+        assert "unlock full 5-system partner compatibility & soulmate timing report" in partner_cta_txt.lower(), f"Unexpected partner CTA text: {partner_cta_txt}"
+
+        # Verify partner_check_run telemetry payload includes user_dob, partner_dob, and compatibility_score
+        partner_events = [p for p in ntfy_payloads if p.get("event_type") == "partner_check_run"]
+        assert len(partner_events) >= 1, f"Expected partner_check_run in {[p.get('event_type') for p in ntfy_payloads]}"
+        pe_extra = partner_events[-1].get("extra") or {}
+        assert pe_extra.get("user_dob") == "1990-07-16", f"Expected user_dob=1990-07-16, got {pe_extra}"
+        assert pe_extra.get("partner_dob") == "1988-10-26", f"Expected partner_dob=1988-10-26, got {pe_extra}"
+        assert int(pe_extra.get("compatibility_score", 0)) >= 80, f"Expected compatibility_score >= 80, got {pe_extra}"
+
+        # Click the dynamic Partner Compatibility Checkout CTA and verify #checkout-partner-banner + checkout_clicked telemetry
+        await page_prod.click('#btn-partner-checkout-cta')
+        await asyncio.sleep(0.15)
+        banner_vis = await page_prod.is_visible('#checkout-partner-banner')
+        assert banner_vis is True, "Expected #checkout-partner-banner to appear in #checkout when Partner CTA is clicked!"
+        checkout_ev = [p for p in ntfy_payloads if p.get("event_type") == "checkout_clicked"]
+        assert len(checkout_ev) >= 1 and checkout_ev[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob in checkout_clicked: {checkout_ev}"
+
+        # Submit email in Teaser Email Bar AFTER running Partner Compatibility check and verify partner_dob is included in lead_submitted
+        await page_prod.fill('#teaser-email-input', 'sarah.compat@gmail.com')
+        await page_prod.click('button[data-action="save-teaser-email"]')
+        await asyncio.sleep(0.2)
+        lead_evs = [p for p in ntfy_payloads if p.get("event_type") == "lead_submitted"]
+        assert len(lead_evs) >= 1 and lead_evs[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob=1988-10-26 in lead_submitted payload: {lead_evs}"
+        print("[OK] Mobile Month/Day/Year dropdowns, Teaser Relationship Clash, 3-Part Triangle, Partner Compatibility CTA & partner_dob lead payload verified!")
 
         # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO + Jenny Hoyos Gate Verification
         print("\n--- Test 9: Reverse Order (DOB -> Name) calc_preview, <=38-Char og:title, 5-Circle Logo & Jenny Hoyos Gate ---")
