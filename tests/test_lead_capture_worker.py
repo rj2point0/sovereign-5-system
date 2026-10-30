@@ -113,6 +113,19 @@ class TestLeadCaptureWorkerUpgrades(unittest.TestCase):
             fk = vof.flesch_kincaid_grade(f"{sc['hook_line']} {sc['but_therefore_twist']} {sc['cta_line']}")
             self.assertLessEqual(fk, 5.5)
 
+    def test_demo_preview_and_love_mini_tier_support(self):
+        calc = w.calculate_5_systems("Chloe", "1998-07-16")
+        lead = {
+            "name": "Chloe",
+            "dob": "1998-07-16",
+            "email": "chloe.real@gmail.com",
+            "partner_dob": "1996-04-13",
+            "calc": calc,
+        }
+        subj, plain, html_body = w.build_luxury_followup_email(lead)
+        self.assertIn("$17 Partner Synastry", html_body)
+        self.assertIn("$17 PARTNER SYNASTRY MINI-READ", plain)
+
 
 if __name__ == "__main__":
     unittest.main()

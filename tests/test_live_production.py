@@ -42,15 +42,21 @@ async def verify_live_pages():
         assert sample_pub_vis is False, "Founder Sample button MUST be hidden on public landing page!"
         print("Founder Sample button cleanly hidden for public visitors!")
 
-        # Test 2b: Verify 390x844 Mobile Viewport Above-The-Fold Submit Button & Micro-Badge on Live Site
+        # Test 2b: Verify 390x844 Mobile Viewport Above-The-Fold Submit Button, Micro-Badge & 1-Tap Sample Demo on Live Site
         page_mob = await browser.new_page(viewport={"width": 390, "height": 844})
         await page_mob.goto(f"{base_url}?utm_source=ig_bio&cohort=ig_reels")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)
-        sub_box = await page_mob.locator('#heroForm button[type="submit"]').first.bounding_box()
-        assert sub_box is not None and (sub_box["y"] + sub_box["height"]) <= 780, f"Expected live submit button bottom <= 780px at 390x844, got {sub_box}"
-        micro_vis = await page_mob.is_visible('#hero-micro-badge')
-        assert micro_vis is True, "Expected #hero-micro-badge to be visible on live site!"
-        print(f"Live 390x844 mobile viewport verified: Submit button bottom={sub_box['y'] + sub_box['height']:.1f}px (<= 780px) & micro-badge visible!")
+        for sel in ('#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
+            box = await page_mob.locator(sel).first.bounding_box()
+            assert box is not None and (box["y"] + box["height"]) <= 780, f"Expected live {sel} bottom <= 780px at 390x844, got {box}"
+        await page_mob.click('#btn-instant-demo')
+        await page_mob.wait_for_selector('#sample-reading-banner', timeout=8000)
+        assert await page_mob.is_visible('#partner-compat-result') is True
+        assert await page_mob.is_visible('#btn-checkout-mini') is True
+        await page_mob.click('#btn-enter-real-birthday')
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)
+        assert await page_mob.locator('#fullName').input_value() == ""
+        print("Live 390x844 mobile viewport verified: Submit button, micro-badge & #btn-instant-demo all <= 780px, 1-Tap Sample Reading & $17 Impulse Tier active!")
         await page_mob.close()
 
         # Verify Founder Sample button IS visible with ?vip=adam

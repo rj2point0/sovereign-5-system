@@ -562,7 +562,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
         f"• System III (Kabbalistic Tree of Life & Sephirot): 🔒 Locked in Full 20-Page Dossier\n"
         f"• System V (Chinese Lo Shu Grid & Missing Numbers): 🔒 Locked in Full 20-Page Dossier\n"
         f"• Active 52-Day Rosicrucian Planetary Cycle: 🔒 Locked in Full 20-Page Dossier\n\n"
-        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37):\n"
+        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37) OR $17 PARTNER SYNASTRY MINI-READ:\n"
         f"{stripe_url}\n\n"
         f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER & WATCH VIDEO BRIEFING:\n"
         f"{teaser_url}\n\n"
@@ -770,8 +770,12 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <!-- Primary CTA Buttons -->
           <tr>
             <td align="center" style="padding:4px 24px 28px;">
-              <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:14px;box-shadow:0 8px 25px rgba(212,175,55,0.3);">
+              <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:10px;box-shadow:0 8px 25px rgba(212,175,55,0.3);">
                 ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
+              </a>
+              <br>
+              <a href="{teaser_url}#checkout" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.45);border-radius:8px;margin-bottom:10px;">
+                ⚡ Or Grab the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
@@ -1398,6 +1402,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "page_view": "page_view",
         "calc_started": "calc_started",
         "field_progress": "calc_started",
+        "demo_preview_clicked": "demo_preview_clicked",
         "calc_preview": "calc_preview",
         "partner_check_run": "partner_check_run",
         "partner_compat_checked": "partner_check_run",
@@ -1449,15 +1454,19 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     b_info = classify_visitor_browser(payload)
     session_id = str(payload.get("session_id") or prof.get("id") or "").strip() or f"anon_{(payload.get('timestamp') or '')[:16]}"
     tier_label = str(extra.get("tier_label") or extra.get("tier") or "").strip()
-    if event_type == "checkout_clicked" and not tier_label:
-        total_p = extra.get("total") or (84 if extra.get("bump") else 37)
-        tier_label = f"${total_p} ({'Bundle' if extra.get('bump') else 'Base'})"
+    if event_type == "checkout_clicked":
+        raw_tier = str(extra.get("tier") or "").strip().lower()
+        if raw_tier == "love_mini" and not tier_label:
+            tier_label = "$17 Partner Synastry & 90-Day Love Timing Mini-Read"
+        elif not tier_label:
+            total_p = extra.get("total") or (84 if extra.get("bump") else 37)
+            tier_label = f"${total_p} ({'Bundle' if extra.get('bump') else 'Base'})"
 
     raw_partner_dob = str(extra.get("partner_dob") or payload.get("partner_dob") or prof.get("partner_dob") or prof.get("partnerDob") or "").strip()
     partner_dob = normalize_dob(raw_partner_dob) if raw_partner_dob else ""
     compat_score = extra.get("compatibility_score") or extra.get("magnetism_score") or ""
 
-    if event_type in ("page_view", "calc_started"):
+    if event_type in ("page_view", "calc_started", "demo_preview_clicked"):
         dedup_key = f"{session_id}::{event_type}"
     elif event_type == "calc_preview":
         dedup_key = f"{session_id}::calc_preview::{clean_name.lower()}::{iso_dob}"
@@ -1535,6 +1544,7 @@ def update_obsidian_dashboard():
         ig_views = [e for e in page_views if e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", ""))]
         other_views = [e for e in page_views if not e.get("is_tiktok_inapp") and not (e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")))]
         calc_started = [e for e in events if e.get("event_type") == "calc_started"]
+        demo_previews = [e for e in events if e.get("event_type") == "demo_preview_clicked"]
         calc_previews = [e for e in events if e.get("event_type") == "calc_preview"]
         partner_checks = [e for e in events if e.get("event_type") in ("partner_check_run", "partner_compat_checked")]
         lead_submits = [e for e in events if e.get("event_type") == "lead_submitted"]
@@ -1551,6 +1561,7 @@ def update_obsidian_dashboard():
                 f"total_page_views: {len(page_views)}",
                 f"tiktok_inapp_views: {len(tt_views)}",
                 f"instagram_inapp_views: {len(ig_views)}",
+                f"demo_previews: {len(demo_previews)}",
                 f"calc_previews: {len(calc_previews)}",
                 f"partner_checks: {len(partner_checks)}",
                 f"total_leads: {len(rows)}",
@@ -1565,7 +1576,7 @@ def update_obsidian_dashboard():
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
                 "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
-                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`). Headless Playwright/localhost test runs are automatically filtered out.",
+                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), tap the 1-Tap Sample Reading (`demo_preview_clicked`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`: `$17` Love Mini-Read, `$37` Full 20-Page Blueprint, or `$84` VIP Bundle). Headless Playwright/localhost test runs are automatically filtered out.",
                 "",
                 "## 1. Live Funnel Conversion Telemetry Summary",
                 "",
@@ -1573,10 +1584,11 @@ def update_obsidian_dashboard():
                 "| :--- | :--- | :---: | :--- |",
                 f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App:** `{len(tt_views)}` · **Instagram In-App:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` |",
                 f"| **2. Calculator Interactions** | `calc_started` | **{len(calc_started)}** | Visitors who tapped into the Name or Birth Date input field |",
+                f"| **2b. 1-Tap Sample Previews** | `demo_preview_clicked` | **{len(demo_previews)}** | Cold scrollers who tapped the 1-Tap Sample Reading (`7th × 4th`) |",
                 f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
                 f"| **3b. Partner Compatibility Checks** | `partner_check_run` | **{len(partner_checks)}** | Visitors who tested a Partner / Crush birthday on the Teaser view |",
                 f"| **4. Full Email Leads Captured** | `lead_submitted` | **{total_leads_count}** | Enrolled in automated 3-part luxury HTML email sequence |",
-                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$37` Base, `$84` Bundle, or `$47` Cycles Upgrade |",
+                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$17` Mini-Read, `$37` Base, or `$84` Bundle |",
                 "",
                 "---",
                 "",
@@ -1589,6 +1601,7 @@ def update_obsidian_dashboard():
             stage_badges = {
                 "page_view": "👀 `page_view`",
                 "calc_started": "✍️ `calc_started`",
+                "demo_preview_clicked": "⚡ `demo_preview_clicked`",
                 "calc_preview": "🔮 `calc_preview`",
                 "partner_check_run": "💑 `partner_check_run`",
                 "lead_submitted": "📩 `lead_submitted`",

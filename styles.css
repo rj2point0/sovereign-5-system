@@ -427,6 +427,12 @@ main, header, footer { position: relative; z-index: 1; }
     font-size: 0.65rem !important;
     line-height: 1.2 !important;
   }
+  #btn-instant-demo {
+    margin-top: 0.3rem !important;
+    padding: 0.28rem 0.5rem !important;
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+  }
   #sample-row {
     margin-top: 0.3rem !important;
   }

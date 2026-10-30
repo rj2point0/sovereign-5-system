@@ -59,23 +59,36 @@
       "title_match": "Born on the 2nd, 11th, 20th, or 29th",
       "comment": "Were you born on the 2nd, 11th, 20th, or 29th—and can you read a room before anyone speaks? 👇",
       "seeded_at": "2026-10-29T07:12:29.832126"
+    },
+    "short_10": {
+      "video_id": "7702232648323812622",
+      "title_match": "Born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th",
+      "comment": "Were you born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th—and do you always fall for people who pull away? 👇",
+      "seeded_at": "2026-10-29T16:39:32.509549"
+    },
+    "short_15": {
+      "video_id": "7702469276480916749",
+      "title_match": "You don't actually miss your ex. You miss the person they faked",
+      "comment": "Do you fall in love with who someone actually is—or their potential? Drop your birth day below 👇",
+      "seeded_at": "2026-10-30T12:08:18.742779"
+    },
+    "short_11": {
+      "video_id": "7702232880092597518",
+      "title_match": "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th",
+      "comment": "Were you born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st—and are you tired of caring more than they do? 👇",
+      "seeded_at": "2026-10-30T12:09:07.577054"
     }
   },
-  "updated_at": "2026-10-29T07:13:39.156912",
+  "updated_at": "2026-10-30T12:10:19.425882",
   "last_verification": {
-    "checked_at": "2026-10-29T07:12:53.279158",
+    "checked_at": "2026-10-30T12:09:42.078362",
     "videos": {
-      "short_08": {
+      "short_15": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
       },
-      "short_07": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": true
-      },
-      "short_06": {
+      "short_11": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true

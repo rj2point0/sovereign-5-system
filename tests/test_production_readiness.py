@@ -362,12 +362,25 @@ async def test_all():
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
         print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-15) verified!")
 
-        # TEST 10: 390x844 iPhone Mobile Viewport Above-The-Fold Audit (Submit Button bottom <= 780px / 800px)
-        print("\n--- Test 10: 390x844 Mobile Viewport Above-The-Fold Audit & Micro-Badge Verification ---")
+        # TEST 10: 390x844 iPhone Mobile Viewport Above-The-Fold Audit + 1-Tap Instant Sample Reading + $17 Impulse Tier
+        print("\n--- Test 10: 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Demo & $17 Impulse Tier ---")
         page_mob = await browser.new_page(viewport={"width": 390, "height": 844})
-        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels")
+        demo_events = []
+        async def capture_demo_webhook(route):
+            req = route.request
+            if req.method == "POST" and ("ntfy.sh" in req.url or "8788/webhook" in req.url):
+                try:
+                    import json as _json
+                    demo_events.append(_json.loads(req.post_data or "{}"))
+                except Exception:
+                    pass
+                await route.fulfill(status=200, body="ok")
+            else:
+                await route.continue_()
+        await page_mob.route("**/*", capture_demo_webhook)
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
-        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge'):
+        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
             assert box is not None, f"Missing bounding box for {sel} at 390x844"
             bottom_y = box["y"] + box["height"]
@@ -375,8 +388,48 @@ async def test_all():
             assert bottom_y <= 800, f"Expected {sel} bottom <= 800px on 390x844 iPhone viewport, got {bottom_y:.1f}px"
         micro_txt = await page_mob.locator('#hero-micro-badge').inner_text()
         assert "Takes 5 seconds" in micro_txt and "No birth time needed" in micro_txt and "Instant Partner Compatibility check on next screen" in micro_txt, f"Unexpected micro-badge: {micro_txt}"
+        demo_btn_txt = await page_mob.locator('#btn-instant-demo').inner_text()
+        assert "preview a real sample reading (7th Birthday" in demo_btn_txt, f"Unexpected #btn-instant-demo text: {demo_btn_txt}"
+
+        # Click #btn-instant-demo and verify demo_preview_clicked + Chloe (1998-07-16) + Partner (1996-04-13) + #sample-reading-banner
+        await page_mob.click('#btn-instant-demo')
+        await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=5000)
+        await asyncio.sleep(0.2)
+        demo_ev_list = [e for e in demo_events if e.get("event_type") == "demo_preview_clicked"]
+        assert len(demo_ev_list) >= 1, f"Expected demo_preview_clicked event, got {[e.get('event_type') for e in demo_events]}"
+        assert (demo_ev_list[-1].get("extra") or {}).get("sample") == "7_vs_4"
+        assert await page_mob.is_visible('#sample-reading-banner') is True, "Expected #sample-reading-banner to be visible"
+        banner_txt = await page_mob.locator('#sample-reading-banner').inner_text()
+        assert "Viewing Sample Reading (Chloe" in banner_txt and "Tap Here To Enter Your Real Birthday" in banner_txt, f"Unexpected banner text: {banner_txt}"
+        assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result pre-calculated on sample reading"
+        assert await page_mob.locator('#partnerDobMonth').input_value() == "04"
+        assert await page_mob.locator('#partnerDobDay').input_value() == "13"
+        assert await page_mob.locator('#partnerDobYear').input_value() == "1996"
+
+        # Verify $17 Impulse Tier renders and fires checkout_clicked with tier="love_mini"
+        assert await page_mob.is_visible('#tier-card-mini') is True, "Expected #tier-card-mini ($17 tier) visible"
+        assert await page_mob.is_visible('#btn-checkout-mini') is True, "Expected #btn-checkout-mini visible"
+        await page_mob.evaluate("window.__blockedStripeNav = null; window.addEventListener('beforeunload', e => e.preventDefault());")
+        await page_mob.route("https://buy.stripe.com/**", lambda route: route.fulfill(status=200, body="stripe_mock"))
+        await page_mob.click('#btn-checkout-mini')
+        await asyncio.sleep(0.25)
+        mini_co_evs = [e for e in demo_events if e.get("event_type") == "checkout_clicked" and (e.get("extra") or {}).get("tier") == "love_mini"]
+        assert len(mini_co_evs) >= 1, f"Expected checkout_clicked with tier='love_mini', got {demo_events}"
+        assert (mini_co_evs[-1].get("extra") or {}).get("total") == 17
+
+        # Re-open sample reading if Stripe mock navigated, then click "Tap Here To Enter Your Real Birthday"
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        await page_mob.click('#btn-instant-demo')
+        await page_mob.wait_for_selector('#sample-reading-banner', timeout=5000)
+        await page_mob.click('#btn-enter-real-birthday')
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        fn_val = await page_mob.locator('#fullName').input_value()
+        assert fn_val == "", f"Expected #fullName to be cleared after clicking enter-real-birthday, got {fn_val!r}"
+        is_fn_focused = await page_mob.evaluate("document.activeElement && document.activeElement.id === 'fullName'")
+        assert is_fn_focused is True, "Expected #fullName to be focused after clicking enter-real-birthday"
         await page_mob.close()
-        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit passed (Submit button & micro-badge 100% above fold <= 780px)!")
+        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill & $17 Impulse Tier verified!")
 
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")

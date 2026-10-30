@@ -3,12 +3,15 @@
    Bilingual Edition: English (EN) & Spanish (ES)
    ===================================================================== */
 const CONFIG = {
+  STRIPE_LINK_MINI: 'https://buy.stripe.com/6oU7sLek90MdbVechV38401',
   STRIPE_LINK_BASE: 'https://buy.stripe.com/6oU7sLek90MdbVechV38401',
   STRIPE_LINK_BUMP: 'https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402',
   STRIPE_LINK_UPGRADE: 'https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403',
 
+  PRICE_MINI: 17,
   PRICE_BASE: 37,
   PRICE_BUMP: 47,
+  PRICE_BUNDLE: 84,
   PRICE_ANCHOR: 197,           // struck-through "value" price
   GUARANTEE_DAYS: 30,          // set 0 to hide the guarantee badge
 
@@ -43,7 +46,7 @@ const CONFIG = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } },
     del(k) { try { localStorage.removeItem(k); } catch (e) { /* noop */ } },
   };
-  const TIER_RANK = { base: 1, full: 2 };
+  const TIER_RANK = { love_mini: 1, base: 2, full: 3 };
   const maxTier = (a, b) => ((TIER_RANK[a] || 0) >= (TIER_RANK[b] || 0) ? a : b) || null;
 
   const LOCK_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
@@ -57,6 +60,7 @@ const CONFIG = {
     profile: null,
     result: null,
     partnerDob: '',
+    isSamplePreview: false,
     bump: false,
     pendingTier: null,
     lang: initialLang,
@@ -634,7 +638,8 @@ const CONFIG = {
     showErrors(errs);
     if (Object.keys(errs).length) return;
 
-    let prof = state.profile && state.profile.fullName === data.fullName && state.profile.birthDate === data.birthDate
+    state.isSamplePreview = false;
+    let prof = state.profile && !state.profile.isSample && state.profile.fullName === data.fullName && state.profile.birthDate === data.birthDate
       ? state.profile
       : { id: leadId(), fullName: data.fullName, birthDate: data.birthDate, email: data.email, tier: state.pendingTier || null, createdAt: new Date().toISOString(), utm: utm() };
     prof.email = data.email;
@@ -881,6 +886,13 @@ const CONFIG = {
 
     $('#teaser-root').innerHTML = `
     <div class="reveal">
+      ${state.isSamplePreview ? `
+      <div id="sample-reading-banner" class="sticky top-2 z-40 mb-5 p-3 sm:p-3.5 rounded-xl border border-gold bg-[#141108]/95 backdrop-blur-md shadow-lg text-center text-xs sm:text-sm text-champagne font-medium flex flex-wrap items-center justify-center gap-1.5">
+        <span>⚡ ${isEs ? 'Viendo Lectura de Ejemplo (Chloe · 16 de Julio) —' : 'Viewing Sample Reading (Chloe · July 16) —'}</span>
+        <button type="button" id="btn-enter-real-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer">
+          ${isEs ? '[Toca Aquí Para Ingresar Tu Fecha Real →]' : '[Tap Here To Enter Your Real Birthday →]'}
+        </button>
+      </div>` : ''}
       <div class="text-center pt-3">
         <span class="badge-olive">${UI.scan_complete}</span>
         <h1 class="font-display text-[1.9rem] leading-tight sm:text-4xl mt-4">${UI.decoded_title.replace('${first}', first)}</h1>
@@ -1079,24 +1091,49 @@ const CONFIG = {
         <p class="eyebrow text-center">${UI.checkout_eyebrow}</p>
         <h3 class="font-display text-2xl sm:text-3xl text-center mt-2">${UI.checkout_title}</h3>
 
-        <div class="mt-6 flex gap-4 items-start card-soft p-4">
-          <div class="shrink-0 w-16 h-20 rounded-md grid place-items-center" style="background:linear-gradient(160deg,#1c1a12,#0b0b0d);border:1px solid rgba(212,175,55,.5)">
-            <span class="font-display text-gold text-xl">${a.number}</span>
+        <!-- TIER 1 · $17 IMPULSE TIER (tier="love_mini") -->
+        <div id="tier-card-mini" class="mt-6 p-4 rounded-xl card-soft border border-white/15 hover:border-gold/40 transition-all">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Opción Rápida · Mini-Lectura' : 'Quick-Start Impulse Option'}</span>
+              <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Mini-Lectura de Sinastría de Pareja y Sincronía de 90 Días' : 'Partner Synastry &amp; 90-Day Love Timing Mini-Read'}</h4>
+              <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Descifra tu bucle de apego Día Natal vs. Sendero de Vida, tu puntaje de compatibilidad con tu pareja y tus próximos 90 días en el amor.' : 'Decodes your Birth Day vs. Life Path attachment loop, your Partner/Crush Birthday Compatibility score, and your next 90 days of love timing.'}</p>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="font-display text-2xl text-champagne">${money(CONFIG.PRICE_MINI)}</div>
+            </div>
           </div>
-          <div class="flex-1">
-            <p class="font-semibold text-ivory text-[0.95rem] leading-snug">${UI.checkout_product}</p>
-            <p class="text-xs text-zinc-400 mt-1">${UI.checkout_product_sub.replace('${first}', first)}</p>
+          <button type="button" id="btn-checkout-mini" data-action="checkout-mini" data-trigger="checkout_tier_17" class="btn-ghost mt-3.5 w-full !py-2.5 !px-4 border-gold/45 hover:border-gold hover:bg-gold/15 text-champagne text-xs sm:text-sm font-semibold">
+            ⚡ ${isEs ? 'Desbloquear Mini-Lectura de Pareja y 90 Días · $17 →' : 'Unlock $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →'}
+          </button>
+        </div>
+
+        <!-- TIER 2 · $37 FLAGSHIP TIER (MOST POPULAR — Only $20 More!) -->
+        <div id="tier-card-base" class="mt-4 p-4 sm:p-5 rounded-xl card-soft border-2 border-gold/70 relative" style="background:linear-gradient(180deg,rgba(212,175,55,0.10),rgba(14,15,20,0.95))">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <span class="badge-gold !text-[0.62rem] !py-0.5">${isEs ? '★ MÁS POPULAR — ¡SOLO $20 MÁS!' : '★ MOST POPULAR — ONLY $20 MORE!'}</span>
+            <span class="text-[0.65rem] text-emerald-300 font-semibold uppercase tracking-wider">${isEs ? 'Ahorras $160 Hoy' : 'Save $160 Today'}</span>
           </div>
-          <div class="text-right shrink-0">
-            <div class="text-xs text-zinc-500 line-through">${money(CONFIG.PRICE_ANCHOR)}</div>
-            <div class="font-display text-2xl text-champagne">${money(CONFIG.PRICE_BASE)}</div>
+          <div class="flex gap-4 items-start">
+            <div class="shrink-0 w-14 h-18 sm:w-16 sm:h-20 rounded-md grid place-items-center" style="background:linear-gradient(160deg,#1c1a12,#0b0b0d);border:1px solid rgba(212,175,55,.5)">
+              <span class="font-display text-gold text-xl">${a.number}</span>
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold text-ivory text-[0.98rem] leading-snug">${isEs ? 'Plano Completo de Amor y Vida de 20 Páginas (5 Sistemas)' : 'Complete 20-Page 5-System Love &amp; Life Blueprint'}</p>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo lo de la Mini-Lectura de $17 MÁS los 5 sistemas ancestrales completos (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor y Vida de 12 Meses para ${first}.` : `Includes everything in the $17 Mini-Read PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Calendar for ${first}.`}</p>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="text-xs text-zinc-500 line-through">${money(CONFIG.PRICE_ANCHOR)}</div>
+              <div class="font-display text-2xl sm:text-3xl text-gold">${money(CONFIG.PRICE_BASE)}</div>
+            </div>
           </div>
         </div>
 
+        <!-- TIER 3 · $84 COMPLETE VIP SOVEREIGN BUNDLE ($37 + $47) -->
         <label id="bump-box" class="bump mt-4 flex gap-3 items-start cursor-pointer">
           <input id="bump" type="checkbox" />
           <span class="text-sm leading-relaxed">
-            <span class="block font-bold text-gold uppercase tracking-wider text-[0.78rem] mb-1">${UI.bump_title.replace('${bumpPrice}', CONFIG.PRICE_BUMP)}</span>
+            <span class="block font-bold text-gold uppercase tracking-wider text-[0.78rem] mb-1">${isEs ? `➜ Paquete Soberano VIP Completo ($${CONFIG.PRICE_BUNDLE}) · +$${CONFIG.PRICE_BUMP}` : `➜ Complete VIP Sovereign Bundle ($${CONFIG.PRICE_BUNDLE}) · +$${CONFIG.PRICE_BUMP}`}</span>
             <span class="text-ivory">${UI.bump_text}</span>
           </span>
         </label>
@@ -1106,7 +1143,7 @@ const CONFIG = {
           <span class="font-display text-3xl text-gold-grad" data-total>${money(CONFIG.PRICE_BASE)}</span>
         </div>
 
-        <button type="button" data-action="checkout" class="btn-gold mt-4 !py-[1.15rem] !text-base">
+        <button type="button" id="btn-checkout-main" data-action="checkout" class="btn-gold mt-4 !py-[1.15rem] !text-base">
           <span>${UI.unlock_cta}</span><span data-total>${money(CONFIG.PRICE_BASE)}</span>
         </button>
 
@@ -1147,6 +1184,70 @@ const CONFIG = {
     $('#bump').checked = state.bump;
     updateTotal();
     setupStickyCta();
+
+    if (state.partnerDob) {
+      const mParts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(state.partnerDob);
+      if (mParts) {
+        const pm = $('#partnerDobMonth'), pd = $('#partnerDobDay'), py = $('#partnerDobYear');
+        if (pm && pd && py) {
+          pm.value = mParts[2];
+          pd.value = mParts[3];
+          py.value = mParts[1];
+          runPartnerCompatibilityCheck({ silentTelemetry: true });
+        }
+      }
+    }
+  }
+
+  function runInstantSampleDemo() {
+    const sampleName = 'Chloe';
+    const sampleDob = '1998-07-16';
+    const samplePartnerDob = '1996-04-13';
+    sendWebhook('demo_preview_clicked', {
+      sample: '7_vs_4',
+      sample_name: sampleName,
+      sample_dob: sampleDob,
+      partner_dob: samplePartnerDob,
+    });
+    fillForm({ fullName: sampleName, birthDate: sampleDob, email: '' });
+    showErrors({});
+    state.isSamplePreview = true;
+    state.partnerDob = samplePartnerDob;
+    state.profile = {
+      id: leadId(),
+      fullName: sampleName,
+      birthDate: sampleDob,
+      email: '',
+      partner_dob: samplePartnerDob,
+      partnerDob: samplePartnerDob,
+      isSample: true,
+      tier: null,
+      createdAt: new Date().toISOString(),
+      utm: utm(),
+    };
+    state.result = E.calculate(sampleName, sampleDob);
+    openTeaser();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function checkoutMini(triggerSource) {
+    const link = CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE;
+    const total = CONFIG.PRICE_MINI;
+    const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
+    const tierLabel = `$${total} Partner Synastry & 90-Day Love Timing Mini-Read`;
+    sendWebhook('checkout_clicked', {
+      bump: false,
+      total,
+      tier: 'love_mini',
+      tier_label: tierLabel,
+      trigger: triggerSource || 'checkout_mini',
+      partner_dob: pDob,
+    });
+    if (!link) {
+      toast('Stripe link not configured in CONFIG.', 5500);
+      return;
+    }
+    goToStripe(link, 'love_mini');
   }
 
   function updateTotal() {
@@ -2096,8 +2197,28 @@ const CONFIG = {
     if (!t) return;
     const a = t.dataset.action;
     if (a === 'sample') { fillForm(CONFIG.SAMPLE); showErrors({}); }
-    else if (a === 'home') { if (state.profile) fillForm(state.profile); showView('hero'); }
+    else if (a === 'instant-demo') {
+      runInstantSampleDemo();
+    }
+    else if (a === 'enter-real-birthday') {
+      state.isSamplePreview = false;
+      state.partnerDob = '';
+      fillForm({});
+      showErrors({});
+      showView('hero');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const fnInput = $('#fullName');
+      if (fnInput) fnInput.focus();
+    }
+    else if (a === 'home') {
+      state.isSamplePreview = false;
+      if (state.profile && !state.profile.isSample) fillForm(state.profile);
+      else fillForm({});
+      showView('hero');
+    }
     else if (a === 'restart') {
+      state.isSamplePreview = false;
+      state.partnerDob = '';
       fillForm({});
       showView('hero');
       document.title = state.lang === 'es'
@@ -2105,6 +2226,17 @@ const CONFIG = {
         : 'Uncover Your Hidden Relationship Pattern & Love Code';
     }
     else if (a === 'checkout') checkout();
+    else if (a === 'checkout-mini') {
+      checkoutMini(t.dataset.trigger || 'checkout_mini');
+    }
+    else if (a === 'checkout-bundle') {
+      const bumpEl = $('#bump');
+      if (bumpEl) {
+        bumpEl.checked = true;
+        updateTotal();
+      }
+      checkout();
+    }
     else if (a === 'check-partner-compat') {
       runPartnerCompatibilityCheck();
     }
@@ -2178,8 +2310,9 @@ const CONFIG = {
     }
   });
 
-  function runPartnerCompatibilityCheck() {
+  function runPartnerCompatibilityCheck(opts) {
     if (!state.result) return;
+    const options = opts || {};
     const mEl = $('#partnerDobMonth');
     const dEl = $('#partnerDobDay');
     const yEl = $('#partnerDobYear');
@@ -2195,20 +2328,22 @@ const CONFIG = {
     }
     const rep = getPartnerCompatReport(state.result, m, d, y, state.lang);
     state.partnerDob = rep.pIso;
-    if (state.profile) {
+    if (state.profile && !state.profile.isSample) {
       state.profile.partner_dob = rep.pIso;
       state.profile.partnerDob = rep.pIso;
       saveProfile(state.profile);
     }
-    const userDobStr = (state.result && state.result.input && state.result.input.birthDate) || (state.profile && state.profile.birthDate) || '';
-    sendWebhook('partner_check_run', {
-      user_dob: userDobStr,
-      partner_dob: rep.pIso,
-      compatibility_score: rep.magnetismScore,
-      magnetism_score: rep.magnetismScore,
-      partner_moolank: rep.pMoolank,
-      partner_lifepath: rep.pLife,
-    });
+    if (!options.silentTelemetry) {
+      const userDobStr = (state.result && state.result.input && state.result.input.birthDate) || (state.profile && state.profile.birthDate) || '';
+      sendWebhook('partner_check_run', {
+        user_dob: userDobStr,
+        partner_dob: rep.pIso,
+        compatibility_score: rep.magnetismScore,
+        magnetism_score: rep.magnetismScore,
+        partner_moolank: rep.pMoolank,
+        partner_lifepath: rep.pLife,
+      });
+    }
     resBox.classList.remove('hidden');
     resBox.innerHTML = `
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
@@ -2236,6 +2371,9 @@ const CONFIG = {
         </p>
         <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
           ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
+        </button>
+        <button type="button" id="btn-partner-mini-cta" data-action="checkout-mini" data-trigger="partner_compat_mini_17" class="btn-ghost mt-2.5 !py-2.5 !px-4 w-full text-xs text-champagne border-gold/40 hover:border-gold">
+          ⚡ ${isEs ? 'O desbloquea solo la Mini-Lectura de Pareja y 90 Días por $17 →' : 'Or grab just the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →'}
         </button>
       </div>
     `;
@@ -2466,12 +2604,13 @@ const CONFIG = {
     // Fire page_view telemetry on load for real visitor sessions
     sendWebhook('page_view', { path: location.pathname + location.search });
 
-    // Determine target tier from URL (?tier=base&unlocked=true, ?tier=full&unlocked=true)
+    // Determine target tier from URL (?tier=love_mini&unlocked=true, ?tier=base&unlocked=true, ?tier=full&unlocked=true)
     const isUnlockedParam = q.get('unlocked') === 'true';
-    const tierParam = q.get('tier'); // 'base' | 'full'
+    const tierParam = q.get('tier'); // 'love_mini' | 'base' | 'full'
     let urlTier = null;
     if (tierParam === 'full') urlTier = 'full';
     else if (tierParam === 'base') urlTier = 'base';
+    else if (tierParam === 'love_mini') urlTier = 'love_mini';
     else if (isUnlockedParam) urlTier = store.get(KEYS.pending) || 'full';
 
     if (urlTier === 'base' && store.get(KEYS.pending) === 'full') urlTier = 'full';
