@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-10-31T06:24:54.547568",
+  "updated_at": "2026-10-31T10:13:10.758792",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -159,24 +159,6 @@
       "uploaded_at": "2026-10-29T16:18:44.407565",
       "caption_preview": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th, 19th, 21st, 23rd, 26th, 28th, or 30th? Why you want someone stro"
     },
-    "tiktok_short_13_hot_then_cold_6weeks.mp4": {
-      "filename": "tiktok_short_13_hot_then_cold_6weeks.mp4",
-      "ad_id": "short_13",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-10-31 11:00",
-      "uploaded_at": "2026-10-30T07:34:36.634514",
-      "caption_preview": "Why do they act obsessed with you in week two, then go cold in week six? (Born on the 2nd, 7th, 11th, 16th, 20th, 25th, "
-    },
-    "tiktok_short_14_test_crush_birthday.mp4": {
-      "filename": "tiktok_short_14_test_crush_birthday.mp4",
-      "ad_id": "short_14",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-10-31 18:30",
-      "uploaded_at": "2026-10-30T07:35:07.118039",
-      "caption_preview": "Test your crush's birthday right now: if your birth days clash here, one of you will always chase (Birth Day = how you f"
-    },
     "tiktok_short_15_miss_fake_version.mp4": {
       "filename": "tiktok_short_15_miss_fake_version.mp4",
       "ad_id": "short_15",
@@ -186,13 +168,22 @@
       "uploaded_at": "2026-10-30T07:35:36.880286",
       "caption_preview": "You don't actually miss your ex. You miss the person they faked for the first 30 days (Born on the 1st, 4th, 6th, 8th, 9"
     },
+    "tiktok_short_14_test_crush_birthday.mp4": {
+      "filename": "tiktok_short_14_test_crush_birthday.mp4",
+      "ad_id": "short_14",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-10-31 18:30",
+      "uploaded_at": "2026-10-31T07:51:22.698086",
+      "caption_preview": "Test your crush's birthday right now: if your birth days clash here, one of you will always chase (Birth Day = how you f"
+    },
     "tiktok_short_16_last_text_crumbs.mp4": {
       "filename": "tiktok_short_16_last_text_crumbs.mp4",
       "ad_id": "short_16",
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-01 18:30",
-      "uploaded_at": "2026-10-31T06:23:51.817138",
+      "uploaded_at": "2026-10-31T07:51:52.957029",
       "caption_preview": "Look at the last text you sent them. That isn't love—that's your birth code begging for crumbs (Born on the 2nd, 6th, 7t"
     },
     "tiktok_short_17_three_months_situationship.mp4": {
@@ -201,7 +192,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-02 11:00",
-      "uploaded_at": "2026-10-31T06:24:22.609414",
+      "uploaded_at": "2026-10-31T07:52:23.337482",
       "caption_preview": "If you have to ask what you are after three months, their birth code already gave you the answer (when your Life Path cr"
     },
     "tiktok_short_18_cares_less_power.mp4": {
@@ -210,8 +201,17 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-02 18:30",
-      "uploaded_at": "2026-10-31T06:24:54.547568",
+      "uploaded_at": "2026-10-31T07:52:53.882131",
       "caption_preview": "They didn't suddenly lose feelings. You just stopped accepting bare minimum effort (Born on the 1st, 3rd, 4th, 8th, 9th,"
+    },
+    "tiktok_short_13_hot_then_cold_6weeks.mp4": {
+      "filename": "tiktok_short_13_hot_then_cold_6weeks.mp4",
+      "ad_id": "short_13",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-10-31T10:13:10.758792",
+      "caption_preview": "Why do they act obsessed with you in week two, then go cold in week six? (Born on the 2nd, 7th, 11th, 16th, 20th, 25th, "
     }
   }
 }

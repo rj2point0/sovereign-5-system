@@ -488,6 +488,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_10_attract_unavailable.mp4",
+        "grid_headline": "WHY THEY\nPULL AWAY",
+        "grid_sub": "Born 2, 7, 11, 16, 20, 25, 29?",
         "hook_box_text": "Born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th? Why you fall for people who pull away:",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -503,7 +505,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         ),
         "broll_clips": [
             (0.0, 4.2, "broll_02_late_night_phone.mp4"),
-            (4.2, 8.0, "broll_01_window_reflection.mp4"),
+            (4.2, 8.0, "broll_11_dusk_river_silhouette.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 2.8),
@@ -526,6 +528,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_11_overgiver_in_love.mp4",
+        "grid_headline": "ALWAYS CARE\nMORE IN LOVE",
+        "grid_sub": "Born 4, 6, 9, 13, 15, 18, 22, 27?",
         "hook_box_text": "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st? Why you ALWAYS care more in love:",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -564,6 +568,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_12_power_struggle_love.mp4",
+        "grid_headline": "FIGHT FOR\nCONTROL IN LOVE",
+        "grid_sub": "Born 1, 3, 5, 8, 10, 14, 19, 28?",
         "hook_box_text": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th, 19th, 21st, 23rd, 26th, 28th, or 30th? Why you fight for control in love:",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -579,7 +585,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         ),
         "broll_clips": [
             (0.0, 4.2, "broll_08_phone_discovery.mp4"),
-            (4.2, 8.0, "broll_02_late_night_phone.mp4"),
+            (4.2, 8.0, "broll_15_sunset_ocean_waves.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 2.8),
@@ -602,6 +608,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_13_hot_then_cold_6weeks.mp4",
+        "grid_headline": "HOT IN WEEK 2\nCOLD IN WEEK 6",
+        "grid_sub": "Why Your Birth Day Pulls Runners",
         "hook_box_text": "Why do they act obsessed with you in week two, then go cold in week six?",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -616,8 +624,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Test your birthday and theirs at the link in bio to see your real love match."
         ),
         "broll_clips": [
-            (0.0, 4.2, "broll_02_late_night_phone.mp4"),
-            (4.2, 8.0, "broll_01_window_reflection.mp4"),
+            (0.0, 4.2, "broll_09_couple_silhouette_walk.mp4"),
+            (4.2, 8.0, "broll_13_rain_ripples_water.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 2.8),
@@ -640,6 +648,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_14_test_crush_birthday.mp4",
+        "grid_headline": "TEST CRUSH'S\nBIRTHDAY",
+        "grid_sub": "If These Clash, One Always Chases",
         "hook_box_text": "Test your crush's birthday right now: if your birth days clash here, one of you will always chase.",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -654,8 +664,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Plug in both birthdays at the link in bio to see your compatibility score in 10 seconds."
         ),
         "broll_clips": [
-            (0.0, 4.2, "broll_08_phone_discovery.mp4"),
-            (4.2, 8.0, "broll_03_thoughtful_woman.mp4"),
+            (0.0, 4.2, "broll_10_couple_sunset_embrace.mp4"),
+            (4.2, 8.0, "broll_19_couple_field_walk.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 2.8),
@@ -678,6 +688,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_15_miss_fake_version.mp4",
+        "grid_headline": "IN LOVE WITH\nPOTENTIAL",
+        "grid_sub": "You Miss Who They Faked Day 1",
         "hook_box_text": "You don't actually miss your ex. You miss the person they faked for the first 30 days.",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -693,7 +705,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         ),
         "broll_clips": [
             (0.0, 4.2, "broll_01_window_reflection.mp4"),
-            (4.2, 8.0, "broll_07_journaling_ritual.mp4"),
+            (4.2, 8.0, "broll_12_beach_shore_brooding.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_loshu.png", 2.8),
@@ -716,6 +728,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_16_last_text_crumbs.mp4",
+        "grid_headline": "BEGGING FOR\nCRUMBS",
+        "grid_sub": "Look At Your Last Text Sent",
         "hook_box_text": "Look at the last text you sent them. That isn't love—that's your birth code begging for crumbs.",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -730,8 +744,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Check both of your birthdays at the link in bio to see how to flip the chase."
         ),
         "broll_clips": [
-            (0.0, 4.2, "broll_02_late_night_phone.mp4"),
-            (4.2, 8.0, "broll_01_window_reflection.mp4"),
+            (0.0, 4.2, "broll_18_hands_texting_phone.mp4"),
+            (4.2, 8.0, "broll_14_city_night_walk.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 2.8),
@@ -754,6 +768,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_17_three_months_situationship.mp4",
+        "grid_headline": "3-MONTH\nSITUATIONSHIP",
+        "grid_sub": "Their Birth Code Answered You",
         "hook_box_text": "If you have to ask what you are after three months, their birth code already gave you the answer.",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -768,8 +784,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Plug their birthday into the link in bio to see if they will ever commit."
         ),
         "broll_clips": [
-            (0.0, 4.2, "broll_03_thoughtful_woman.mp4"),
-            (4.2, 8.0, "broll_08_phone_discovery.mp4"),
+            (0.0, 4.2, "broll_20_couple_tension_apart.mp4"),
+            (4.2, 8.0, "broll_12_beach_shore_brooding.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 2.8),
@@ -792,6 +808,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_18_cares_less_power.mp4",
+        "grid_headline": "STOPPED ACCEPTING\nBARE MINIMUM",
+        "grid_sub": "Your Boundary Reset Year",
         "hook_box_text": "They didn't suddenly lose feelings. You just stopped accepting bare minimum effort.",
         "hook_end_sec": 4.2,
         "cta_tail_sec": 3.4,
@@ -807,8 +825,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "See your next 90 days of love timing at the link in bio right now."
         ),
         "broll_clips": [
-            (0.0, 4.2, "broll_07_journaling_ritual.mp4"),
-            (4.2, 8.0, "broll_02_late_night_phone.mp4"),
+            (0.0, 4.2, "broll_16_candlelight_woman_face.mp4"),
+            (4.2, 8.0, "broll_17_candle_dark_glow.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_anchors.png", 2.8),
@@ -936,6 +954,8 @@ class BrollStoryGenerator:
     def __init__(self):
         os.makedirs(VIDEOS_DIR, exist_ok=True)
         self.font_hook = ImageFont.truetype(FONT_BOLD, 42)
+        self.font_hook_giant = ImageFont.truetype(FONT_BOLD, 68)
+        self.font_hook_sub = ImageFont.truetype(FONT_BOLD, 38)
         self.font_cap = ImageFont.truetype(FONT_BOLD, 56)
         self.font_cta_top = ImageFont.truetype(FONT_BOLD, 28)
         self.font_cta_main = ImageFont.truetype(FONT_BOLD, 32)
@@ -1061,11 +1081,68 @@ class BrollStoryGenerator:
                 break
         return dur
 
-    def draw_native_tiktok_hook_box(self, draw: ImageDraw.ImageDraw, hook_text: str):
+    def draw_native_tiktok_hook_box(
+        self,
+        draw: ImageDraw.ImageDraw,
+        hook_text: str,
+        grid_headline: Optional[str] = None,
+        grid_sub: Optional[str] = None,
+    ):
         """
         Draws an authentic native TikTok white rounded-rectangle text box sticker
         centered in the upper-middle safe zone (y ~ 360).
+        When `grid_headline` is provided, renders a GIANT 68px bold 3-to-6 word Poster Headline
+        with an optional 38px compact subtitle line below it so the 3-column profile grid is
+        100% readable at a glance.
         """
+        if grid_headline:
+            h_lines = [ln.strip() for ln in grid_headline.split("\n") if ln.strip()]
+            font_h = self.font_hook_giant
+            for f_sz in (68, 64):
+                font_h = self.font_hook_giant if f_sz == 68 else ImageFont.truetype(FONT_BOLD, f_sz)
+                widths = [draw.textbbox((0, 0), ln, font=font_h)[2] - draw.textbbox((0, 0), ln, font=font_h)[0] for ln in h_lines]
+                if max(widths) <= 910:
+                    break
+            h_widths = [draw.textbbox((0, 0), ln, font=font_h)[2] - draw.textbbox((0, 0), ln, font=font_h)[0] for ln in h_lines]
+            line_h = 80
+            sub_h = 54 if grid_sub else 0
+            sub_w = (draw.textbbox((0, 0), grid_sub, font=self.font_hook_sub)[2] - draw.textbbox((0, 0), grid_sub, font=self.font_hook_sub)[0]) if grid_sub else 0
+
+            max_w = max(max(h_widths), sub_w)
+            total_h = len(h_lines) * line_h + sub_h
+
+            cx, cy = 540, 370
+            pad_x, pad_y = 38, 28
+            x0 = max(36, cx - max_w // 2 - pad_x)
+            y0 = cy - total_h // 2 - pad_y
+            x1 = min(1044, cx + max_w // 2 + pad_x)
+            y1 = cy + total_h // 2 + pad_y
+
+            # Strong drop shadow behind the white TikTok poster sticker
+            draw.rounded_rectangle(
+                [x0 + 6, y0 + 8, x1 + 6, y1 + 8],
+                radius=26,
+                fill=(0, 0, 0),
+            )
+            # Crisp white rounded-rectangle poster card with subtle gold accent border
+            draw.rounded_rectangle(
+                [x0, y0, x1, y1],
+                radius=26,
+                fill=(255, 255, 255),
+                outline=(212, 175, 55),
+                width=4,
+            )
+
+            curr_y = y0 + pad_y + line_h // 2 - 4
+            for ln in h_lines:
+                draw.text((cx, curr_y), ln, fill=(12, 12, 16), font=font_h, anchor="mm")
+                curr_y += line_h
+
+            if grid_sub:
+                sub_y = curr_y - line_h // 2 + 30
+                draw.text((cx, sub_y), grid_sub, fill=(168, 28, 48), font=self.font_hook_sub, anchor="mm")
+            return
+
         lines = textwrap.wrap(hook_text, width=28)
         line_bboxes = [draw.textbbox((0, 0), ln, font=self.font_hook) for ln in lines]
         line_widths = [b[2] - b[0] for b in line_bboxes]
@@ -1294,7 +1371,12 @@ class BrollStoryGenerator:
 
             # 2. Native TikTok White Rounded-Rectangle Hook Box (0.0s - hook_end_sec)
             if t <= hook_end_sec:
-                self.draw_native_tiktok_hook_box(draw, spec["hook_box_text"])
+                self.draw_native_tiktok_hook_box(
+                    draw,
+                    spec["hook_box_text"],
+                    grid_headline=spec.get("grid_headline"),
+                    grid_sub=spec.get("grid_sub"),
+                )
 
             # 3. Center 3-Word CapCut-Style Captions Throughout
             active_cue_text = None

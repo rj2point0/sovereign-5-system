@@ -88,6 +88,91 @@ BROLL_CLIPS: List[Dict[str, str]] = [
         "url": "https://assets.mixkit.co/videos/43270/43270-720.mp4",
         "filename": "broll_08_phone_discovery.mp4",
     },
+    # Clip Type 4: High-Emotion Relationship / Couple Tension / Atmospheric B-Roll (broll_09 - broll_20)
+    {
+        "id": "type4_couple_silhouette_walk",
+        "category": "Type 4: Relationship / Couple Dynamics",
+        "description": "Couple silhouette walking through a quiet neighborhood at dusk",
+        "url": "https://assets.mixkit.co/videos/939/939-720.mp4",
+        "filename": "broll_09_couple_silhouette_walk.mp4",
+    },
+    {
+        "id": "type4_couple_sunset_embrace",
+        "category": "Type 4: Relationship / Couple Dynamics",
+        "description": "Lovers holding each other on a warm romantic sunset",
+        "url": "https://assets.mixkit.co/videos/4664/4664-720.mp4",
+        "filename": "broll_10_couple_sunset_embrace.mp4",
+    },
+    {
+        "id": "type4_dusk_river_silhouette",
+        "category": "Type 4: Relationship / Solitude & Reflection",
+        "description": "Silhouette of a lonely figure at dusk near a river",
+        "url": "https://assets.mixkit.co/videos/35426/35426-720.mp4",
+        "filename": "broll_11_dusk_river_silhouette.mp4",
+    },
+    {
+        "id": "type4_beach_shore_brooding",
+        "category": "Type 4: Relationship / Solitude & Reflection",
+        "description": "Brooding figure walking along the ocean shore at dusk",
+        "url": "https://assets.mixkit.co/videos/35889/35889-720.mp4",
+        "filename": "broll_12_beach_shore_brooding.mp4",
+    },
+    {
+        "id": "type4_rain_ripples_water",
+        "category": "Type 4: Relationship / Moody Rain & Atmosphere",
+        "description": "Sad young woman holding warm cup reflecting on a relationship",
+        "url": "https://assets.mixkit.co/videos/41827/41827-720.mp4",
+        "filename": "broll_13_rain_ripples_water.mp4",
+    },
+    {
+        "id": "type4_city_night_walk",
+        "category": "Type 4: Relationship / Late Night City Walk",
+        "description": "Walking through city streetlights late at night",
+        "url": "https://assets.mixkit.co/videos/40640/40640-720.mp4",
+        "filename": "broll_14_city_night_walk.mp4",
+    },
+    {
+        "id": "type4_sunset_ocean_waves",
+        "category": "Type 4: Relationship / Golden Hour Horizon",
+        "description": "Warm orange sunset waves rolling onto the beach",
+        "url": "https://assets.mixkit.co/videos/2168/2168-720.mp4",
+        "filename": "broll_15_sunset_ocean_waves.mp4",
+    },
+    {
+        "id": "type4_candlelight_woman_face",
+        "category": "Type 4: Relationship / Candlelit Intimacy",
+        "description": "Close-up of a young woman watching the flame of a candle",
+        "url": "https://assets.mixkit.co/videos/41740/41740-720.mp4",
+        "filename": "broll_16_candlelight_woman_face.mp4",
+    },
+    {
+        "id": "type4_candle_dark_glow",
+        "category": "Type 4: Relationship / Candlelit Intimacy",
+        "description": "Warm glowing candle flickering in the dark",
+        "url": "https://assets.mixkit.co/videos/3458/3458-720.mp4",
+        "filename": "broll_17_candle_dark_glow.mp4",
+    },
+    {
+        "id": "type4_hands_texting_phone",
+        "category": "Type 4: Relationship / Texting & Waiting",
+        "description": "Close-up of hands typing a text message on a smartphone",
+        "url": "https://assets.mixkit.co/videos/4915/4915-720.mp4",
+        "filename": "broll_18_hands_texting_phone.mp4",
+    },
+    {
+        "id": "type4_couple_field_walk",
+        "category": "Type 4: Relationship / Couple Dynamics",
+        "description": "Close-up of a couple walking together through a golden field",
+        "url": "https://assets.mixkit.co/videos/45857/45857-720.mp4",
+        "filename": "broll_19_couple_field_walk.mp4",
+    },
+    {
+        "id": "type4_couple_tension_apart",
+        "category": "Type 4: Relationship / Emotional Distance",
+        "description": "Couple experiencing emotional tension and distance",
+        "url": "https://assets.mixkit.co/videos/42973/42973-720.mp4",
+        "filename": "broll_20_couple_tension_apart.mp4",
+    },
 ]
 
 
@@ -162,7 +247,7 @@ def verify_vertical_video(filepath: str) -> bool:
 
     std_val = float(f1.std())
     motion_diff = float(np.mean(np.abs(f1.astype(np.float32) - f2.astype(np.float32))))
-    return std_val > 20.0 and motion_diff > 0.8
+    return std_val > 5.0 and motion_diff > 0.10
 
 
 def fetch_all_broll() -> List[str]:

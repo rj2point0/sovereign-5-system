@@ -77,22 +77,23 @@
       "title_match": "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th",
       "comment": "Were you born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th, 27th, or 31st—and are you tired of caring more than they do? 👇",
       "seeded_at": "2026-10-30T12:09:07.577054"
+    },
+    "short_12": {
+      "video_id": "7702233127871139085",
+      "title_match": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th",
+      "comment": "Are you on this list (1, 3, 5, 8, 10, 12, 14, 17, 19, 21, 23, 26, 28, 30)—and do you struggle to let your guard down in love? 👇",
+      "seeded_at": "2026-10-30T18:39:39.417006"
+    },
+    "short_13": {
+      "video_id": "7702881083007798541",
+      "title_match": "Why do they act obsessed with you in week two, then go cold",
+      "comment": "Have you ever had someone act obsessed in week 2 and go cold by week 6? Drop your birthday month & day below 👇",
+      "seeded_at": "2026-10-31T10:14:52.383686"
     }
   },
-  "updated_at": "2026-10-30T12:10:19.425882",
+  "updated_at": "2026-10-31T10:16:31.896562",
   "last_verification": {
-    "checked_at": "2026-10-30T12:09:42.078362",
-    "videos": {
-      "short_15": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": true
-      },
-      "short_11": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": true
-      }
-    }
+    "checked_at": "2026-10-31T10:16:12.178232",
+    "videos": {}
   }
 }
