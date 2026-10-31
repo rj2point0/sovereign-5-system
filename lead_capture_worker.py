@@ -67,6 +67,7 @@ SMTP_USER = "adamvega@megavegaventures.com"
 SMTP_PASS = "msct rkqt xcwb inma"
 SENDER_DISPLAY = "Sacred Number Blueprint <adamvega@megavegaventures.com>"
 
+STRIPE_MINI_URL = "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404"
 STRIPE_BASE_URL = "https://buy.stripe.com/6oU7sLek90MdbVechV38401"
 STRIPE_BUMP_URL = "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402"
 BASE_FUNNEL_URL = "https://blueprint.megavegaventures.com/"
@@ -466,6 +467,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
 
     teaser_url = build_teaser_deep_link(name, dob, email_addr)
     stripe_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+    stripe_mini_url = f"{STRIPE_MINI_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
 
     subject = f"✦ Your 5-System Numerology Code: Master Overlap #{a1['number']} ({a1['archetype']})"
 
@@ -774,7 +776,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
                 ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
               </a>
               <br>
-              <a href="{teaser_url}#checkout" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.45);border-radius:8px;margin-bottom:10px;">
+              <a href="{stripe_mini_url}" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.45);border-radius:8px;margin-bottom:10px;">
                 ⚡ Or Grab the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →
               </a>
               <br>
@@ -822,6 +824,7 @@ def build_followup_email_2_loshu(lead: Dict[str, Any]) -> Tuple[str, str, str]:
 
     teaser_url = build_teaser_deep_link(name, dob, email_addr)
     stripe_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+    stripe_mini_url = f"{STRIPE_MINI_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
 
     subject = f"✦ {first_name}, the missing numbers in your Chinese Lo Shu Grid..."
     preheader = (
@@ -942,6 +945,7 @@ def build_followup_email_3_cycles(lead: Dict[str, Any]) -> Tuple[str, str, str]:
 
     teaser_url = build_teaser_deep_link(name, dob, email_addr)
     stripe_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+    stripe_mini_url = f"{STRIPE_MINI_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
 
     subject = f"⏳ {first_name}, your current 52-Day Rosicrucian Cycle is active"
     preheader = (

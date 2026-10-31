@@ -346,21 +346,21 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_15
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_18
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15")]
-        assert len(jh_specs) == 6, f"Expected 6 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18")]
+        assert len(jh_specs) == 9, f"Expected 9 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
             if s["id"] == "short_13":
                 assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for short_13, got {gate_res['fk_grade']}"
-            elif s["id"] in ("short_14", "short_15"):
+            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
-        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-15) verified!")
+        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-18) verified!")
 
         # TEST 10: 390x844 iPhone Mobile Viewport Above-The-Fold Audit + 1-Tap Instant Sample Reading + $17 Impulse Tier
         print("\n--- Test 10: 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Demo & $17 Impulse Tier ---")
@@ -406,16 +406,30 @@ async def test_all():
         assert await page_mob.locator('#partnerDobDay').input_value() == "13"
         assert await page_mob.locator('#partnerDobYear').input_value() == "1996"
 
-        # Verify $17 Impulse Tier renders and fires checkout_clicked with tier="love_mini"
+        # Verify $17 Impulse Tier renders and fires checkout_clicked with tier="love_mini" and redirects to dedicated $17 Stripe link
+        mini_cfg = await page_mob.evaluate("() => CONFIG.STRIPE_LINK_MINI")
+        assert mini_cfg == "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404", f"Expected dedicated $17 Stripe link, got {mini_cfg}"
         assert await page_mob.is_visible('#tier-card-mini') is True, "Expected #tier-card-mini ($17 tier) visible"
         assert await page_mob.is_visible('#btn-checkout-mini') is True, "Expected #btn-checkout-mini visible"
-        await page_mob.evaluate("window.__blockedStripeNav = null; window.addEventListener('beforeunload', e => e.preventDefault());")
-        await page_mob.route("https://buy.stripe.com/**", lambda route: route.fulfill(status=200, body="stripe_mock"))
+        intercepted_stripe_urls = []
+        async def mock_stripe_route(route):
+            intercepted_stripe_urls.append(route.request.url)
+            await route.fulfill(status=200, body="stripe_mock")
+        await page_mob.route("https://buy.stripe.com/**", mock_stripe_route)
         await page_mob.click('#btn-checkout-mini')
         await asyncio.sleep(0.25)
         mini_co_evs = [e for e in demo_events if e.get("event_type") == "checkout_clicked" and (e.get("extra") or {}).get("tier") == "love_mini"]
         assert len(mini_co_evs) >= 1, f"Expected checkout_clicked with tier='love_mini', got {demo_events}"
         assert (mini_co_evs[-1].get("extra") or {}).get("total") == 17
+        assert any("dRm8wP7VL0Md1gA0zd38404" in u for u in intercepted_stripe_urls), f"Expected navigation to $17 Stripe link dRm8wP7VL0Md1gA0zd38404, got {intercepted_stripe_urls}"
+
+        # Verify visiting /?tier=love_mini&unlocked=true renders the unlocked Partner Synastry & 90-Day Love Timing Report cleanly
+        await page_mob.goto("http://127.0.0.1:8080/?tier=love_mini&unlocked=true")
+        await page_mob.wait_for_selector('#view-dossier:not(.hidden)', timeout=5000)
+        assert await page_mob.is_visible('#partner-synastry-love-timing-report') is True, "Expected #partner-synastry-love-timing-report visible on ?tier=love_mini&unlocked=true"
+        mini_rep_txt = await page_mob.locator('#partner-synastry-love-timing-report').inner_text()
+        assert "PARTNER SYNASTRY & 90-DAY LOVE TIMING REPORT" in mini_rep_txt.upper()
+        assert "90 DAYS OF ROSICRUCIAN LOVE TIMING" in mini_rep_txt.upper()
 
         # Re-open sample reading if Stripe mock navigated, then click "Tap Here To Enter Your Real Birthday"
         await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")

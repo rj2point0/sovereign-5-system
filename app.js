@@ -3,7 +3,7 @@
    Bilingual Edition: English (EN) & Spanish (ES)
    ===================================================================== */
 const CONFIG = {
-  STRIPE_LINK_MINI: 'https://buy.stripe.com/6oU7sLek90MdbVechV38401',
+  STRIPE_LINK_MINI: 'https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404',
   STRIPE_LINK_BASE: 'https://buy.stripe.com/6oU7sLek90MdbVechV38401',
   STRIPE_LINK_BUMP: 'https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402',
   STRIPE_LINK_UPGRADE: 'https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403',
@@ -2122,6 +2122,157 @@ const CONFIG = {
     return pages;
   }
 
+  function buildLoveMiniUnlockedHtml(r, tier) {
+    const isEs = state.lang === 'es';
+    const C_LANG = C.get(state.lang);
+    const uMoolank = r.vedic.moolank.value;
+    const uRuler = r.vedic.moolank.ruler.planet;
+    const uLife = r.pythagorean.lifePath.value;
+    const uLifeArch = (C_LANG.ARCHETYPES[uLife] || {}).name || ('#' + uLife);
+    const relMap = isEs ? REL_ATTACHMENT_MAP_ES : REL_ATTACHMENT_MAP_EN;
+    const attInfo = relMap[uMoolank] || relMap[7];
+
+    const rawPartnerIso = (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || state.partnerDob || '1996-04-13';
+    const parts = rawPartnerIso.split('-');
+    const pYear = parts[0] || '1996';
+    const pMonth = parts[1] || '04';
+    const pDay = parts[2] || '13';
+    const rep = getPartnerCompatReport(r, pMonth, pDay, pYear, state.lang);
+
+    const monthsArr = isEs ? DOB_MONTHS_ES : DOB_MONTHS_EN;
+    const pMonthOpts = monthsArr.map((m, idx) => {
+      const val = String(idx + 1).padStart(2, '0');
+      return `<option value="${val}" ${val === pMonth ? 'selected' : ''}>${val} · ${m}</option>`;
+    }).join('');
+    let pDayOpts = '';
+    for (let d = 1; d <= 31; d++) {
+      const val = String(d).padStart(2, '0');
+      pDayOpts += `<option value="${val}" ${val === pDay ? 'selected' : ''}>${d}</option>`;
+    }
+    let pYearOpts = '';
+    for (let y = 2006; y >= 1940; y--) {
+      const val = String(y);
+      pYearOpts += `<option value="${val}" ${val === pYear ? 'selected' : ''}>${y}</option>`;
+    }
+
+    const cy = r.cycles;
+    const curT = C_LANG.CYCLE_TEXT[cy.current.index];
+    const nextIdx = (cy.current.index + 1) % cy.periods.length;
+    const nx = cy.periods[nextIdx];
+    const nxT = C_LANG.CYCLE_TEXT[nx.index];
+    const name = esc(r.input.fullName);
+
+    return `
+      <section id="partner-synastry-love-timing-report" class="card p-5 sm:p-7 mb-8 border-2 border-gold/65 bg-gradient-to-b from-gold/10 via-[#121318] to-[#0E0F14] rounded-2xl avoid-break">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gold/25 pb-4">
+          <span class="badge-gold !text-[0.62rem]">✦ ${isEs ? 'DESBLOQUEADO · SINASTRÍA DE PAREJA Y TIMING AMOROSO DE 90 DÍAS' : 'UNLOCKED · PARTNER SYNASTRY & 90-DAY LOVE TIMING REPORT'}</span>
+          <span class="text-xs text-zinc-400">${isEs ? 'Preparado para' : 'Prepared for'} <b class="text-ivory">${name}</b> (${esc(r.input.birthDate)})</span>
+        </div>
+
+        <h2 class="font-display text-2xl sm:text-3xl text-gold-grad mt-4 leading-snug">
+          ${isEs ? 'Tu Código de Apego, Compatibilidad de Pareja y Próximos 90 Días en el Amor' : 'Your Attachment Loop, Partner Synastry & Next 90 Days of Love Timing'}
+        </h2>
+        <p class="text-xs sm:text-sm text-zinc-300 mt-2 leading-relaxed">
+          ${isEs
+            ? 'Este informe desbloqueado cruza tu Sendero Occidental con tu Conductor Natal Védico (Moolank), evalúa tu química y puntos ciegos Lo Shu con tu pareja o persona especial, y traza tus próximas dos ventanas planetarias de 52 días.'
+            : 'This unlocked report cross-references your Western Life Path against your Vedic Birth-Day Driver (Moolank), scores your chemistry and shared Lo Shu blindspots with your partner or crush, and maps your next two 52-day planetary love windows.'}
+        </p>
+
+        <!-- 1. Attachment vs Attraction Split -->
+        <div class="mt-5 p-4 sm:p-5 rounded-xl bg-black/40 border border-white/10">
+          <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gold font-semibold">
+            ${isEs ? '1 · TU DIVISIÓN INTERNA DE APEGO Y ATRACCIÓN (2 AM LOOP)' : '1 · YOUR ATTACHMENT VS. ATTRACTION SPLIT (2 AM LOOP)'}
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3 mt-3">
+            <div class="card-soft p-3.5 border border-white/10">
+              <div class="text-[0.6rem] uppercase tracking-wider text-zinc-400">${isEs ? 'Lo Que Crees Que Necesitas (Sendero Occidental)' : 'Who You Think You Need (Western Life Path)'}</div>
+              <div class="font-display text-lg text-champagne mt-1">#${uLife} · ${esc(uLifeArch)}</div>
+              <p class="text-xs text-zinc-300 mt-1">${isEs ? 'Tu mente consciente busca estabilidad, propósito compartido y reciprocidad clara.' : 'Your conscious mind looks for consistency, shared values, and predictable emotional safety.'}</p>
+            </div>
+            <div class="card-soft p-3.5 border border-gold/40">
+              <div class="text-[0.6rem] uppercase tracking-wider text-gold">${isEs ? 'Lo Que Realmente Persigues (Conductor Védico Natal)' : 'Who You Instinctively Chase (Vedic Birth-Day Driver)'}</div>
+              <div class="font-display text-lg text-gold mt-1">#${uMoolank} · ${esc(uRuler)} (${esc(attInfo.style)})</div>
+              <p class="text-xs text-zinc-200 mt-1">${attInfo.chase}</p>
+            </div>
+          </div>
+          <p class="text-xs text-rose-200/90 mt-3 pt-2.5 border-t border-white/10">
+            <b>${isEs ? 'Punto Ciego a Romper:' : 'Root Attachment Blindspot to Break:'}</b> ${attInfo.blindspot}
+          </p>
+        </div>
+
+        <!-- 2. Interactive Partner Synastry Matrix -->
+        <div class="mt-5 p-4 sm:p-5 rounded-xl bg-black/40 border border-gold/35">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gold font-semibold">
+              ${isEs ? '2 · MATRIZ DE COMPATIBILIDAD Y SINASTRÍA DE PAREJA' : '2 · PARTNER / CRUSH SYNASTRY & COMMUNICATION MATRIX'}
+            </div>
+            <span class="text-[0.68rem] text-zinc-400">${isEs ? 'Fecha de Pareja:' : 'Partner Birthday:'} <b class="text-champagne">${esc(rep.pIso)}</b></span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 mt-3 no-print">
+            <select id="dossierPartnerMonth" aria-label="Partner Birth Month" class="field !py-2 !px-2.5 text-xs">${pMonthOpts}</select>
+            <select id="dossierPartnerDay" aria-label="Partner Birth Day" class="field !py-2 !px-2.5 text-xs">${pDayOpts}</select>
+            <select id="dossierPartnerYear" aria-label="Partner Birth Year" class="field !py-2 !px-2.5 text-xs">${pYearOpts}</select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center mt-4">
+            <div class="card-soft p-3.5 border border-gold/40">
+              <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Química y Magnetismo' : 'Chemistry & Magnetism'}</div>
+              <div class="font-display text-2xl sm:text-3xl text-gold mt-1">${rep.magnetismScore}%</div>
+              <div class="text-[0.65rem] text-emerald-300 mt-0.5">${isEs ? 'Atracción Magnética' : 'High Initial Pull'}</div>
+            </div>
+            <div class="card-soft p-3.5 border border-white/10">
+              <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Conductor Natal de Pareja' : 'Partner Birth-Day Driver'}</div>
+              <div class="font-display text-xl text-champagne mt-1">#${rep.pMoolank} · ${esc(rep.pRuler)}</div>
+              <div class="text-[0.65rem] text-zinc-400 mt-0.5">${isEs ? 'Sendero Occidental' : 'Western Life Path'} #${rep.pLife}</div>
+            </div>
+            <div class="card-soft p-3.5 border border-rose-400/35 bg-rose-950/20">
+              <div class="text-[0.6rem] uppercase tracking-[0.16em] text-rose-300">${isEs ? 'Riesgo de Fricción' : 'Unresolved Friction Risk'}</div>
+              <div class="font-display text-sm sm:text-base text-rose-200 mt-1.5">${rep.frictionLevel}</div>
+              <div class="text-[0.65rem] text-zinc-300 mt-0.5">${rep.sharedMissingCount} ${isEs ? 'Vacíos Lo Shu Compartidos' : 'Shared Lo Shu Blindspots'}</div>
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-3.5">${rep.summary}</p>
+          <div class="mt-3 p-3.5 rounded-lg bg-gold/10 border border-gold/30 text-xs text-champagne leading-relaxed">
+            <b>✦ ${isEs ? 'Protocolo de Comunicación para #' + uMoolank + ' × #' + rep.pMoolank + ':' : 'Communication & Reset Rule for #' + uMoolank + ' × #' + rep.pMoolank + ':'}</b>
+            ${isEs
+              ? `Cuando un #${rep.pMoolank} (${rep.pRuler}) se siente presionado o interrogado, su sistema nervioso se cierra. En lugar de exigir respuestas inmediatas desde el miedo, dale 24 horas de espacio tranquilo y expresa tu necesidad en una sola frase clara sin reproches. Eso desactiva su reflejo de huida y hace que vuelva hacia ti por decisión propia.`
+              : `When a #${rep.pMoolank} (${rep.pRuler}) feels interrogated or emotionally cornered, their nervous system shuts down. Instead of double-texting or demanding instant reassurance when anxious, state your boundary warmly in one sentence and step back for 24 hours. Giving their #${rep.pMoolank} driver breathing room flips the chase dynamic and brings them back toward you.`}
+          </div>
+        </div>
+
+        <!-- 3. Next 90 Days of Rosicrucian Love Timing -->
+        <div class="mt-5 p-4 sm:p-5 rounded-xl bg-black/40 border border-white/10">
+          <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gold font-semibold">
+            ${isEs ? '3 · TUS PRÓXIMOS 90 DÍAS DE TIMING AMOROSO ROSACRUZ' : '3 · YOUR NEXT 90 DAYS OF ROSICRUCIAN LOVE TIMING'}
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3.5 mt-3">
+            <div class="card-soft p-4 border border-gold/45">
+              <div class="flex items-center justify-between">
+                <span class="badge-gold !text-[0.55rem]">${isEs ? 'ACTIVO HOY · ' + cy.daysRemaining + ' DÍAS RESTANTES' : 'ACTIVE TODAY · ' + cy.daysRemaining + ' DAYS LEFT'}</span>
+                <span class="text-xs text-zinc-400 font-mono">${cy.current.startLabel} – ${cy.current.endLabel}</span>
+              </div>
+              <div class="font-display text-lg text-champagne mt-2">${cy.current.glyph} ${cy.current.name}</div>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${curT.directive}</p>
+              <p class="text-[0.7rem] text-emerald-300 mt-2"><b>${isEs ? 'En el Amor Ahora:' : 'Love Action Now:'}</b> ${curT.do[0]}</p>
+              <p class="text-[0.7rem] text-rose-300 mt-1"><b>${isEs ? 'Evitar Ahora:' : 'Avoid Right Now:'}</b> ${curT.avoid[0]}</p>
+            </div>
+            <div class="card-soft p-4 border border-white/10">
+              <div class="flex items-center justify-between">
+                <span class="text-[0.6rem] uppercase tracking-wider text-gold font-semibold">${isEs ? 'SIGUIENTE VENTANA DE 52 DÍAS' : 'NEXT 52-DAY WINDOW'}</span>
+                <span class="text-xs text-zinc-400 font-mono">${nx.startLabel} – ${nx.endLabel}</span>
+              </div>
+              <div class="font-display text-lg text-ivory mt-2">${nx.glyph} ${nx.name}</div>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${nxT.directive}</p>
+              <p class="text-[0.7rem] text-emerald-300 mt-2"><b>${isEs ? 'Mejor Movimiento:' : 'Best Love Move:'}</b> ${nxT.do[0]}</p>
+              <p class="text-[0.7rem] text-rose-300 mt-1"><b>${isEs ? 'Cuidado Con:' : 'Watch Out For:'}</b> ${nxT.avoid[0]}</p>
+            </div>
+          </div>
+        </div>
+      </section>`;
+  }
+
   function renderDossier() {
     const r = state.result, tier = state.profile.tier || 'full';
     const C_LANG = C.get(state.lang);
@@ -2160,7 +2311,9 @@ const CONFIG = {
         </div>
       </div>`;
 
-    const html = pages.map((p, i) => {
+    const loveMiniHeader = buildLoveMiniUnlockedHtml(r, tier);
+
+    const html = loveMiniHeader + pages.map((p, i) => {
       const isCover = p.cover;
       const head = isCover ? '' : `<div class="page-head"><span>${state.lang === 'es' ? 'EL PLANO SOBERANO' : 'SOVEREIGN 5-SYSTEM'}</span><span class="hidden sm:inline">${name}</span><span>${p.title}</span></div>`;
       const foot = isCover ? '' : `<div class="page-foot"><span>${state.lang === 'es' ? 'CONFIDENCIAL' : 'CONFIDENTIAL'}</span><span>${state.lang === 'es' ? 'PÁG.' : 'PAGE'} ${i + 1} / ${total}</span></div>`;
@@ -2427,6 +2580,21 @@ const CONFIG = {
         runPartnerCompatibilityCheck();
       }
     }
+    if (['dossierPartnerMonth', 'dossierPartnerDay', 'dossierPartnerYear'].includes(e.target.id)) {
+      const mEl = $('#dossierPartnerMonth');
+      const dEl = $('#dossierPartnerDay');
+      const yEl = $('#dossierPartnerYear');
+      if (mEl && dEl && yEl && mEl.value && dEl.value && yEl.value) {
+        const newIso = `${yEl.value}-${String(mEl.value).padStart(2, '0')}-${String(dEl.value).padStart(2, '0')}`;
+        state.partnerDob = newIso;
+        if (state.profile) {
+          state.profile.partner_dob = newIso;
+          state.profile.partnerDob = newIso;
+          if (!state.profile.isSample) saveProfile(state.profile);
+        }
+        renderDossier();
+      }
+    }
   });
 
   // Handle claim form submission (for paying customers on a new device or without localStorage)
@@ -2674,13 +2842,27 @@ const CONFIG = {
         return;
       }
     } else if (urlTier) {
-      // Paying customer arrived with unlocked=true or tier=base/full on a device WITHOUT localStorage!
+      // Paying customer arrived with unlocked=true or tier=love_mini/base/full on a device WITHOUT localStorage!
       state.pendingTier = urlTier;
+      state.partnerDob = '1996-04-13';
+      state.profile = {
+        id: leadId(),
+        fullName: 'Chloe',
+        birthDate: '1998-07-16',
+        partner_dob: '1996-04-13',
+        partnerDob: '1996-04-13',
+        email: '',
+        tier: urlTier,
+        isSample: true,
+        createdAt: new Date().toISOString(),
+        utm: utm(),
+      };
+      state.result = E.calculate(state.profile.fullName, state.profile.birthDate);
       showView('dossier');
       $('#claim-bar').classList.remove('hidden');
-      $('#dossier-actions').classList.add('hidden');
-      $('#dossier-root').innerHTML = '';
-      toast(state.lang === 'es' ? '✦ Pago confirmado. Ingresa tus datos para generar tu PDF desbloqueado.' : '✦ Payment confirmed. Enter your details to generate your unlocked PDF.', 6000);
+      $('#dossier-actions').classList.remove('hidden');
+      renderDossier();
+      toast(state.lang === 'es' ? '✦ Pago confirmado. Ingresa tus datos arriba si deseas actualizar tu fecha o descarga tu reporte desbloqueado.' : '✦ Payment confirmed. Your unlocked Partner Synastry & 90-Day Love Timing Report is ready below (or enter your birth details above to customize).', 6000);
       return;
     }
     showView('hero');

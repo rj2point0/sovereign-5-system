@@ -322,11 +322,17 @@ class TikTokAutoUploader:
         date_inputs = page.locator('input[value*="2026-"], input[placeholder*="YYYY"]')
         if await date_inputs.count() > 0:
             try:
+                cur_date_val = (await date_inputs.first.get_attribute("value") or "").strip()
                 await date_inputs.first.click(force=True)
                 await asyncio.sleep(0.8)
-                # If target date is in a future month relative to today, click the next-month arrow on the calendar header
-                now_dt = datetime.now()
-                month_diff = (dt.year - now_dt.year) * 12 + (dt.month - now_dt.month)
+                # Determine which month the calendar popup is currently displaying from cur_date_val (or fallback to today)
+                base_dt = datetime.now()
+                try:
+                    if len(cur_date_val) >= 7 and cur_date_val[4] == "-":
+                        base_dt = datetime.strptime(cur_date_val[:10], "%Y-%m-%d")
+                except Exception:
+                    pass
+                month_diff = (dt.year - base_dt.year) * 12 + (dt.month - base_dt.month)
                 for _ in range(max(0, month_diff)):
                     next_arrows = page.locator(
                         'span.arrow:last-child, div[class*="calendar"] svg:last-of-type, button[aria-label*="Next"], span[class*="next"]'

@@ -9,20 +9,32 @@ async def test_checkout():
         await page.goto("http://127.0.0.1:8080/")
 
         # Verify CONFIG values
+        mini_link = await page.evaluate("() => CONFIG.STRIPE_LINK_MINI")
         base_link = await page.evaluate("() => CONFIG.STRIPE_LINK_BASE")
         bump_link = await page.evaluate("() => CONFIG.STRIPE_LINK_BUMP")
         upgrade_link = await page.evaluate("() => CONFIG.STRIPE_LINK_UPGRADE")
         demo_mode = await page.evaluate("() => CONFIG.DEMO_MODE")
 
-        print(f"Base Link: {base_link}")
-        print(f"Bump Link: {bump_link}")
-        print(f"Upgrade Link: {upgrade_link}")
+        print(f"Mini Link ($17): {mini_link}")
+        print(f"Base Link ($37): {base_link}")
+        print(f"Bump Link ($84): {bump_link}")
+        print(f"Upgrade Link ($47): {upgrade_link}")
         print(f"Demo Mode: {demo_mode}")
 
+        assert mini_link == "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404"
         assert base_link == "https://buy.stripe.com/6oU7sLek90MdbVechV38401"
         assert bump_link == "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402"
         assert upgrade_link == "https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403"
         assert demo_mode is False, "DEMO_MODE should be false for public traffic"
+
+        # Verify visiting /?tier=love_mini&unlocked=true renders the unlocked Partner Synastry & 90-Day Love Timing report cleanly
+        page_mini = await browser.new_page()
+        await page_mini.goto("http://127.0.0.1:8080/?tier=love_mini&unlocked=true")
+        await page_mini.wait_for_selector("#view-dossier:not(.hidden)", timeout=5000)
+        assert await page_mini.is_visible("#partner-synastry-love-timing-report") is True, "Expected #partner-synastry-love-timing-report visible on ?tier=love_mini&unlocked=true"
+        rep_txt = await page_mini.locator("#partner-synastry-love-timing-report").inner_text()
+        assert "PARTNER SYNASTRY & 90-DAY LOVE TIMING REPORT" in rep_txt.upper()
+        await page_mini.close()
 
         # Fill Founder Sample and go to teaser
         await page.click('button[data-action="sample"]')

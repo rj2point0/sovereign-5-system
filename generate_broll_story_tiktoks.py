@@ -710,6 +710,121 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#loshugrid", "#datingadvice", "#overgiver", "#lovecode"
         ],
     },
+    {
+        "id": "short_16",
+        "cohort": "Cohort C · Outlier Batch 4",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_16_last_text_crumbs.mp4",
+        "hook_box_text": "Look at the last text you sent them. That isn't love—that's your birth code begging for crumbs.",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Look at the last text you sent them. That isn't love—that's your birth code begging for crumbs. "
+            "If you were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, 25th, or 29th, you panic when someone goes quiet. "
+            "But chasing them only triggers their runner number. Therefore, the harder you text, the faster they pull away. "
+            "Check both of your birthdays at the link in bio to see how to flip the chase."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_02_late_night_phone.mp4"),
+            (4.2, 8.0, "broll_01_window_reflection.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Look at the last text you sent them. That isn't love—that's your birth code begging for crumbs "
+            "(Born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, 25th, or 29th—here is how to flip the chase) 💔✨ "
+            "#relationships #anxiousattachment #textingadvice #numerology #datingadvice #nocontact #lovecode #attachmentstyle"
+        ),
+        "first_comment": "Were you born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, 25th, or 29th—and do you panic when they go quiet? 👇",
+        "hashtags": [
+            "#relationships", "#anxiousattachment", "#textingadvice", "#numerology",
+            "#datingadvice", "#nocontact", "#lovecode", "#attachmentstyle"
+        ],
+    },
+    {
+        "id": "short_17",
+        "cohort": "Cohort C · Outlier Batch 4",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_17_three_months_situationship.mp4",
+        "hook_box_text": "If you have to ask what you are after three months, their birth code already gave you the answer.",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "If you have to ask what you are after three months, their birth code already gave you the answer. "
+            "You keep waiting for them to be ready. But when your Life Path craves commitment and their birth day number craves freedom: "
+            "they will keep you in the gray zone forever. Therefore, waiting another month won't change their mind. "
+            "Plug their birthday into the link in bio to see if they will ever commit."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_03_thoughtful_woman.mp4"),
+            (4.2, 8.0, "broll_08_phone_discovery.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "If you have to ask what you are after three months, their birth code already gave you the answer "
+            "(when your Life Path craves commitment and their birth day craves freedom) 🥀🔮 "
+            "#situationship #relationships #datingadvice #numerology #commitmentissues #compatibility #lovecode #heisnotthatintoyou"
+        ),
+        "first_comment": "Have you ever waited months for someone to be ready to commit? Drop both of your birth days below 👇",
+        "hashtags": [
+            "#situationship", "#relationships", "#datingadvice", "#numerology",
+            "#commitmentissues", "#compatibility", "#lovecode", "#heisnotthatintoyou"
+        ],
+    },
+    {
+        "id": "short_18",
+        "cohort": "Cohort C · Outlier Batch 4",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_18_cares_less_power.mp4",
+        "hook_box_text": "They didn't suddenly lose feelings. You just stopped accepting bare minimum effort.",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "They didn't suddenly lose feelings. You just stopped accepting bare minimum effort. "
+            "If you were born on the 1st, 3rd, 4th, 8th, 9th, 10th, 13th, 17th, 18th, 19th, 22nd, 26th, 27th, 28th, or 31st, "
+            "you carry the whole relationship on your back. But the second you match their energy, they call you cold. "
+            "Therefore, your birth code is entering a boundary reset year. "
+            "See your next 90 days of love timing at the link in bio right now."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_07_journaling_ritual.mp4"),
+            (4.2, 8.0, "broll_02_late_night_phone.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_anchors.png", 2.8),
+            ("image", "scenes_cache/scene_relationships.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "They didn't suddenly lose feelings. You just stopped accepting bare minimum effort "
+            "(Born on the 1st, 3rd, 4th, 8th, 9th, 10th, 13th, 17th, 18th, 19th, 22nd, 26th, 27th, 28th, or 31st—your boundary reset year) ⚡👑 "
+            "#relationships #bareminimum #highstandards #numerology #datingadvice #selfworth #lovecode #boundaries"
+        ),
+        "first_comment": "Were you born on the 1st, 3rd, 4th, 8th, 9th, 10th, 13th, 17th, 18th, 19th, 22nd, 26th, 27th, 28th, or 31st—and did you match their energy? 👇",
+        "hashtags": [
+            "#relationships", "#bareminimum", "#highstandards", "#numerology",
+            "#datingadvice", "#selfworth", "#lovecode", "#boundaries"
+        ],
+    },
 ]
 
 

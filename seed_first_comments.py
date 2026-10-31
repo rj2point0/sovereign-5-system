@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_18",
+        "video_id": None,
+        "title_match": "They didn't suddenly lose feelings. You just stopped accepting bare minimum",
+        "comment": "Were you born on the 1st, 3rd, 4th, 8th, 9th, 10th, 13th, 17th, 18th, 19th, 22nd, 26th, 27th, 28th, or 31st—and did you match their energy? 👇",
+    },
+    {
+        "id": "short_17",
+        "video_id": None,
+        "title_match": "If you have to ask what you are after three months, their birth code",
+        "comment": "Have you ever waited months for someone to be ready to commit? Drop both of your birth days below 👇",
+    },
+    {
+        "id": "short_16",
+        "video_id": None,
+        "title_match": "Look at the last text you sent them. That isn't love",
+        "comment": "Were you born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, 25th, or 29th—and do you panic when they go quiet? 👇",
+    },
+    {
         "id": "short_15",
         "video_id": None,
         "title_match": "You don't actually miss your ex. You miss the person they faked",
