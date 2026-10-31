@@ -42,13 +42,13 @@ async def verify_live_pages():
         assert sample_pub_vis is False, "Founder Sample button MUST be hidden on public landing page!"
         print("Founder Sample button cleanly hidden for public visitors!")
 
-        # Test 2b: Verify 390x844 Mobile Viewport Above-The-Fold Submit Button, Micro-Badge & 1-Tap Sample Demo on Live Site
-        page_mob = await browser.new_page(viewport={"width": 390, "height": 844})
+        # Test 2b: Verify 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Submit Button, Micro-Badge & 1-Tap Sample Demo on Live Site
+        page_mob = await browser.new_page(viewport={"width": 390, "height": 660})
         await page_mob.goto(f"{base_url}?utm_source=ig_bio&cohort=ig_reels")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)
         for sel in ('#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
-            assert box is not None and (box["y"] + box["height"]) <= 780, f"Expected live {sel} bottom <= 780px at 390x844, got {box}"
+            assert box is not None and (box["y"] + box["height"]) <= 635, f"Expected live {sel} bottom <= 635px at 390x660, got {box}"
         await page_mob.click('#btn-instant-demo')
         await page_mob.wait_for_selector('#sample-reading-banner', timeout=8000)
         assert await page_mob.is_visible('#partner-compat-result') is True
@@ -56,7 +56,7 @@ async def verify_live_pages():
         await page_mob.click('#btn-enter-real-birthday')
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)
         assert await page_mob.locator('#fullName').input_value() == ""
-        print("Live 390x844 mobile viewport verified: Submit button, micro-badge & #btn-instant-demo all <= 780px, 1-Tap Sample Reading & $17 Impulse Tier active!")
+        print("Live 390x660 TikTok In-App Browser viewport verified: Submit button, micro-badge & #btn-instant-demo all <= 635px, 1-Tap Sample Reading & $17 Impulse Tier active!")
         await page_mob.close()
 
         # Verify Founder Sample button IS visible with ?vip=adam

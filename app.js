@@ -2350,6 +2350,15 @@ const CONFIG = {
     if (!t) return;
     const a = t.dataset.action;
     if (a === 'sample') { fillForm(CONFIG.SAMPLE); showErrors({}); }
+    else if (a === 'toggle-hero-email') {
+      const eb = $('#hero-email-block');
+      if (eb) {
+        eb.classList.add('mobile-expanded');
+        t.classList.add('hidden');
+        const em = $('#email');
+        if (em) em.focus();
+      }
+    }
     else if (a === 'instant-demo') {
       runInstantSampleDemo();
     }

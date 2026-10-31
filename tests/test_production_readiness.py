@@ -362,9 +362,9 @@ async def test_all():
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
         print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-18) verified!")
 
-        # TEST 10: 390x844 iPhone Mobile Viewport Above-The-Fold Audit + 1-Tap Instant Sample Reading + $17 Impulse Tier
-        print("\n--- Test 10: 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Demo & $17 Impulse Tier ---")
-        page_mob = await browser.new_page(viewport={"width": 390, "height": 844})
+        # TEST 10: 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Audit + 1-Tap Instant Sample Reading + $17 Impulse Tier
+        print("\n--- Test 10: 390x660 TikTok In-App Browser Viewport Audit (bottom <= 635px), 1-Tap Sample Demo & $17 Impulse Tier ---")
+        page_mob = await browser.new_page(viewport={"width": 390, "height": 660})
         demo_events = []
         async def capture_demo_webhook(route):
             req = route.request
@@ -378,14 +378,15 @@ async def test_all():
             else:
                 await route.continue_()
         await page_mob.route("**/*", capture_demo_webhook)
-        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        assert await page_mob.is_visible('.system-strip') is False, "Expected .system-strip to be hidden on <600px mobile viewport"
+        assert await page_mob.is_visible('#hero-email-block') is False, "Expected #hero-email-block to be collapsed by default on <600px mobile viewport"
         for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
-            assert box is not None, f"Missing bounding box for {sel} at 390x844"
+            assert box is not None, f"Missing bounding box for {sel} at 390x660"
             bottom_y = box["y"] + box["height"]
-            assert bottom_y <= 780, f"Expected {sel} bottom <= 780px on 390x844 iPhone viewport, got {bottom_y:.1f}px"
-            assert bottom_y <= 800, f"Expected {sel} bottom <= 800px on 390x844 iPhone viewport, got {bottom_y:.1f}px"
+            assert bottom_y <= 635, f"Expected {sel} bottom <= 635px on 390x660 TikTok In-App Browser viewport, got {bottom_y:.1f}px"
         micro_txt = await page_mob.locator('#hero-micro-badge').inner_text()
         assert "Takes 5 seconds" in micro_txt and "No birth time needed" in micro_txt and "Instant Partner Compatibility check on next screen" in micro_txt, f"Unexpected micro-badge: {micro_txt}"
         demo_btn_txt = await page_mob.locator('#btn-instant-demo').inner_text()
