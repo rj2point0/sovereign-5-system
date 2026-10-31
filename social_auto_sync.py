@@ -64,6 +64,10 @@ def main():
         "3. TikTok First-Comment Seeder (Newly Live Videos)",
         [PYTHON_EXE, os.path.join(BASE_DIR, "seed_first_comments.py"), "--wait-seconds", "15"],
     )
+    run_step(
+        "4. TikTok Top-3 Video Pinner (short_02, short_10, short_11)",
+        [PYTHON_EXE, os.path.join(BASE_DIR, "pin_top_videos.py")],
+    )
 
 
 if __name__ == "__main__":
