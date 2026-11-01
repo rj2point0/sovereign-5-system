@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-10-31T10:13:10.758792",
+  "updated_at": "2026-11-01T15:05:02.349641",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -159,15 +159,6 @@
       "uploaded_at": "2026-10-29T16:18:44.407565",
       "caption_preview": "Born on the 1st, 3rd, 5th, 8th, 10th, 12th, 14th, 17th, 19th, 21st, 23rd, 26th, 28th, or 30th? Why you want someone stro"
     },
-    "tiktok_short_15_miss_fake_version.mp4": {
-      "filename": "tiktok_short_15_miss_fake_version.mp4",
-      "ad_id": "short_15",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-11-01 11:00",
-      "uploaded_at": "2026-10-30T07:35:36.880286",
-      "caption_preview": "You don't actually miss your ex. You miss the person they faked for the first 30 days (Born on the 1st, 4th, 6th, 8th, 9"
-    },
     "tiktok_short_14_test_crush_birthday.mp4": {
       "filename": "tiktok_short_14_test_crush_birthday.mp4",
       "ad_id": "short_14",
@@ -212,6 +203,42 @@
       "schedule_time": null,
       "uploaded_at": "2026-10-31T10:13:10.758792",
       "caption_preview": "Why do they act obsessed with you in week two, then go cold in week six? (Born on the 2nd, 7th, 11th, 16th, 20th, 25th, "
+    },
+    "tiktok_short_19_text_back_anxiety.mp4": {
+      "filename": "tiktok_short_19_text_back_anxiety.mp4",
+      "ad_id": "short_19",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-03 11:00",
+      "uploaded_at": "2026-11-01T15:00:07.762935",
+      "caption_preview": "Why do you stare at your phone waiting for a text back? (Born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 2"
+    },
+    "tiktok_short_20_wrong_birthday_match.mp4": {
+      "filename": "tiktok_short_20_wrong_birthday_match.mp4",
+      "ad_id": "short_20",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-03 18:30",
+      "uploaded_at": "2026-11-01T15:01:01.053010",
+      "caption_preview": "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy (why checking only zodiac signs misses yo"
+    },
+    "tiktok_short_21_november_love_shift.mp4": {
+      "filename": "tiktok_short_21_november_love_shift.mp4",
+      "ad_id": "short_21",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-04 11:00",
+      "uploaded_at": "2026-11-01T15:01:41.476794",
+      "caption_preview": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? Why the "
+    },
+    "tiktok_short_15_miss_fake_version.mp4": {
+      "filename": "tiktok_short_15_miss_fake_version.mp4",
+      "ad_id": "short_15",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-01T15:05:02.349641",
+      "caption_preview": "You don't actually miss your ex. You miss the person they faked for the first 30 days (Born on the 1st, 4th, 6th, 8th, 9"
     }
   }
 }

@@ -351,24 +351,24 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_18
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_21
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18")]
-        assert len(jh_specs) == 9, f"Expected 9 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21")]
+        assert len(jh_specs) == 12, f"Expected 12 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
             if s["id"] == "short_13":
                 assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for short_13, got {gate_res['fk_grade']}"
-            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18"):
+            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
-        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-18) verified!")
+        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-21) verified!")
 
-        # TEST 10: 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Audit + 1-Tap Instant Sample Reading + $17 Impulse Tier
-        print("\n--- Test 10: 390x660 TikTok In-App Browser Viewport Audit (bottom <= 635px), 1-Tap Sample Demo & $17 Impulse Tier ---")
+        # TEST 10: 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Audit + Optional Name + 1-Tap Quick-Day Strip + 1-Tap Instant Sample Reading + $17 Impulse Tier
+        print("\n--- Test 10: 390x660 TikTok In-App Browser Viewport Audit (bottom <= 635px), Blank Name Submit, #quick-day-strip, 1-Tap Sample Demo & $17 Impulse Tier ---")
         page_mob = await browser.new_page(viewport={"width": 390, "height": 660})
         demo_events = []
         async def capture_demo_webhook(route):
@@ -387,11 +387,35 @@ async def test_all():
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
         assert await page_mob.is_visible('.system-strip') is False, "Expected .system-strip to be hidden on <600px mobile viewport"
         assert await page_mob.is_visible('#hero-email-block') is False, "Expected #hero-email-block to be collapsed by default on <600px mobile viewport"
-        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
+        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#quick-day-strip', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
             assert box is not None, f"Missing bounding box for {sel} at 390x660"
             bottom_y = box["y"] + box["height"]
             assert bottom_y <= 635, f"Expected {sel} bottom <= 635px on 390x660 TikTok In-App Browser viewport, got {bottom_y:.1f}px"
+
+        # 10a) Verify submitting Hero form with #fullName left blank + Month/Day/Year selected succeeds without error
+        await page_mob.fill('#fullName', '')
+        await page_mob.select_option('#dobMonth', '07')
+        await page_mob.select_option('#dobDay', '16')
+        await page_mob.select_option('#dobYear', '1994')
+        await page_mob.click('#heroForm button[type="submit"]')
+        await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=6000)
+        assert await page_mob.is_visible('#teaser-relationship-clash') is True, "Expected Teaser view to open when #fullName is left blank!"
+
+        # 10b) Return to Hero and verify tapping a day in #quick-day-strip fires quick_day_selected and opens Teaser immediately
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        await page_mob.click('#quick-day-strip button[data-action="quick-day"][data-day="25"]')
+        await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=5000)
+        await asyncio.sleep(0.2)
+        qd_ev_list = [e for e in demo_events if e.get("event_type") == "quick_day_selected"]
+        assert len(qd_ev_list) >= 1, f"Expected quick_day_selected event, got {[e.get('event_type') for e in demo_events]}"
+        assert (qd_ev_list[-1].get("extra") or {}).get("birth_day") == 25, f"Expected birth_day=25 in quick_day_selected: {qd_ev_list[-1]}"
+        assert await page_mob.is_visible('#quick-day-banner') is True, "Expected #quick-day-banner visible on Teaser after 1-tap quick-day click"
+
+        # Return to Hero to test #btn-instant-demo
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
         micro_txt = await page_mob.locator('#hero-micro-badge').inner_text()
         assert "Takes 5 seconds" in micro_txt and "No birth time needed" in micro_txt and "Instant Partner Compatibility check on next screen" in micro_txt, f"Unexpected micro-badge: {micro_txt}"
         demo_btn_txt = await page_mob.locator('#btn-instant-demo').inner_text()

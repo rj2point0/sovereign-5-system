@@ -843,6 +843,126 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#datingadvice", "#selfworth", "#lovecode", "#boundaries"
         ],
     },
+    {
+        "id": "short_19",
+        "cohort": "Cohort C · Outlier Batch 5",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_19_text_back_anxiety.mp4",
+        "grid_headline": "WHY THEY LEAVE\nYOU ON READ",
+        "grid_sub": "BIRTH CODE CLASH",
+        "hook_box_text": "Why do you stare at your phone for hours waiting for a text back?",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Why do you stare at your phone for hours waiting for a text back? "
+            "If you were born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 24th, or 29th, you bond fast. "
+            "But your heart chases a distance number. Therefore, the closer you get, the more they pull back. "
+            "Tap the link in bio to test both birthdays right now."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_02_late_night_phone.mp4"),
+            (4.2, 8.0, "broll_18_hands_texting_phone.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why do you stare at your phone waiting for a text back? "
+            "(Born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 24th, or 29th—fast-bonding Birth Day vs. distance number) 📱💔 "
+            "#relationships #texting #leftonread #anxiousattachment #numerology #datingadvice #lovecode #compatibility"
+        ),
+        "first_comment": "Were you born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 24th, or 29th—and do you hate waiting on a text back? 👇",
+        "hashtags": [
+            "#relationships", "#texting", "#leftonread", "#anxiousattachment",
+            "#numerology", "#datingadvice", "#lovecode", "#compatibility"
+        ],
+    },
+    {
+        "id": "short_20",
+        "cohort": "Cohort C · Outlier Batch 5",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_20_wrong_birthday_match.mp4",
+        "grid_headline": "THE 3 BIRTHDAYS\nTO AVOID DATING",
+        "grid_sub": "CHECK YOUR MATCH",
+        "hook_box_text": "Every birthday has 3 natural soulmate dates and 3 dates that drain your energy.",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Every birth day has three soulmate dates, and three dates that drain you. "
+            "Most apps only check your star sign. "
+            "But your star sign misses your 2 AM heart number. Therefore, you keep dating the three dates that drain your peace. "
+            "Check their birth day in five seconds at the link in bio."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_19_couple_field_walk.mp4"),
+            (4.2, 8.0, "broll_20_couple_tension_apart.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 2.8),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy "
+            "(why checking only zodiac signs misses your 2 AM emotional number) 🔮❤️‍🔥 "
+            "#relationships #soulmate #compatibility #numerology #datingadvice #zodiacsigns #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "What day of the month were you born—and what day was the person who drained your energy born? Drop both below 👇",
+        "hashtags": [
+            "#relationships", "#soulmate", "#compatibility", "#numerology",
+            "#datingadvice", "#zodiacsigns", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_21",
+        "cohort": "Cohort C · Outlier Batch 5",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_21_november_love_shift.mp4",
+        "grid_headline": "YOUR NOVEMBER\nLOVE SHIFT",
+        "grid_sub": "NEXT 30 DAYS",
+        "hook_box_text": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? Your November love shift:",
+        "hook_end_sec": 4.2,
+        "cta_tail_sec": 3.4,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 13.6,
+        "voice": "en-US-AvaNeural",
+        "rate": "+12%",
+        "spoken_script": (
+            "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? "
+            "The last three months felt so heavy in love. "
+            "But your 52-day timing cycle shifts this week. Therefore, a big choice in love is about to land in your lap. "
+            "Tap the link in bio to see your next 30 days."
+        ),
+        "broll_clips": [
+            (0.0, 4.2, "broll_11_dusk_river_silhouette.mp4"),
+            (4.2, 8.0, "broll_15_sunset_ocean_waves.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_anchors.png", 2.8),
+            ("image", "scenes_cache/scene_relationships.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? "
+            "Why the last 3 months felt heavy in love—and how your 52-day timing cycle shifts this week 🌙✨ "
+            "#november #relationships #lovetiming #numerology #datingadvice #spiritualtiktok #lovecode #52daycycle"
+        ),
+        "first_comment": "Born on 1, 4, 7, 8, 9, 10, 13, 16, 17, 18, 19, 22, 25, 26, 27, 28, or 31—did the last 3 months feel heavy in love? 👇",
+        "hashtags": [
+            "#november", "#relationships", "#lovetiming", "#numerology",
+            "#datingadvice", "#spiritualtiktok", "#lovecode", "#52daycycle"
+        ],
+    },
 ]
 
 

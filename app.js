@@ -393,10 +393,11 @@ const CONFIG = {
       syncDobValueOnly();
       const fNameEl = $('#fullName');
       const dobEl = $('#birthDate');
-      if (!fNameEl || !dobEl) return;
-      const fName = fNameEl.value.trim();
+      if (!dobEl) return;
+      const rawName = fNameEl ? fNameEl.value.trim() : '';
+      const fName = rawName || (state.lang === 'es' ? 'Tu Lectura' : 'Your Reading');
       const dob = dobEl.value.trim();
-      if (!fName || !dob) return;
+      if (!dob) return;
       const chk = E.validate(fName, dob);
       if (!chk.valid) return;
       const key = `${fName.toLowerCase()}::${dob}`;
@@ -625,8 +626,9 @@ const CONFIG = {
   async function onSubmit(e) {
     e.preventDefault();
     syncDobValueOnly();
+    const rawName = ($('#fullName').value || '').trim();
     const data = {
-      fullName: $('#fullName').value,
+      fullName: rawName || (state.lang === 'es' ? 'Tu Lectura' : 'Your Reading'),
       birthDate: $('#birthDate').value,
       email: $('#email').value.trim(),
     };
@@ -639,6 +641,7 @@ const CONFIG = {
     if (Object.keys(errs).length) return;
 
     state.isSamplePreview = false;
+    state.isQuickDayPreview = false;
     let prof = state.profile && !state.profile.isSample && state.profile.fullName === data.fullName && state.profile.birthDate === data.birthDate
       ? state.profile
       : { id: leadId(), fullName: data.fullName, birthDate: data.birthDate, email: data.email, tier: state.pendingTier || null, createdAt: new Date().toISOString(), utm: utm() };
@@ -884,6 +887,11 @@ const CONFIG = {
     let pYearOpts = `<option value="">${isEs ? 'Año' : 'Year'}</option>`;
     for (let y = 2006; y >= 1940; y--) pYearOpts += `<option value="${y}">${y}</option>`;
 
+    const isDefaultName = ['Your Reading', 'Tu Lectura', 'You', 'Tu'].includes(r.input.fullName);
+    const decodedTitleHtml = isDefaultName
+      ? (isEs ? 'Tu Código Natal Ha Sido Descifrado.' : 'Your Birth Code Has Been Decoded.')
+      : UI.decoded_title.replace('${first}', first);
+
     $('#teaser-root').innerHTML = `
     <div class="reveal">
       ${state.isSamplePreview ? `
@@ -892,10 +900,16 @@ const CONFIG = {
         <button type="button" id="btn-enter-real-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer">
           ${isEs ? '[Toca Aquí Para Ingresar Tu Fecha Real →]' : '[Tap Here To Enter Your Real Birthday →]'}
         </button>
+      </div>` : state.isQuickDayPreview ? `
+      <div id="quick-day-banner" class="sticky top-2 z-40 mb-5 p-3 sm:p-3.5 rounded-xl border border-gold bg-[#141108]/95 backdrop-blur-md shadow-lg text-center text-xs sm:text-sm text-champagne font-medium flex flex-wrap items-center justify-center gap-1.5">
+        <span>⚡ ${isEs ? `Vista Rápida del Día ${r.input.birth.d} (Conductor #${uMoolank} · ${uRuler}) —` : `Instant Birth Day ${r.input.birth.d} Love Code Preview (Driver #${uMoolank} · ${uRuler}) —`}</span>
+        <button type="button" id="btn-refine-exact-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer">
+          ${isEs ? '[Refinar Tu Mes y Año Exactos →]' : '[Refine Your Exact Birth Month &amp; Year →]'}
+        </button>
       </div>` : ''}
       <div class="text-center pt-3">
         <span class="badge-olive">${UI.scan_complete}</span>
-        <h1 class="font-display text-[1.9rem] leading-tight sm:text-4xl mt-4">${UI.decoded_title.replace('${first}', first)}</h1>
+        <h1 class="font-display text-[1.9rem] leading-tight sm:text-4xl mt-4">${decodedTitleHtml}</h1>
         <p class="text-zinc-400 mt-3 text-sm sm:text-base max-w-xl mx-auto">${decodedSub}</p>
       </div>
 
@@ -1212,6 +1226,7 @@ const CONFIG = {
     fillForm({ fullName: sampleName, birthDate: sampleDob, email: '' });
     showErrors({});
     state.isSamplePreview = true;
+    state.isQuickDayPreview = false;
     state.partnerDob = samplePartnerDob;
     state.profile = {
       id: leadId(),
@@ -1226,6 +1241,60 @@ const CONFIG = {
       utm: utm(),
     };
     state.result = E.calculate(sampleName, sampleDob);
+    openTeaser();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function runQuickDayPreview(dayRaw) {
+    const dNum = parseInt(dayRaw, 10);
+    if (!dNum || dNum < 1 || dNum > 31) return;
+    const dayStr = String(dNum).padStart(2, '0');
+    const mEl = $('#dobMonth');
+    const dEl = $('#dobDay');
+    const yEl = $('#dobYear');
+    const fnEl = $('#fullName');
+    const emEl = $('#email');
+
+    const userHadMonthYear = Boolean(mEl && mEl.value && yEl && yEl.value);
+    let mVal = (mEl && mEl.value) ? mEl.value : '07';
+    let yVal = (yEl && yEl.value) ? yEl.value : '1994';
+    // Guard against invalid month-day combos (e.g. Feb 30/31 or 31 in a 30-day month)
+    if (dNum === 31 && ['02', '04', '06', '09', '11'].includes(mVal)) mVal = '07';
+    if (dNum >= 29 && mVal === '02') mVal = '07';
+
+    const quickDob = `${yVal}-${mVal}-${dayStr}`;
+    const rawName = fnEl ? fnEl.value.trim() : '';
+    const fullName = rawName || (state.lang === 'es' ? 'Tu Lectura' : 'Your Reading');
+    const emailVal = emEl ? emEl.value.trim() : '';
+
+    if (mEl) mEl.value = mVal;
+    if (dEl) dEl.value = dayStr;
+    if (yEl) yEl.value = yVal;
+    const dobInput = $('#birthDate');
+    if (dobInput) dobInput.value = quickDob;
+    showErrors({});
+
+    state.isSamplePreview = false;
+    state.isQuickDayPreview = !userHadMonthYear;
+    state.profile = {
+      id: (state.profile && !state.profile.isSample && state.profile.id) || leadId(),
+      fullName,
+      birthDate: quickDob,
+      email: emailVal,
+      tier: state.pendingTier || null,
+      createdAt: new Date().toISOString(),
+      utm: utm(),
+    };
+    state.result = E.calculate(fullName, quickDob);
+    saveProfile(state.profile);
+
+    sendWebhook('quick_day_selected', {
+      birth_day: dNum,
+      day_str: dayStr,
+      birth_date: quickDob,
+      used_default_month_year: !userHadMonthYear,
+    });
+
     openTeaser();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -2362,15 +2431,21 @@ const CONFIG = {
     else if (a === 'instant-demo') {
       runInstantSampleDemo();
     }
+    else if (a === 'quick-day') {
+      runQuickDayPreview(t.dataset.day);
+    }
     else if (a === 'enter-real-birthday') {
+      const keepDay = state.isQuickDayPreview && $('#dobDay') ? $('#dobDay').value : '';
       state.isSamplePreview = false;
+      state.isQuickDayPreview = false;
       state.partnerDob = '';
       fillForm({});
+      if (keepDay && $('#dobDay')) $('#dobDay').value = keepDay;
       showErrors({});
       showView('hero');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      const fnInput = $('#fullName');
-      if (fnInput) fnInput.focus();
+      const focusEl = keepDay ? $('#dobMonth') : $('#fullName');
+      if (focusEl) focusEl.focus();
     }
     else if (a === 'home') {
       state.isSamplePreview = false;

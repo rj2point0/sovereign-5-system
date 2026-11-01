@@ -66,12 +66,6 @@
       "comment": "Were you born on the 2nd, 7th, 11th, 16th, 20th, 25th, or 29th—and do you always fall for people who pull away? 👇",
       "seeded_at": "2026-10-29T16:39:32.509549"
     },
-    "short_15": {
-      "video_id": "7702469276480916749",
-      "title_match": "You don't actually miss your ex. You miss the person they faked",
-      "comment": "Do you fall in love with who someone actually is—or their potential? Drop your birth day below 👇",
-      "seeded_at": "2026-10-30T12:08:18.742779"
-    },
     "short_11": {
       "video_id": "7702232880092597518",
       "title_match": "Born on the 4th, 6th, 9th, 13th, 15th, 18th, 22nd, 24th",
@@ -95,16 +89,33 @@
       "title_match": "Test your crush's birthday right now: if your birth days clash",
       "comment": "What day of the month were you born, and what day was your partner or crush born? Drop both below 👇",
       "seeded_at": "2026-10-31T19:26:36.324593"
+    },
+    "short_15": {
+      "video_id": "7703342845494562061",
+      "title_match": "You don't actually miss your ex. You miss the person they faked",
+      "comment": "Do you fall in love with who someone actually is—or their potential? Drop your birth day below 👇",
+      "seeded_at": "2026-11-01T15:06:17.761181"
+    },
+    "short_03": {
+      "video_id": "7700014741648952590",
+      "title_match": "Why reading your Western Life Path number alone feels like reading 1 page",
+      "comment": "Which two numbers feel like they are constantly fighting each other in your personality? Drop your birthday below 👇",
+      "seeded_at": "2026-11-01T15:06:37.411164"
     }
   },
-  "updated_at": "2026-10-31T19:27:35.127854",
+  "updated_at": "2026-11-01T15:07:37.817229",
   "last_verification": {
-    "checked_at": "2026-10-31T19:27:06.549642",
+    "checked_at": "2026-11-01T15:06:57.448698",
     "videos": {
-      "short_14": {
+      "short_15": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
+      },
+      "short_03": {
+        "browse_comment_count": "0",
+        "comment_intact": false,
+        "in_studio_comment_feed": false
       }
     }
   }

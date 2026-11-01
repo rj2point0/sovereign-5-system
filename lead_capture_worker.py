@@ -1406,6 +1406,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "page_view": "page_view",
         "calc_started": "calc_started",
         "field_progress": "calc_started",
+        "quick_day_selected": "quick_day_selected",
         "demo_preview_clicked": "demo_preview_clicked",
         "calc_preview": "calc_preview",
         "partner_check_run": "partner_check_run",
@@ -1470,7 +1471,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     partner_dob = normalize_dob(raw_partner_dob) if raw_partner_dob else ""
     compat_score = extra.get("compatibility_score") or extra.get("magnetism_score") or ""
 
-    if event_type in ("page_view", "calc_started", "demo_preview_clicked"):
+    if event_type in ("page_view", "calc_started", "demo_preview_clicked", "quick_day_selected"):
         dedup_key = f"{session_id}::{event_type}"
     elif event_type == "calc_preview":
         dedup_key = f"{session_id}::calc_preview::{clean_name.lower()}::{iso_dob}"
@@ -1548,6 +1549,7 @@ def update_obsidian_dashboard():
         ig_views = [e for e in page_views if e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", ""))]
         other_views = [e for e in page_views if not e.get("is_tiktok_inapp") and not (e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")))]
         calc_started = [e for e in events if e.get("event_type") == "calc_started"]
+        quick_days = [e for e in events if e.get("event_type") == "quick_day_selected"]
         demo_previews = [e for e in events if e.get("event_type") == "demo_preview_clicked"]
         calc_previews = [e for e in events if e.get("event_type") == "calc_preview"]
         partner_checks = [e for e in events if e.get("event_type") in ("partner_check_run", "partner_compat_checked")]
@@ -1565,6 +1567,7 @@ def update_obsidian_dashboard():
                 f"total_page_views: {len(page_views)}",
                 f"tiktok_inapp_views: {len(tt_views)}",
                 f"instagram_inapp_views: {len(ig_views)}",
+                f"quick_day_selects: {len(quick_days)}",
                 f"demo_previews: {len(demo_previews)}",
                 f"calc_previews: {len(calc_previews)}",
                 f"partner_checks: {len(partner_checks)}",
@@ -1580,7 +1583,7 @@ def update_obsidian_dashboard():
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
                 "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
-                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), tap the 1-Tap Sample Reading (`demo_preview_clicked`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`: `$17` Love Mini-Read, `$37` Full 20-Page Blueprint, or `$84` VIP Bundle). Headless Playwright/localhost test runs are automatically filtered out.",
+                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), tap their 1-Tap Birth Day (`quick_day_selected`), tap the 1-Tap Sample Reading (`demo_preview_clicked`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`: `$17` Love Mini-Read, `$37` Full 20-Page Blueprint, or `$84` VIP Bundle). Headless Playwright/localhost test runs are automatically filtered out.",
                 "",
                 "## 1. Live Funnel Conversion Telemetry Summary",
                 "",
@@ -1588,6 +1591,7 @@ def update_obsidian_dashboard():
                 "| :--- | :--- | :---: | :--- |",
                 f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App:** `{len(tt_views)}` · **Instagram In-App:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` |",
                 f"| **2. Calculator Interactions** | `calc_started` | **{len(calc_started)}** | Visitors who tapped into the Name or Birth Date input field |",
+                f"| **2a. 1-Tap Birth Day Quick-Select** | `quick_day_selected` | **{len(quick_days)}** | Visitors who tapped their Birth Day (`1–31`) on the Hero quick-strip |",
                 f"| **2b. 1-Tap Sample Previews** | `demo_preview_clicked` | **{len(demo_previews)}** | Cold scrollers who tapped the 1-Tap Sample Reading (`7th × 4th`) |",
                 f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
                 f"| **3b. Partner Compatibility Checks** | `partner_check_run` | **{len(partner_checks)}** | Visitors who tested a Partner / Crush birthday on the Teaser view |",
@@ -1605,6 +1609,7 @@ def update_obsidian_dashboard():
             stage_badges = {
                 "page_view": "👀 `page_view`",
                 "calc_started": "✍️ `calc_started`",
+                "quick_day_selected": "⚡ `quick_day_selected`",
                 "demo_preview_clicked": "⚡ `demo_preview_clicked`",
                 "calc_preview": "🔮 `calc_preview`",
                 "partner_check_run": "💑 `partner_check_run`",
@@ -1858,7 +1863,7 @@ def poll_cloud_relay_once() -> int:
                     msg_str = envelope.get("message", "")
                     payload = json.loads(msg_str)
                     ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
-                    if ev_name in ("page_view", "calc_started", "field_progress", "calc_preview", "partner_check_run", "partner_compat_checked", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
+                    if ev_name in ("page_view", "calc_started", "field_progress", "quick_day_selected", "demo_preview_clicked", "calc_preview", "partner_check_run", "partner_compat_checked", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
                         record_telemetry_event(payload)
                     if ev_name not in ("lead_capture", "lead_submitted", "purchase_return"):
                         continue

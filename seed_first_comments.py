@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_21",
+        "video_id": None,
+        "title_match": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th",
+        "comment": "Born on 1, 4, 7, 8, 9, 10, 13, 16, 17, 18, 19, 22, 25, 26, 27, 28, or 31—did the last 3 months feel heavy in love? 👇",
+    },
+    {
+        "id": "short_20",
+        "video_id": None,
+        "title_match": "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy",
+        "comment": "What day of the month were you born—and what day was the person who drained your energy born? Drop both below 👇",
+    },
+    {
+        "id": "short_19",
+        "video_id": None,
+        "title_match": "Why do you stare at your phone waiting for a text back",
+        "comment": "Were you born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 24th, or 29th—and do you hate waiting on a text back? 👇",
+    },
+    {
         "id": "short_18",
         "video_id": None,
         "title_match": "They didn't suddenly lose feelings. You just stopped accepting bare minimum",
@@ -237,18 +255,30 @@ async def seed_comment_on_video_from_profile(
             break
         prof_videos = await page.evaluate(
             """() => {
-                return Array.from(document.querySelectorAll('a[href*="/video/"]')).map(a => ({
-                    href: a.href,
-                    imgAlt: a.querySelector('img') ? (a.querySelector('img').alt || '') : ''
-                }));
+                return Array.from(document.querySelectorAll('a[href*="/video/"]')).map(a => {
+                    const card = a.closest('[data-e2e="user-post-item"]') || a.parentElement || a;
+                    return {
+                        href: a.href,
+                        imgAlt: a.querySelector('img') ? (a.querySelector('img').alt || '') : '',
+                        cardText: card ? (card.innerText || '') : ''
+                    };
+                });
             }"""
         )
+        is_scheduled_post = False
         for v in prof_videos:
             if title_match.lower()[:28] in v.get("imgAlt", "").lower():
+                c_txt = v.get("cardText", "").lower()
+                if "schedule" in c_txt or re.search(r"202\d\s*-\s*\d+", c_txt):
+                    is_scheduled_post = True
+                    break
                 m = re.search(r"/video/(\d+)", v.get("href", ""))
                 if m:
                     matched_vid = m.group(1)
                     break
+        if is_scheduled_post:
+            print(f"   [Seed] ⏳ Video matching '{title_match[:36]}...' is still Scheduled on TikTok; will seed once live.", flush=True)
+            return None
         if not matched_vid and attempt == 0:
             print("   [Seed] Waiting 6s for newly posted video to appear on profile grid...", flush=True)
             await asyncio.sleep(6.0)
