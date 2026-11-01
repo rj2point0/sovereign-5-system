@@ -375,6 +375,10 @@ async def verify_comments_after_delay(
 
         # 2. Check each video modal on @sacrednumberblueprint to confirm browse-comment-count >= 1
         await page.goto(PROFILE_URL, wait_until="domcontentloaded", timeout=45000)
+        try:
+            await page.locator('a[href*="/video/"]').first.wait_for(state="attached", timeout=20000)
+        except Exception:
+            pass
         await asyncio.sleep(4.5)
         for t in targets:
             vid = t.get("video_id")

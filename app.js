@@ -2421,7 +2421,37 @@ const CONFIG = {
         if (box) {
           box.innerHTML = `<p class="text-xs sm:text-sm text-gold font-medium">${state.lang === 'es' ? '✦ ¡Resumen enviado a ' + esc(emVal) + '! Revisa tu bandeja de entrada.' : '✦ Summary sent to ' + esc(emVal) + '! Check your inbox.'}</p>`;
         }
+        const pBox = $('#partner-compat-email-box');
+        if (pBox) pBox.classList.add('hidden');
         toast(state.lang === 'es' ? '✦ ¡Resumen de 5 Sistemas enviado a tu correo!' : '✦ 5-System Summary emailed to you!');
+      }
+    }
+    else if (a === 'save-partner-email') {
+      const emInput = $('#partner-compat-email-input');
+      const emVal = emInput ? emInput.value.trim() : '';
+      if (!emVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emVal)) {
+        toast(state.lang === 'es' ? 'Ingresa un correo electrónico válido.' : 'Please enter a valid email address.');
+        return;
+      }
+      const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
+      if (state.profile) {
+        state.profile.email = emVal;
+        if (pDob) {
+          state.profile.partner_dob = pDob;
+          state.profile.partnerDob = pDob;
+        }
+        if (!state.profile.isSample) saveProfile(state.profile);
+        sendWebhook('lead_submitted', {
+          trigger: 'partner_compat_email_bar',
+          partner_dob: pDob,
+        });
+        const pBox = $('#partner-compat-email-box');
+        if (pBox) {
+          pBox.innerHTML = `<div id="partner-compat-email-confirmed" class="p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-400/50 text-emerald-300 text-xs sm:text-sm font-semibold text-center">✓ ${state.lang === 'es' ? '¡Reporte de Pareja y 3 Fechas Clave enviados a ' + esc(emVal) + '!' : 'Match Report &amp; Next 3 Turning-Point Dates sent to ' + esc(emVal) + '!'}</div>`;
+        }
+        const tBox = $('#teaser-email-box');
+        if (tBox) tBox.classList.add('hidden');
+        toast(state.lang === 'es' ? '✦ ¡Reporte de Compatibilidad enviado a tu correo!' : '✦ Partner Match Report emailed to you!');
       }
     }
     else if (a === 'demo-unlock') demoUnlock();
@@ -2534,6 +2564,18 @@ const CONFIG = {
         <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
           ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
         </button>
+        ${!(state.profile && state.profile.email) ? `
+        <div id="partner-compat-email-box" class="mt-3.5 p-3 sm:p-3.5 rounded-xl bg-black/40 border border-gold/35 text-left">
+          <p class="text-xs text-champagne font-medium leading-snug">
+            📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver tus próximas 3 fechas clave en el amor gratis?' : 'Want to save this Partner Compatibility score &amp; see your next 3 relationship turning-point dates for free?'}
+          </p>
+          <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
+            <input id="partner-compat-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
+            <button type="button" id="btn-save-partner-email" data-action="save-partner-email" class="btn-gold !py-2 !px-4 sm:w-auto text-xs font-bold whitespace-nowrap">
+              ${isEs ? 'Enviar Nuestro Reporte →' : 'Email Our Match Report →'}
+            </button>
+          </div>
+        </div>` : ''}
         <button type="button" id="btn-partner-mini-cta" data-action="checkout-mini" data-trigger="partner_compat_mini_17" class="btn-ghost mt-2.5 !py-2.5 !px-4 w-full text-xs text-champagne border-gold/40 hover:border-gold">
           ⚡ ${isEs ? 'O desbloquea solo la Mini-Lectura de Pareja y 90 Días por $17 →' : 'Or grab just the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →'}
         </button>

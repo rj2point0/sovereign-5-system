@@ -89,11 +89,23 @@
       "title_match": "Why do they act obsessed with you in week two, then go cold",
       "comment": "Have you ever had someone act obsessed in week 2 and go cold by week 6? Drop your birthday month & day below 👇",
       "seeded_at": "2026-10-31T10:14:52.383686"
+    },
+    "short_14": {
+      "video_id": "7702844507703823629",
+      "title_match": "Test your crush's birthday right now: if your birth days clash",
+      "comment": "What day of the month were you born, and what day was your partner or crush born? Drop both below 👇",
+      "seeded_at": "2026-10-31T19:26:36.324593"
     }
   },
-  "updated_at": "2026-10-31T10:16:31.896562",
+  "updated_at": "2026-10-31T19:27:35.127854",
   "last_verification": {
-    "checked_at": "2026-10-31T10:16:12.178232",
-    "videos": {}
+    "checked_at": "2026-10-31T19:27:06.549642",
+    "videos": {
+      "short_14": {
+        "browse_comment_count": "1",
+        "comment_intact": true,
+        "in_studio_comment_feed": true
+      }
+    }
   }
 }

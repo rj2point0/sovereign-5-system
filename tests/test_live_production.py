@@ -52,6 +52,7 @@ async def verify_live_pages():
         await page_mob.click('#btn-instant-demo')
         await page_mob.wait_for_selector('#sample-reading-banner', timeout=8000)
         assert await page_mob.is_visible('#partner-compat-result') is True
+        assert await page_mob.is_visible('#partner-compat-email-box') is True
         assert await page_mob.is_visible('#btn-checkout-mini') is True
         await page_mob.click('#btn-enter-real-birthday')
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)

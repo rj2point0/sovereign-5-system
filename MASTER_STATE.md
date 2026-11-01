@@ -52,26 +52,28 @@
   - Logs all telemetry events (`page_view`, `calc_started`, `field_progress`, `calc_preview`, `demo_preview_clicked`, `partner_check_run`, `lead_submitted`, `checkout_clicked`) to `telemetry_events.json` and `G:\My Drive\MVV_Memory_Vault\03-Projects\Leads_Captured_Dashboard.md`.
   - Logs captured leads to `leads_captured.csv`, `G:\My Drive\5_System_Numerology_MVP\leads_captured.csv`, and Supabase (`public.numerology_leads`).
   - Sends the 3-part HTML drip sequence via `adamvega@megavegaventures.com` Workspace SMTP (Email #1 instant teaser + partner compatibility personalization + `$17`/`$37` CTAs; Email #2 at 24h; Email #3 at 48h).
+- **Inline Partner Compatibility Email Capture (`#partner-compat-email-box` in `app.js`)**:
+  - When a visitor tests a Partner/Crush birthday on the Teaser screen (`runPartnerCompatibilityCheck()`) without having entered their email yet (`!state.profile.email`), renders a 1-line inline email capture bar right above the `$17` Mini-Read button (`"📩 Want to save this Partner Compatibility score & see your next 3 relationship turning-point dates for free?"` + `[Email Our Match Report →]`).
+  - Submitting saves `state.profile.email`, fires `lead_submitted` (`trigger: "partner_compat_email_bar"`) with `partner_dob` so `lead_capture_worker.py` immediately sends Email #1 with the **`💑 PARTNER / CRUSH COMPATIBILITY SNAPSHOT`** section, and displays `#partner-compat-email-confirmed`.
 
 ---
 
 ## 4. Dual-Platform Social Automation & Video Pipeline (`short_01`–`short_18`)
 
 - **Authenticated Browser Profiles**:
-  - TikTok (`@sacrednumberblueprint` — Display Name: `Love & Birthday Compatibility` / `Birthday Love Code 💔`): `C:\Users\User\.gemini\antigravity\tiktok_browser_profile`
-  - Instagram (`@sacrednumberblueprint`): `C:\Users\User\.gemini\antigravity\ig_browser_profile`
+  - TikTok (`@sacrednumberblueprint` — Display Name: `Love & Birthday Compatibility` · Bio: `Why do they pull away? 💔 Test your birthday & theirs across 5 systems 👇`): `C:\Users\User\.gemini\antigravity\tiktok_browser_profile`
+  - Instagram (`@sacrednumberblueprint` — Name: `Love & Birthday Compatibility` · Bio: `Why do they pull away? 💔 Test your birthday & theirs across 5 systems 👇`): `C:\Users\User\.gemini\antigravity\ig_browser_profile`
 - **20-Clip Real Human 9:16 B-Roll Library (`broll_library/`)**:
   - Managed by `fetch_human_broll.py` (`broll_01` through `broll_20`).
 - **Video Generator (`generate_broll_story_tiktoks.py`)**:
   - Enforces Jenny Hoyos's 5th-Grade Readability Gate (`Flesch-Kincaid Grade <= 5.5`, zero academic jargon, `But/Therefore` twist connector, `<= 0.35s` tail hold).
   - Renders **giant `68px` bold 3–6 word Poster Headlines (`grid_headline`)** + `38px` crimson subtitle (`grid_sub`) on Frame 1 (`0.0s–4.2s`) so every thumbnail is readable in the 3-column mobile profile grid.
 - **Current Video Status (`uploaded_videos.json` & `uploaded_ig_reels.json`)**:
-  - `short_01`–`short_13`: **Published Live** on both TikTok and Instagram Reels with automod-safe first comments seeded (`seeded_first_comments.json`).
-  - `short_14` (`TEST CRUSH'S / BIRTHDAY`): Live on Instagram Reels; **Scheduled on TikTok Studio for `2026-10-31 18:30`**.
+  - `short_01`–`short_14`: **Published Live** on both TikTok and Instagram Reels with automod-safe first comments seeded (`seeded_first_comments.json`; `short_14` `7702844507703823629` verified `ModalIntact=True`).
   - `short_15` (`IN LOVE WITH / POTENTIAL`): Live on Instagram Reels; **Scheduled on TikTok Studio for `2026-11-01 11:00`**.
-  - `short_16` (`BEGGING FOR / CRUMBS`): Live on Instagram Reels; **Scheduled on TikTok Studio for `2026-11-01 18:30`**.
-  - `short_17` (`3-MONTH / SITUATIONSHIP`): Live on Instagram Reels; **Scheduled on TikTok Studio for `2026-11-02 11:00`**.
-  - `short_18` (`STOPPED ACCEPTING / BARE MINIMUM`): Live on Instagram Reels; **Scheduled on TikTok Studio for `2026-11-02 18:30`**.
+  - `short_16` (`BEGGING FOR / CRUMBS`): Upgraded `68px` version Live on Instagram Reels (`/reel/DfLqhT9Obuc/`); **Scheduled on TikTok Studio for `2026-11-01 18:30`**.
+  - `short_17` (`3-MONTH / SITUATIONSHIP`): Upgraded `68px` version Live on Instagram Reels (`/reel/DfLqpclukZh/`); **Scheduled on TikTok Studio for `2026-11-02 11:00`**.
+  - `short_18` (`STOPPED ACCEPTING / BARE MINIMUM`): Upgraded `68px` version Live on Instagram Reels (`/reel/DfLqxxBO1JV/`); **Scheduled on TikTok Studio for `2026-11-02 18:30`**.
   - Early `<100` view prototype tests (`45`, `67`, `74`, `95` views) set to **Private (`Only me`)** on TikTok Studio.
 - **Automated 2-Hour Social Sync (`social_auto_sync.py` / `\Sovereign5SocialAutoSync`)**:
   - Runs `seed_first_comments.py`, `tiktok_comment_responder.py --live --limit 15`, and `ig_comment_responder.py --live --limit 15`.

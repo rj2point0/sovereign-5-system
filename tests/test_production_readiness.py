@@ -299,12 +299,17 @@ async def test_all():
         checkout_ev = [p for p in ntfy_payloads if p.get("event_type") == "checkout_clicked"]
         assert len(checkout_ev) >= 1 and checkout_ev[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob in checkout_clicked: {checkout_ev}"
 
-        # Submit email in Teaser Email Bar AFTER running Partner Compatibility check and verify partner_dob is included in lead_submitted
-        await page_prod.fill('#teaser-email-input', 'sarah.compat@gmail.com')
-        await page_prod.click('button[data-action="save-teaser-email"]')
+        # Submit email in inline Partner Compatibility Email Capture Bar (#partner-compat-email-box) and verify partner_dob is included in lead_submitted + green confirmation badge appears
+        assert await page_prod.is_visible('#partner-compat-email-box') is True, "Expected #partner-compat-email-box to be visible inside #partner-compat-result when !state.profile.email"
+        p_email_txt = await page_prod.locator('#partner-compat-email-box').inner_text()
+        assert "want to save this partner compatibility score" in p_email_txt.lower() and "email our match report" in p_email_txt.lower(), f"Unexpected #partner-compat-email-box text: {p_email_txt}"
+        await page_prod.fill('#partner-compat-email-input', 'sarah.compat@gmail.com')
+        await page_prod.click('#btn-save-partner-email')
         await asyncio.sleep(0.2)
+        assert await page_prod.is_visible('#partner-compat-email-confirmed') is True, "Expected green confirmation badge #partner-compat-email-confirmed after submitting partner email"
         lead_evs = [p for p in ntfy_payloads if p.get("event_type") == "lead_submitted"]
         assert len(lead_evs) >= 1 and lead_evs[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob=1988-10-26 in lead_submitted payload: {lead_evs}"
+        assert (lead_evs[-1].get("extra") or {}).get("trigger") == "partner_compat_email_bar", f"Expected trigger=partner_compat_email_bar, got {lead_evs[-1]}"
         print("[OK] Mobile Month/Day/Year dropdowns, Teaser Relationship Clash, 3-Part Triangle, Partner Compatibility CTA & partner_dob lead payload verified!")
 
         # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO + Jenny Hoyos Gate Verification
