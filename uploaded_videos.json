@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-02T09:14:53.954496",
+  "updated_at": "2026-11-02T09:42:01.000173",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -266,6 +266,33 @@
       "schedule_time": "2026-11-05 18:30",
       "uploaded_at": "2026-11-02T07:48:40.922504",
       "caption_preview": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? Only one birth number can handle your fire"
+    },
+    "tiktok_short_25_7sec_karmic_or_soulmate.mp4": {
+      "filename": "tiktok_short_25_7sec_karmic_or_soulmate.mp4",
+      "ad_id": "short_25",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-02T09:40:31.569754",
+      "caption_preview": "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Intense chemistry can be a karmic trap—tap the bio link to test b"
+    },
+    "tiktok_short_26_7sec_no_contact_thoughts.mp4": {
+      "filename": "tiktok_short_26_7sec_no_contact_thoughts.mp4",
+      "ad_id": "short_26",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-06 11:00",
+      "uploaded_at": "2026-11-02T09:41:28.847863",
+      "caption_preview": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean they forgot you (ch"
+    },
+    "tiktok_short_27_7sec_november_turning_point.mp4": {
+      "filename": "tiktok_short_27_7sec_november_turning_point.mp4",
+      "ad_id": "short_27",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-06 18:30",
+      "uploaded_at": "2026-11-02T09:42:01.000173",
+      "caption_preview": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Your next love shift star"
     }
   }
 }

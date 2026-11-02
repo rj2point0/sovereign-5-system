@@ -119,18 +119,19 @@
       "title_match": "If you have to ask what you are after three months, their birth code",
       "comment": "Have you ever waited months for someone to be ready to commit? Drop both of your birth days below 👇",
       "seeded_at": "2026-11-02T09:16:25.646762"
+    },
+    "short_25": {
+      "video_id": "7703630255013104910",
+      "title_match": "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Intense chemistry can be a karmic trap",
+      "comment": "Were you born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th—and what day was your partner or crush born? Drop both below 👇",
+      "seeded_at": "2026-11-02T09:42:23.829484"
     }
   },
-  "updated_at": "2026-11-02T09:17:31.667601",
+  "updated_at": "2026-11-02T09:43:48.741848",
   "last_verification": {
-    "checked_at": "2026-11-02T09:16:52.206447",
+    "checked_at": "2026-11-02T09:43:19.203218",
     "videos": {
-      "short_22": {
-        "browse_comment_count": "1",
-        "comment_intact": true,
-        "in_studio_comment_feed": false
-      },
-      "short_17": {
+      "short_25": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true

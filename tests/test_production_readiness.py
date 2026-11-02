@@ -351,19 +351,19 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_24
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_27
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24")]
-        assert len(jh_specs) == 15, f"Expected 15 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27")]
+        assert len(jh_specs) == 18, f"Expected 18 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
             if s["id"] == "short_13":
                 assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for short_13, got {gate_res['fk_grade']}"
-            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24"):
+            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
         from lead_capture_worker import build_cart_recovery_email, collect_lead_partner_checks_and_intent, calculate_5_systems
         geet_intent = collect_lead_partner_checks_and_intent("geet08190@gmail.com", "1986-02-19", "1988-08-19")
@@ -424,6 +424,8 @@ async def test_all():
 
         # 10c) Verify tapping a partner day (1-31) in #partner-quick-day-strip immediately fires partner_check_run without Partner Month/Year dropdowns & renders #flip-chase-preview-bubble + #btn-unlock-text-script
         assert await page_mob.is_visible('#partner-quick-day-strip') is True, "Expected #partner-quick-day-strip visible inside #partner-compat-box"
+        pqd_box = await page_mob.locator('#partner-quick-day-strip').bounding_box()
+        assert pqd_box is not None and pqd_box["y"] >= 0 and (pqd_box["y"] + pqd_box["height"]) <= 635, f"Expected #partner-quick-day-strip immediately visible inside 390x660 viewport after quick_day_selected, got {pqd_box}"
         await page_mob.click('#partner-quick-day-strip button[data-action="partner-quick-day"][data-day="16"]')
         await asyncio.sleep(0.2)
         assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result to render immediately on 1-tap partner day click"

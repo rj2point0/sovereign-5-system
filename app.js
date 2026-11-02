@@ -896,6 +896,46 @@ const CONFIG = {
       ? (isEs ? 'Tu Código Natal Ha Sido Descifrado.' : 'Your Birth Code Has Been Decoded.')
       : UI.decoded_title.replace('${first}', first);
 
+    const partnerCompatBoxHtml = `
+      <!-- PRIORITY #1A.3 · OPTIONAL PARTNER / CRUSH BIRTHDAY COMPATIBILITY CHECKER -->
+      <div id="partner-compat-box" class="card ${state.isQuickDayPreview ? 'mt-2.5 p-3.5 sm:p-6' : 'mt-7 p-5 sm:p-7'} border-gold/50" style="border-color:rgba(212,175,55,.5);background:linear-gradient(180deg,rgba(28,25,18,0.92),rgba(14,15,20,0.96))">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="badge-gold">${isEs ? '✦ Escáner de Compatibilidad de Pareja (Opcional)' : '✦ Instant Partner / Crush Compatibility Check (Optional)'}</span>
+          <span class="text-[0.65rem] uppercase tracking-[0.15em] text-champagne">${isEs ? 'Sin Costo Extra' : 'Instant Preview'}</span>
+        </div>
+        <h3 class="font-display ${state.isQuickDayPreview ? 'text-base sm:text-xl mt-2' : 'text-lg sm:text-2xl mt-3'} text-ivory">
+          ${isEs ? '¿Quieres comprobar tu compatibilidad con tu pareja o alguien especial? Ingresa su fecha de nacimiento (Opcional):' : 'Want to check your compatibility with a partner or crush? Enter their birthday (Optional):'}
+        </h3>
+        <p class="text-xs sm:text-sm text-zinc-300 mt-1">
+          ${isEs ? 'Calcularemos al instante su puntaje de magnetismo, dónde chocan sus números natales y qué casillas del Lo Shu Chino completan juntos.' : 'See your instant Magnetism vs. Friction score, how their Birth-Day Driver interacts with yours, and whether their chart fills your missing Lo Shu love numbers.'}
+        </p>
+
+        <!-- 1-TAP PARTNER BIRTH DAY STRIP (1-31) -->
+        <div id="partner-quick-day-strip" class="${state.isQuickDayPreview ? 'mt-2.5 p-2.5 sm:p-3.5' : 'mt-4 p-3 sm:p-3.5'} rounded-xl border ${state.isQuickDayPreview ? 'border-gold bg-gold/10 shadow-lg' : 'border-gold/40 bg-black/35'}">
+          <p id="partner-quick-day-label" class="text-[0.7rem] sm:text-xs font-semibold text-champagne text-center mb-1.5">
+            ${isEs
+              ? '⚡ ¿No sabes su año de nacimiento? Solo toca el Día del Mes en que nació (1–31) para ver su Compatibilidad y Guion de Texto al instante:'
+              : '⚡ Don\'t know their birth year? Just tap the Day of the Month they were born (1–31) for an instant Match &amp; Text Script check:'}
+          </p>
+          <div class="quick-day-grid" role="group" aria-label="Partner Quick Birth Day Select 1 to 31">
+            ${pQuickDayBtns}
+          </div>
+        </div>
+
+        <p class="text-[0.65rem] uppercase tracking-[0.14em] text-zinc-400 mt-2.5 text-center">
+          ${isEs ? '— O selecciona su Mes, Día y Año completos si los conoces —' : '— Or select their full Month, Day &amp; Year below —'}
+        </p>
+        <div class="grid grid-cols-3 gap-2.5 mt-1.5" id="partner-dob-group">
+          <select id="partnerDobMonth" class="field !px-3 !py-2 text-sm" aria-label="Partner Birth Month">${pMonthOpts}</select>
+          <select id="partnerDobDay" class="field !px-3 !py-2 text-sm" aria-label="Partner Birth Day">${pDayOpts}</select>
+          <select id="partnerDobYear" class="field !px-3 !py-2 text-sm" aria-label="Partner Birth Year">${pYearOpts}</select>
+        </div>
+        <button type="button" data-action="check-partner-compat" id="btn-partner-compat" class="btn-gold mt-3 !py-2.5 text-xs sm:text-sm">
+          ✦ ${isEs ? 'Calcular Compatibilidad y Fricción con Mi Pareja →' : 'Calculate Our Relationship Compatibility & Friction Score →'}
+        </button>
+        <div id="partner-compat-result" class="hidden mt-4 pt-4 border-t border-gold/30"></div>
+      </div>`;
+
     $('#teaser-root').innerHTML = `
     <div class="reveal">
       ${state.isSamplePreview ? `
@@ -905,15 +945,21 @@ const CONFIG = {
           ${isEs ? '[Toca Aquí Para Ingresar Tu Fecha Real →]' : '[Tap Here To Enter Your Real Birthday →]'}
         </button>
       </div>` : state.isQuickDayPreview ? `
-      <div id="quick-day-banner" class="sticky top-2 z-40 mb-5 p-3 sm:p-3.5 rounded-xl border border-gold bg-[#141108]/95 backdrop-blur-md shadow-lg text-center text-xs sm:text-sm text-champagne font-medium flex flex-wrap items-center justify-center gap-2">
-        <span>⚡ ${isEs ? `Vista Rápida del Día ${r.input.birth.d} (Conductor #${uMoolank} · ${uRuler}) —` : `Instant Birth Day ${r.input.birth.d} Love Code Preview (Driver #${uMoolank} · ${uRuler}) —`}</span>
-        <button type="button" id="btn-jump-partner-strip" data-action="scroll-partner-compat" class="px-2.5 py-1 rounded-lg bg-gold text-[#141108] font-extrabold text-xs hover:brightness-110 cursor-pointer shadow">
-          ${isEs ? '💑 Probar Día de Pareja (1–31) ↓' : '💑 Test Partner\'s Birth Day (1–31) ↓'}
-        </button>
-        <button type="button" id="btn-refine-exact-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer text-xs">
-          ${isEs ? '[Refinar Tu Mes y Año Exactos →]' : '[Refine Your Exact Birth Month &amp; Year →]'}
-        </button>
-      </div>` : ''}
+      <div id="quick-day-banner" class="mb-2.5 p-2.5 sm:p-3.5 rounded-xl border border-gold bg-[#141108]/95 shadow-lg text-left sm:text-center text-xs sm:text-sm text-champagne">
+        <div class="font-bold text-gold leading-snug">
+          ⚡ ${isEs ? `Día Natal ${r.input.birth.d} · Conductor #${uMoolank} (${uRuler}) — ${attInfo.style}` : `Birth Day ${r.input.birth.d} Love Archetype: Driver #${uMoolank} (${uRuler}) · ${attInfo.style}`}
+        </div>
+        <p class="text-[0.7rem] sm:text-xs text-zinc-200 mt-0.5 leading-snug line-clamp-2">${attInfo.chase}</p>
+        <div class="mt-1.5 flex flex-wrap items-center justify-between sm:justify-center gap-2">
+          <button type="button" id="btn-jump-partner-strip" data-action="scroll-partner-compat" class="px-2 py-0.5 rounded-md bg-gold text-[#141108] font-extrabold text-[0.68rem] hover:brightness-110 cursor-pointer shadow">
+            ${isEs ? '💑 Probar Día de Pareja (1–31) ↓' : '💑 Tap Partner\'s Birth Day Below (1–31) ↓'}
+          </button>
+          <button type="button" id="btn-refine-exact-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer text-[0.68rem]">
+            ${isEs ? '[Refinar Tu Mes y Año Exactos →]' : '[Refine Exact Birth Month &amp; Year →]'}
+          </button>
+        </div>
+      </div>
+      ${partnerCompatBoxHtml}` : ''}
       <div class="text-center pt-3">
         <span class="badge-olive">${UI.scan_complete}</span>
         <h1 class="font-display text-[1.9rem] leading-tight sm:text-4xl mt-4">${decodedTitleHtml}</h1>
@@ -1013,44 +1059,7 @@ const CONFIG = {
         <div id="triangle-audio-status" class="hidden mt-3 p-3.5 rounded-xl card-soft border border-gold/40 text-xs sm:text-sm text-champagne text-center"></div>
       </div>
 
-      <!-- PRIORITY #1A.3 · OPTIONAL PARTNER / CRUSH BIRTHDAY COMPATIBILITY CHECKER -->
-      <div id="partner-compat-box" class="card mt-7 p-5 sm:p-7 border-gold/50" style="border-color:rgba(212,175,55,.5);background:linear-gradient(180deg,rgba(28,25,18,0.92),rgba(14,15,20,0.96))">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="badge-gold">${isEs ? '✦ Escáner de Compatibilidad de Pareja (Opcional)' : '✦ Instant Partner / Crush Compatibility Check (Optional)'}</span>
-          <span class="text-[0.65rem] uppercase tracking-[0.15em] text-champagne">${isEs ? 'Sin Costo Extra' : 'Instant Preview'}</span>
-        </div>
-        <h3 class="font-display text-lg sm:text-2xl text-ivory mt-3">
-          ${isEs ? '¿Quieres comprobar tu compatibilidad con tu pareja o alguien especial? Ingresa su fecha de nacimiento (Opcional):' : 'Want to check your compatibility with a partner or crush? Enter their birthday (Optional):'}
-        </h3>
-        <p class="text-xs sm:text-sm text-zinc-300 mt-1.5">
-          ${isEs ? 'Calcularemos al instante su puntaje de magnetismo, dónde chocan sus números natales y qué casillas del Lo Shu Chino completan juntos.' : 'See your instant Magnetism vs. Friction score, how their Birth-Day Driver interacts with yours, and whether their chart fills your missing Lo Shu love numbers.'}
-        </p>
-
-        <!-- 1-TAP PARTNER BIRTH DAY STRIP (1-31) -->
-        <div id="partner-quick-day-strip" class="mt-4 p-3 sm:p-3.5 rounded-xl border ${state.isQuickDayPreview ? 'border-gold bg-gold/10 shadow-lg' : 'border-gold/40 bg-black/35'}">
-          <p id="partner-quick-day-label" class="text-[0.72rem] sm:text-xs font-semibold text-champagne text-center mb-2">
-            ${isEs
-              ? '⚡ ¿No sabes su año de nacimiento? Solo toca el Día del Mes en que nació (1–31) para ver su Compatibilidad y Guion de Texto al instante:'
-              : '⚡ Don\'t know their birth year? Just tap the Day of the Month they were born (1–31) for an instant Match &amp; Text Script check:'}
-          </p>
-          <div class="quick-day-grid" role="group" aria-label="Partner Quick Birth Day Select 1 to 31">
-            ${pQuickDayBtns}
-          </div>
-        </div>
-
-        <p class="text-[0.68rem] uppercase tracking-[0.14em] text-zinc-400 mt-3.5 text-center">
-          ${isEs ? '— O selecciona su Mes, Día y Año completos si los conoces —' : '— Or select their full Month, Day &amp; Year below —'}
-        </p>
-        <div class="grid grid-cols-3 gap-2.5 mt-2" id="partner-dob-group">
-          <select id="partnerDobMonth" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Month">${pMonthOpts}</select>
-          <select id="partnerDobDay" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Day">${pDayOpts}</select>
-          <select id="partnerDobYear" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Year">${pYearOpts}</select>
-        </div>
-        <button type="button" data-action="check-partner-compat" id="btn-partner-compat" class="btn-gold mt-4 !py-3 text-xs sm:text-sm">
-          ✦ ${isEs ? 'Calcular Compatibilidad y Fricción con Mi Pareja →' : 'Calculate Our Relationship Compatibility & Friction Score →'}
-        </button>
-        <div id="partner-compat-result" class="hidden mt-5 pt-5 border-t border-gold/30"></div>
-      </div>
+      ${state.isQuickDayPreview ? '' : partnerCompatBoxHtml}
 
       <!-- 1-TAP VIRAL SHARE BUTTON -->
       <div class="mt-4 text-center">

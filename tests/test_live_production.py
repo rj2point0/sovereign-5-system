@@ -54,6 +54,8 @@ async def verify_live_pages():
         await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=8000)
         assert await page_mob.is_visible('#quick-day-banner') is True
         assert await page_mob.is_visible('#partner-quick-day-strip') is True
+        live_pqd_box = await page_mob.locator('#partner-quick-day-strip').bounding_box()
+        assert live_pqd_box is not None and live_pqd_box["y"] >= 0 and (live_pqd_box["y"] + live_pqd_box["height"]) <= 635, f"Expected live #partner-quick-day-strip inside 390x660 viewport, got {live_pqd_box}"
         await page_mob.click('#partner-quick-day-strip button[data-action="partner-quick-day"][data-day="25"]')
         await asyncio.sleep(0.2)
         assert await page_mob.is_visible('#partner-compat-result') is True

@@ -428,6 +428,9 @@ main, header, footer { position: relative; z-index: 1; }
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
+  #view-teaser {
+    padding-top: 0.35rem !important;
+  }
   #view-hero .badge-gold {
     margin-bottom: 0.14rem !important;
     padding: 3px 9px !important;

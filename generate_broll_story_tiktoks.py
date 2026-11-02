@@ -30,7 +30,7 @@ import cv2
 import edge_tts
 import imageio_ffmpeg
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 
 if sys.platform == "win32":
     try:
@@ -1085,6 +1085,134 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#datingadvice", "#lovecode", "#birthdaycompatibility", "#crush"
         ],
     },
+    {
+        "id": "short_25",
+        "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_25_7sec_karmic_or_soulmate.mp4",
+        "grid_headline": "SOULMATE OR\nKARMIC TRAP?",
+        "grid_sub": "TEST BOTH BIRTHDAYS",
+        "hook_box_text": "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Soulmate or karmic trap:",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? "
+            "Fast chemistry can be a karmic trap. "
+            "So tap the bio link to test both birthdays free."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_09_couple_silhouette_walk.mp4"),
+            (2.3, 4.6, "broll_16_candlelight_woman_face.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Intense chemistry can be a karmic trap—tap the bio link to test both birthdays free 💔🔮 "
+            "#relationships #karmicrelationship #soulmate #numerology #datingadvice #lovecode #birthdaycompatibility #situationship"
+        ),
+        "first_comment": "Were you born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th—and what day was your partner or crush born? Drop both below 👇",
+        "hashtags": [
+            "#relationships", "#karmicrelationship", "#soulmate", "#numerology",
+            "#datingadvice", "#lovecode", "#birthdaycompatibility", "#situationship"
+        ],
+    },
+    {
+        "id": "short_26",
+        "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_26_7sec_no_contact_thoughts.mp4",
+        "grid_headline": "DO THEY MISS YOU\nIN NO CONTACT?",
+        "grid_sub": "CHECK THEIR BIRTH DAY",
+        "hook_box_text": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th:",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“I'm taking a step back this week because...",
+        "spoken_script": (
+            "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, "
+            "silence does not mean they forgot you. "
+            "So check their exact text script in our bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_01_window_reflection.mp4"),
+            (2.3, 4.6, "broll_14_city_night_walk.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean they forgot you "
+            "(check their exact Flip The Chase text script in our bio) 📱💔 "
+            "#nocontact #relationships #textingadvice #avoidantattachment #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Was your person born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th—and are you in no contact right now? 👇",
+        "hashtags": [
+            "#nocontact", "#relationships", "#textingadvice", "#avoidantattachment",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_27",
+        "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_27_7sec_november_turning_point.mp4",
+        "grid_headline": "3 LOVE DATES\nTO WATCH NEXT",
+        "grid_sub": "YOUR 90-DAY CALENDAR",
+        "hook_box_text": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st?",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "Born on the 3rd, 4th, 8th, 9th, 13th, 18th, or 27th? "
+            "Your next love shift starts this week. "
+            "So tap our bio to see your dates."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_11_dusk_river_silhouette.mp4"),
+            (2.3, 4.6, "broll_15_sunset_ocean_waves.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_anchors.png", 1.5),
+            ("image", "scenes_cache/scene_relationships.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? "
+            "Your next love shift starts this week—tap our bio to see your 3 turning-point dates 🌙✨ "
+            "#november #relationships #lovetiming #numerology #datingadvice #lovecode #birthdaycompatibility #soulmate"
+        ),
+        "first_comment": "Were you born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Drop your birth day 👇",
+        "hashtags": [
+            "#november", "#relationships", "#lovetiming", "#numerology",
+            "#datingadvice", "#lovecode", "#birthdaycompatibility", "#soulmate"
+        ],
+    },
 ]
 
 
@@ -1496,6 +1624,92 @@ class BrollStoryGenerator:
         draw.text((cx, cy - 24), line1, fill=(255, 209, 71), font=self.font_cta_main, anchor="mm")
         draw.text((cx, cy + 24), line2, fill=(245, 245, 247), font=self.font_cta_top, anchor="mm")
 
+    def draw_imessage_match_reveal_card(self, frame: Image.Image, spec: Dict[str, Any]) -> Image.Image:
+        """
+        Upgrades the 7.5s video reveal phase (4.6s-7.5s) to visually display:
+        1) Dark-mode Partner Match Card ('Born 19th × Born 23rd -> 96% SOULMATE LOCK') + 1-Tap Birth Day Strip
+        2) iMessage 'Flip The Chase' Text Script Bubble (first line visible + Gaussian-blurred secret text + Gold Lock CTA)
+        """
+        frame = ImageEnhance.Brightness(frame).enhance(0.30)
+        draw = ImageDraw.Draw(frame)
+
+        f_badge = ImageFont.truetype(FONT_BOLD, 24)
+        f_pair = ImageFont.truetype(FONT_BOLD, 35)
+        f_score = ImageFont.truetype(FONT_BOLD, 32)
+        f_day = ImageFont.truetype(FONT_BOLD, 24)
+        f_sms_hdr = ImageFont.truetype(FONT_BOLD, 25)
+        f_sms_txt = ImageFont.truetype(FONT_BOLD, 31)
+        f_lock = ImageFont.truetype(FONT_BOLD, 24)
+
+        # --- CARD 1: PARTNER MATCH CARD (y = 165..545) ---
+        draw.rounded_rectangle([58, 165, 1022, 545], radius=28, fill=(14, 16, 22), outline=(212, 175, 55), width=4)
+        draw.text((540, 210), "1-TAP PARTNER & CRUSH BIRTHDAY MATCH", fill=(243, 229, 171), font=f_badge, anchor="mm")
+
+        pair_txt = spec.get("reveal_match_pair", "Born 19th × Born 23rd")
+        score_txt = spec.get("reveal_match_score", "96% SOULMATE LOCK")
+        draw.text((540, 274), f"{pair_txt}  →  {score_txt}", fill=(255, 255, 255), font=f_pair, anchor="mm")
+
+        draw.rounded_rectangle([110, 322, 970, 402], radius=20, fill=(20, 44, 32), outline=(74, 222, 128), width=3)
+        draw.text((540, 362), f"{score_txt} · HIGH INITIAL PULL", fill=(110, 245, 165), font=f_score, anchor="mm")
+
+        # Mini 1-Tap Birth Day Grid row inside Match Card
+        days_demo = ["2", "7", "11", "14", "16", "*19*", "*23*", "25", "29"]
+        bx0 = 102
+        bw = 88
+        bgap = 10
+        for idx, d_lbl in enumerate(days_demo):
+            dx0 = bx0 + idx * (bw + bgap)
+            dx1 = dx0 + bw
+            is_sel = "*" in d_lbl
+            clean_lbl = d_lbl.replace("*", "")
+            draw.rounded_rectangle(
+                [dx0, 432, dx1, 512],
+                radius=14,
+                fill=(212, 175, 55) if is_sel else (26, 28, 36),
+                outline=(255, 225, 110) if is_sel else (110, 95, 45),
+                width=3 if is_sel else 2,
+            )
+            draw.text(
+                ((dx0 + dx1) // 2, 472),
+                clean_lbl,
+                fill=(18, 15, 8) if is_sel else (243, 229, 171),
+                font=f_day,
+                anchor="mm",
+            )
+
+        # --- CARD 2: iMESSAGE "FLIP THE CHASE" TEXT SCRIPT BUBBLE (y = 575..1185) ---
+        draw.rounded_rectangle([58, 575, 1022, 1185], radius=28, fill=(11, 13, 19), outline=(96, 165, 250), width=3)
+        draw.text((540, 625), "YOUR \"FLIP THE CHASE\" TEXT SCRIPT (iMessage):", fill=(255, 209, 71), font=f_sms_hdr, anchor="mm")
+
+        # iMessage blue/slate speech bubble
+        draw.rounded_rectangle([94, 668, 986, 1002], radius=24, fill=(24, 38, 58), outline=(96, 165, 250), width=2)
+        sms_lead = spec.get("reveal_sms_lead", "“Hey, I loved hanging out, but I noticed...")
+        draw.text((130, 725), sms_lead, fill=(255, 255, 255), font=f_sms_txt, anchor="lm")
+
+        # Render 2 realistic secret SMS lines and apply Gaussian blur so it looks like frosted glass
+        secret_box = (120, 775, 960, 980)
+        secret_img = frame.crop(secret_box)
+        s_draw = ImageDraw.Draw(secret_img)
+        s_draw.text((10, 42), "our pace works best when neither of us forces it.", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
+        s_draw.text((10, 112), "Reach out next week when your head is clear.”", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
+        secret_blurred = secret_img.filter(ImageFilter.GaussianBlur(radius=7))
+        frame.paste(secret_blurred, (secret_box[0], secret_box[1]))
+
+        # Glowing Gold Lock Button inside Card 2 (with drawn vector padlock icon)
+        draw = ImageDraw.Draw(frame)
+        draw.rounded_rectangle([94, 1030, 986, 1150], radius=20, fill=(212, 175, 55), outline=(255, 235, 150), width=3)
+        # Draw crisp vector padlock at x=138..162, y=1075..1105
+        draw.arc([141, 1068, 159, 1088], start=180, end=0, fill=(18, 15, 8), width=3)
+        draw.rounded_rectangle([137, 1083, 163, 1106], radius=4, fill=(18, 15, 8))
+        draw.text(
+            (558, 1090),
+            "Tap Link in Bio to Test Both Birthdays & Unlock Your Script",
+            fill=(18, 15, 8),
+            font=f_lock,
+            anchor="mm",
+        )
+        return frame
+
     def render_video(
         self,
         spec: Dict[str, Any],
@@ -1587,6 +1801,8 @@ class BrollStoryGenerator:
                 x0 = (1080 - new_w) // 2
                 y0 = (1920 - new_h) // 2
                 frame = base_img.crop((x0, y0, x0 + new_w, y0 + new_h)).resize((1080, 1920), Image.Resampling.BILINEAR)
+                if broll_cutoff <= 5.0:
+                    frame = self.draw_imessage_match_reveal_card(frame, spec)
             elif t < 19.5 and calc_reader is not None:
                 frame = calc_reader.get_frame(t - 15.0, darken_ratio=0.96)
             else:
@@ -1608,6 +1824,8 @@ class BrollStoryGenerator:
                 x0 = (1080 - new_w) // 2
                 y0 = (1920 - new_h) // 2
                 frame = base_img.crop((x0, y0, x0 + new_w, y0 + new_h)).resize((1080, 1920), Image.Resampling.BILINEAR)
+                if broll_cutoff <= 5.0:
+                    frame = self.draw_imessage_match_reveal_card(frame, spec)
 
             draw = ImageDraw.Draw(frame)
 

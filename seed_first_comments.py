@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_27",
+        "video_id": None,
+        "title_match": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st?",
+        "comment": "Were you born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Drop your birth day 👇",
+    },
+    {
+        "id": "short_26",
+        "video_id": None,
+        "title_match": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean",
+        "comment": "Was your person born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th—and are you in no contact right now? 👇",
+    },
+    {
+        "id": "short_25",
+        "video_id": None,
+        "title_match": "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Intense chemistry can be a karmic trap",
+        "comment": "Were you born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th—and what day was your partner or crush born? Drop both below 👇",
+    },
+    {
         "id": "short_24",
         "video_id": None,
         "title_match": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th",
