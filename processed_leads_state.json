@@ -14,5 +14,30 @@
     "email_1_sent_at": "2026-10-23T03:05:37.015383+00:00",
     "email_2_sent_at": "2026-10-24T03:05:43.922935+00:00",
     "email_3_sent_at": "2026-10-26T06:08:03.246503+00:00"
+  },
+  "geet08190@gmail.com::1986-02-19::geet": {
+    "timestamp": "2026-11-01T04:04:51.585Z",
+    "name": "Geet",
+    "dob": "1986-02-19",
+    "email": "geet08190@gmail.com",
+    "lang": "en",
+    "utm": {
+      "utm_source": "ig_bio",
+      "utm_medium": "social",
+      "utm_content": "link_in_bio",
+      "cohort": "ig_reels"
+    },
+    "source_attribution": "Instagram Bio · Reels",
+    "partner_dob": "1988-08-19",
+    "top_3_overlap_numbers": "8, 9, 1",
+    "life_path": "9",
+    "expression": "19/1",
+    "vedic_moolank": "1 · Surya (Sun)",
+    "chaldean_name": "17/8",
+    "email_sent": true,
+    "email_1_sent_at": "2026-11-01T04:05:09.731919+00:00",
+    "email_2_sent_at": "2026-11-02T04:05:19.559687+00:00",
+    "email_3_sent_at": null,
+    "cart_recovery_sent_at": "2026-11-02T15:29:00.109975+00:00"
   }
 }

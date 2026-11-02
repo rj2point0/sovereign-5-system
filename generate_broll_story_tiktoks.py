@@ -963,6 +963,128 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#datingadvice", "#spiritualtiktok", "#lovecode", "#52daycycle"
         ],
     },
+    {
+        "id": "short_22",
+        "cohort": "Cohort C · Outlier Batch 6 (7-Sec Retention)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_22_7sec_ghost_days.mp4",
+        "grid_headline": "DAYS THAT GO\nCOLD FAST",
+        "grid_sub": "AVOIDANT BIRTH CODE",
+        "hook_box_text": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they go cold overnight:",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "spoken_script": (
+            "Born on the 4th, 7th, 8th, 16th, or 25th? "
+            "They act obsessed, then go cold fast. "
+            "But closeness scares their birth code. "
+            "Test both birthdays in bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_20_couple_tension_apart.mp4"),
+            (2.3, 4.6, "broll_12_beach_shore_brooding.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed with you and then suddenly go cold overnight "
+            "(it's an avoidant birth code reflex—test both birthdays in bio) 💔🔮 "
+            "#relationships #avoidantattachment #situationship #numerology #datingadvice #ghosting #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Have you ever dated someone born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th who went cold fast? Drop both birth days below 👇",
+        "hashtags": [
+            "#relationships", "#avoidantattachment", "#situationship", "#numerology",
+            "#datingadvice", "#ghosting", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_23",
+        "cohort": "Cohort C · Outlier Batch 6 (7-Sec Retention)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_23_7sec_double_text.mp4",
+        "grid_headline": "NEVER DOUBLE\nTEXT THEM",
+        "grid_sub": "DO THIS INSTEAD",
+        "hook_box_text": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Never double text them:",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "spoken_script": (
+            "Born on the 2nd, 6th, 11th, 20th, or 29th? "
+            "Stop double texting when they go quiet. "
+            "But chasing makes them pull back more. "
+            "Match their silence and check bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_18_hands_texting_phone.mp4"),
+            (2.3, 4.6, "broll_02_late_night_phone.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting when they go quiet—here is how to flip the chase 📱💔 "
+            "#relationships #textingadvice #doubletext #anxiousattachment #numerology #datingadvice #nocontact #lovecode"
+        ),
+        "first_comment": "Were you born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th—and do you fight the urge to double text? Drop your day below 👇",
+        "hashtags": [
+            "#relationships", "#textingadvice", "#doubletext", "#anxiousattachment",
+            "#numerology", "#datingadvice", "#nocontact", "#lovecode"
+        ],
+    },
+    {
+        "id": "short_24",
+        "cohort": "Cohort C · Outlier Batch 6 (7-Sec Retention)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_24_7sec_soulmate_day.mp4",
+        "grid_headline": "YOUR TRUE\nSOULMATE DAY",
+        "grid_sub": "TEST BOTH BIRTHDAYS",
+        "hook_box_text": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? Your soulmate day:",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "spoken_script": (
+            "Born on the 1st, 5th, 10th, 19th, or 23rd? "
+            "Only one birth day can match your fire. "
+            "But wrong dates drain your heart. "
+            "Check your match in bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_10_couple_sunset_embrace.mp4"),
+            (2.3, 4.6, "broll_17_candle_dark_glow.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? "
+            "Only one birth number can handle your fire without starting a power struggle 🔥❤️‍🔥 "
+            "#relationships #soulmate #compatibility #numerology #datingadvice #lovecode #birthdaycompatibility #crush"
+        ),
+        "first_comment": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th—what day was your crush or partner born? Drop both 👇",
+        "hashtags": [
+            "#relationships", "#soulmate", "#compatibility", "#numerology",
+            "#datingadvice", "#lovecode", "#birthdaycompatibility", "#crush"
+        ],
+    },
 ]
 
 
@@ -1156,7 +1278,7 @@ class BrollStoryGenerator:
 
         tempo = 1.0
         if target_voice_sec and v_dur > target_voice_sec:
-            tempo = min(1.35, max(1.0, v_dur / target_voice_sec))
+            tempo = min(1.55, max(1.0, v_dur / target_voice_sec))
             for c in cues:
                 c["start"] = c["start"] / tempo
                 c["end"] = c["end"] / tempo
@@ -1387,7 +1509,7 @@ class BrollStoryGenerator:
         is_short = spec.get("format_type") == "cohort_c_short"
         hook_end_sec = spec.get("hook_end_sec", 4.5 if is_short else 4.2)
         cta_tail_sec = spec.get("cta_tail_sec", 3.5 if is_short else 5.0)
-        broll_cutoff = 7.5 if is_short else 15.0
+        broll_cutoff = float(spec.get("broll_cutoff", 7.5 if is_short else 15.0))
 
         print(
             f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames, format={spec.get('format_type')})...",
@@ -1448,12 +1570,12 @@ class BrollStoryGenerator:
                         break
                 frame = broll_readers[active_broll].get_frame(local_t, darken_ratio=0.84)
             elif is_short:
-                # Cohort C (7.5s -> end): Fast dynamic zoom reveal across the 2 dossier scenes
-                reveal_dur = max(1.0, total_dur - 7.5)
-                mid_t = 7.5 + (reveal_dur * 0.48)
+                # Cohort C (broll_cutoff -> end): Fast dynamic zoom reveal across the 2 dossier scenes
+                reveal_dur = max(1.0, total_dur - broll_cutoff)
+                mid_t = broll_cutoff + (reveal_dur * 0.48)
                 if t < mid_t or len(p_imgs) == 1:
                     img_key = p_imgs[0]
-                    u = max(0.0, min(1.0, (t - 7.5) / max(0.5, mid_t - 7.5)))
+                    u = max(0.0, min(1.0, (t - broll_cutoff) / max(0.5, mid_t - broll_cutoff)))
                     zoom = 1.0 + 0.065 * u
                 else:
                     img_key = p_imgs[1]
@@ -1535,12 +1657,15 @@ class BrollStoryGenerator:
         """Extracts audit frames for visual verification and syncs to artifacts."""
         cap = cv2.VideoCapture(mp4_path)
         fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0.0
+        vid_dur = (frame_count / fps) if fps > 0 else 14.0
         saved = []
-        checkpoints = (
-            [(2.0, "2s_hook"), (5.5, "5s_broll"), (10.5, "10s_reveal")]
-            if is_short
-            else [(2.0, "2s_hook"), (8.0, "8s_broll"), (20.0, "20s_reveal")]
-        )
+        if vid_dur <= 8.5:
+            checkpoints = [(1.5, "2s_hook"), (3.5, "5s_broll"), (6.0, "10s_reveal")]
+        elif is_short:
+            checkpoints = [(2.0, "2s_hook"), (5.5, "5s_broll"), (10.5, "10s_reveal")]
+        else:
+            checkpoints = [(2.0, "2s_hook"), (8.0, "8s_broll"), (20.0, "20s_reveal")]
         for sec, tag in checkpoints:
             f_num = int(sec * fps)
             cap.set(cv2.CAP_PROP_POS_FRAMES, f_num)

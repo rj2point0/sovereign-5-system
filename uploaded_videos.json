@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-01T15:05:02.349641",
+  "updated_at": "2026-11-02T07:48:40.922504",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -239,6 +239,33 @@
       "schedule_time": null,
       "uploaded_at": "2026-11-01T15:05:02.349641",
       "caption_preview": "You don't actually miss your ex. You miss the person they faked for the first 30 days (Born on the 1st, 4th, 6th, 8th, 9"
+    },
+    "tiktok_short_22_7sec_ghost_days.mp4": {
+      "filename": "tiktok_short_22_7sec_ghost_days.mp4",
+      "ad_id": "short_22",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-04 18:30",
+      "uploaded_at": "2026-11-02T07:47:38.944950",
+      "caption_preview": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed with you and then suddenly go cold overnight"
+    },
+    "tiktok_short_23_7sec_double_text.mp4": {
+      "filename": "tiktok_short_23_7sec_double_text.mp4",
+      "ad_id": "short_23",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-05 11:00",
+      "uploaded_at": "2026-11-02T07:48:09.874611",
+      "caption_preview": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting when they go quiet—here is how to flip t"
+    },
+    "tiktok_short_24_7sec_soulmate_day.mp4": {
+      "filename": "tiktok_short_24_7sec_soulmate_day.mp4",
+      "ad_id": "short_24",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-05 18:30",
+      "uploaded_at": "2026-11-02T07:48:40.922504",
+      "caption_preview": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? Only one birth number can handle your fire"
     }
   }
 }

@@ -351,21 +351,29 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_21
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_24
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21")]
-        assert len(jh_specs) == 12, f"Expected 12 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24")]
+        assert len(jh_specs) == 15, f"Expected 15 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
             if s["id"] == "short_13":
                 assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for short_13, got {gate_res['fk_grade']}"
-            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21"):
+            elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
-        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility & Jenny Hoyos 5th-Grade Gate (short_10-21) verified!")
+        from lead_capture_worker import build_cart_recovery_email, collect_lead_partner_checks_and_intent, calculate_5_systems
+        geet_intent = collect_lead_partner_checks_and_intent("geet08190@gmail.com", "1986-02-19", "1988-08-19")
+        geet_subj, geet_plain, geet_html = build_cart_recovery_email(
+            {"name": "Geet", "dob": "1986-02-19", "email": "geet08190@gmail.com", "calc": calculate_5_systems("Geet", "1986-02-19")},
+            intent_info=geet_intent,
+        )
+        assert geet_subj == "Geet — your 96% match on Dec 23 (and why Aug 19 pulls away) 💔", f"Unexpected Geet recovery subject: {geet_subj}"
+        assert "dRm8wP7VL0Md1gA0zd38404?prefilled_email=geet08190%40gmail.com" in geet_html
+        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility, Cart Recovery & Jenny Hoyos 5th-Grade Gate (short_10-24) verified!")
 
         # TEST 10: 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Audit + Optional Name + 1-Tap Quick-Day Strip + 1-Tap Instant Sample Reading + $17 Impulse Tier
         print("\n--- Test 10: 390x660 TikTok In-App Browser Viewport Audit (bottom <= 635px), Blank Name Submit, #quick-day-strip, 1-Tap Sample Demo & $17 Impulse Tier ---")
@@ -441,6 +449,10 @@ async def test_all():
         assert mini_cfg == "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404", f"Expected dedicated $17 Stripe link, got {mini_cfg}"
         assert await page_mob.is_visible('#tier-card-mini') is True, "Expected #tier-card-mini ($17 tier) visible"
         assert await page_mob.is_visible('#btn-checkout-mini') is True, "Expected #btn-checkout-mini visible"
+        mini_card_txt = await page_mob.locator('#tier-card-mini').inner_text()
+        base_card_txt = await page_mob.locator('#tier-card-base').inner_text()
+        assert 'Flip The Chase' in mini_card_txt, f"Expected 'Flip The Chase' Text Script in #tier-card-mini, got {mini_card_txt}"
+        assert 'Flip The Chase' in base_card_txt, f"Expected 'Flip The Chase' Text Script in #tier-card-base, got {base_card_txt}"
         intercepted_stripe_urls = []
         async def mock_stripe_route(route):
             intercepted_stripe_urls.append(route.request.url)

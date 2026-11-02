@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_24",
+        "video_id": None,
+        "title_match": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th",
+        "comment": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th—what day was your crush or partner born? Drop both 👇",
+    },
+    {
+        "id": "short_23",
+        "video_id": None,
+        "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting",
+        "comment": "Were you born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th—and do you fight the urge to double text? Drop your day below 👇",
+    },
+    {
+        "id": "short_22",
+        "video_id": None,
+        "title_match": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed",
+        "comment": "Have you ever dated someone born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th who went cold fast? Drop both birth days below 👇",
+    },
+    {
         "id": "short_21",
         "video_id": None,
         "title_match": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th",

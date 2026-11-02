@@ -101,21 +101,22 @@
       "title_match": "Why reading your Western Life Path number alone feels like reading 1 page",
       "comment": "Which two numbers feel like they are constantly fighting each other in your personality? Drop your birthday below 👇",
       "seeded_at": "2026-11-01T15:06:37.411164"
+    },
+    "short_16": {
+      "video_id": "7702844640541641997",
+      "title_match": "Look at the last text you sent them. That isn't love",
+      "comment": "Were you born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, 25th, or 29th—and do you panic when they go quiet? 👇",
+      "seeded_at": "2026-11-02T07:45:51.750240"
     }
   },
-  "updated_at": "2026-11-01T15:07:37.817229",
+  "updated_at": "2026-11-02T07:46:41.993376",
   "last_verification": {
-    "checked_at": "2026-11-01T15:06:57.448698",
+    "checked_at": "2026-11-02T07:46:11.847956",
     "videos": {
-      "short_15": {
+      "short_16": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
-      },
-      "short_03": {
-        "browse_comment_count": "0",
-        "comment_intact": false,
-        "in_studio_comment_feed": false
       }
     }
   }

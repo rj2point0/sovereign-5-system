@@ -1067,12 +1067,263 @@ def send_email_via_smtp(recipient: str, subject: str, plain_text: str, html_body
         return False
 
 
+def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[str, Any]] = None) -> Tuple[str, str, str]:
+    """
+    Returns (subject, plain_text, html_body) for the 2-Hour Cart Abandonment /
+    High-Intent Partner Check Recovery Email ($17 VIP Unlock).
+    """
+    name = lead.get("name") or "Friend"
+    first_name = name.split()[0] if name and name.lower() not in ("your reading", "tu lectura") else "Friend"
+    dob = lead.get("dob", "1986-02-19")
+    email_addr = lead.get("email", "")
+    calc = lead.get("calc") or calculate_5_systems(name, dob)
+    a1, a2, a3 = calc["anchors"][0], calc["anchors"][1], calc["anchors"][2]
+
+    try:
+        dt_obj = datetime.strptime(dob, "%Y-%m-%d")
+        dob_formatted = dt_obj.strftime("%B %d, %Y")
+        birth_day_num = dt_obj.day
+    except Exception:
+        dob_formatted = dob
+        birth_day_num = 19
+
+    def _ordinal(n: int) -> str:
+        if 11 <= (n % 100) <= 13:
+            return f"{n}th"
+        return f"{n}{ {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th') }"
+
+    birth_day_ord = _ordinal(birth_day_num)
+    DAY_TITLES = {
+        1: "The Independent Initiator",
+        2: "The Deep Intuitive Bonder",
+        6: "The Devoted Sanctuary Builder",
+        7: "The Guarded Soul-Searcher",
+        8: "The All-Or-Nothing Protector",
+        9: "The Fierce Empathic Protector",
+        11: "The High-Voltage Intuitive Mirror",
+        16: "The Guarded Truth-Seeker",
+        19: "The Fierce Independent Over-Giver",
+        20: "The Deeply Sensitive Peacekeeper",
+        23: "The Magnetic Mental Spark",
+        25: "The Private Deep-Water Thinker",
+        29: "The All-In Karmic Romantic",
+    }
+    u_moolank_num = int(str(calc["vedic_moolank"]).split()[0])
+    birth_day_title = DAY_TITLES.get(birth_day_num, DAY_TITLES.get(u_moolank_num, "The Sovereign Heart"))
+
+    intent = intent_info or {}
+    partner_checks = intent.get("partner_checks") or []
+
+    # Check if this is Geet or has Dec 23 + Aug 19
+    is_geet = email_addr.strip().lower() == "geet08190@gmail.com"
+    if is_geet:
+        first_name = "Geet"
+        subject = "Geet — your 96% match on Dec 23 (and why Aug 19 pulls away) 💔"
+    elif len(partner_checks) >= 2:
+        sorted_checks = sorted(partner_checks, key=lambda x: x.get("score", 0), reverse=True)
+        top_p = sorted_checks[0]
+        low_p = sorted_checks[-1]
+        subject = f"{first_name} — your {top_p['score']}% match on {top_p['short_date']} (and why {low_p['short_date']} pulls away) 💔"
+    elif len(partner_checks) == 1:
+        top_p = partner_checks[0]
+        subject = f"{first_name} — your {top_p['score']}% match on {top_p['short_date']} (& what to text when they pull away) 💔"
+    else:
+        subject = f"{first_name} — why your {birth_day_ord} Birth Code attracts partners who pull away 💔"
+
+    stripe_mini_url = f"{STRIPE_MINI_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+    stripe_base_url = f"{STRIPE_BASE_URL}?prefilled_email={urllib.parse.quote(email_addr)}"
+    primary_partner_dob = (
+        "1988-12-23"
+        if is_geet
+        else (partner_checks[0]["dob"] if partner_checks else (lead.get("partner_dob") or "1988-12-23"))
+    )
+    teaser_url = build_teaser_deep_link(name, dob, email_addr) + f"&partner_dob={urllib.parse.quote(primary_partner_dob)}"
+
+    preheader = (
+        f"Born on the {birth_day_ord} ({birth_day_title}): we saved the partner birthdays you tested — "
+        f"unlock your complete Partner Synastry & 'Flip The Chase' Text Script for just $17..."
+    )
+
+    if is_geet or any(p.get("short_date") == "Dec 23" for p in partner_checks):
+        match_breakdown_plain = (
+            f"1. DEC 23 (1988-12-23 & 1979-12-23) — 96% SOULMATE LOCK (Birth-Day Driver 5 · Mercury):\n"
+            f"   Why it works: Your 19th Birth Day ({calc['vedic_moolank']}) carries intense solar loyalty, while a 23rd Birth Day "
+            f"(5 · Mercury) brings playful mental electricity that disarms your overthinking without triggering a control battle.\n\n"
+            f"2. AUG 08 (1988-08-08) — 94% KARMIC GRAVITY PULL (Birth-Day Driver 8 · Saturn):\n"
+            f"   Why it pulls so hard: Because #8 is your #1 Primary Signature Anchor across 5 systems, an Aug 8 partner feels "
+            f"instantly familiar—like unfinished past-life business—but 8s go silent whenever they feel emotionally cornered.\n\n"
+            f"3. AUG 19 (1988-08-19 & 1979-08-19) — 85% DUAL-19 POWER STRUGGLE (Birth-Day Driver 1 · Sun):\n"
+            f"   Why Aug 19 pulls away: When two people born on the 19th collide, the initial spark is undeniable—both of you "
+            f"love hard and hate feeling weak. But Dual-19s trigger a stubborn 'who texts first?' standoff where both of you "
+            f"act unbothered on the surface while secretly waiting for the other to reach out.\n"
+        )
+        match_breakdown_html = """
+              <div style="background-color:#0D0E12;border:1px solid rgba(212,175,55,0.42);border-radius:12px;padding:16px;margin-bottom:14px;">
+                <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#34D399;font-weight:700;margin-bottom:4px;">
+                  ✦ MATCH #1 · DEC 23 (1988-12-23 / 1979-12-23) · 96% SOULMATE LOCK
+                </div>
+                <div style="font-family:'Georgia',serif;font-size:17px;color:#F3E5AB;font-weight:600;margin-bottom:6px;">
+                  19th (1 · Sun) + 23rd (5 · Mercury) = Effortless Mental &amp; Emotional Spark
+                </div>
+                <p style="margin:0;font-size:13px;line-height:1.58;color:#D4D4D8;">
+                  Your <strong>19th Birth Day</strong> carries fierce loyalty and high standards, while a <strong>Dec 23rd partner (Driver #5)</strong> brings fast-moving warmth and mental chemistry that melts your guard without triggering a power struggle.
+                </p>
+              </div>
+
+              <div style="background-color:#0D0E12;border:1px solid rgba(248,113,113,0.42);border-left:4px solid #F87171;border-radius:12px;padding:16px;margin-bottom:14px;">
+                <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#FCA5A5;font-weight:700;margin-bottom:4px;">
+                  ⚠️ MATCH #2 · AUG 19 (1988-08-19 / 1979-08-19) · 85% DUAL-19 POWER STRUGGLE
+                </div>
+                <div style="font-family:'Georgia',serif;font-size:17px;color:#F3E5AB;font-weight:600;margin-bottom:6px;">
+                  Why Two 19th Birthdays Lock Horns &amp; Pull Away
+                </div>
+                <p style="margin:0;font-size:13px;line-height:1.58;color:#D4D4D8;">
+                  When two people born on the <strong>19th (1 · Sun)</strong> connect, the attraction is magnetic—yet neither of you wants to look like the one chasing. The moment an <strong>Aug 19</strong> partner feels questioned or pressured, their ego retreats into a silent standoff, leaving you staring at your phone wondering why they went cold.
+                </p>
+              </div>
+
+              <div style="background-color:#0D0E12;border:1px solid rgba(212,175,55,0.28);border-radius:12px;padding:14px 16px;margin-bottom:16px;">
+                <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#D4AF37;font-weight:700;margin-bottom:4px;">
+                  🔥 MATCH #3 · AUG 08 (1988-08-08) · 94% KARMIC MAGNETISM
+                </div>
+                <p style="margin:0;font-size:13px;line-height:1.55;color:#D4D4D8;">
+                  Because <strong>#8 (The Sovereign Executive)</strong> is your <strong>#1 Primary Signature Anchor</strong> across 5 systems, an <strong>Aug 8 (8 · Saturn)</strong> partner triggers an intense karmic pull—plus we also saved your checks for <strong>Dec 19 (90%)</strong> and <strong>Aug 23 (82%)</strong>.
+                </p>
+              </div>"""
+    else:
+        rows_plain = []
+        rows_html = []
+        for idx, p in enumerate(partner_checks[:4], start=1):
+            rows_plain.append(
+                f"{idx}. {p['short_date']} ({p['dob']}) — {p['score']}% Match (Driver {p['moolank']} · Life Path {p['life_path']})"
+            )
+            rows_html.append(
+                f"""<div style="background-color:#0D0E12;border:1px solid rgba(212,175,55,0.35);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+                  <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#D4AF37;font-weight:700;margin-bottom:4px;">
+                    ✦ TESTED MATCH #{idx} · {html.escape(p['short_date'])} ({html.escape(p['dob'])}) · {p['score']}% COMPATIBILITY
+                  </div>
+                  <p style="margin:0;font-size:13px;line-height:1.55;color:#D4D4D8;">
+                    Your <strong>{html.escape(birth_day_ord)} Birth Code</strong> paired with their <strong>Driver {html.escape(p['moolank'])} (Life Path {html.escape(p['life_path'])})</strong> creates a <strong>{p['score']}% initial pull</strong>—see their exact attachment trigger and communication script below.
+                  </p>
+                </div>"""
+            )
+        match_breakdown_plain = "\n".join(rows_plain) if rows_plain else (
+            f"• Your {birth_day_ord} Birth Day ({calc['vedic_moolank']}) carries {birth_day_title} energy—giving 100% devotion while secretly testing who can handle your depth."
+        )
+        match_breakdown_html = "\n".join(rows_html) if rows_html else f"""
+              <div style="background-color:#0D0E12;border:1px solid rgba(212,175,55,0.38);border-radius:12px;padding:16px;margin-bottom:16px;">
+                <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#D4AF37;font-weight:700;margin-bottom:4px;">
+                  ✦ YOUR {html.escape(birth_day_ord.upper())} BIRTH CODE · {html.escape(birth_day_title.upper())}
+                </div>
+                <p style="margin:0;font-size:13px;line-height:1.58;color:#D4D4D8;">
+                  Your <strong>{html.escape(birth_day_ord)} Birth Day ({html.escape(calc['vedic_moolank'])})</strong> paired with Master Overlap <strong>#{a1['number']} ({html.escape(a1['archetype'])})</strong> means you bond deeply—but when a partner pulls back, chasing them only triggers their defensive wall.
+                </p>
+              </div>"""
+
+    plain_text = (
+        f"SACRED NUMBER BLUEPRINT · PERSONALIZED PARTNER SYNASTRY BRIEFING\n"
+        f"Saved for {first_name} (Born {dob_formatted} — {birth_day_ord}: {birth_day_title})\n"
+        f"============================================================\n\n"
+        f"{first_name}, we noticed you tested your Partner Compatibility on Sacred Number Blueprint and clicked to view "
+        f"your full Synastry breakdown right before we unlocked our new $17 Impulse Mini-Read tier!\n\n"
+        f"Because you were born on the {birth_day_ord} ({birth_day_title} · Ruled by {calc['vedic_moolank']} with Master Overlap "
+        f"#{a1['number']} {a1['archetype']}), you pour fierce loyalty into the person you want—yet nothing drains your nervous "
+        f"system faster than a partner who acts hot one week and distant the next.\n\n"
+        f"HERE IS THE SNAPSHOT OF THE PARTNER BIRTHDAYS YOU TESTED:\n"
+        f"{match_breakdown_plain}\n\n"
+        f"UNLOCK YOUR COMPLETE PARTNER SYNASTRY & 90-DAY LOVE TIMING MINI-READ FOR JUST $17 (Instead of $37):\n"
+        f"• Full 5-System Synastry Breakdown for Dec 23 (96%), Aug 19 (85%), and Aug 08 (94%)\n"
+        f"• The Exact 'Flip The Chase' Text Script For Their Birth Number (word-for-word what to text a #1/19th vs. a #5/23rd or #8 when they pull away)\n"
+        f"• Your Next 3 Relationship Turning-Point Dates over the next 90 days\n\n"
+        f"👉 1-CLICK $17 VIP UNLOCK:\n{stripe_mini_url}\n\n"
+        f"Or unlock your complete 20-Page All-5-Systems Sovereign Dossier ($37):\n{stripe_base_url}\n\n"
+        f"Return to your saved interactive Partner Check:\n{teaser_url}\n"
+    )
+
+    html_body = f"""<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#0A0A0C;font-family:'Georgia',serif;color:#F5F5F7;">
+  <div style="display:none;max-height:0px;overflow:hidden;mso-hide:all;font-size:1px;color:#0A0A0C;line-height:1px;opacity:0;">
+    {html.escape(preheader)}&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+  </div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0A0A0C;padding:26px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background-color:#121318;border:1px solid rgba(212,175,55,0.42);border-radius:18px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:26px 24px 18px;border-bottom:1px solid rgba(212,175,55,0.2);background:radial-gradient(circle at 50% 0%,#281e12,#121318 75%);">
+              <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2.8px;text-transform:uppercase;color:#D4AF37;font-weight:700;">
+                💞 SAVED PARTNER COMPATIBILITY BRIEFING · $17 VIP UNLOCK 💞
+              </div>
+              <h1 style="margin:10px 0 6px;font-size:23px;line-height:1.3;color:#F5F5F7;font-weight:600;">
+                {html.escape(first_name)}, Your {html.escape(birth_day_ord)} Birth Code &amp; The Partner Matches You Tested
+              </h1>
+              <p style="margin:0;font-family:'Arial',sans-serif;font-size:13px;color:#A1A1AA;">
+                Born <strong style="color:#F3E5AB;">{html.escape(dob_formatted)} ({html.escape(birth_day_ord)} — {html.escape(birth_day_title)})</strong> · Master Overlap <strong style="color:#F3E5AB;">#{a1['number']}</strong>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:22px 24px 16px;font-family:'Arial',sans-serif;font-size:14px;line-height:1.62;color:#E4E4E7;">
+              <p style="margin:0 0 14px;">
+                We saw you test your Partner Compatibility scores and click the checkout button right before we released our new <strong>$17 Partner Synastry &amp; 90-Day Love Timing Mini-Read</strong>—so we saved your exact partner matches for you below:
+              </p>
+              <p style="margin:0 0 16px;">
+                Because you were born on the <strong>{html.escape(birth_day_ord)} ({html.escape(birth_day_title)} · Ruled by {html.escape(calc['vedic_moolank'])})</strong> with a <strong>#{a1['number']} ({html.escape(a1['archetype'])})</strong> 5-System Overlap, you carry rare loyalty and emotional depth—yet you hate feeling like you are the only one over-investing when someone goes cold.
+              </p>
+              {match_breakdown_html}
+              <div style="background:linear-gradient(145deg,#1d1810 0%,#101116 100%);border:1px solid rgba(212,175,55,0.5);border-radius:12px;padding:16px;margin-bottom:18px;">
+                <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#F3E5AB;font-weight:700;margin-bottom:8px;">
+                  ⚡ UNLOCK FOR JUST $17 (INSTEAD OF $37) — INSTANT ACCESS:
+                </div>
+                <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.65;color:#E4E4E7;">
+                  <li><strong>Side-by-Side 5-System Partner Synastry:</strong> Why <strong>Dec 23 (96%)</strong> feels effortless while <strong>Aug 19 (85%)</strong> triggers silent ego standoffs.</li>
+                  <li><strong>The Exact “Flip The Chase” Text Script For Their Birth Number:</strong> Word-for-word what to text a <strong>#1 (19th)</strong>, <strong>#5 (23rd)</strong>, or <strong>#8 (8th)</strong> when they pull away so they lean back in without you chasing.</li>
+                  <li><strong>Your Next 3 Relationship Turning-Point Dates:</strong> Exact 90-day Rosicrucian &amp; Vedic love timing windows for commitment vs. space.</li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:2px 24px 28px;">
+              <a href="{stripe_mini_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 28px;border-radius:12px;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:12px;box-shadow:0 8px 25px rgba(212,175,55,0.32);">
+                ⚡ UNLOCK MY PARTNER SYNASTRY &amp; TEXT SCRIPT ($17) →
+              </a>
+              <br>
+              <a href="{stripe_base_url}" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.4);border-radius:8px;margin-bottom:10px;">
+                ✦ Or Unlock the Complete 20-Page All-5-Systems Sovereign Dossier ($37)
+              </a>
+              <br>
+              <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:6px 14px;">
+                ↻ Re-Open Your Interactive Partner Compatibility Check
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
+
+    return subject, plain_text, html_body
+
+
+def send_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[str, Any]] = None) -> bool:
+    """Builds and sends the 2-Hour Cart Abandonment / High-Intent Partner Check $17 VIP Recovery Email."""
+    subject, plain_text, html_body = build_cart_recovery_email(lead, intent_info=intent_info)
+    return send_email_via_smtp(lead["email"], subject, plain_text, html_body, step_num=99)
+
+
 def send_followup_email(lead: Dict[str, Any], step: int = 1) -> bool:
     """Builds and sends Email #1 (Instant), Email #2 (24h), or Email #3 (48h)."""
     if step == 2:
         subject, plain_text, html_body = build_followup_email_2_loshu(lead)
     elif step == 3:
         subject, plain_text, html_body = build_followup_email_3_cycles(lead)
+    elif step == 99:
+        subject, plain_text, html_body = build_cart_recovery_email(lead)
     else:
         subject, plain_text, html_body = build_luxury_followup_email(lead)
     return send_email_via_smtp(lead["email"], subject, plain_text, html_body, step_num=step)
@@ -1764,9 +2015,101 @@ def process_lead(
     return processed[dedup_key]
 
 
+def collect_lead_partner_checks_and_intent(
+    email_addr: str,
+    dob: str,
+    partner_dob_fallback: str = "",
+) -> Dict[str, Any]:
+    """
+    Scans telemetry_events.json for a lead's session(s) / dob / email to determine:
+    - All unique partner_dob values tested in `partner_check_run` (with score & Vedic driver)
+    - Whether `checkout_clicked` occurred
+    - Whether `purchase_return` occurred
+    """
+    events = load_telemetry_events()
+    clean_email = (email_addr or "").strip().lower()
+    clean_dob = (dob or "").strip()
+
+    # Find all session_ids associated with this email or dob
+    matched_sessions = set()
+    for ev in events:
+        ev_email = str(ev.get("email") or "").strip().lower()
+        ev_dob = str(ev.get("dob") or "").strip()
+        sid = str(ev.get("session_id") or "").strip()
+        if sid and ((clean_email and ev_email == clean_email) or (clean_dob and ev_dob == clean_dob)):
+            matched_sessions.add(sid)
+
+    partner_map: Dict[str, Dict[str, Any]] = {}
+    checkout_clicked = False
+    purchased = False
+
+    u_calc = calculate_5_systems("User", clean_dob) if clean_dob else None
+    u_moolank_num = int(str(u_calc["vedic_moolank"]).split()[0]) if u_calc else 1
+    u_lp_val = u_calc.get("life_path_val", 9) if u_calc else 9
+
+    def _add_partner(p_dob_raw: str, score_override: Any = None):
+        p_iso = normalize_dob(p_dob_raw)
+        if not p_iso or not re.match(r"^\d{4}-\d{2}-\d{2}$", p_iso):
+            return
+        if p_iso in partner_map:
+            return
+        try:
+            p_calc = calculate_5_systems("Partner", p_iso)
+            dt_p = datetime.strptime(p_iso, "%Y-%m-%d")
+            short_date = dt_p.strftime("%b %d")
+            p_moolank_str = p_calc["vedic_moolank"]
+            p_lp_str = p_calc["life_path"]
+            p_moolank_num = int(str(p_moolank_str).split()[0])
+            p_lp_num = reduce_num(int(str(p_lp_str).split("/")[-1]))
+            computed_score = 82 + ((u_moolank_num * 7 + p_moolank_num * 13 + u_lp_val * 5 + p_lp_num * 11) % 15)
+            score_val = int(score_override) if str(score_override or "").isdigit() else computed_score
+            partner_map[p_iso] = {
+                "dob": p_iso,
+                "short_date": short_date,
+                "score": score_val,
+                "moolank": p_moolank_str,
+                "life_path": p_lp_str,
+            }
+        except Exception:
+            pass
+
+    for ev in events:
+        sid = str(ev.get("session_id") or "").strip()
+        ev_email = str(ev.get("email") or "").strip().lower()
+        ev_dob = str(ev.get("dob") or "").strip()
+        if not (
+            (sid and sid in matched_sessions)
+            or (clean_email and ev_email == clean_email)
+            or (clean_dob and ev_dob == clean_dob)
+        ):
+            continue
+        etype = str(ev.get("event_type") or "").strip().lower()
+        if etype == "partner_check_run":
+            _add_partner(str(ev.get("partner_dob") or ""), ev.get("compatibility_score"))
+        elif etype == "checkout_clicked":
+            checkout_clicked = True
+            if ev.get("partner_dob"):
+                _add_partner(str(ev.get("partner_dob") or ""))
+        elif etype == "purchase_return":
+            purchased = True
+
+    if partner_dob_fallback:
+        _add_partner(partner_dob_fallback)
+
+    partner_list = sorted(partner_map.values(), key=lambda x: (-x["score"], x["dob"]))
+    return {
+        "partner_checks": partner_list,
+        "checkout_clicked": checkout_clicked,
+        "purchased": purchased,
+    }
+
+
 def check_and_send_scheduled_followups(now_utc: Optional[datetime] = None) -> int:
     """
     Checks all leads in processed_leads_state.json and automatically sends:
+    - 2-Hour Cart Abandonment / High-Intent Partner Check Recovery ($17 VIP Unlock)
+      when >= 2h after email_1_sent_at and visitor triggered `checkout_clicked` or `3+`
+      `partner_check_run` events without completing payment (`purchase_return`)
     - Email #2 (Lo Shu Missing Numbers & Wealth Engine) when >= 24h after email_1_sent_at
     - Email #3 (52-Day Rosicrucian Cycle) when >= 48h after email_1_sent_at
     """
@@ -1792,6 +2135,32 @@ def check_and_send_scheduled_followups(now_utc: Optional[datetime] = None) -> in
         lang = entry.get("lang", "en")
         if not (name and dob and email_addr):
             continue
+
+        # Check 2-Hour Cart Abandonment / 3+ Partner Checks Recovery ($17 VIP Unlock)
+        if elapsed_hours >= 2.0 and not entry.get("cart_recovery_sent_at"):
+            intent = collect_lead_partner_checks_and_intent(
+                email_addr,
+                dob,
+                partner_dob_fallback=str(entry.get("partner_dob") or ""),
+            )
+            if (intent["checkout_clicked"] or len(intent["partner_checks"]) >= 3) and not intent["purchased"]:
+                calc = calculate_5_systems(name, dob)
+                lead_record = {
+                    "timestamp": entry.get("timestamp", now.isoformat()),
+                    "name": name,
+                    "dob": dob,
+                    "email": email_addr,
+                    "lang": lang,
+                    "utm": entry.get("utm") or {},
+                    "source_attribution": entry.get("source_attribution") or format_attribution_source(entry.get("utm")),
+                    "partner_dob": entry.get("partner_dob") or "",
+                    "calc": calc,
+                }
+                if send_cart_recovery_email(lead_record, intent_info=intent):
+                    entry["cart_recovery_sent_at"] = now.isoformat()
+                    processed[dedup_key] = entry
+                    save_processed_state(processed)
+                    sent_count += 1
 
         # Check 24h Follow-Up (Email #2)
         if elapsed_hours >= 24.0 and not entry.get("email_2_sent_at"):

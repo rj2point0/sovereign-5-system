@@ -1112,13 +1112,17 @@ const CONFIG = {
               <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Opción Rápida · Mini-Lectura' : 'Quick-Start Impulse Option'}</span>
               <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Mini-Lectura de Sinastría de Pareja y Sincronía de 90 Días' : 'Partner Synastry &amp; 90-Day Love Timing Mini-Read'}</h4>
               <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Descifra tu bucle de apego Día Natal vs. Sendero de Vida, tu puntaje de compatibilidad con tu pareja y tus próximos 90 días en el amor.' : 'Decodes your Birth Day vs. Life Path attachment loop, your Partner/Crush Birthday Compatibility score, and your next 90 days of love timing.'}</p>
+              <ul class="mt-2.5 space-y-1 text-xs text-champagne">
+                <li>✓ <b>${isEs ? 'El Guion Exacto de Texto para "Invertir la Persecución" Según Su Número Natal' : 'The Exact "Flip The Chase" Text Script For Their Birth Number'}</b> ${isEs ? '(qué escribir palabra por palabra cuando se aleja o te deja en visto)' : '(word-for-word what to text when they pull away or leave you on read)'}</li>
+                <li>✓ ${isEs ? 'Mapa de Compatibilidad y Fricción de Pareja (5 Sistemas) + Tus Próximas 3 Fechas Clave en el Amor (90 Días)' : 'Side-by-Side Partner Compatibility &amp; Friction Map + Your Next 3 Relationship Turning-Point Dates (90 Days)'}</li>
+              </ul>
             </div>
             <div class="text-right shrink-0">
               <div class="font-display text-2xl text-champagne">${money(CONFIG.PRICE_MINI)}</div>
             </div>
           </div>
           <button type="button" id="btn-checkout-mini" data-action="checkout-mini" data-trigger="checkout_tier_17" class="btn-ghost mt-3.5 w-full !py-2.5 !px-4 border-gold/45 hover:border-gold hover:bg-gold/15 text-champagne text-xs sm:text-sm font-semibold">
-            ⚡ ${isEs ? 'Desbloquear Mini-Lectura de Pareja y 90 Días · $17 →' : 'Unlock $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →'}
+            ⚡ ${isEs ? 'Desbloquear Mini-Lectura de Pareja y Guion de Texto · $17 →' : 'Unlock $17 Partner Synastry &amp; "Flip The Chase" Text Script →'}
           </button>
         </div>
 
@@ -1134,7 +1138,7 @@ const CONFIG = {
             </div>
             <div class="flex-1">
               <p class="font-semibold text-ivory text-[0.98rem] leading-snug">${isEs ? 'Plano Completo de Amor y Vida de 20 Páginas (5 Sistemas)' : 'Complete 20-Page 5-System Love &amp; Life Blueprint'}</p>
-              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo lo de la Mini-Lectura de $17 MÁS los 5 sistemas ancestrales completos (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor y Vida de 12 Meses para ${first}.` : `Includes everything in the $17 Mini-Read PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Calendar for ${first}.`}</p>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo lo de la Mini-Lectura de $17 (incluido el Guion Exacto de Texto "Invertir la Persecución" para su Número Natal) MÁS los 5 sistemas ancestrales completos (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor y Vida de 12 Meses para ${first}.` : `Includes everything in the $17 Mini-Read (including The Exact "Flip The Chase" Text Script For Their Birth Number) PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Calendar for ${first}.`}</p>
             </div>
             <div class="text-right shrink-0">
               <div class="text-xs text-zinc-500 line-through">${money(CONFIG.PRICE_ANCHOR)}</div>
@@ -2304,10 +2308,10 @@ const CONFIG = {
 
           <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-3.5">${rep.summary}</p>
           <div class="mt-3 p-3.5 rounded-lg bg-gold/10 border border-gold/30 text-xs text-champagne leading-relaxed">
-            <b>✦ ${isEs ? 'Protocolo de Comunicación para #' + uMoolank + ' × #' + rep.pMoolank + ':' : 'Communication & Reset Rule for #' + uMoolank + ' × #' + rep.pMoolank + ':'}</b>
+            <b>✦ ${isEs ? 'Protocolo de Comunicación y Guion Exacto de Texto ("Invertir la Persecución") para #' + uMoolank + ' × #' + rep.pMoolank + ':' : 'The Exact "Flip The Chase" Text Script & Reset Rule for #' + uMoolank + ' × #' + rep.pMoolank + ':'}</b>
             ${isEs
-              ? `Cuando un #${rep.pMoolank} (${rep.pRuler}) se siente presionado o interrogado, su sistema nervioso se cierra. En lugar de exigir respuestas inmediatas desde el miedo, dale 24 horas de espacio tranquilo y expresa tu necesidad en una sola frase clara sin reproches. Eso desactiva su reflejo de huida y hace que vuelva hacia ti por decisión propia.`
-              : `When a #${rep.pMoolank} (${rep.pRuler}) feels interrogated or emotionally cornered, their nervous system shuts down. Instead of double-texting or demanding instant reassurance when anxious, state your boundary warmly in one sentence and step back for 24 hours. Giving their #${rep.pMoolank} driver breathing room flips the chase dynamic and brings them back toward you.`}
+              ? `Cuando un #${rep.pMoolank} (${rep.pRuler}) se siente presionado o interrogado, su sistema nervioso se cierra. En lugar de exigir respuestas inmediatas desde el miedo, dale 24 horas de espacio tranquilo y envía este mensaje exacto de baja presión: <i>"Me encantó nuestro tiempo juntos; estaré concentrado/a en mis proyectos estos días, avísame cuando estés libre para vernos."</i> Eso desactiva su reflejo de huida y hace que vuelva hacia ti por decisión propia.`
+              : `When a #${rep.pMoolank} (${rep.pRuler}) feels interrogated or emotionally cornered, their nervous system shuts down. Instead of double-texting when anxious, wait 24 hours and send this exact low-pressure "Flip The Chase" text: <i>"Loved catching up the other night—I'm heads-down on my week right now, let me know when your schedule opens up."</i> Removing emotional pressure disarms their #${rep.pMoolank} defense mechanism and pulls them back toward you.`}
           </div>
         </div>
 
@@ -2633,8 +2637,8 @@ const CONFIG = {
       <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-4">${rep.summary}</p>
       <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
         <p class="text-xs sm:text-sm text-champagne text-left leading-relaxed">
-          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa en el Dossier de 20 Páginas:' : 'Locked Inside Your Full 20-Page Sovereign Dossier:'}</b>
-          ${isEs ? 'Descubre cómo comunicarte con un #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo y qué fechas exactas favorecen su unión en los próximos 12 meses.' : 'See the exact communication rules for a #' + rep.pMoolank + ' (' + rep.pRuler + ') partner so neither of you pulls away—plus your peak relationship dates over the next 12 months.'}
+          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa y Guion de Texto:' : 'Locked Inside Your Partner Synastry &amp; Full Dossier:'}</b>
+          ${isEs ? 'Incluye <b>El Guion Exacto de Texto para "Invertir la Persecución"</b> para una pareja #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo, más tus fechas clave en los próximos 12 meses.' : 'Includes <b>The Exact "Flip The Chase" Text Script For Their #' + rep.pMoolank + ' (' + rep.pRuler + ') Birth Number</b> so neither of you pulls away—plus your peak relationship dates over the next 12 months.'}
         </p>
         <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
           ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}

@@ -70,6 +70,8 @@ async def verify_live_pages():
         assert await page_mob.is_visible('#partner-compat-result') is True
         assert await page_mob.is_visible('#partner-compat-email-box') is True
         assert await page_mob.is_visible('#btn-checkout-mini') is True
+        assert 'Flip The Chase' in (await page_mob.locator('#tier-card-mini').inner_text())
+        assert 'Flip The Chase' in (await page_mob.locator('#tier-card-base').inner_text())
         await page_mob.click('#btn-enter-real-birthday')
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)
         assert await page_mob.locator('#fullName').input_value() == ""
