@@ -289,12 +289,13 @@ async def seed_comment_on_video_from_profile(
                 c_txt = v.get("cardText", "").lower()
                 if "schedule" in c_txt or re.search(r"202\d\s*-\s*\d+", c_txt):
                     is_scheduled_post = True
-                    break
+                    continue
                 m = re.search(r"/video/(\d+)", v.get("href", ""))
                 if m:
                     matched_vid = m.group(1)
+                    is_scheduled_post = False
                     break
-        if is_scheduled_post:
+        if is_scheduled_post and not matched_vid:
             print(f"   [Seed] ⏳ Video matching '{title_match[:36]}...' is still Scheduled on TikTok; will seed once live.", flush=True)
             return None
         if not matched_vid and attempt == 0:

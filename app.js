@@ -886,6 +886,10 @@ const CONFIG = {
     for (let d = 1; d <= 31; d++) pDayOpts += `<option value="${String(d).padStart(2, '0')}">${d}</option>`;
     let pYearOpts = `<option value="">${isEs ? 'Año' : 'Year'}</option>`;
     for (let y = 2006; y >= 1940; y--) pYearOpts += `<option value="${y}">${y}</option>`;
+    let pQuickDayBtns = '';
+    for (let d = 1; d <= 31; d++) {
+      pQuickDayBtns += `<button type="button" class="quick-day-btn" data-action="partner-quick-day" data-day="${d}">${d}</button>`;
+    }
 
     const isDefaultName = ['Your Reading', 'Tu Lectura', 'You', 'Tu'].includes(r.input.fullName);
     const decodedTitleHtml = isDefaultName
@@ -901,9 +905,12 @@ const CONFIG = {
           ${isEs ? '[Toca Aquí Para Ingresar Tu Fecha Real →]' : '[Tap Here To Enter Your Real Birthday →]'}
         </button>
       </div>` : state.isQuickDayPreview ? `
-      <div id="quick-day-banner" class="sticky top-2 z-40 mb-5 p-3 sm:p-3.5 rounded-xl border border-gold bg-[#141108]/95 backdrop-blur-md shadow-lg text-center text-xs sm:text-sm text-champagne font-medium flex flex-wrap items-center justify-center gap-1.5">
+      <div id="quick-day-banner" class="sticky top-2 z-40 mb-5 p-3 sm:p-3.5 rounded-xl border border-gold bg-[#141108]/95 backdrop-blur-md shadow-lg text-center text-xs sm:text-sm text-champagne font-medium flex flex-wrap items-center justify-center gap-2">
         <span>⚡ ${isEs ? `Vista Rápida del Día ${r.input.birth.d} (Conductor #${uMoolank} · ${uRuler}) —` : `Instant Birth Day ${r.input.birth.d} Love Code Preview (Driver #${uMoolank} · ${uRuler}) —`}</span>
-        <button type="button" id="btn-refine-exact-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer">
+        <button type="button" id="btn-jump-partner-strip" data-action="scroll-partner-compat" class="px-2.5 py-1 rounded-lg bg-gold text-[#141108] font-extrabold text-xs hover:brightness-110 cursor-pointer shadow">
+          ${isEs ? '💑 Probar Día de Pareja (1–31) ↓' : '💑 Test Partner\'s Birth Day (1–31) ↓'}
+        </button>
+        <button type="button" id="btn-refine-exact-birthday" data-action="enter-real-birthday" class="underline font-bold text-gold hover:text-ivory cursor-pointer text-xs">
           ${isEs ? '[Refinar Tu Mes y Año Exactos →]' : '[Refine Your Exact Birth Month &amp; Year →]'}
         </button>
       </div>` : ''}
@@ -1018,7 +1025,23 @@ const CONFIG = {
         <p class="text-xs sm:text-sm text-zinc-300 mt-1.5">
           ${isEs ? 'Calcularemos al instante su puntaje de magnetismo, dónde chocan sus números natales y qué casillas del Lo Shu Chino completan juntos.' : 'See your instant Magnetism vs. Friction score, how their Birth-Day Driver interacts with yours, and whether their chart fills your missing Lo Shu love numbers.'}
         </p>
-        <div class="grid grid-cols-3 gap-2.5 mt-4" id="partner-dob-group">
+
+        <!-- 1-TAP PARTNER BIRTH DAY STRIP (1-31) -->
+        <div id="partner-quick-day-strip" class="mt-4 p-3 sm:p-3.5 rounded-xl border ${state.isQuickDayPreview ? 'border-gold bg-gold/10 shadow-lg' : 'border-gold/40 bg-black/35'}">
+          <p id="partner-quick-day-label" class="text-[0.72rem] sm:text-xs font-semibold text-champagne text-center mb-2">
+            ${isEs
+              ? '⚡ ¿No sabes su año de nacimiento? Solo toca el Día del Mes en que nació (1–31) para ver su Compatibilidad y Guion de Texto al instante:'
+              : '⚡ Don\'t know their birth year? Just tap the Day of the Month they were born (1–31) for an instant Match &amp; Text Script check:'}
+          </p>
+          <div class="quick-day-grid" role="group" aria-label="Partner Quick Birth Day Select 1 to 31">
+            ${pQuickDayBtns}
+          </div>
+        </div>
+
+        <p class="text-[0.68rem] uppercase tracking-[0.14em] text-zinc-400 mt-3.5 text-center">
+          ${isEs ? '— O selecciona su Mes, Día y Año completos si los conoces —' : '— Or select their full Month, Day &amp; Year below —'}
+        </p>
+        <div class="grid grid-cols-3 gap-2.5 mt-2" id="partner-dob-group">
           <select id="partnerDobMonth" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Month">${pMonthOpts}</select>
           <select id="partnerDobDay" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Day">${pDayOpts}</select>
           <select id="partnerDobYear" class="field !px-3 !py-2.5 text-sm" aria-label="Partner Birth Year">${pYearOpts}</select>
@@ -1301,6 +1324,35 @@ const CONFIG = {
 
     openTeaser();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function runPartnerQuickDayCheck(dayRaw) {
+    const dNum = parseInt(dayRaw, 10);
+    if (!dNum || dNum < 1 || dNum > 31) return;
+    const dayStr = String(dNum).padStart(2, '0');
+    const mEl = $('#partnerDobMonth');
+    const dEl = $('#partnerDobDay');
+    const yEl = $('#partnerDobYear');
+    if (!mEl || !dEl || !yEl) return;
+
+    let mVal = mEl.value ? mEl.value : '10';
+    let yVal = yEl.value ? yEl.value : '1993';
+    if (dNum === 31 && ['02', '04', '06', '09', '11'].includes(mVal)) mVal = '10';
+    if (dNum >= 29 && mVal === '02') mVal = '10';
+
+    mEl.value = mVal;
+    dEl.value = dayStr;
+    yEl.value = yVal;
+
+    $$('#partner-quick-day-strip .quick-day-btn').forEach((btn) => {
+      btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === dNum);
+    });
+
+    runPartnerCompatibilityCheck({ viaQuickDay: true, partnerBirthDay: dNum });
+    const resBox = $('#partner-compat-result');
+    if (resBox) {
+      resBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   function checkoutMini(triggerSource) {
@@ -2438,6 +2490,13 @@ const CONFIG = {
     else if (a === 'quick-day') {
       runQuickDayPreview(t.dataset.day);
     }
+    else if (a === 'partner-quick-day') {
+      runPartnerQuickDayCheck(t.dataset.day);
+    }
+    else if (a === 'scroll-partner-compat') {
+      const pBox = $('#partner-compat-box');
+      if (pBox) pBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     else if (a === 'enter-real-birthday') {
       const keepDay = state.isQuickDayPreview && $('#dobDay') ? $('#dobDay').value : '';
       state.isSamplePreview = false;
@@ -2598,6 +2657,88 @@ const CONFIG = {
       return;
     }
     const rep = getPartnerCompatReport(state.result, m, d, y, state.lang);
+    const userBirthDay = (state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || 19;
+    const partnerBirthDay = parseInt(d, 10) || 13;
+    $$('#partner-quick-day-strip .quick-day-btn').forEach((btn) => {
+      btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === partnerBirthDay);
+    });
+    const smsPreviewMapEn = {
+      1: {
+        leadIn: 'Hey, I loved hanging out, but I noticed ',
+        blurred: 'our pace works best when neither of us forces it. Let\'s catch up next week when your schedule clears and we can do something real.',
+      },
+      2: {
+        leadIn: 'Hey, I really value our connection, so I\'m ',
+        blurred: 'giving us both breathing room this week instead of overthinking mixed signals. Talk to you in a few days when things feel grounded.',
+      },
+      3: {
+        leadIn: 'Loved our energy the other night, and I\'m ',
+        blurred: 'heads-down on my own plans this week. Hit me when your schedule opens up and you\'re ready to lock in a real plan.',
+      },
+      4: {
+        leadIn: 'I\'m taking a step back this week because ',
+        blurred: 'I only invest in consistency that matches mine. Reach out when you\'re free to actually lock in a plan without the guesswork.',
+      },
+      5: {
+        leadIn: 'Hey, had fun catching up, but I noticed ',
+        blurred: 'we\'re on totally different wavelengths this week. Going offline for a few days—let\'s talk when things settle down on your end.',
+      },
+      6: {
+        leadIn: 'You know I care about us, so I\'m ',
+        blurred: 'stepping back from the back-and-forth this week instead of forcing a talk. Let me know when you want to sit down together.',
+      },
+      7: {
+        leadIn: 'I\'m taking a step back this week because ',
+        blurred: 'I know you need space to process and I value my peace too. Text me when you\'re ready to show up fully.',
+      },
+      8: {
+        leadIn: 'Hey, I loved hanging out, but I noticed ',
+        blurred: 'you\'ve got a lot on your plate right now. Taking space on my end this week—reach out when your head is clear.',
+      },
+      9: {
+        leadIn: 'I felt a real spark with you, so ',
+        blurred: 'I\'m stepping back instead of chasing mixed signals this week. Call me when you\'re ready to match my energy 100%.',
+      },
+    };
+    const smsPreviewMapEs = {
+      1: {
+        leadIn: 'Oye, me encantó verte, pero noté que ',
+        blurred: 'nuestro ritmo fluye mejor cuando ninguno lo fuerza. Hablemos la próxima semana cuando tengas tiempo real.',
+      },
+      2: {
+        leadIn: 'Valoro mucho nuestra conexión, así que voy a ',
+        blurred: 'darnos espacio esta semana para no sobrepensar las cosas. Hablamos en unos días con calma.',
+      },
+      3: {
+        leadIn: 'Me encantó nuestra energía la otra noche, y ',
+        blurred: 'esta semana estaré enfocado en mis planes. Escríbeme cuando estés listo para armar un plan real.',
+      },
+      4: {
+        leadIn: 'Voy a tomar distancia esta semana porque yo ',
+        blurred: 'solo invierto donde hay constancia mutua. Avísame cuando tengas claro qué quieres construir.',
+      },
+      5: {
+        leadIn: 'Oye, la pasé genial contigo, pero noté que ',
+        blurred: 'estamos en sintonías distintas esta semana. Me desconecto unos días; hablamos cuando todo se calme.',
+      },
+      6: {
+        leadIn: 'Sabes que me importas mucho, así que prefiero ',
+        blurred: 'dar un paso atrás esta semana en vez de forzar conversaciones. Avísame cuando quieras hablar bien.',
+      },
+      7: {
+        leadIn: 'Voy a tomar un respiro esta semana porque ',
+        blurred: 'sé que necesitas tu espacio para procesar y yo también valoro mi paz. Escríbeme cuando estés presente.',
+      },
+      8: {
+        leadIn: 'Oye, me encantó salir contigo, pero noté que ',
+        blurred: 'tienes mil cosas en la cabeza ahora mismo. Tomo distancia de mi lado; búscame cuando estés libre.',
+      },
+      9: {
+        leadIn: 'Sentí una chispa real contigo, así que prefiero ',
+        blurred: 'dar un paso atrás en lugar de perseguir señales confusas. Llámame cuando quieras igualar mi energía.',
+      },
+    };
+    const smsPreview = (isEs ? smsPreviewMapEs : smsPreviewMapEn)[rep.pMoolank] || (isEs ? smsPreviewMapEs[7] : smsPreviewMapEn[7]);
     state.partnerDob = rep.pIso;
     if (state.profile && !state.profile.isSample) {
       state.profile.partner_dob = rep.pIso;
@@ -2613,6 +2754,7 @@ const CONFIG = {
         magnetism_score: rep.magnetismScore,
         partner_moolank: rep.pMoolank,
         partner_lifepath: rep.pLife,
+        via_quick_day: Boolean(options.viaQuickDay),
       });
     }
     resBox.classList.remove('hidden');
@@ -2635,16 +2777,32 @@ const CONFIG = {
         </div>
       </div>
       <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-4">${rep.summary}</p>
-      <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
-        <p class="text-xs sm:text-sm text-champagne text-left leading-relaxed">
-          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa y Guion de Texto:' : 'Locked Inside Your Partner Synastry &amp; Full Dossier:'}</b>
-          ${isEs ? 'Incluye <b>El Guion Exacto de Texto para "Invertir la Persecución"</b> para una pareja #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo, más tus fechas clave en los próximos 12 meses.' : 'Includes <b>The Exact "Flip The Chase" Text Script For Their #' + rep.pMoolank + ' (' + rep.pRuler + ') Birth Number</b> so neither of you pulls away—plus your peak relationship dates over the next 12 months.'}
-        </p>
-        <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
-          ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
+
+      <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->
+      <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-4 text-left">
+        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
+          <span class="text-[0.68rem] sm:text-xs font-extrabold uppercase tracking-wider text-gold">
+            ${isEs
+              ? `💬 TU GUION DE TEXTO "INVERTIR LA PERSECUCIÓN" (Día Natal ${userBirthDay} × Día de Pareja ${partnerBirthDay}):`
+              : `💬 YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (Birth Day ${userBirthDay} × Partner Day ${partnerBirthDay}):`}
+          </span>
+          <span class="text-[0.6rem] uppercase tracking-widest text-sky-300 bg-sky-950/60 border border-sky-400/30 px-2 py-0.5 rounded-full">
+            iMessage · #${rep.pMoolank} ${rep.pRuler}
+          </span>
+        </div>
+        <div class="imessage-bubble">
+          <span class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.blurred}</span>
+        </div>
+        <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
+          🔒 ${isEs
+            ? 'Desbloquear el guion exacto palabra por palabra + Calendario de Amor de 90 Días ($17 Mini-Lectura) →'
+            : 'Unlock the exact word-for-word text script + 90-Day Love Timing Calendar ($17 Mini-Read) →'}
         </button>
+      </div>
+
+      <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
         ${!(state.profile && state.profile.email) ? `
-        <div id="partner-compat-email-box" class="mt-3.5 p-3 sm:p-3.5 rounded-xl bg-black/40 border border-gold/35 text-left">
+        <div id="partner-compat-email-box" class="mb-3.5 p-3 sm:p-3.5 rounded-xl bg-black/40 border border-gold/35 text-left">
           <p class="text-xs text-champagne font-medium leading-snug">
             📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver tus próximas 3 fechas clave en el amor gratis?' : 'Want to save this Partner Compatibility score &amp; see your next 3 relationship turning-point dates for free?'}
           </p>
@@ -2655,6 +2813,13 @@ const CONFIG = {
             </button>
           </div>
         </div>` : ''}
+        <p class="text-xs sm:text-sm text-champagne text-left leading-relaxed">
+          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa y Dossier de 20 Páginas:' : 'Locked Inside Your Partner Synastry &amp; Full Dossier:'}</b>
+          ${isEs ? 'Incluye <b>El Guion Exacto de Texto para "Invertir la Persecución"</b> para una pareja #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo, más tus fechas clave en los próximos 12 meses.' : 'Includes <b>The Exact "Flip The Chase" Text Script For Their #' + rep.pMoolank + ' (' + rep.pRuler + ') Birth Number</b> so neither of you pulls away—plus your peak relationship dates over the next 12 months.'}
+        </p>
+        <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
+          ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
+        </button>
         <button type="button" id="btn-partner-mini-cta" data-action="checkout-mini" data-trigger="partner_compat_mini_17" class="btn-ghost mt-2.5 !py-2.5 !px-4 w-full text-xs text-champagne border-gold/40 hover:border-gold">
           ⚡ ${isEs ? 'O desbloquea solo la Mini-Lectura de Pareja y 90 Días por $17 →' : 'Or grab just the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →'}
         </button>

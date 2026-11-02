@@ -49,10 +49,18 @@ async def verify_live_pages():
         for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#quick-day-strip', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
             assert box is not None and (box["y"] + box["height"]) <= 635, f"Expected live {sel} bottom <= 635px at 390x660, got {box}"
-        # Test 1-Tap #quick-day-strip on live site
+        # Test 1-Tap #quick-day-strip + 1-Tap #partner-quick-day-strip + #flip-chase-preview-bubble on live site
         await page_mob.click('#quick-day-strip button[data-action="quick-day"][data-day="16"]')
         await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=8000)
         assert await page_mob.is_visible('#quick-day-banner') is True
+        assert await page_mob.is_visible('#partner-quick-day-strip') is True
+        await page_mob.click('#partner-quick-day-strip button[data-action="partner-quick-day"][data-day="25"]')
+        await asyncio.sleep(0.2)
+        assert await page_mob.is_visible('#partner-compat-result') is True
+        assert await page_mob.is_visible('#flip-chase-preview-bubble') is True
+        assert await page_mob.is_visible('#btn-unlock-text-script') is True
+        live_bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
+        assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 16 × PARTNER DAY 25)' in live_bubble_txt.upper()
         # Return to Hero and test blank #fullName + Month/Day/Year submit on live site
         await page_mob.goto(f"{base_url}?utm_source=ig_bio&cohort=ig_reels")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)

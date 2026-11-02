@@ -107,13 +107,30 @@
       "title_match": "Look at the last text you sent them. That isn't love",
       "comment": "Were you born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, 25th, or 29th—and do you panic when they go quiet? 👇",
       "seeded_at": "2026-11-02T07:45:51.750240"
+    },
+    "short_22": {
+      "video_id": "7703622747489963278",
+      "title_match": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed",
+      "comment": "Have you ever dated someone born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th who went cold fast? Drop both birth days below 👇",
+      "seeded_at": "2026-11-02T09:15:52.768218"
+    },
+    "short_17": {
+      "video_id": "7703623597469748493",
+      "title_match": "If you have to ask what you are after three months, their birth code",
+      "comment": "Have you ever waited months for someone to be ready to commit? Drop both of your birth days below 👇",
+      "seeded_at": "2026-11-02T09:16:25.646762"
     }
   },
-  "updated_at": "2026-11-02T07:46:41.993376",
+  "updated_at": "2026-11-02T09:17:31.667601",
   "last_verification": {
-    "checked_at": "2026-11-02T07:46:11.847956",
+    "checked_at": "2026-11-02T09:16:52.206447",
     "videos": {
-      "short_16": {
+      "short_22": {
+        "browse_comment_count": "1",
+        "comment_intact": true,
+        "in_studio_comment_feed": false
+      },
+      "short_17": {
         "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true

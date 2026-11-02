@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-02T07:48:40.922504",
+  "updated_at": "2026-11-02T09:14:53.954496",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -180,10 +180,10 @@
     "tiktok_short_17_three_months_situationship.mp4": {
       "filename": "tiktok_short_17_three_months_situationship.mp4",
       "ad_id": "short_17",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-11-02 11:00",
-      "uploaded_at": "2026-10-31T07:52:23.337482",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-02T09:14:53.954496",
       "caption_preview": "If you have to ask what you are after three months, their birth code already gave you the answer (when your Life Path cr"
     },
     "tiktok_short_18_cares_less_power.mp4": {
@@ -243,10 +243,10 @@
     "tiktok_short_22_7sec_ghost_days.mp4": {
       "filename": "tiktok_short_22_7sec_ghost_days.mp4",
       "ad_id": "short_22",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-11-04 18:30",
-      "uploaded_at": "2026-11-02T07:47:38.944950",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-02T09:11:39.510180",
       "caption_preview": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed with you and then suddenly go cold overnight"
     },
     "tiktok_short_23_7sec_double_text.mp4": {

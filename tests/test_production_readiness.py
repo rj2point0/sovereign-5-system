@@ -420,6 +420,40 @@ async def test_all():
         assert len(qd_ev_list) >= 1, f"Expected quick_day_selected event, got {[e.get('event_type') for e in demo_events]}"
         assert (qd_ev_list[-1].get("extra") or {}).get("birth_day") == 25, f"Expected birth_day=25 in quick_day_selected: {qd_ev_list[-1]}"
         assert await page_mob.is_visible('#quick-day-banner') is True, "Expected #quick-day-banner visible on Teaser after 1-tap quick-day click"
+        assert await page_mob.is_visible('#btn-jump-partner-strip') is True, "Expected #btn-jump-partner-strip inside #quick-day-banner"
+
+        # 10c) Verify tapping a partner day (1-31) in #partner-quick-day-strip immediately fires partner_check_run without Partner Month/Year dropdowns & renders #flip-chase-preview-bubble + #btn-unlock-text-script
+        assert await page_mob.is_visible('#partner-quick-day-strip') is True, "Expected #partner-quick-day-strip visible inside #partner-compat-box"
+        await page_mob.click('#partner-quick-day-strip button[data-action="partner-quick-day"][data-day="16"]')
+        await asyncio.sleep(0.2)
+        assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result to render immediately on 1-tap partner day click"
+        p_qd_evs = [e for e in demo_events if e.get("event_type") == "partner_check_run"]
+        assert len(p_qd_evs) >= 1, f"Expected partner_check_run after tapping partner day 16, got {[e.get('event_type') for e in demo_events]}"
+        assert (p_qd_evs[-1].get("extra") or {}).get("via_quick_day") is True, f"Expected via_quick_day=True in partner_check_run: {p_qd_evs[-1]}"
+        assert await page_mob.is_visible('#flip-chase-preview-bubble') is True, "Expected #flip-chase-preview-bubble visible inside #partner-compat-result"
+        bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
+        assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 25 × PARTNER DAY 16)' in bubble_txt.upper(), f"Unexpected bubble header: {bubble_txt}"
+        assert await page_mob.is_visible('#btn-unlock-text-script') is True, "Expected #btn-unlock-text-script visible inside #flip-chase-preview-bubble"
+        blur_style = await page_mob.locator('#flip-chase-preview-bubble .imessage-blurred').get_attribute('style')
+        assert 'blur(5px)' in (blur_style or ''), f"Expected blur(5px) on .imessage-blurred, got {blur_style}"
+
+        # Intercept Stripe redirect for #btn-unlock-text-script and verify it routes to $17 love_mini with trigger='unlock_text_script_17'
+        script_stripe_urls = []
+        async def mock_script_stripe_route(route):
+            script_stripe_urls.append(route.request.url)
+            await route.fulfill(status=200, body="stripe_mock_script")
+        await page_mob.route("https://buy.stripe.com/**", mock_script_stripe_route)
+        await page_mob.click('#btn-unlock-text-script')
+        await asyncio.sleep(0.25)
+        script_co_evs = [
+            e for e in demo_events
+            if e.get("event_type") == "checkout_clicked"
+            and (e.get("extra") or {}).get("tier") == "love_mini"
+            and (e.get("extra") or {}).get("trigger") == "unlock_text_script_17"
+        ]
+        assert len(script_co_evs) >= 1, f"Expected checkout_clicked with tier='love_mini' and trigger='unlock_text_script_17', got {demo_events}"
+        assert any("dRm8wP7VL0Md1gA0zd38404" in u for u in script_stripe_urls), f"Expected $17 Stripe link redirect from #btn-unlock-text-script, got {script_stripe_urls}"
+        await page_mob.unroute("https://buy.stripe.com/**")
 
         # Return to Hero to test #btn-instant-demo
         await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
