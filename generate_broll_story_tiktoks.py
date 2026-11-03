@@ -1213,10 +1213,138 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Your next love shift starts this week—tap our bio to see your 3 turning-point dates 🌙✨ "
             "#november #relationships #lovetiming #numerology #datingadvice #lovecode #birthdaycompatibility #soulmate"
         ),
-        "first_comment": "Were you born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Drop your birth day 👇",
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
         "hashtags": [
             "#november", "#relationships", "#lovetiming", "#numerology",
             "#datingadvice", "#lovecode", "#birthdaycompatibility", "#soulmate"
+        ],
+    },
+    {
+        "id": "short_28",
+        "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_28_7sec_who_chases_who.mp4",
+        "grid_headline": "WHO CHASES WHO\nBY BIRTH DAY",
+        "grid_sub": "DROP BOTH DAYS BELOW",
+        "hook_box_text": "Born on the 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? Who chases who:",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I really value our connection, so I'm...",
+        "spoken_script": (
+            "Born on the 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? "
+            "You always care more first. "
+            "So drop both birth days below or tap our bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_03_thoughtful_woman.mp4"),
+            (2.3, 4.6, "broll_19_couple_field_walk.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Born on the 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? Why you always care more first "
+            "(drop both birth days below or test your match in our bio) 💔🔮 "
+            "#relationships #overgiver #attachmentstyle #numerology #datingadvice #lovecode #birthdaycompatibility #crush"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#overgiver", "#attachmentstyle", "#numerology",
+            "#datingadvice", "#lovecode", "#birthdaycompatibility", "#crush"
+        ],
+    },
+    {
+        "id": "short_29",
+        "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_29_7sec_silent_treatment_days.mp4",
+        "grid_headline": "BIRTH DAYS THAT\nGO SILENT",
+        "grid_sub": "HOW TO FLIP IT",
+        "hook_box_text": "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st?",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“I'm taking a step back this week because...",
+        "spoken_script": (
+            "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st? "
+            "Never chase when they go quiet. "
+            "So get their exact text script in our bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_18_hands_texting_phone.mp4"),
+            (2.3, 4.6, "broll_14_city_night_walk.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st? "
+            "Never chase when they go silent—get their exact Flip The Chase text script in our bio 📱💔 "
+            "#relationships #textingadvice #silenttreatment #avoidantattachment #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#textingadvice", "#silenttreatment", "#avoidantattachment",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_30",
+        "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
+        "format_type": "cohort_c_short",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_30_7sec_endgame_birthdays.mp4",
+        "grid_headline": "ARE YOUR BIRTHDAYS\nENDGAME?",
+        "grid_sub": "96% SOULMATE LOCK",
+        "hook_box_text": "Some birthdays are built to last, and some are just a three month lesson.",
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "Some birthdays are built to last, but some are just a three month lesson. "
+            "Comment both birth days below or test your match free at the link in bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "broll_10_couple_sunset_embrace.mp4"),
+            (2.3, 4.6, "broll_17_candle_dark_glow.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Are your birthdays endgame—or just a 3-month karmic lesson? "
+            "(Comment both birth days below or test your match free at the link in bio) 🔥❤️‍🔥 "
+            "#relationships #soulmate #endgame #compatibility #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#soulmate", "#endgame", "#compatibility",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
         ],
     },
 ]
@@ -1605,13 +1733,14 @@ class BrollStoryGenerator:
     def draw_final_5s_cta_pill(self, draw: ImageDraw.ImageDraw):
         """
         Displays the clean organic Call-To-Action pill in the closing seconds:
-        'Tap @sacrednumberblueprint → Try the 5-System Overlap Calculator in our bio'
+        'Tap @sacrednumberblueprint (Link in Bio)'
+        'Test Both Birthdays Free → Blueprint.MegaVegaVentures.com'
         """
-        line1 = "Tap @sacrednumberblueprint"
-        line2 = "→ Try the 5-System Overlap Calculator in our bio"
+        line1 = "Tap @sacrednumberblueprint (Link in Bio)"
+        line2 = "Test Both Birthdays Free → Blueprint.MegaVegaVentures.com"
 
         cx, cy = 540, 1620
-        w_box, h_box = 940, 136
+        w_box, h_box = 980, 140
         x0, y0 = cx - w_box // 2, cy - h_box // 2
         x1, y1 = cx + w_box // 2, cy + h_box // 2
 
@@ -1627,8 +1756,9 @@ class BrollStoryGenerator:
             outline=(255, 209, 71),
             width=3,
         )
+        f_sub = ImageFont.truetype(FONT_BOLD, 25)
         draw.text((cx, cy - 24), line1, fill=(255, 209, 71), font=self.font_cta_main, anchor="mm")
-        draw.text((cx, cy + 24), line2, fill=(245, 245, 247), font=self.font_cta_top, anchor="mm")
+        draw.text((cx, cy + 25), line2, fill=(245, 245, 247), font=f_sub, anchor="mm")
 
     def draw_imessage_match_reveal_card(self, frame: Image.Image, spec: Dict[str, Any]) -> Image.Image:
         """

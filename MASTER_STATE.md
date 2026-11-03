@@ -70,27 +70,32 @@
 
 ---
 
-## 4. Dual-Platform Social Automation & Video Pipeline (`short_01`–`short_24`)
+## 4. Dual-Platform Social Automation & Video Pipeline (`short_01`–`short_30`)
 
-- **Authenticated Browser Profiles**:
-  - TikTok (`@sacrednumberblueprint` — Display Name: `Love & Birthday Compatibility` · Bio: `Why do they pull away? 💔 Test your birthday & theirs across 5 systems 👇`): `C:\Users\User\.gemini\antigravity\tiktok_browser_profile`
-  - Instagram (`@sacrednumberblueprint` — Name: `Love & Birthday Compatibility` · Bio: `Why do they pull away? 💔 Test your birthday & theirs across 5 systems 👇`): `C:\Users\User\.gemini\antigravity\ig_browser_profile`
+- **Authenticated Browser Profiles & Verified Logged-Out Mobile Bio Links**:
+  - TikTok (`@sacrednumberblueprint` — Display Name: `Love & Birthday Compatibility` · Bio: `Why do they pull away? 💔 Test your birthday & theirs across 5 systems 👇` · Publicly Clickable Bio Link `[data-e2e="user-link"]`: `blueprint.megavegaventures.com/?utm_source=tiktok&cohort=bio` verified in logged-out iPhone 14 mobile view): `C:\Users\User\.gemini\antigravity\tiktok_browser_profile`
+  - Instagram (`@sacrednumberblueprint` — Name: `Love & Birthday Compatibility` · Bio: `Why do they pull away? 💔 Test your birthday & theirs across 5 systems 👇` · Publicly Clickable Bio Link: `blueprint.megavegaventures.com/?utm_source=ig_bio&cohort=ig_reels`): `C:\Users\User\.gemini\antigravity\ig_browser_profile`
 - **20-Clip Real Human 9:16 B-Roll Library (`broll_library/`)**:
   - Managed by `fetch_human_broll.py` (`broll_01` through `broll_20`).
 - **Video Generator (`generate_broll_story_tiktoks.py`)**:
   - Enforces Jenny Hoyos's 5th-Grade Readability Gate (`Flesch-Kincaid Grade <= 5.5`, zero academic jargon, `But/Therefore` twist connector, `<= 0.35s` tail hold).
   - Renders **giant `68px` bold 3–6 word Poster Headlines (`grid_headline`)** + `38px` crimson subtitle (`grid_sub`) on Frame 1 so every thumbnail is readable in the 3-column mobile profile grid.
-  - Renders the **Interactive Partner Match Card (`Born 19th × Born 23rd → 96% SOULMATE LOCK` + 1-Tap Birth Day Strip) & Blurred iMessage "Flip The Chase" Text Script Bubble (`draw_imessage_match_reveal_card`)** during `4.6s–7.5s` on all 7.5-second shorts so viewers visually see the interactive calculator + blurred SMS reveal before tapping the bio link.
+  - Renders the **Interactive Partner Match Card (`Born 19th × Born 23rd → 96% SOULMATE LOCK` + 1-Tap Birth Day Strip) & Blurred iMessage "Flip The Chase" Text Script Bubble (`draw_imessage_match_reveal_card`)** during `4.6s–7.5s` on all 7.5-second shorts, plus a persistent bottom CTA pill (`draw_final_5s_cta_pill`) showing both `Tap @sacrednumberblueprint (Link in Bio)` and `Test Both Birthdays Free → Blueprint.MegaVegaVentures.com`.
+- **Interactive "2-Birthday Match % Bait" Seeded First Comments (`seed_first_comments.py` & IG Reels)**:
+  - All `short_18` through `short_30` videos on TikTok and Instagram Reels use the 2-birthday comment bait (`"Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇"`, `124 chars`, 100% automod-safe) to directly feed `parse_birth_days_from_comment(text)` (`A_PAIR_COMPAT`).
 - **Current Video Status (`uploaded_videos.json` & `uploaded_ig_reels.json`)**:
-  - `short_01`–`short_19`: **Published Live** on both TikTok and Instagram Reels with automod-safe first comments seeded (`seeded_first_comments.json`; `short_14` `7702844507703823629`, `short_15` `7703342845494562061`, `short_16` `7702844640541641997`, `short_17` `7703623597469748493`, `short_18` `7702844869877828877`, and `short_19` `7703990124526210318` verified `ModalIntact=True`).
-  - `short_20` (`THE 3 BIRTHDAYS / TO AVOID DATING`, `FK=2.54`): Live on Instagram Reels (`/reel/DfN3fVRul_X/`); **Scheduled on TikTok Studio for `2026-11-03 18:30` (`7703341818120768781`)**.
-  - `short_21` (`YOUR NOVEMBER / LOVE SHIFT`, `FK=2.13`): Live on Instagram Reels (`/reel/DfN3scQOV9B/`); **Scheduled on TikTok Studio for `2026-11-04 11:00` (`7703342010752601357`)**.
-  - `short_22` (`DAYS THAT GO / COLD FAST`, `7.56s`, `FK=0.59`): **Published Live** on both Instagram Reels (`/reel/DfPp_HOOJS3/`) and TikTok (`7703622747489963278`, `ModalIntact=True`).
-  - `short_23` (`NEVER DOUBLE / TEXT THEM`, `7.54s`, `FK=0.67`): Upgraded with `draw_imessage_match_reveal_card()` (`4.6s–7.5s`); Live on Instagram Reels (`/reel/DfPqHCVucCA/`); **Scheduled on TikTok Studio for `2026-11-05 11:00`**.
-  - `short_24` (`YOUR TRUE / SOULMATE DAY`, `7.54s`, `FK=-0.64`): Upgraded with `draw_imessage_match_reveal_card()` (`4.6s–7.5s`); Live on Instagram Reels (`/reel/DfPqO5wupcl/`); **Scheduled on TikTok Studio for `2026-11-05 18:30`**.
-  - `short_25` (`SOULMATE OR / KARMIC TRAP?`, `7.54s`, `FK=1.54`): **Published Live** on both Instagram Reels (`/reel/DfP3a8aOUPF/`) and TikTok (`7703630255013104910`, `ModalIntact=True`).
-  - `short_26` (`DO THEY MISS YOU / IN NO CONTACT?`, `7.70s`, `FK=3.56`): Live on Instagram Reels (`/reel/DfP3jR_OPp6/`); **Scheduled on TikTok Studio for `2026-11-06 11:00`**.
-  - `short_27` (`3 LOVE DATES / TO WATCH NEXT`, `7.54s`, `FK=-0.41`): Live on Instagram Reels (`/reel/DfP3rbpu_81/`); **Scheduled on TikTok Studio for `2026-11-06 18:30`**.
+  - `short_01`–`short_19`: **Published Live** on both TikTok and Instagram Reels with automod-safe first comments seeded (`seeded_first_comments.json`; `short_14` `7702844507703823629`, `short_15` `7703342845494562061`, `short_16` `7702844640541641997`, `short_17` `7703623597469748493`, `short_18` `7702844869877828877`, and `short_19` `7703341562952043789` / `7703990124526210318` verified `ModalIntact=True`).
+  - `short_20` (`THE 3 BIRTHDAYS / TO AVOID DATING`, `FK=2.54`): Live on Instagram Reels (`/reel/DfN3fVRul_X/`, `134 views`); **Scheduled on TikTok Studio for `2026-11-03 18:30` (`7703341818120768781`)**.
+  - `short_21` (`YOUR NOVEMBER / LOVE SHIFT`, `FK=2.13`): Live on Instagram Reels (`/reel/DfN3scQOV9B/`, `85 views`); **Scheduled on TikTok Studio for `2026-11-04 11:00` (`7703342010752601357`)**.
+  - `short_22` (`DAYS THAT GO / COLD FAST`, `7.56s`, `FK=0.59`): **Published Live** on both Instagram Reels (`/reel/DfPp_HOOJS3/`) and TikTok (`7703622747489963278`, **`155 views` — #1 video on account**, 2-birthday comment seeded & `ModalIntact=True`).
+  - `short_23` (`NEVER DOUBLE / TEXT THEM`, `7.54s`, `FK=0.67`): Upgraded with `draw_imessage_match_reveal_card()` (`4.6s–7.5s`); Live on Instagram Reels (`/reel/DfPqHCVucCA/` with 2-birthday comment seeded); **Scheduled on TikTok Studio for `2026-11-05 11:00` (`7703990374565498125`)**.
+  - `short_24` (`YOUR TRUE / SOULMATE DAY`, `7.54s`, `FK=-0.64`): Upgraded with `draw_imessage_match_reveal_card()` (`4.6s–7.5s`); Live on Instagram Reels (`/reel/DfPqO5wupcl/`, `103 views`, 2-birthday comment seeded); **Scheduled on TikTok Studio for `2026-11-05 18:30` (`7703990588911193357`)**.
+  - `short_25` (`SOULMATE OR / KARMIC TRAP?`, `7.54s`, `FK=1.54`): **Published Live** on both Instagram Reels (`/reel/DfP3a8aOUPF/`, `125 views`, 2-birthday comment seeded) and TikTok (`7703630255013104910`, `101 views`, 2-birthday comment seeded & `ModalIntact=True`).
+  - `short_26` (`DO THEY MISS YOU / IN NO CONTACT?`, `7.70s`, `FK=3.56`): Live on Instagram Reels (`/reel/DfP3jR_OPp6/`, 2-birthday comment seeded); **Scheduled on TikTok Studio for `2026-11-06 11:00` (`7703630452141067534`)**.
+  - `short_27` (`3 LOVE DATES / TO WATCH NEXT`, `7.54s`, `FK=-0.41`): Live on Instagram Reels (`/reel/DfP3rbpu_81/`, 2-birthday comment seeded); **Scheduled on TikTok Studio for `2026-11-06 18:30` (`7703630711911206157`)**.
+  - `short_28` (`WHO CHASES WHO / BY BIRTH DAY`, `8.11s`, `FK=0.79`): **Published Live** on both TikTok (`7704068444592950541`, 2-birthday comment seeded & `ModalIntact=True`) and Instagram Reels (`/reel/DfS6Iu5OEhv/`, 2-birthday comment seeded).
+  - `short_29` (`BIRTH DAYS THAT / GO SILENT`, `8.47s`, `FK=1.76`): Live on Instagram Reels (`/reel/DfS6QdAuGPY/`, 2-birthday comment seeded); **Scheduled on TikTok Studio for `2026-11-07 11:00`**.
+  - `short_30` (`ARE YOUR BIRTHDAYS / ENDGAME?`, `7.54s`, `FK=3.49`): Live on Instagram Reels (`/reel/DfS6YOPO8hJ/`, 2-birthday comment seeded); **Scheduled on TikTok Studio for `2026-11-07 18:30`**.
   - Early `<100` view prototype tests (`45`, `67`, `74`, `95` views) set to **Private (`Only me`)** on TikTok Studio.
 - **Automated 2-Hour Social Sync (`social_auto_sync.py` / `\Sovereign5SocialAutoSync`)**:
   - Runs `seed_first_comments.py`, `tiktok_comment_responder.py --live --limit 15`, and `ig_comment_responder.py --live --limit 15`.

@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-03T08:58:51.366371",
+  "updated_at": "2026-11-03T14:02:19.332626",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -293,6 +293,33 @@
       "schedule_time": "2026-11-06 18:30",
       "uploaded_at": "2026-11-02T09:42:01.000173",
       "caption_preview": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Your next love shift star"
+    },
+    "tiktok_short_28_7sec_who_chases_who.mp4": {
+      "filename": "tiktok_short_28_7sec_who_chases_who.mp4",
+      "ad_id": "short_28",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-03T14:00:53.812571",
+      "caption_preview": "Born on the 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? Why you always care more first (drop both birth "
+    },
+    "tiktok_short_29_7sec_silent_treatment_days.mp4": {
+      "filename": "tiktok_short_29_7sec_silent_treatment_days.mp4",
+      "ad_id": "short_29",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-07 11:00",
+      "uploaded_at": "2026-11-03T14:01:49.460789",
+      "caption_preview": "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st? Never chase when they go silent—g"
+    },
+    "tiktok_short_30_7sec_endgame_birthdays.mp4": {
+      "filename": "tiktok_short_30_7sec_endgame_birthdays.mp4",
+      "ad_id": "short_30",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-07 18:30",
+      "uploaded_at": "2026-11-03T14:02:19.332626",
+      "caption_preview": "Are your birthdays endgame—or just a 3-month karmic lesson? (Comment both birth days below or test your match free at th"
     }
   }
 }

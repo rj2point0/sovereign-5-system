@@ -54,64 +54,82 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_30",
+        "video_id": None,
+        "title_match": "Are your birthdays endgame—or just a 3-month karmic lesson?",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_29",
+        "video_id": None,
+        "title_match": "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st?",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_28",
+        "video_id": None,
+        "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? Why you always care more first",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_27",
         "video_id": None,
         "title_match": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st?",
-        "comment": "Were you born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Drop your birth day 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_26",
         "video_id": None,
         "title_match": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean",
-        "comment": "Was your person born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th—and are you in no contact right now? 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_25",
         "video_id": None,
         "title_match": "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Intense chemistry can be a karmic trap",
-        "comment": "Were you born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th—and what day was your partner or crush born? Drop both below 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_24",
         "video_id": None,
         "title_match": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th",
-        "comment": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th—what day was your crush or partner born? Drop both 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_23",
         "video_id": None,
         "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting",
-        "comment": "Were you born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th—and do you fight the urge to double text? Drop your day below 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_22",
         "video_id": None,
         "title_match": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed",
-        "comment": "Have you ever dated someone born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th who went cold fast? Drop both birth days below 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '7 & 19') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_21",
         "video_id": None,
         "title_match": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th",
-        "comment": "Born on 1, 4, 7, 8, 9, 10, 13, 16, 17, 18, 19, 22, 25, 26, 27, 28, or 31—did the last 3 months feel heavy in love? 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_20",
         "video_id": None,
         "title_match": "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy",
-        "comment": "What day of the month were you born—and what day was the person who drained your energy born? Drop both below 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_19",
         "video_id": None,
         "title_match": "Why do you stare at your phone waiting for a text back",
-        "comment": "Were you born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 24th, or 29th—and do you hate waiting on a text back? 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_18",
         "video_id": None,
         "title_match": "They didn't suddenly lose feelings. You just stopped accepting bare minimum",
-        "comment": "Were you born on the 1st, 3rd, 4th, 8th, 9th, 10th, 13th, 17th, 18th, 19th, 22nd, 26th, 27th, 28th, or 31st—and did you match their energy? 👇",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
     },
     {
         "id": "short_17",
@@ -303,7 +321,7 @@ async def seed_comment_on_video_from_profile(
         )
         is_scheduled_post = False
         for v in prof_videos:
-            if title_match.lower()[:28] in v.get("imgAlt", "").lower():
+            if title_match.lower()[:56] in v.get("imgAlt", "").lower():
                 c_txt = v.get("cardText", "").lower()
                 if "schedule" in c_txt or re.search(r"202\d\s*-\s*\d+", c_txt):
                     is_scheduled_post = True
@@ -459,7 +477,7 @@ async def verify_comments_after_delay(
                     }"""
                 )
                 for v in prof_videos:
-                    if t["title_match"].lower()[:28] in v.get("imgAlt", "").lower():
+                    if t["title_match"].lower()[:56] in v.get("imgAlt", "").lower():
                         m = re.search(r"/video/(\d+)", v.get("href", ""))
                         if m:
                             vid = m.group(1)
