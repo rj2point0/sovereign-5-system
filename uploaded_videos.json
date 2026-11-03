@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-02T09:42:01.000173",
+  "updated_at": "2026-11-03T08:58:51.366371",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -207,10 +207,10 @@
     "tiktok_short_19_text_back_anxiety.mp4": {
       "filename": "tiktok_short_19_text_back_anxiety.mp4",
       "ad_id": "short_19",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-11-03 11:00",
-      "uploaded_at": "2026-11-01T15:00:07.762935",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-03T08:56:59.248336",
       "caption_preview": "Why do you stare at your phone waiting for a text back? (Born on the 2nd, 3rd, 5th, 6th, 11th, 14th, 15th, 20th, 23rd, 2"
     },
     "tiktok_short_20_wrong_birthday_match.mp4": {
@@ -255,7 +255,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-05 11:00",
-      "uploaded_at": "2026-11-02T07:48:09.874611",
+      "uploaded_at": "2026-11-03T08:58:04.057782",
       "caption_preview": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting when they go quiet—here is how to flip t"
     },
     "tiktok_short_24_7sec_soulmate_day.mp4": {
@@ -264,7 +264,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-05 18:30",
-      "uploaded_at": "2026-11-02T07:48:40.922504",
+      "uploaded_at": "2026-11-03T08:58:51.366371",
       "caption_preview": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? Only one birth number can handle your fire"
     },
     "tiktok_short_25_7sec_karmic_or_soulmate.mp4": {
