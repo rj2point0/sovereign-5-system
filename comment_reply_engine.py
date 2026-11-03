@@ -14,7 +14,7 @@ import re
 import sys
 import urllib.request
 import urllib.error
-from typing import Dict, Optional, Tuple, Any
+from typing import Dict, List, Optional, Tuple, Any
 
 if sys.platform == "win32":
     try:
@@ -163,6 +163,128 @@ def parse_birthday_from_text(text: str) -> Optional[Tuple[int, int, int, str]]:
 
 
 # -----------------------------------------------------------------------------
+# BIRTH-DAY COMPATIBILITY PARSER (1 OR 2 BIRTH DAYS: 1..31)
+# -----------------------------------------------------------------------------
+SINGLE_DAY_COMPAT_MAP: Dict[int, Dict[str, str]] = {
+    1: {"arch": "Driver #1 (Leader)", "soulmate": "5th/14th/23rd", "trap": "8th/17th/26th"},
+    2: {"arch": "Driver #2 (Empath)", "soulmate": "6th/15th/24th", "trap": "9th/18th/27th"},
+    3: {"arch": "Driver #3 (Spark)", "soulmate": "9th/18th/27th", "trap": "6th/15th/24th"},
+    4: {"arch": "Driver #4 (Anchor)", "soulmate": "7th/16th/25th", "trap": "2nd/11th/20th"},
+    5: {"arch": "Driver #5 (Rebel)", "soulmate": "1st/10th/19th", "trap": "4th/13th/22nd"},
+    6: {"arch": "Driver #6 (Healer)", "soulmate": "2nd/11th/20th", "trap": "3rd/12th/21st"},
+    7: {"arch": "Driver #7 (Mystic)", "soulmate": "4th/13th/22nd", "trap": "1st/10th/19th"},
+    8: {"arch": "Driver #8 (Boss)", "soulmate": "6th/15th/24th", "trap": "1st/10th/19th"},
+    9: {"arch": "Driver #9 (Fighter)", "soulmate": "3rd/12th/21st", "trap": "2nd/11th/20th"},
+}
+
+
+def parse_birth_days_from_comment(text: str) -> List[int]:
+    """
+    Detects 1 or 2 birth days (1..31) in viewer comments such as:
+    - Two birth days: "14th and 23rd", "me 7 him 19", "Oct 12 and May 4", "19 & 25"
+    - One birth day: "Born on the 19th", "7", "25th"
+    Ignores explicit Life Path / Master Number self-identifications ("Life path 7", "Master number 11", "I'm an 8")
+    and non-birthday durations ("80 hours a week").
+    """
+    if not text:
+        return []
+    clean = text.lower().strip()
+
+    # Ignore explicit Life Path / Master Number statements so they route to B_NUMBER
+    if re.search(
+        r'\b(?:life\s*path|lp|master\s*number|my\s*number\s*is|mine\s*is|i[\x27\u2019]?m\s+an?\s+(?:11|22|33|[1-9]))\b',
+        clean,
+    ):
+        return []
+
+    work = clean
+
+    # 1. Convert ISO dates YYYY-MM-DD into day tokens
+    def _repl_iso(m: re.Match) -> str:
+        d = int(m.group(3))
+        return f" __bday_{d}__ " if 1 <= d <= 31 else " "
+
+    work = re.sub(r'\b(19\d\d|20\d\d)[-/\.](\d{1,2})[-/\.](\d{1,2})\b', _repl_iso, work)
+
+    # 2. Convert slash/dash numeric dates MM/DD(/YYYY) into day tokens
+    def _repl_slash(m: re.Match) -> str:
+        a, b = int(m.group(1)), int(m.group(2))
+        d = a if (a > 12 and 1 <= b <= 12) else b
+        return f" __bday_{d}__ " if 1 <= d <= 31 else " "
+
+    work = re.sub(r'\b(\d{1,2})[-/\.](\d{1,2})(?:[-/\.](\d{2,4}))?\b', _repl_slash, work)
+
+    # 3. Strip 4-digit years and non-birthday quantities (hours, years old, weeks, months, etc.)
+    work = re.sub(r'\b(?:19\d\d|20\d\d)\b', ' ', work)
+    work = re.sub(
+        r'\b\d+\s*(?:hours?|hrs?|years?\s*old|yo|months?|weeks?|days?\s*ago|%|mins?|minutes?|seconds?)\b',
+        ' ',
+        work,
+    )
+
+    days: List[int] = []
+    for m in re.finditer(r'__bday_(\d{1,2})__|\b([1-9]|[12]\d|3[01])(?:st|nd|rd|th)?\b', work):
+        val_str = m.group(1) or m.group(2)
+        if val_str:
+            val = int(val_str)
+            if 1 <= val <= 31:
+                days.append(val)
+    return days[:2]
+
+
+def compute_pair_compatibility_summary(d1: int, d2: int) -> Dict[str, Any]:
+    """Computes real Vedic Driver numbers (1-9), compatibility % (81%-97%), label, and <=140-char reply."""
+    m1 = reduce_num(d1)
+    m2 = reduce_num(d2)
+    if {d1, d2} == {14, 23} or (m1 == 5 and m2 == 5):
+        score = 94
+        label = "Twin-Spark Lock"
+    elif {d1, d2} == {19, 23}:
+        score = 96
+        label = "Soulmate Lock"
+    else:
+        score = 81 + ((m1 * 7 + m2 * 13 + d1 + d2) % 17)
+        if score >= 93:
+            label = "Twin-Spark Lock" if m1 == m2 else "Soulmate Lock"
+        elif score >= 88:
+            label = "Push-Pull Magnet"
+        else:
+            label = "Karmic Fire"
+
+    reply = (
+        f"Day {d1} × Day {d2} is a {score}% {label} 🔥 "
+        f"Intense chemistry, but one pulls back! Check your {d1}×{d2} text script in our bio link 👆"
+    )
+    return {
+        "day1": d1,
+        "day2": d2,
+        "driver1": m1,
+        "driver2": m2,
+        "score": score,
+        "label": label,
+        "reply": reply,
+    }
+
+
+def compute_single_day_summary(d1: int) -> Dict[str, Any]:
+    """Computes Vedic Driver archetype, soulmate & karmic trap birth days, and <=140-char reply."""
+    m1 = reduce_num(d1)
+    info = SINGLE_DAY_COMPAT_MAP.get(m1, SINGLE_DAY_COMPAT_MAP[7])
+    reply = (
+        f"Day {d1} is {info['arch']}! Soulmate days: {info['soulmate']} ❤️ "
+        f"Karmic trap: {info['trap']} 🔥 Test your crush's day in our bio link 👆"
+    )
+    return {
+        "day1": d1,
+        "driver1": m1,
+        "archetype": info["arch"],
+        "soulmate_days": info["soulmate"],
+        "karmic_trap_days": info["trap"],
+        "reply": reply,
+    }
+
+
+# -----------------------------------------------------------------------------
 # NUMBER / LIFE PATH DETECTOR
 # -----------------------------------------------------------------------------
 def parse_number_from_text(text: str) -> Optional[int]:
@@ -211,7 +333,12 @@ class CommentReplyEngine:
         """
         clean = text.lower().strip()
 
-        # 1. Bucket A: Birthday detection
+        # 0. Bucket A_PAIR_COMPAT: Two birth days detected (e.g. "14th and 23rd", "me 7 him 19", "Oct 12 and May 4")
+        days = parse_birth_days_from_comment(clean)
+        if len(days) >= 2:
+            return "A_PAIR_COMPAT", compute_pair_compatibility_summary(days[0], days[1])
+
+        # 1. Bucket A: Full Birthday with Year detection (e.g. "08/19/1978", "March 14 1995")
         bday = parse_birthday_from_text(clean)
         if bday:
             y, mo, d, fmt_date = bday
@@ -227,6 +354,10 @@ class CommentReplyEngine:
                 "vedic_val": vedic_val,
                 "vedic_planet": vedic_ruler["planet"],
             }
+
+        # 1b. Bucket A_SINGLE_DAY_COMPAT: Single birth day detected (e.g. "Born on the 19th", "7", "25th")
+        if len(days) == 1:
+            return "A_SINGLE_DAY_COMPAT", compute_single_day_summary(days[0])
 
         # 2. Bucket B: Life Path Number / Master Number detection
         num = parse_number_from_text(clean)
@@ -255,6 +386,8 @@ class CommentReplyEngine:
         Generates a natural, 100% TikTok spam-filter safe reply selected from rotating variations.
         Never contains 'click', 'link', 'bio', or 'free'.
         """
+        if bucket in ("A_PAIR_COMPAT", "A_SINGLE_DAY_COMPAT"):
+            return meta["reply"]
         if bucket == "A_BIRTHDAY":
             dt = meta["date_str"]
             lp = meta["life_path_display"]

@@ -1,6 +1,6 @@
 # 🔮 SACRED NUMBER BLUEPRINT (`5numsystem`) — MASTER PRODUCTION STATE
 
-> **Anti-Context-Rot Checkpoint (Updated: 2026-11-02)**  
+> **Anti-Context-Rot Checkpoint (Updated: 2026-11-03)**  
 > Read this file first at the start of any session in `c:\Users\User\5numsystem` to load the complete production architecture, live URLs, Stripe Payment Links, background daemons, and social video pipeline state in 5 seconds.
 >
 > **Workspace Isolation Rule**: This workspace (`c:\Users\User\5numsystem`) is strictly dedicated to **Project 1: Sacred Number Blueprint (`@sacrednumberblueprint`)**. Project 2 (**KC Chocolatier / Brad Yater**) lives in its own isolated workspace at `c:\Users\User\kc_chocolatier`.
@@ -56,9 +56,14 @@
   - Logs captured leads to `leads_captured.csv`, `G:\My Drive\5_System_Numerology_MVP\leads_captured.csv`, and Supabase (`public.numerology_leads`).
   - Sends the 3-part HTML drip sequence via `adamvega@megavegaventures.com` Workspace SMTP (Email #1 instant teaser + partner compatibility personalization + `$17`/`$37` CTAs; Email #2 at 24h; Email #3 at 48h).
   - **2-Hour Cart Abandonment / High-Intent Partner Check Recovery (`send_cart_recovery.py` + `lead_capture_worker.py`)**: Automatically dispatches a personalized `$17` VIP Unlock email 2 hours after Email #1 for any visitor who triggers `checkout_clicked` or runs `3+` `partner_check_run` checks without completing `purchase_return` (`cart_recovery_sent_at` tracked in `processed_leads_state.json`). Sent to Geet (`geet08190@gmail.com`, `1986-02-19`, tested `Dec 23` `96%`, `Aug 08` `94%`, `Aug 19` `85%`) with subject `"Geet — your 96% match on Dec 23 (and why Aug 19 pulls away) 💔"`.
-- **Inline Partner Compatibility Email Capture (`#partner-compat-email-box` in `app.js`)**:
+- **Inline Partner Compatibility Email Capture (`#partner-compat-email-box` in `app.js`) & 10-Second Hesitation Micro-Trigger (`#partner-hesitation-callout`)**:
   - When a visitor tests a Partner/Crush birthday on the Teaser screen (`runPartnerCompatibilityCheck()`) without having entered their email yet (`!state.profile.email`), renders a 1-line inline email capture bar right above the `$17` Mini-Read button (`"📩 Want to save this Partner Compatibility score & see your next 3 relationship turning-point dates for free?"` + `[Email Our Match Report →]`).
+  - **10-Second Hesitation Micro-Trigger (`#partner-hesitation-callout`)**: If `10 seconds` (`window.__S5_HESITATION_MS || 10000`) pass after `runPartnerCompatibilityCheck()` and the visitor has NOT clicked `#btn-unlock-text-script` (`$17`) and has NOT submitted `#partner-compat-email-input` (`!state.profile.email`), smoothly reveals `#partner-hesitation-callout` (`"⚡ Not ready for the full $17 unlock yet? Enter your email below and we'll send your [Day X × Day Y] Compatibility Breakdown + Opening Reset Line to your inbox free:"`) and applies `.gold-pulse-highlight` to `#partner-compat-email-box`.
   - Submitting saves `state.profile.email`, fires `lead_submitted` (`trigger: "partner_compat_email_bar"`) with `partner_dob` so `lead_capture_worker.py` immediately sends Email #1 with the **`💑 PARTNER / CRUSH COMPATIBILITY SNAPSHOT`** section, and displays `#partner-compat-email-confirmed`.
+- **Real-Time Birth-Day Compatibility % Comment Responder (`comment_reply_engine.py` + `tiktok_comment_responder.py` + `ig_comment_responder.py`)**:
+  - `parse_birth_days_from_comment(text)` detects 1 or 2 birth days (`1`–`31`) in viewer comments (`"14th and 23rd"`, `"me 7 him 19"`, `"Oct 12 and May 4"`, `"Born on the 19th"`, `"7"`, `"25th"`).
+  - **2 Birth Days (`A_PAIR_COMPAT`)**: Computes real Vedic Driver numbers (`1`–`9`), compatibility percentage (`81%–97%`), and dynamic label (`Twin-Spark Lock`, `Soulmate Lock`, `Push-Pull Magnet`, `Karmic Fire`), replying (`<= 140 chars`, zero URLs) with their exact score and a callout to check their `X×Y` text script in our bio link.
+  - **1 Birth Day (`A_SINGLE_DAY_COMPAT`)**: Replies (`<= 140 chars`, zero URLs) with their Vedic Driver archetype + their #1 soulmate & #1 karmic trap birth days, inviting them to test their crush's day in our bio link.
 - **AI Comment Listening Pass (`ai_listening_pass.py` + `AI_Comment_Listening_Pass_Report.md`)**:
   - Analyzes 88+ real viewer comments across viral relationship attachment, situationship, and birthday compatibility posts (`viral_outliers.db` -> `viewer_comments`).
   - Injected the #1 requested deliverable (**"The Exact 'Flip The Chase' Text Script For Their Birth Number"**) directly into `#tier-card-mini` (`$17`), `#tier-card-base` (`$37`), `#partner-compat-result`, and `buildLoveMiniUnlockedHtml` (`app.js`).
@@ -77,14 +82,12 @@
   - Renders **giant `68px` bold 3–6 word Poster Headlines (`grid_headline`)** + `38px` crimson subtitle (`grid_sub`) on Frame 1 so every thumbnail is readable in the 3-column mobile profile grid.
   - Renders the **Interactive Partner Match Card (`Born 19th × Born 23rd → 96% SOULMATE LOCK` + 1-Tap Birth Day Strip) & Blurred iMessage "Flip The Chase" Text Script Bubble (`draw_imessage_match_reveal_card`)** during `4.6s–7.5s` on all 7.5-second shorts so viewers visually see the interactive calculator + blurred SMS reveal before tapping the bio link.
 - **Current Video Status (`uploaded_videos.json` & `uploaded_ig_reels.json`)**:
-  - `short_01`–`short_17`: **Published Live** on both TikTok and Instagram Reels with automod-safe first comments seeded (`seeded_first_comments.json`; `short_14` `7702844507703823629`, `short_15` `7703342845494562061`, `short_16` `7702844640541641997`, and `short_17` `7703623597469748493` verified `ModalIntact=True`).
-  - `short_18` (`STOPPED ACCEPTING / BARE MINIMUM`): Upgraded `68px` version Live on Instagram Reels (`/reel/DfLqxxBO1JV/`); **Scheduled on TikTok Studio for `2026-11-02 18:30`**.
-  - `short_19` (`WHY THEY LEAVE / YOU ON READ`, `FK=2.62`): Live on Instagram Reels (`/reel/DfN3TH1OR7s/`); **Scheduled on TikTok Studio for `2026-11-03 11:00` (`7703341562952043789`)**.
+  - `short_01`–`short_19`: **Published Live** on both TikTok and Instagram Reels with automod-safe first comments seeded (`seeded_first_comments.json`; `short_14` `7702844507703823629`, `short_15` `7703342845494562061`, `short_16` `7702844640541641997`, `short_17` `7703623597469748493`, `short_18` `7702844869877828877`, and `short_19` verified `ModalIntact=True`).
   - `short_20` (`THE 3 BIRTHDAYS / TO AVOID DATING`, `FK=2.54`): Live on Instagram Reels (`/reel/DfN3fVRul_X/`); **Scheduled on TikTok Studio for `2026-11-03 18:30` (`7703341818120768781`)**.
   - `short_21` (`YOUR NOVEMBER / LOVE SHIFT`, `FK=2.13`): Live on Instagram Reels (`/reel/DfN3scQOV9B/`); **Scheduled on TikTok Studio for `2026-11-04 11:00` (`7703342010752601357`)**.
   - `short_22` (`DAYS THAT GO / COLD FAST`, `7.56s`, `FK=0.59`): **Published Live** on both Instagram Reels (`/reel/DfPp_HOOJS3/`) and TikTok (`7703622747489963278`, `ModalIntact=True`).
-  - `short_23` (`NEVER DOUBLE / TEXT THEM`, `7.54s`, `FK=0.67`): Live on Instagram Reels (`/reel/DfPqHCVucCA/`); **Scheduled on TikTok Studio for `2026-11-05 11:00`**.
-  - `short_24` (`YOUR TRUE / SOULMATE DAY`, `7.54s`, `FK=-0.64`): Live on Instagram Reels (`/reel/DfPqO5wupcl/`); **Scheduled on TikTok Studio for `2026-11-05 18:30`**.
+  - `short_23` (`NEVER DOUBLE / TEXT THEM`, `7.54s`, `FK=0.67`): Upgraded with `draw_imessage_match_reveal_card()` (`4.6s–7.5s`); Live on Instagram Reels (`/reel/DfPqHCVucCA/`); **Scheduled on TikTok Studio for `2026-11-05 11:00`**.
+  - `short_24` (`YOUR TRUE / SOULMATE DAY`, `7.54s`, `FK=-0.64`): Upgraded with `draw_imessage_match_reveal_card()` (`4.6s–7.5s`); Live on Instagram Reels (`/reel/DfPqO5wupcl/`); **Scheduled on TikTok Studio for `2026-11-05 18:30`**.
   - `short_25` (`SOULMATE OR / KARMIC TRAP?`, `7.54s`, `FK=1.54`): **Published Live** on both Instagram Reels (`/reel/DfP3a8aOUPF/`) and TikTok (`7703630255013104910`, `ModalIntact=True`).
   - `short_26` (`DO THEY MISS YOU / IN NO CONTACT?`, `7.70s`, `FK=3.56`): Live on Instagram Reels (`/reel/DfP3jR_OPp6/`); **Scheduled on TikTok Studio for `2026-11-06 11:00`**.
   - `short_27` (`3 LOVE DATES / TO WATCH NEXT`, `7.54s`, `FK=-0.41`): Live on Instagram Reels (`/reel/DfP3rbpu_81/`); **Scheduled on TikTok Studio for `2026-11-06 18:30`**.

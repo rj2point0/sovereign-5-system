@@ -640,6 +640,22 @@ main, header, footer { position: relative; z-index: 1; }
   }
 }
 
+@keyframes goldPulseHighlight {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.45), 0 0 18px rgba(212, 175, 55, 0.25);
+    border-color: rgba(212, 175, 55, 0.95);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(212, 175, 55, 0), 0 0 28px rgba(243, 229, 171, 0.45);
+    border-color: #F3E5AB;
+  }
+}
+
+.gold-pulse-highlight {
+  animation: goldPulseHighlight 2.2s infinite ease-in-out;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.16), rgba(14, 15, 20, 0.95)) !important;
+}
+
 /* =====================================================================
    PRINT — book-quality multi-page PDF, zero UI clutter
    ===================================================================== */

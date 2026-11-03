@@ -373,7 +373,36 @@ async def test_all():
         )
         assert geet_subj == "Geet — your 96% match on Dec 23 (and why Aug 19 pulls away) 💔", f"Unexpected Geet recovery subject: {geet_subj}"
         assert "dRm8wP7VL0Md1gA0zd38404?prefilled_email=geet08190%40gmail.com" in geet_html
-        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility, Cart Recovery & Jenny Hoyos 5th-Grade Gate (short_10-24) verified!")
+
+        # Verify Real-Time Birth-Day Compatibility % Replies in comment_reply_engine.py, tiktok_comment_responder.py & ig_comment_responder.py
+        from comment_reply_engine import CommentReplyEngine, parse_birth_days_from_comment
+        from ig_comment_responder import IGCommentReplyGenerator
+        import tiktok_comment_responder as _tt_resp
+        assert hasattr(_tt_resp, "parse_birth_days_from_comment"), "tiktok_comment_responder must expose parse_birth_days_from_comment"
+        assert parse_birth_days_from_comment("14th and 23rd") == [14, 23]
+        assert parse_birth_days_from_comment("me 7 him 19") == [7, 19]
+        assert parse_birth_days_from_comment("Oct 12 and May 4") == [12, 4]
+        assert parse_birth_days_from_comment("Born on the 19th") == [19]
+        assert parse_birth_days_from_comment("7") == [7]
+        assert parse_birth_days_from_comment("25th") == [25]
+        c_eng = CommentReplyEngine(use_llm=False)
+        ig_gen = IGCommentReplyGenerator()
+        for two_day_txt, exp_pair in [("14th and 23rd", (14, 23)), ("me 7 him 19", (7, 19)), ("Oct 12 and May 4", (12, 4))]:
+            tt_r = c_eng.generate_reply(two_day_txt)
+            ig_r = ig_gen.generate_ig_reply(two_day_txt)
+            assert tt_r["bucket"] == "A_PAIR_COMPAT" and ig_r["bucket"] == "A_PAIR_COMPAT"
+            assert f"Day {exp_pair[0]} × Day {exp_pair[1]}" in tt_r["reply"]
+            assert "%" in tt_r["reply"] and f"{exp_pair[0]}×{exp_pair[1]} text script in our bio link" in tt_r["reply"]
+            assert len(tt_r["reply"]) <= 140 and "http" not in tt_r["reply"].lower()
+            assert ig_r["reply_text"] == tt_r["reply"]
+        for one_day_txt, exp_d in [("Born on the 19th", 19), ("7", 7), ("25th", 25)]:
+            tt_r1 = c_eng.generate_reply(one_day_txt)
+            ig_r1 = ig_gen.generate_ig_reply(one_day_txt)
+            assert tt_r1["bucket"] == "A_SINGLE_DAY_COMPAT" and ig_r1["bucket"] == "A_SINGLE_DAY_COMPAT"
+            assert f"Day {exp_d} is Driver #" in tt_r1["reply"]
+            assert "Soulmate days:" in tt_r1["reply"] and "Karmic trap:" in tt_r1["reply"]
+            assert len(tt_r1["reply"]) <= 140 and "http" not in tt_r1["reply"].lower()
+        print("[OK] Reverse order calc_preview, <=38-char og:title, 5-Circle favicon.svg, Partner Compatibility, Cart Recovery, 1-Day/2-Day Comment Replies & Jenny Hoyos 5th-Grade Gate (short_10-27) verified!")
 
         # TEST 10: 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Audit + Optional Name + 1-Tap Quick-Day Strip + 1-Tap Instant Sample Reading + $17 Impulse Tier
         print("\n--- Test 10: 390x660 TikTok In-App Browser Viewport Audit (bottom <= 635px), Blank Name Submit, #quick-day-strip, 1-Tap Sample Demo & $17 Impulse Tier ---")
@@ -426,9 +455,15 @@ async def test_all():
         assert await page_mob.is_visible('#partner-quick-day-strip') is True, "Expected #partner-quick-day-strip visible inside #partner-compat-box"
         pqd_box = await page_mob.locator('#partner-quick-day-strip').bounding_box()
         assert pqd_box is not None and pqd_box["y"] >= 0 and (pqd_box["y"] + pqd_box["height"]) <= 635, f"Expected #partner-quick-day-strip immediately visible inside 390x660 viewport after quick_day_selected, got {pqd_box}"
+        await page_mob.evaluate("window.__S5_HESITATION_MS = 120;")
         await page_mob.click('#partner-quick-day-strip button[data-action="partner-quick-day"][data-day="16"]')
-        await asyncio.sleep(0.2)
+        await asyncio.sleep(0.25)
         assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result to render immediately on 1-tap partner day click"
+        assert await page_mob.is_visible('#partner-hesitation-callout') is True, "Expected #partner-hesitation-callout to reveal inside #partner-compat-email-box after hesitation timer!"
+        hes_txt = await page_mob.locator('#partner-hesitation-callout').inner_text()
+        assert "Not ready for the full $17 unlock yet?" in hes_txt and "[Day 25 × Day 16] Compatibility Breakdown + Opening Reset Line" in hes_txt, f"Unexpected #partner-hesitation-callout text: {hes_txt}"
+        has_pulse_cls = await page_mob.evaluate("document.querySelector('#partner-compat-email-box').classList.contains('gold-pulse-highlight')")
+        assert has_pulse_cls is True, "Expected #partner-compat-email-box to have .gold-pulse-highlight class after hesitation timer!"
         p_qd_evs = [e for e in demo_events if e.get("event_type") == "partner_check_run"]
         assert len(p_qd_evs) >= 1, f"Expected partner_check_run after tapping partner day 16, got {[e.get('event_type') for e in demo_events]}"
         assert (p_qd_evs[-1].get("extra") or {}).get("via_quick_day") is True, f"Expected via_quick_day=True in partner_check_run: {p_qd_evs[-1]}"

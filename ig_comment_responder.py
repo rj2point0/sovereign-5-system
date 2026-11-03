@@ -43,6 +43,9 @@ from comment_reply_engine import (
     calculate_vedic_moolank,
     parse_birthday_from_text,
     parse_number_from_text,
+    parse_birth_days_from_comment,
+    compute_pair_compatibility_summary,
+    compute_single_day_summary,
 )
 
 if sys.platform == "win32":
@@ -82,8 +85,27 @@ class IGCommentReplyGenerator:
             digest = hashlib.md5(f"{author}:{clean}".encode("utf-8")).hexdigest()
             seed = int(digest[:8], 16)
 
+        # Check 2-day or 1-day compatibility comments first
+        days = parse_birth_days_from_comment(low)
+        if len(days) >= 2:
+            pair_meta = compute_pair_compatibility_summary(days[0], days[1])
+            return {
+                "bucket": "A_PAIR_COMPAT",
+                "meta": pair_meta,
+                "reply_text": pair_meta["reply"],
+                "reply": pair_meta["reply"],
+            }
+
         # Check explicit OVERLAP keyword first if no birthday/number
         bday = parse_birthday_from_text(low)
+        if not bday and len(days) == 1:
+            single_meta = compute_single_day_summary(days[0])
+            return {
+                "bucket": "A_SINGLE_DAY_COMPAT",
+                "meta": single_meta,
+                "reply_text": single_meta["reply"],
+                "reply": single_meta["reply"],
+            }
         num = parse_number_from_text(low)
 
         if bday:

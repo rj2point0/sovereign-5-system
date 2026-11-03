@@ -22,7 +22,12 @@ from typing import Dict, List, Optional, Any
 
 from playwright.async_api import async_playwright, BrowserContext, Page
 
-from comment_reply_engine import CommentReplyEngine
+from comment_reply_engine import (
+    CommentReplyEngine,
+    parse_birth_days_from_comment,
+    compute_pair_compatibility_summary,
+    compute_single_day_summary,
+)
 
 if sys.platform == "win32":
     try:

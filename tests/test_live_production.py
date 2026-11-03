@@ -56,11 +56,15 @@ async def verify_live_pages():
         assert await page_mob.is_visible('#partner-quick-day-strip') is True
         live_pqd_box = await page_mob.locator('#partner-quick-day-strip').bounding_box()
         assert live_pqd_box is not None and live_pqd_box["y"] >= 0 and (live_pqd_box["y"] + live_pqd_box["height"]) <= 635, f"Expected live #partner-quick-day-strip inside 390x660 viewport, got {live_pqd_box}"
+        await page_mob.evaluate("window.__S5_HESITATION_MS = 120;")
         await page_mob.click('#partner-quick-day-strip button[data-action="partner-quick-day"][data-day="25"]')
-        await asyncio.sleep(0.2)
+        await asyncio.sleep(0.25)
         assert await page_mob.is_visible('#partner-compat-result') is True
         assert await page_mob.is_visible('#flip-chase-preview-bubble') is True
         assert await page_mob.is_visible('#btn-unlock-text-script') is True
+        assert await page_mob.is_visible('#partner-hesitation-callout') is True, "Expected #partner-hesitation-callout visible on live site after hesitation timer"
+        live_hes_txt = await page_mob.locator('#partner-hesitation-callout').inner_text()
+        assert "[Day 16 × Day 25]" in live_hes_txt, f"Unexpected live hesitation text: {live_hes_txt}"
         live_bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
         assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 16 × PARTNER DAY 25)' in live_bubble_txt.upper()
         # Return to Hero and test blank #fullName + Month/Day/Year submit on live site

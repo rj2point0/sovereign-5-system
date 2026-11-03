@@ -1020,6 +1020,9 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
         "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I really value our connection, so I'm...",
         "spoken_script": (
             "Born on the 2nd, 6th, 11th, 20th, or 29th? "
             "Stop double texting when they go quiet. "
@@ -1060,6 +1063,9 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
         "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
         "spoken_script": (
             "Born on the 1st, 5th, 10th, 19th, or 23rd? "
             "Only one birth day can match your fire. "

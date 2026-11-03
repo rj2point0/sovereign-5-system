@@ -1365,6 +1365,11 @@ const CONFIG = {
   }
 
   function checkoutMini(triggerSource) {
+    state.hasClickedMiniUnlock = true;
+    if (state.partnerHesitationTimer) {
+      clearTimeout(state.partnerHesitationTimer);
+      state.partnerHesitationTimer = null;
+    }
     const link = CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE;
     const total = CONFIG.PRICE_MINI;
     const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
@@ -2811,7 +2816,12 @@ const CONFIG = {
 
       <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
         ${!(state.profile && state.profile.email) ? `
-        <div id="partner-compat-email-box" class="mb-3.5 p-3 sm:p-3.5 rounded-xl bg-black/40 border border-gold/35 text-left">
+        <div id="partner-compat-email-box" class="mb-3.5 p-3 sm:p-3.5 rounded-xl bg-black/40 border border-gold/35 text-left transition-all">
+          <div id="partner-hesitation-callout" class="hidden mb-2.5 p-2.5 rounded-lg bg-gold/15 border border-gold text-xs text-ivory font-semibold leading-snug">
+            ⚡ ${isEs
+              ? `¿Aún no estás listo para el desbloqueo completo de $17? Ingresa tu correo abajo y te enviaremos gratis tu Desglose de Compatibilidad [Día ${userBirthDay} × Día ${partnerBirthDay}] + Primera Línea de Texto:`
+              : `Not ready for the full $17 unlock yet? Enter your email below and we'll send your [Day ${userBirthDay} × Day ${partnerBirthDay}] Compatibility Breakdown + Opening Reset Line to your inbox free:`}
+          </div>
           <p class="text-xs text-champagne font-medium leading-snug">
             📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver tus próximas 3 fechas clave en el amor gratis?' : 'Want to save this Partner Compatibility score &amp; see your next 3 relationship turning-point dates for free?'}
           </p>
@@ -2834,6 +2844,22 @@ const CONFIG = {
         </button>
       </div>
     `;
+
+    state.hasClickedMiniUnlock = false;
+    if (state.partnerHesitationTimer) {
+      clearTimeout(state.partnerHesitationTimer);
+      state.partnerHesitationTimer = null;
+    }
+    const hesitationDelayMs = Number(window.__S5_HESITATION_MS) > 0 ? Number(window.__S5_HESITATION_MS) : 10000;
+    state.partnerHesitationTimer = setTimeout(() => {
+      if (state.hasClickedMiniUnlock || (state.profile && state.profile.email)) return;
+      const calloutEl = $('#partner-hesitation-callout');
+      const emailBoxEl = $('#partner-compat-email-box');
+      if (calloutEl && emailBoxEl) {
+        calloutEl.classList.remove('hidden');
+        emailBoxEl.classList.add('gold-pulse-highlight');
+      }
+    }, hesitationDelayMs);
   }
 
   function playTriangleBriefing(partNum) {
