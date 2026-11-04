@@ -1153,9 +1153,9 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "grid_headline": "DO THEY MISS YOU\nIN NO CONTACT?",
         "grid_sub": "CHECK THEIR BIRTH DAY",
         "hook_box_text": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th:",
-        "hook_end_sec": 4.6,
-        "cta_tail_sec": 2.8,
-        "broll_cutoff": 4.6,
+        "hook_end_sec": 5.8,
+        "cta_tail_sec": 1.8,
+        "broll_cutoff": 5.8,
         "tail_hold_sec": 0.25,
         "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
@@ -1169,8 +1169,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So check their exact text script in our bio."
         ),
         "broll_clips": [
-            (0.0, 2.5, "emo_11_worried_sad_woman_closeup.mp4"),
-            (2.5, 4.6, "emo_01_woman_phone_night.mp4"),
+            (0.0, 2.9, "emo_11_worried_sad_woman_closeup.mp4"),
+            (2.9, 5.8, "emo_01_woman_phone_night.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1893,24 +1893,61 @@ class BrollStoryGenerator:
         Upgrades the 7.5s video reveal phase (4.6s-7.5s) to visually display:
         1) Dark-mode Partner Match Card ('Born 19th × Born 23rd -> 96% SOULMATE LOCK') + 1-Tap Birth Day Strip
         2) iMessage 'Flip The Chase' Text Script Bubble (first line visible + Gaussian-blurred secret text + Gold Lock CTA)
-        When visual_format == 'emotional_face_giant', keeps the Giant 120px Headline at the top (Y=185..435)
-        so no platform auto-thumbnail ever loses the giant headline!
+        When visual_format == 'emotional_face_giant', keeps Y = 0..1185 (Giant 120px Headline + Expressive Human Face)
+        100% unobstructed and renders a compact Lower-Third Match + Blurred iMessage Dock at Y = 1185..1545 so NO frame
+        of the video ever hides the human face or giant headline!
         """
         is_emo_giant = spec.get("visual_format") == "emotional_face_giant"
-        frame = ImageEnhance.Brightness(frame).enhance(0.58 if is_emo_giant else 0.30)
         if is_emo_giant:
-            frame = self.draw_giant_emotional_headline(frame, spec, compact_top=True)
+            frame = self.draw_giant_emotional_headline(frame, spec, compact_top=False)
+            draw = ImageDraw.Draw(frame)
+            f_pair = ImageFont.truetype(FONT_BOLD, 30)
+            f_sms_txt = ImageFont.truetype(FONT_BOLD, 27)
+            f_lock = ImageFont.truetype(FONT_BOLD, 23)
+
+            pair_txt = spec.get("reveal_match_pair", "Born 19th × Born 23rd")
+            score_txt = spec.get("reveal_match_score", "96% SOULMATE LOCK")
+
+            # Lower-Third Compact Match + Blurred iMessage Dock (Y = 1185..1535) — never covers faces at Y = 550..1180!
+            draw.rounded_rectangle([54, 1185, 1026, 1535], radius=24, fill=(12, 14, 20), outline=(212, 175, 55), width=3)
+            draw.rounded_rectangle([84, 1202, 996, 1264], radius=16, fill=(20, 44, 32), outline=(74, 222, 128), width=2)
+            draw.text((540, 1233), f"{pair_txt}  →  {score_txt}", fill=(110, 245, 165), font=f_pair, anchor="mm")
+
+            # iMessage speech bubble with 1 clear line + 1 blurred secret line
+            draw.rounded_rectangle([84, 1276, 996, 1436], radius=18, fill=(24, 38, 58), outline=(96, 165, 250), width=2)
+            sms_lead = spec.get("reveal_sms_lead", "“Hey, I loved hanging out, but I noticed...")
+            draw.text((114, 1316), sms_lead, fill=(255, 255, 255), font=f_sms_txt, anchor="lm")
+
+            secret_box = (108, 1348, 970, 1426)
+            secret_img = frame.crop(secret_box)
+            s_draw = ImageDraw.Draw(secret_img)
+            s_draw.text((8, 34), "our pace works best when neither of us forces it.”", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
+            secret_blurred = secret_img.filter(ImageFilter.GaussianBlur(radius=6))
+            frame.paste(secret_blurred, (secret_box[0], secret_box[1]))
+
+            draw = ImageDraw.Draw(frame)
+            draw.rounded_rectangle([84, 1448, 996, 1518], radius=16, fill=(212, 175, 55), outline=(255, 235, 150), width=2)
+            draw.text(
+                (540, 1483),
+                "🔒 Tap Link in Bio to Test Both Birthdays & Unlock Your Script",
+                fill=(18, 15, 8),
+                font=f_lock,
+                anchor="mm",
+            )
+            return frame
+
+        frame = ImageEnhance.Brightness(frame).enhance(0.30)
         draw = ImageDraw.Draw(frame)
 
-        f_badge = ImageFont.truetype(FONT_BOLD, 23 if is_emo_giant else 24)
-        f_pair = ImageFont.truetype(FONT_BOLD, 33 if is_emo_giant else 35)
-        f_score = ImageFont.truetype(FONT_BOLD, 30 if is_emo_giant else 32)
-        f_day = ImageFont.truetype(FONT_BOLD, 23 if is_emo_giant else 24)
-        f_sms_hdr = ImageFont.truetype(FONT_BOLD, 24 if is_emo_giant else 25)
-        f_sms_txt = ImageFont.truetype(FONT_BOLD, 29 if is_emo_giant else 31)
+        f_badge = ImageFont.truetype(FONT_BOLD, 24)
+        f_pair = ImageFont.truetype(FONT_BOLD, 35)
+        f_score = ImageFont.truetype(FONT_BOLD, 32)
+        f_day = ImageFont.truetype(FONT_BOLD, 24)
+        f_sms_hdr = ImageFont.truetype(FONT_BOLD, 25)
+        f_sms_txt = ImageFont.truetype(FONT_BOLD, 31)
         f_lock = ImageFont.truetype(FONT_BOLD, 24)
 
-        y_shift = 325 if is_emo_giant else 0
+        y_shift = 0
 
         # --- CARD 1: PARTNER MATCH CARD ---
         draw.rounded_rectangle(

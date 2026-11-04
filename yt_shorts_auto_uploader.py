@@ -343,56 +343,77 @@ async def seed_and_pin_comments_on_short(page: Page, video_id: str) -> Dict[str,
 
 
 async def delete_old_short_uploads(page: Page, old_ids: List[str]):
-    """Deletes or privatizes the previous small-text Short uploads via their direct Studio edit URL."""
-    if not old_ids:
-        return
-    print(f"  [Cleanup] Removing/privatizing {len(old_ids)} old Short(s): {old_ids}", flush=True)
-    for vid in old_ids:
-        edit_url = f"https://studio.youtube.com/video/{vid}/edit"
-        try:
-            await page.goto(edit_url, wait_until="domcontentloaded", timeout=45000)
-            await asyncio.sleep(4.2)
+    """Deduplicates Public Shorts in YouTube Studio (keeps only the newest Public row per title and sets older duplicates to Private)."""
+    short_tab = f"https://studio.youtube.com/channel/{YT_CHANNEL_ID}/videos/short"
+    print(f"  [Cleanup] Opening {short_tab} to deduplicate Public Shorts...", flush=True)
+    await page.goto(short_tab, wait_until="domcontentloaded", timeout=45000)
+    await asyncio.sleep(5.5)
 
-            # 1. Try Delete forever via #overflow-menu-button on video edit page
-            more_btn = page.locator("ytcp-button#overflow-menu-button, button[aria-label='More actions']").first
-            if await more_btn.count() > 0 and await more_btn.is_visible():
-                await more_btn.click(force=True)
+    rows = page.locator("ytcp-video-row")
+    rcount = await rows.count()
+    seen_titles = set()
+    for idx in range(rcount):
+        row = rows.nth(idx)
+        try:
+            row_txt = await row.inner_text()
+        except Exception:
+            continue
+        if "Private" in row_txt:
+            continue
+        lines = [ln.strip() for ln in row_txt.splitlines() if len(ln.strip()) > 12]
+        title_key = lines[0] if lines else f"row_{idx}"
+        if title_key not in seen_titles:
+            seen_titles.add(title_key)
+            print(f"    ✓ Keeping newest Public Short row #{idx+1}: {title_key[:55]}", flush=True)
+            continue
+        try:
+            await row.scroll_into_view_if_needed()
+            await asyncio.sleep(0.5)
+            vis_cell = row.locator(
+                "ytcp-video-row-cell-visibility, .cell-body.tablecell-visibility, #visibility-text, div.tablecell-visibility"
+            ).first
+            vcnt = await vis_cell.count()
+            if vcnt > 0:
+                await vis_cell.click(force=True)
+                await asyncio.sleep(1.2)
+                priv_radio = page.locator(
+                    'tp-yt-paper-radio-button[name="PRIVATE"], tp-yt-paper-radio-button:has-text("Private")'
+                ).first
+                pcnt = await priv_radio.count()
+                if pcnt > 0:
+                    await priv_radio.click(force=True)
+                    await asyncio.sleep(0.8)
+                    save_btn = page.locator(
+                        'ytcp-button#save-button, ytcp-video-visibility-select ytcp-button#save-button, div[role="dialog"] button:has-text("Save")'
+                    ).first
+                    scnt = await save_btn.count()
+                    if scnt > 0:
+                        await save_btn.click(force=True)
+                        await asyncio.sleep(3.0)
+                        print(f"    ✓ Set older duplicate Short row #{idx+1} ({title_key[:42]}) to Private.", flush=True)
+                        continue
+            # Fallback: hover row -> click Options (3 dots) -> Delete forever
+            await row.hover()
+            await asyncio.sleep(0.6)
+            opts = row.locator('ytcp-button#options-button, button[aria-label="Options"]').first
+            if await opts.count() > 0:
+                await opts.click(force=True)
                 await asyncio.sleep(0.8)
-                del_item = page.locator('tp-yt-paper-item:has-text("Delete forever")').first
-                if await del_item.count() > 0 and await del_item.is_visible():
-                    await del_item.click(force=True)
+                del_it = page.locator('tp-yt-paper-item:has-text("Delete forever")').first
+                if await del_it.count() > 0:
+                    await del_it.click(force=True)
                     await asyncio.sleep(1.0)
-                    chk = page.locator("ytcp-checkbox-lit#confirm-checkbox, ytcp-checkbox-lit#delete-confirm-checkbox, div[role='dialog'] ytcp-checkbox-lit").first
+                    chk = page.locator('ytcp-checkbox-lit#delete-confirm-checkbox, ytcp-checkbox-lit#confirm-checkbox, div[role="dialog"] ytcp-checkbox-lit').first
                     if await chk.count() > 0:
                         await chk.click(force=True)
-                        await asyncio.sleep(0.5)
-                    confirm_btn = page.locator("ytcp-button#confirm-button, div[role='dialog'] button:has-text('Delete forever')").first
-                    if await confirm_btn.count() > 0:
-                        await confirm_btn.click(force=True)
-                        await asyncio.sleep(4.0)
-                        print(f"    ✓ Deleted old Short {vid} forever!", flush=True)
-                        continue
-
-            # 2. Fallback: set Visibility to Private + Save on edit page
-            vis_box = page.locator("ytcp-video-metadata-visibility #select-button, ytcp-video-metadata-visibility").first
-            if await vis_box.count() > 0:
-                await vis_box.click(force=True)
-                await asyncio.sleep(0.8)
-                priv_radio = page.locator('tp-yt-paper-radio-button[name="PRIVATE"], tp-yt-paper-radio-button:has-text("Private")').first
-                if await priv_radio.count() > 0:
-                    await priv_radio.click(force=True)
-                    await asyncio.sleep(0.5)
-                    done_btn = page.locator("ytcp-button#done-button, div[role='dialog'] ytcp-button#save-button").first
-                    if await done_btn.count() > 0:
-                        await done_btn.click(force=True)
-                        await asyncio.sleep(0.8)
-                    save_btn = page.locator("ytcp-button#save").first
-                    if await save_btn.count() > 0:
-                        await save_btn.click(force=True)
-                        await asyncio.sleep(2.5)
-                        print(f"    ✓ Set old Short {vid} to Private", flush=True)
+                        await asyncio.sleep(0.6)
+                    cbtn = page.locator('ytcp-button#confirm-button, div[role="dialog"] button:has-text("Delete forever")').first
+                    if await cbtn.count() > 0:
+                        await cbtn.click(force=True)
+                        await asyncio.sleep(3.5)
+                        print(f"    ✓ Deleted older duplicate Short row #{idx+1} ({title_key[:42]}) forever.", flush=True)
         except Exception as e:
-            print(f"    [Cleanup Notice] {vid}: {e}", flush=True)
+            print(f"    [Cleanup Notice] row #{idx+1}: {e}", flush=True)
 
 
 async def upload_single_short(page: Page, item: Dict[str, Any]) -> Optional[str]:
@@ -763,17 +784,11 @@ async def run_pipeline(do_rebrand: bool = True, do_upload: bool = True):
                 save_tracker(tracker)
 
         if do_upload:
-            old_ids = [
-                v.get("video_id")
-                for v in tracker.get("videos", {}).values()
-                if v.get("video_id") and v.get("ReplaceOld")
-            ]
-            if old_ids:
-                await delete_old_short_uploads(page, old_ids)
-                for k in list(tracker.get("videos", {}).keys()):
-                    if tracker["videos"][k].get("ReplaceOld"):
-                        del tracker["videos"][k]
-                save_tracker(tracker)
+            await delete_old_short_uploads(page, [])
+            for k in list(tracker.get("videos", {}).keys()):
+                if tracker["videos"][k].get("ReplaceOld"):
+                    del tracker["videos"][k]
+            save_tracker(tracker)
 
             for item in YT_SHORTS_QUEUE:
                 sid = item["id"]
@@ -797,6 +812,15 @@ async def run_pipeline(do_rebrand: bool = True, do_upload: bool = True):
                         entry.update(seed_res)
                     tracker.setdefault("videos", {})[sid] = entry
                     save_tracker(tracker)
+
+            await delete_old_short_uploads(page, [])
+
+            # Capture public Shorts grid verification screenshot
+            await page.goto("https://www.youtube.com/@sacrednumberblueprint/shorts", wait_until="domcontentloaded", timeout=45000)
+            await asyncio.sleep(5.5)
+            shot_p = os.path.join(BASE_DIR, "yt_shorts_grid_verified.png")
+            await page.screenshot(path=shot_p)
+            print(f"  ✓ Saved verified YouTube Shorts grid screenshot -> {shot_p}", flush=True)
 
         if browser:
             await browser.close()
