@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-03T14:02:19.332626",
+  "updated_at": "2026-11-03T17:32:35.086639",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -216,10 +216,10 @@
     "tiktok_short_20_wrong_birthday_match.mp4": {
       "filename": "tiktok_short_20_wrong_birthday_match.mp4",
       "ad_id": "short_20",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-11-03 18:30",
-      "uploaded_at": "2026-11-01T15:01:01.053010",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-03T17:32:35.086639",
       "caption_preview": "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy (why checking only zodiac signs misses yo"
     },
     "tiktok_short_21_november_love_shift.mp4": {
@@ -228,7 +228,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-04 11:00",
-      "uploaded_at": "2026-11-01T15:01:41.476794",
+      "uploaded_at": "2026-11-03T17:29:17.922715",
       "caption_preview": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? Why the "
     },
     "tiktok_short_15_miss_fake_version.mp4": {
