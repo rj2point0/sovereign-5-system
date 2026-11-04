@@ -560,8 +560,28 @@ async def test_all():
         assert fn_val == "", f"Expected #fullName to be cleared after clicking enter-real-birthday, got {fn_val!r}"
         is_fn_focused = await page_mob.evaluate("document.activeElement && document.activeElement.id === 'fullName'")
         assert is_fn_focused is True, "Expected #fullName to be focused after clicking enter-real-birthday"
+
+        # Verify viral partner share deep-link (/?d1=19&d2=23) and #btn-share-partner-match
+        demo_events.clear()
+        await page_mob.goto("http://127.0.0.1:8080/?d1=19&d2=23&utm_source=partner_share&force_telemetry=1")
+        await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=5000)
+        await asyncio.sleep(0.25)
+        assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result visible on ?d1=19&d2=23"
+        assert await page_mob.is_visible('#flip-chase-preview-bubble') is True, "Expected #flip-chase-preview-bubble visible on ?d1=19&d2=23"
+        assert await page_mob.is_visible('#btn-share-partner-match') is True, "Expected #btn-share-partner-match visible on ?d1=19&d2=23"
+        compat_txt = await page_mob.locator('#partner-compat-result').inner_text()
+        assert "BIRTH DAY 19 × PARTNER DAY 23" in compat_txt.upper(), f"Expected BIRTH DAY 19 × PARTNER DAY 23 in #partner-compat-result, got {compat_txt}"
+        shared_open_evs = [e for e in demo_events if e.get("event_type") == "shared_match_opened"]
+        assert len(shared_open_evs) >= 1, f"Expected shared_match_opened telemetry event on ?d1=19&d2=23, got {[e.get('event_type') for e in demo_events]}"
+        assert (shared_open_evs[-1].get("extra") or {}).get("d1") == 19 and (shared_open_evs[-1].get("extra") or {}).get("d2") == 23
+
+        await page_mob.click('#btn-share-partner-match')
+        await asyncio.sleep(0.25)
+        shared_click_evs = [e for e in demo_events if e.get("event_type") == "partner_match_shared"]
+        assert len(shared_click_evs) >= 1, f"Expected partner_match_shared telemetry event after clicking #btn-share-partner-match, got {[e.get('event_type') for e in demo_events]}"
+
         await page_mob.close()
-        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill & $17 Impulse Tier verified!")
+        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill, $17 Impulse Tier & ?d1=19&d2=23 Viral Partner Share verified!")
 
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")

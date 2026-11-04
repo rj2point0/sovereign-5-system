@@ -143,6 +143,16 @@ async def verify_live_pages():
         vsl_live = await page_clean.is_visible("#vsl-video")
         assert vsl_live is True, "Live VSL video player should be visible on Teaser deep-link!"
         print("Cross-browser email Teaser deep-link and VSL video verified on live site!")
+
+        # Test 6: Viral Partner Share deep-link (/?d1=19&d2=23) and #btn-share-partner-match on live site
+        await page_clean.goto(f"{base_url}?d1=19&d2=23&utm_source=partner_share")
+        await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
+        assert await page_clean.is_visible("#partner-compat-result") is True
+        assert await page_clean.is_visible("#flip-chase-preview-bubble") is True
+        assert await page_clean.is_visible("#btn-share-partner-match") is True
+        live_compat_txt = await page_clean.locator("#partner-compat-result").inner_text()
+        assert "BIRTH DAY 19 × PARTNER DAY 23" in live_compat_txt.upper()
+        print("Live ?d1=19&d2=23 Viral Partner Share deep-link & #btn-share-partner-match verified on live site!")
         await ctx_clean.close()
 
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")

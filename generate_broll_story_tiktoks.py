@@ -925,31 +925,35 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
     },
     {
         "id": "short_21",
-        "cohort": "Cohort C · Outlier Batch 5",
+        "cohort": "Cohort C · Outlier Batch 5 (7.5s Visual Demo)",
         "format_type": "cohort_c_short",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_21_november_love_shift.mp4",
         "grid_headline": "YOUR NOVEMBER\nLOVE SHIFT",
         "grid_sub": "NEXT 30 DAYS",
         "hook_box_text": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? Your November love shift:",
-        "hook_end_sec": 4.2,
-        "cta_tail_sec": 3.4,
+        "hook_end_sec": 2.9,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
         "tail_hold_sec": 0.25,
-        "target_voice_sec": 13.6,
+        "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
-        "rate": "+12%",
+        "rate": "+25%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
         "spoken_script": (
-            "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th, 18th, 19th, 22nd, 25th, 26th, 27th, 28th, or 31st? "
-            "The last three months felt so heavy in love. "
-            "But your 52-day timing cycle shifts this week. Therefore, a big choice in love is about to land in your lap. "
-            "Tap the link in bio to see your next 30 days."
+            "Born on the 1st, 4th, 7th, 8th, 9th, 19th, or 25th? "
+            "The last three months felt heavy in love, "
+            "but your November love shift starts this week. "
+            "Test both birthdays in bio."
         ),
         "broll_clips": [
-            (0.0, 4.2, "broll_11_dusk_river_silhouette.mp4"),
-            (4.2, 8.0, "broll_15_sunset_ocean_waves.mp4"),
+            (0.0, 2.3, "broll_11_dusk_river_silhouette.mp4"),
+            (2.3, 4.6, "broll_15_sunset_ocean_waves.mp4"),
         ],
         "product_scenes": [
-            ("image", "scenes_cache/scene_anchors.png", 2.8),
+            ("image", "scenes_cache/scene_anchors.png", 1.5),
             ("image", "scenes_cache/scene_relationships.png", 99.0),
         ],
         "tiktok_caption": (
@@ -957,7 +961,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Why the last 3 months felt heavy in love—and how your 52-day timing cycle shifts this week 🌙✨ "
             "#november #relationships #lovetiming #numerology #datingadvice #spiritualtiktok #lovecode #52daycycle"
         ),
-        "first_comment": "Born on 1, 4, 7, 8, 9, 10, 13, 16, 17, 18, 19, 22, 25, 26, 27, 28, or 31—did the last 3 months feel heavy in love? 👇",
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
         "hashtags": [
             "#november", "#relationships", "#lovetiming", "#numerology",
             "#datingadvice", "#spiritualtiktok", "#lovecode", "#52daycycle"

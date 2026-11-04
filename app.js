@@ -827,6 +827,13 @@ const CONFIG = {
 
     const pInfo = (isEs ? REL_ATTACHMENT_MAP_ES : REL_ATTACHMENT_MAP_EN)[pMoolank] || REL_ATTACHMENT_MAP_EN[7];
     const frictionLevel = sharedMissing.length >= 3 ? (isEs ? 'ALTA (Puntos Ciegos Compartidos)' : 'HIGH (Shared Blindspots)') : (isEs ? 'MODERADA-ALTA (Choque de Ritmos)' : 'MODERATE-HIGH (Pacing Clash)');
+    const matchLabel = magnetismScore >= 93
+      ? (isEs ? 'Vínculo de Alma Gemela' : 'Soulmate Lock')
+      : magnetismScore >= 89
+        ? (isEs ? 'Chispa Gemela' : 'Twin-Spark Lock')
+        : magnetismScore >= 86
+          ? (isEs ? 'Imán de Atracción' : 'Push-Pull Magnet')
+          : (isEs ? 'Fuego Kármico' : 'Karmic Fire');
 
     return {
       pIso,
@@ -837,6 +844,7 @@ const CONFIG = {
       uLife,
       uRuler,
       magnetismScore,
+      matchLabel,
       frictionLevel,
       sharedMissingCount: sharedMissing.length,
       bridgedCount: bridgedNums.length,
@@ -1361,6 +1369,52 @@ const CONFIG = {
     const resBox = $('#partner-compat-result');
     if (resBox) {
       resBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function sharePartnerMatch(btnEl) {
+    const d1 = parseInt((btnEl && btnEl.dataset && btnEl.dataset.d1) || '', 10) || ((state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || 19);
+    const d2 = parseInt((btnEl && btnEl.dataset && btnEl.dataset.d2) || '', 10) || parseInt(($('#partnerDobDay') && $('#partnerDobDay').value) || '23', 10) || 23;
+    const score = parseInt((btnEl && btnEl.dataset && btnEl.dataset.score) || '', 10) || 96;
+    const label = (btnEl && btnEl.dataset && btnEl.dataset.label) || 'Soulmate Lock';
+    const isEs = state.lang === 'es';
+    const shareUrl = `https://blueprint.megavegaventures.com/?d1=${d1}&d2=${d2}&utm_source=partner_share`;
+    const shareText = isEs
+      ? `Nuestros cumpleaños (Día ${d1} × Día ${d2}) obtuvieron un ${score}% de compatibilidad (${label}) 👀 Mira lo que dice de nosotros: ${shareUrl}`
+      : `Our birthdays (Day ${d1} × Day ${d2}) got a ${score}% ${label} match 👀 Look at what it says about us: ${shareUrl}`;
+
+    sendWebhook('partner_match_shared', {
+      d1,
+      d2,
+      score,
+      label,
+      share_url: shareUrl,
+    });
+
+    const copyFallback = () => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(shareText).catch(() => {});
+        }
+      } catch (e) { /* ignore */ }
+      toast(
+        isEs
+          ? '✅ ¡Enlace copiado! Pégalo en iMessage, WhatsApp o DM'
+          : '✅ Match Link Copied! Paste in iMessage/DM',
+        4500
+      );
+    };
+
+    if (navigator.share && !navigator.webdriver) {
+      navigator.share({
+        title: `Day ${d1} × Day ${d2} (${score}% ${label})`,
+        text: shareText,
+        url: shareUrl,
+      }).catch(() => {
+        copyFallback();
+      });
+    } else {
+      copyFallback();
     }
   }
 
@@ -2609,6 +2663,9 @@ const CONFIG = {
     else if (a === 'demo-unlock') demoUnlock();
     else if (a === 'print') window.print();
     else if (a === 'share-code') shareCode();
+    else if (a === 'share-partner-match') {
+      sharePartnerMatch(t);
+    }
     else if (a === 'scroll-checkout') $('#checkout').scrollIntoView({ behavior: 'smooth', block: 'start' });
     else if (a === 'partner-checkout') {
       const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
@@ -2777,7 +2834,7 @@ const CONFIG = {
         <div class="card-soft p-3.5 border border-gold/40">
           <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Química y Magnetismo' : 'Chemistry & Magnetism'}</div>
           <div class="font-display text-2xl sm:text-3xl text-gold mt-1">${rep.magnetismScore}%</div>
-          <div class="text-[0.65rem] text-emerald-300 mt-0.5">${isEs ? 'Atracción Inmediata' : 'High Initial Pull'}</div>
+          <div class="text-[0.65rem] text-emerald-300 mt-0.5">${rep.matchLabel || (isEs ? 'Atracción Inmediata' : 'High Initial Pull')}</div>
         </div>
         <div class="card-soft p-3.5 border border-white/10">
           <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Conductor Natal de Tu Pareja' : 'Their Birth-Day Driver'}</div>
@@ -2790,7 +2847,14 @@ const CONFIG = {
           <div class="text-[0.65rem] text-zinc-300 mt-0.5">${rep.sharedMissingCount} ${isEs ? 'Vacíos Lo Shu Compartidos' : 'Shared Lo Shu Blindspots'}</div>
         </div>
       </div>
-      <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-4">${rep.summary}</p>
+      <div class="mt-3 flex justify-center">
+        <button type="button" id="btn-share-partner-match" data-action="share-partner-match" data-d1="${userBirthDay}" data-d2="${partnerBirthDay}" data-score="${rep.magnetismScore}" data-label="${esc(rep.matchLabel || 'Soulmate Lock')}" class="btn-ghost !py-2 !px-4 w-full sm:w-auto text-xs font-bold text-gold border-gold/50 hover:border-gold bg-gold/10 rounded-xl transition-all">
+          📲 ${isEs
+            ? `Enviar Este ${rep.magnetismScore}% de Compatibilidad (Día ${userBirthDay} × Día ${partnerBirthDay}) a Tu Pareja / Amiga`
+            : `Send This ${rep.magnetismScore}% Match To Them / A Friend`}
+        </button>
+      </div>
+      <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-3.5">${rep.summary}</p>
 
       <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->
       <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-4 text-left">
@@ -3113,6 +3177,16 @@ const CONFIG = {
 
     if (urlTier === 'base' && store.get(KEYS.pending) === 'full') urlTier = 'full';
     if (urlTier) store.del(KEYS.pending);
+
+    // Viral Partner Share Deep-Link (?d1=19&d2=23): Auto-load Day d1 × Day d2 Compatibility % Score + iMessage preview
+    const qD1 = parseInt(q.get('d1') || '', 10);
+    const qD2 = parseInt(q.get('d2') || '', 10);
+    if (qD1 >= 1 && qD1 <= 31 && qD2 >= 1 && qD2 <= 31) {
+      runQuickDayPreview(qD1);
+      runPartnerQuickDayCheck(qD2);
+      sendWebhook('shared_match_opened', { d1: qD1, d2: qD2 });
+      return;
+    }
 
     let prof = store.get(KEYS.profile);
     // Optional deep-link prefill & cross-browser session restore: ?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=...
