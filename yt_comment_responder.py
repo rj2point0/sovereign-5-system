@@ -37,7 +37,7 @@ if sys.platform == "win32":
         pass
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-YT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\yt_browser_profile"
+YT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\yt_chrome_cdp_userdata"
 YT_CHANNEL_ID = "UCBIWSA7ZBuBEP_9rj3uSfqA"
 YT_STUDIO_COMMENTS_URL = f"https://studio.youtube.com/channel/{YT_CHANNEL_ID}/comments/inbox"
 DEDUP_PATH = os.path.join(BASE_DIR, "replied_yt_comments.json")
@@ -80,7 +80,7 @@ async def run_yt_responder(live: bool = False, limit: int = 10):
             headless=False,
             viewport={"width": 1366, "height": 900},
             ignore_default_args=["--enable-automation"],
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--profile-directory=Profile 6"],
         )
         page = ctx.pages[0] if ctx.pages else await ctx.new_page()
         try:

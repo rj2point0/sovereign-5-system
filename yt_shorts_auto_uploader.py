@@ -586,7 +586,7 @@ async def ensure_yt_studio_logged_in(page: Page) -> bool:
             print(f"  [YT Auth] Bridge port 8766 notice: {e}", flush=True)
 
         try:
-            for sec in range(600):
+            for sec in range(7200):
                 try:
                     latest_png = await page.screenshot(type="png")
                 except Exception:
@@ -597,7 +597,7 @@ async def ensure_yt_studio_logged_in(page: Page) -> bool:
                     print(f"  ✓ [YT Auth] Authenticated in YouTube Studio after {sec+1}s: {cur_url}", flush=True)
                     await asyncio.sleep(4.0)
                     return True
-                if sec % 15 == 0 and sec > 0:
+                if sec % 30 == 0 and sec > 0:
                     print(f"    ... waiting for imcodingdad@gmail.com at http://localhost:8766 ({sec}s elapsed) ...", flush=True)
         finally:
             if server:
