@@ -1,0 +1,108 @@
+{
+  "updated_at": "2026-11-04T13:06:11.156668",
+  "tiktok": {
+    "deleted_scheduled": [
+      {
+        "vid": "7703601254852824333",
+        "reason": "scheduled_dup_short_22_already_live_157v",
+        "status": "deleted"
+      },
+      {
+        "vid": "7703601237857455374",
+        "reason": "scheduled_dup_short_23",
+        "status": "not_found"
+      },
+      {
+        "vid": "7703601405159869710",
+        "reason": "scheduled_dup_short_24",
+        "status": "not_found"
+      },
+      {
+        "vid": "7703630452141067534",
+        "reason": "replace_old_whitebox_short_26_with_format_A",
+        "status": "not_found"
+      },
+      {
+        "vid": "7703630711911206157",
+        "reason": "replace_old_silhouette_short_27_with_format_B",
+        "status": "not_found"
+      },
+      {
+        "vid": "7704068719772699917",
+        "reason": "replace_old_whitebox_short_29_with_format_C",
+        "status": "not_found"
+      },
+      {
+        "vid": "7704068831345413390",
+        "reason": "replace_old_dark_short_30_with_format_A",
+        "status": "not_found"
+      }
+    ],
+    "set_private": [
+      {
+        "vid": "7704122197744291085",
+        "reason": "duplicate_short_21_12v_vs_36v",
+        "status": "already_private"
+      },
+      {
+        "vid": "7703341818120768781",
+        "reason": "duplicate_short_20_94v_vs_106v",
+        "status": "already_private"
+      },
+      {
+        "vid": "7703341562952043789",
+        "reason": "duplicate_short_19_33v_vs_72v",
+        "status": "private"
+      },
+      {
+        "vid": "7703623597469748493",
+        "reason": "duplicate_short_17_96v_vs_104v",
+        "status": "private"
+      },
+      {
+        "vid": "7702469276480916749",
+        "reason": "duplicate_short_15_0v_vs_95v",
+        "status": "private"
+      },
+      {
+        "vid": "7702844869877828877",
+        "reason": "zero_views_short_18_bare_minimum",
+        "status": "private"
+      },
+      {
+        "vid": "7702844640541641997",
+        "reason": "zero_views_short_16_begging_for_crumbs",
+        "status": "private"
+      }
+    ]
+  },
+  "instagram": {
+    "deleted_reels": [
+      {
+        "shortcode": "DfN3scQOV9B",
+        "reason": "duplicate_short_21_old_14s_vs_DfTR1XxublV_122v",
+        "status": "deleted"
+      },
+      {
+        "shortcode": "DfP3rbpu_81",
+        "reason": "duplicate_lakeside_silhouette_short_27_7v",
+        "status": "deleted"
+      },
+      {
+        "shortcode": "DfP3jR_OPp6",
+        "reason": "replace_old_whitebox_short_26_with_format_A",
+        "status": "deleted"
+      },
+      {
+        "shortcode": "DfS6QdAuGPY",
+        "reason": "replace_old_whitebox_short_29_with_format_C",
+        "status": "deleted"
+      },
+      {
+        "shortcode": "DfS6YOPO8hJ",
+        "reason": "replace_old_dark_short_30_with_format_A",
+        "status": "deleted"
+      }
+    ]
+  }
+}

@@ -1141,6 +1141,12 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_26",
         "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
         "format_type": "cohort_c_short",
+        "visual_format": "imessage_thread",
+        "imessage_theme": "blue_crimson",
+        "imessage_incoming": "I just need some space to figure my head out right now...",
+        "imessage_outgoing": "Did I do something wrong? Why did you go completely quiet?",
+        "imessage_status": "Delivered · Read 1:14 AM",
+        "imessage_days_pill": "BORN 2nd · 6th · 7th · 11th · 15th · 16th · 20th · 24th · 25th",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_26_7sec_no_contact_thoughts.mp4",
         "grid_headline": "DO THEY MISS YOU\nIN NO CONTACT?",
@@ -1162,8 +1168,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So check their exact text script in our bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_01_window_reflection.mp4"),
-            (2.3, 4.6, "broll_14_city_night_walk.mp4"),
+            (0.0, 2.3, "broll_06_laptop_focus.mp4"),
+            (2.3, 4.6, "broll_04_stressed_temples.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1174,7 +1180,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "(check their exact Flip The Chase text script in our bio) 📱💔 "
             "#nocontact #relationships #textingadvice #avoidantattachment #numerology #datingadvice #lovecode #birthdaycompatibility"
         ),
-        "first_comment": "Was your person born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th—and are you in no contact right now? 👇",
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
         "hashtags": [
             "#nocontact", "#relationships", "#textingadvice", "#avoidantattachment",
             "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
@@ -1184,6 +1190,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_27",
         "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
         "format_type": "cohort_c_short",
+        "visual_format": "birthday_matrix",
+        "matrix_days": [3, 4, 8, 9, 12, 13, 17, 18, 21, 22, 26, 27, 30, 31],
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_27_7sec_november_turning_point.mp4",
         "grid_headline": "3 LOVE DATES\nTO WATCH NEXT",
@@ -1205,8 +1213,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So tap our bio to see your dates."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_11_dusk_river_silhouette.mp4"),
-            (2.3, 4.6, "broll_15_sunset_ocean_waves.mp4"),
+            (0.0, 2.3, "broll_15_sunset_ocean_waves.mp4"),
+            (2.3, 4.6, "broll_08_phone_discovery.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_anchors.png", 1.5),
@@ -1270,6 +1278,9 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_29",
         "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
         "format_type": "cohort_c_short",
+        "visual_format": "editorial_broll",
+        "editorial_badge": "SILENT TREATMENT DECODER · DAYS 1–31",
+        "editorial_days_pill": "BORN 4th · 7th · 8th · 13th · 16th · 17th · 22nd · 25th · 26th · 31st",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_29_7sec_silent_treatment_days.mp4",
         "grid_headline": "BIRTH DAYS THAT\nGO SILENT",
@@ -1291,8 +1302,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So get their exact text script in our bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_18_hands_texting_phone.mp4"),
-            (2.3, 4.6, "broll_14_city_night_walk.mp4"),
+            (0.0, 2.3, "broll_12_beach_shore_brooding.mp4"),
+            (2.3, 4.6, "broll_07_journaling_ritual.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1313,6 +1324,12 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_30",
         "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
         "format_type": "cohort_c_short",
+        "visual_format": "imessage_thread",
+        "imessage_theme": "gold_emerald",
+        "imessage_incoming": "We either feel like 100% soulmates or we trigger each other...",
+        "imessage_outgoing": "Are our birthdays endgame or just a 3-month lesson?",
+        "imessage_status": "Delivered · Read 2:08 AM",
+        "imessage_days_pill": "DAY 19 × DAY 23  •  96% TWIN-SPARK LOCK",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_30_7sec_endgame_birthdays.mp4",
         "grid_headline": "ARE YOUR BIRTHDAYS\nENDGAME?",
@@ -1333,8 +1350,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Comment both birth days below or test your match free at the link in bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_10_couple_sunset_embrace.mp4"),
-            (2.3, 4.6, "broll_17_candle_dark_glow.mp4"),
+            (0.0, 2.3, "broll_02_late_night_phone.mp4"),
+            (2.3, 4.6, "broll_10_couple_sunset_embrace.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1850,6 +1867,223 @@ class BrollStoryGenerator:
         )
         return frame
 
+    def draw_format_a_imessage_thread(self, frame: Image.Image, spec: Dict[str, Any]) -> Image.Image:
+        """
+        Format A — Native Dark-Mode iMessage Story ('imessage_thread'):
+        Frame 0 (and 0.0s..hook_end_sec) opens on a crisp, high-contrast iMessage thread
+        ('Delivered · Read 1:14 AM' + emotional text exchange + bold neon-gold/crimson header pill)
+        that looks like a real phone screenshot, with mean_luma >= 55.
+        """
+        theme = spec.get("imessage_theme", "blue_crimson")
+        # Bright frosted-slate iOS dark mode background so mean_luma >= 60
+        frame = ImageEnhance.Brightness(frame).enhance(0.55)
+        overlay = Image.new("RGBA", (1080, 1920), (22, 26, 38, 215) if theme == "blue_crimson" else (28, 24, 34, 215))
+        frame = Image.alpha_composite(frame.convert("RGBA"), overlay).convert("RGB")
+        draw = ImageDraw.Draw(frame)
+
+        f_hdr = ImageFont.truetype(FONT_BOLD, 62)
+        f_sub = ImageFont.truetype(FONT_BOLD, 32)
+        f_contact = ImageFont.truetype(FONT_BOLD, 28)
+        f_msg = ImageFont.truetype(FONT_BOLD, 34)
+        f_stat = ImageFont.truetype(FONT_BOLD, 25)
+        f_pill = ImageFont.truetype(FONT_BOLD, 27)
+
+        # 1. Top Bold Header Pill (Crimson or Royal Gold)
+        hdr_bg = (165, 24, 48) if theme == "blue_crimson" else (180, 125, 20)
+        hdr_border = (255, 209, 71) if theme == "blue_crimson" else (110, 245, 165)
+        draw.rounded_rectangle([46, 115, 1034, 355], radius=28, fill=hdr_bg, outline=hdr_border, width=4)
+        h_lines = [ln.strip() for ln in (spec.get("grid_headline") or "DO THEY MISS YOU?").split("\n") if ln.strip()]
+        cy_h = 185 if len(h_lines) > 1 else 210
+        for ln in h_lines:
+            draw.text((540, cy_h), ln, fill=(255, 255, 255), font=f_hdr, anchor="mm")
+            cy_h += 72
+        if spec.get("grid_sub"):
+            draw.rounded_rectangle([260, 298, 820, 344], radius=16, fill=(18, 18, 26))
+            draw.text((540, 321), spec["grid_sub"], fill=(255, 215, 90), font=f_sub, anchor="mm")
+
+        # 2. Phone Screen Container (y=380..1195)
+        draw.rounded_rectangle([46, 380, 1034, 1195], radius=34, fill=(32, 36, 48), outline=(95, 110, 140), width=3)
+        # iOS Contact Header Bar
+        draw.rounded_rectangle([50, 384, 1030, 480], radius=30, fill=(44, 50, 66))
+        draw.ellipse([498, 392, 582, 444], fill=(212, 175, 55))
+        draw.text((540, 418), "19×23", fill=(16, 16, 22), font=f_stat, anchor="mm")
+        draw.text((540, 462), "iMessage · Today 1:14 AM", fill=(210, 220, 238), font=f_contact, anchor="mm")
+
+        # Incoming Gray Bubble (left-aligned)
+        inc_txt = spec.get("imessage_incoming", "I just need some space to figure my head out right now...")
+        inc_lines = textwrap.wrap(inc_txt, width=35)
+        draw.rounded_rectangle([82, 505, 865, 675], radius=26, fill=(64, 70, 88), outline=(110, 120, 145), width=2)
+        iy = 552
+        for ln in inc_lines[:2]:
+            draw.text((115, iy), ln, fill=(250, 252, 255), font=f_msg, anchor="lm")
+            iy += 48
+
+        # Outgoing Blue Bubble (right-aligned)
+        out_txt = spec.get("imessage_outgoing", "Did I do something wrong? Why did you go completely quiet?")
+        out_lines = textwrap.wrap(out_txt, width=35)
+        bubble_col = (14, 118, 254) if theme == "blue_crimson" else (22, 138, 98)
+        draw.rounded_rectangle([205, 705, 998, 880], radius=26, fill=bubble_col, outline=(145, 205, 255), width=2)
+        oy = 752
+        for ln in out_lines[:2]:
+            draw.text((238, oy), ln, fill=(255, 255, 255), font=f_msg, anchor="lm")
+            oy += 48
+
+        # Delivered · Read status
+        stat_txt = spec.get("imessage_status", "Delivered · Read 1:14 AM")
+        draw.text((985, 912), stat_txt, fill=(255, 125, 145), font=f_stat, anchor="rm")
+
+        # Bottom Highlighted Birth-Day Callout Card inside iMessage Window
+        days_pill = spec.get("imessage_days_pill", "BORN 2nd · 6th · 7th · 11th · 15th · 16th · 20th · 24th · 25th")
+        draw.rounded_rectangle([78, 955, 1002, 1165], radius=24, fill=(22, 25, 34), outline=(255, 209, 71), width=3)
+        draw.text((540, 1012), "TARGET BIRTH DAYS IN THIS READING:", fill=(255, 209, 71), font=f_stat, anchor="mm")
+        draw.rounded_rectangle([104, 1052, 976, 1138], radius=18, fill=(245, 238, 215))
+        draw.text((540, 1095), days_pill, fill=(20, 18, 28), font=f_pill, anchor="mm")
+        return frame
+
+    def draw_format_b_birthday_matrix(self, frame: Image.Image, spec: Dict[str, Any]) -> Image.Image:
+        """
+        Format B — Interactive Birth-Day Matrix Spotlight ('birthday_matrix'):
+        Frame 0 (and 0.0s..hook_end_sec) opens on a luxury dark-velvet & gold 1–31 Birth-Day
+        Calendar Grid with the hook's target birth days glowing in emerald/crimson (mean_luma >= 55).
+        """
+        frame = ImageEnhance.Brightness(frame).enhance(0.60)
+        overlay = Image.new("RGBA", (1080, 1920), (34, 24, 48, 210))
+        frame = Image.alpha_composite(frame.convert("RGBA"), overlay).convert("RGB")
+        draw = ImageDraw.Draw(frame)
+
+        f_hdr = ImageFont.truetype(FONT_BOLD, 64)
+        f_sub = ImageFont.truetype(FONT_BOLD, 30)
+        f_day = ImageFont.truetype(FONT_BOLD, 36)
+        f_foot = ImageFont.truetype(FONT_BOLD, 27)
+
+        # 1. Luxury Gold/Emerald Header Card (y=115..355)
+        draw.rounded_rectangle([46, 115, 1034, 355], radius=28, fill=(28, 56, 48), outline=(212, 175, 55), width=4)
+        h_lines = [ln.strip() for ln in (spec.get("grid_headline") or "3 LOVE DATES\nTO WATCH NEXT").split("\n") if ln.strip()]
+        cy_h = 182 if len(h_lines) > 1 else 210
+        for ln in h_lines:
+            draw.text((540, cy_h), ln, fill=(255, 248, 225), font=f_hdr, anchor="mm")
+            cy_h += 72
+        draw.rounded_rectangle([230, 295, 850, 342], radius=16, fill=(212, 175, 55))
+        draw.text((540, 319), spec.get("grid_sub", "YOUR 90-DAY LOVE CALENDAR"), fill=(18, 15, 10), font=f_sub, anchor="mm")
+
+        # 2. 1–31 Birth-Day Calendar Matrix Card (y=380..1195)
+        draw.rounded_rectangle([46, 380, 1034, 1195], radius=32, fill=(42, 36, 58), outline=(212, 175, 55), width=3)
+        draw.text((540, 428), "SPOTLIGHT BIRTH DAYS (1–31) · FIND YOUR NUMBER:", fill=(255, 220, 115), font=f_sub, anchor="mm")
+
+        target_days = set(spec.get("matrix_days", [3, 4, 8, 9, 12, 13, 17, 18, 21, 22, 26, 27, 30, 31]))
+        cols = 7
+        tile_w, tile_h = 116, 108
+        gap_x, gap_y = 16, 18
+        grid_w = cols * tile_w + (cols - 1) * gap_x
+        start_x = (1080 - grid_w) // 2
+        start_y = 472
+
+        for day_num in range(1, 32):
+            idx = day_num - 1
+            r = idx // cols
+            c = idx % cols
+            x0 = start_x + c * (tile_w + gap_x)
+            y0 = start_y + r * (tile_h + gap_y)
+            x1 = x0 + tile_w
+            y1 = y0 + tile_h
+            is_hit = day_num in target_days
+            if is_hit:
+                # Alternate Emerald and Crimson-Gold spotlight tiles
+                fill_c = (18, 155, 105) if (day_num % 2 == 1) else (215, 65, 90)
+                out_c = (255, 235, 140)
+                txt_c = (255, 255, 255)
+            else:
+                fill_c = (72, 66, 92)
+                out_c = (120, 112, 145)
+                txt_c = (215, 210, 230)
+            draw.rounded_rectangle([x0, y0, x1, y1], radius=18, fill=fill_c, outline=out_c, width=3 if is_hit else 2)
+            draw.text(((x0 + x1) // 2, (y0 + y1) // 2), str(day_num), fill=txt_c, font=f_day, anchor="mm")
+
+        # Footer callout inside Matrix card
+        draw.rounded_rectangle([78, 1102, 1002, 1172], radius=18, fill=(245, 238, 218))
+        draw.text((540, 1137), "• Glowing Birth Days Enter a Major 14-Day Love Shift This Week", fill=(24, 18, 32), font=f_foot, anchor="mm")
+        return frame
+
+    def draw_format_c_editorial_broll(self, frame: Image.Image, spec: Dict[str, Any]) -> Image.Image:
+        """
+        Format C — Editorial Magazine Typography over Bright, Unique B-Roll ('editorial_broll'):
+        Uses a bright, never-before-used lifestyle clip (mean_luma >= 90) with full-width editorial
+        typography (icy-blue/crimson/gold accents — zero white rectangle box!).
+        """
+        draw = ImageDraw.Draw(frame)
+        f_badge = ImageFont.truetype(FONT_BOLD, 28)
+        f_hdr = ImageFont.truetype(FONT_BOLD, 74)
+        f_sub = ImageFont.truetype(FONT_BOLD, 34)
+        f_ribbon = ImageFont.truetype(FONT_BOLD, 26)
+
+        # Top Icy-Blue / Obsidian Pill Badge (y=135..198)
+        badge_txt = spec.get("editorial_badge", "SILENT TREATMENT DECODER · DAYS 1–31")
+        draw.rounded_rectangle([120, 135, 960, 198], radius=30, fill=(14, 24, 38), outline=(56, 189, 248), width=3)
+        draw.text((540, 166), badge_txt, fill=(125, 211, 252), font=f_badge, anchor="mm")
+
+        # Full-Width Stacked Magazine Headline with heavy stroke & dual-tone colors (y=245..395)
+        h_lines = [ln.strip() for ln in (spec.get("grid_headline") or "BIRTH DAYS THAT\nGO SILENT").split("\n") if ln.strip()]
+        line_colors = [(255, 255, 255), (255, 209, 71), (255, 92, 138)]
+        cy = 255
+        for idx, ln in enumerate(h_lines):
+            col = line_colors[idx % len(line_colors)]
+            draw.text((544, cy + 5), ln, fill=(0, 0, 0), font=f_hdr, anchor="mm", stroke_width=10, stroke_fill=(0, 0, 0))
+            draw.text((540, cy), ln, fill=col, font=f_hdr, anchor="mm", stroke_width=7, stroke_fill=(12, 14, 22))
+            cy += 88
+
+        # Crimson Editorial Subtitle Pill
+        if spec.get("grid_sub"):
+            draw.rounded_rectangle([270, cy - 22, 810, cy + 36], radius=18, fill=(175, 24, 52), outline=(255, 215, 110), width=3)
+            draw.text((540, cy + 7), spec["grid_sub"], fill=(255, 255, 255), font=f_sub, anchor="mm")
+            cy += 78
+
+        # Bottom Target Birth-Days Ribbon
+        days_rib = spec.get("editorial_days_pill", "BORN 4th · 7th · 8th · 13th · 16th · 17th · 22nd · 25th · 26th · 31st")
+        draw.rounded_rectangle([54, cy - 10, 1026, cy + 54], radius=18, fill=(16, 18, 28), outline=(255, 209, 71), width=2)
+        draw.text((540, cy + 22), days_rib, fill=(255, 238, 180), font=f_ribbon, anchor="mm")
+        return frame
+
+    def verify_and_record_broll_registry(self, spec: Dict[str, Any]):
+        """Enforces Strict Zero-Reuse B-Roll Registry (used_broll_registry.json) + Brightness Gate (mean_luma >= 55)."""
+        reg_path = os.path.join(BASE_DIR, "used_broll_registry.json")
+        reg = {"history": []}
+        if os.path.exists(reg_path):
+            try:
+                reg = json.load(open(reg_path, encoding="utf-8"))
+            except Exception:
+                reg = {"history": []}
+
+        primary_clip = spec["broll_clips"][0][2]
+        clip_path = os.path.join(BROLL_DIR, primary_clip)
+        cap = cv2.VideoCapture(clip_path)
+        ret, bgr = cap.read()
+        cap.release()
+        mean_luma = float(np.mean(bgr)) if ret else 0.0
+        if mean_luma < 55.0:
+            raise ValueError(f"[{spec['id']}] Brightness Gate FAILED on {primary_clip}: mean_luma={mean_luma:.1f} < 55.0")
+
+        # Check last 15 videos in history (excluding current spec['id'])
+        recent = [h for h in reg.get("history", []) if h.get("id") != spec["id"]][-15:]
+        recent_clips = {h.get("primary_clip") for h in recent}
+        if primary_clip in recent_clips:
+            raise ValueError(f"[{spec['id']}] Zero-Reuse Gate FAILED: {primary_clip} was already used in recent videos {recent_clips}")
+
+        reg["history"] = [h for h in reg.get("history", []) if h.get("id") != spec["id"]] + [
+            {
+                "id": spec["id"],
+                "visual_format": spec.get("visual_format", "legacy"),
+                "primary_clip": primary_clip,
+                "mean_luma": round(mean_luma, 1),
+                "updated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            }
+        ]
+        with open(reg_path, "w", encoding="utf-8") as f:
+            json.dump(reg, f, indent=2)
+        print(
+            f"   ✓ [Anti-Slop B-Roll Gate PASSED] [{spec['id']}] format={spec.get('visual_format', 'legacy')} | clip={primary_clip} | luma={mean_luma:.1f} (>=55)",
+            flush=True,
+        )
+
     def render_video(
         self,
         spec: Dict[str, Any],
@@ -1866,9 +2100,11 @@ class BrollStoryGenerator:
         broll_cutoff = float(spec.get("broll_cutoff", 7.5 if is_short else 15.0))
 
         print(
-            f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames, format={spec.get('format_type')})...",
+            f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames, format={spec.get('format_type')}, visual_format={spec.get('visual_format', 'legacy')})...",
             flush=True,
         )
+        if spec.get("visual_format"):
+            self.verify_and_record_broll_registry(spec)
 
         # Preload human B-roll readers
         broll_readers = {}
@@ -1969,14 +2205,25 @@ class BrollStoryGenerator:
 
             draw = ImageDraw.Draw(frame)
 
-            # 2. Native TikTok White Rounded-Rectangle Hook Box (0.0s - hook_end_sec)
+            # 2. Visual Format Hook (0.0s - hook_end_sec): 3 Distinct Cover & Hook Formats
+            v_fmt = spec.get("visual_format", "legacy")
             if t <= hook_end_sec:
-                self.draw_native_tiktok_hook_box(
-                    draw,
-                    spec["hook_box_text"],
-                    grid_headline=spec.get("grid_headline"),
-                    grid_sub=spec.get("grid_sub"),
-                )
+                if v_fmt == "imessage_thread":
+                    frame = self.draw_format_a_imessage_thread(frame, spec)
+                    draw = ImageDraw.Draw(frame)
+                elif v_fmt == "birthday_matrix":
+                    frame = self.draw_format_b_birthday_matrix(frame, spec)
+                    draw = ImageDraw.Draw(frame)
+                elif v_fmt == "editorial_broll":
+                    frame = self.draw_format_c_editorial_broll(frame, spec)
+                    draw = ImageDraw.Draw(frame)
+                else:
+                    self.draw_native_tiktok_hook_box(
+                        draw,
+                        spec["hook_box_text"],
+                        grid_headline=spec.get("grid_headline"),
+                        grid_sub=spec.get("grid_sub"),
+                    )
 
             # 3. Center 3-Word CapCut-Style Captions Throughout
             active_cue_text = None
@@ -1991,6 +2238,12 @@ class BrollStoryGenerator:
             # 4. Closing Call-to-Action Pill
             if t >= (total_dur - cta_tail_sec):
                 self.draw_final_5s_cta_pill(draw)
+
+            if f_idx == 0:
+                f0_path = os.path.join(BASE_DIR, f"frame0_{spec['id']}.png")
+                frame.save(f0_path, format="PNG")
+                f0_luma = float(np.mean(np.array(frame)))
+                print(f"   ✓ Saved Frame-0 cover: {f0_path} (mean_luma={f0_luma:.1f})", flush=True)
 
             buf = io.BytesIO()
             frame.save(buf, format="JPEG", quality=92)
@@ -2112,8 +2365,11 @@ class BrollStoryGenerator:
                 if os.path.exists(tmp):
                     os.remove(tmp)
 
-            # Copy to root, Google Drive tiktok_queue, and Artifacts
+            # Copy to root, tiktok_videos, Google Drive tiktok_queue, and Artifacts
             shutil.copy2(out_mp4, os.path.join(BASE_DIR, fname))
+            tt_vids_dir = os.path.join(BASE_DIR, "tiktok_videos")
+            if os.path.exists(tt_vids_dir):
+                shutil.copy2(out_mp4, os.path.join(tt_vids_dir, fname))
             if os.path.exists(GDRIVE_QUEUE_DIR):
                 g_dst = os.path.join(GDRIVE_QUEUE_DIR, fname)
                 shutil.copy2(out_mp4, g_dst)

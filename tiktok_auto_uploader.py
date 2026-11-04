@@ -392,14 +392,73 @@ class TikTokAutoUploader:
 
         print(f"   [Studio] ✓ Schedule mode configured ({date_str} {time_str}).", flush=True)
 
+    async def verify_or_remove_existing_studio_post(
+        self, page: Page, caption_prefix: str, replace_scheduled: bool = False
+    ) -> bool:
+        """
+        Hard Deduplication Guard: checks TikTok Studio Content table before uploading.
+        Returns True if safe to proceed, or False if a duplicate already exists.
+        If `replace_scheduled=True`, deletes any Scheduled copy matching `caption_prefix` first.
+        """
+        prefix_clean = caption_prefix[:42].strip()
+        if not prefix_clean:
+            return True
+        try:
+            await page.goto("https://www.tiktok.com/tiktokstudio/content", wait_until="domcontentloaded", timeout=45000)
+            await asyncio.sleep(4.5)
+            body_txt = await page.inner_text("body")
+            if prefix_clean.lower() in body_txt.lower():
+                if not replace_scheduled:
+                    print(
+                        f"   [DEDUP GUARD] 🛑 Aborting upload: video matching '{prefix_clean}...' already exists in TikTok Studio Published/Scheduled!",
+                        flush=True,
+                    )
+                    return False
+                print(
+                    f"   [DEDUP GUARD] ♻ Replacing existing Scheduled entry matching '{prefix_clean}...' in TikTok Studio...",
+                    flush=True,
+                )
+                rows = page.locator('tr, [role="row"], div[class*="PostItem"], div[class*="row"]')
+                rcnt = await rows.count()
+                for i in range(rcnt):
+                    r = rows.nth(i)
+                    try:
+                        rtxt = await r.inner_text()
+                    except Exception:
+                        continue
+                    if prefix_clean.lower() in rtxt.lower() and "scheduled" in rtxt.lower():
+                        more_btn = r.locator('[aria-label*="More"], button:has(svg), [class*="more"]').last
+                        if await more_btn.count() > 0:
+                            await more_btn.click(force=True)
+                            await asyncio.sleep(0.8)
+                            del_opt = page.locator('li:has-text("Delete"), button:has-text("Delete"), span:text-is("Delete")').first
+                            if await del_opt.count() > 0 and await del_opt.is_visible():
+                                await del_opt.click(force=True)
+                                await asyncio.sleep(1.0)
+                                conf = page.locator('div[role="dialog"] button:has-text("Delete")').first
+                                if await conf.count() > 0 and await conf.is_visible():
+                                    await conf.click(force=True)
+                                    await asyncio.sleep(3.0)
+                                    print("   [DEDUP GUARD] ✓ Deleted old Scheduled copy from TikTok Studio.", flush=True)
+                                    break
+        except Exception as e:
+            print(f"   [DEDUP GUARD] Check notice: {e}", flush=True)
+        return True
+
     async def upload_single_video(
         self,
         page: Page,
         item: Dict[str, Any],
         mode: str,
-        schedule_dt: Optional[datetime] = None
+        schedule_dt: Optional[datetime] = None,
+        replace_scheduled: bool = False,
     ) -> bool:
         print(f"\n▶ [UPLOAD] Uploading {item['filename']} ({item['size_mb']} MB)...", flush=True)
+        safe = await self.verify_or_remove_existing_studio_post(
+            page, item.get("caption", ""), replace_scheduled=replace_scheduled
+        )
+        if not safe:
+            return False
         await page.goto(TIKTOK_UPLOAD_URL, wait_until="domcontentloaded", timeout=45000)
         await asyncio.sleep(4.0)
         await self.dismiss_joyride_overlays(page)
@@ -586,7 +645,9 @@ class TikTokAutoUploader:
             )
             page = context.pages[0] if context.pages else await context.new_page()
             for item in selected:
-                await self.upload_single_video(page, item, mode=mode, schedule_dt=schedule_dt)
+                await self.upload_single_video(
+                    page, item, mode=mode, schedule_dt=schedule_dt, replace_scheduled=force
+                )
             await context.close()
 
         print("=" * 72)

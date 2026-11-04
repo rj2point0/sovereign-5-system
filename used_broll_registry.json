@@ -1,0 +1,32 @@
+{
+  "history": [
+    {
+      "id": "short_26",
+      "visual_format": "imessage_thread",
+      "primary_clip": "broll_06_laptop_focus.mp4",
+      "mean_luma": 141.2,
+      "updated_at": "2026-11-04T12:55:01"
+    },
+    {
+      "id": "short_29",
+      "visual_format": "editorial_broll",
+      "primary_clip": "broll_12_beach_shore_brooding.mp4",
+      "mean_luma": 128.5,
+      "updated_at": "2026-11-04T12:55:38"
+    },
+    {
+      "id": "short_27",
+      "visual_format": "birthday_matrix",
+      "primary_clip": "broll_15_sunset_ocean_waves.mp4",
+      "mean_luma": 102.6,
+      "updated_at": "2026-11-04T12:57:19"
+    },
+    {
+      "id": "short_30",
+      "visual_format": "imessage_thread",
+      "primary_clip": "broll_02_late_night_phone.mp4",
+      "mean_luma": 88.0,
+      "updated_at": "2026-11-04T12:57:37"
+    }
+  ]
+}

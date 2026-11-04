@@ -33,9 +33,29 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_30",
+        "video_id": None,
+        "title_match": "Are your birthdays endgame—or just a 3-month karmic lesson?",
+    },
+    {
+        "id": "short_29",
+        "video_id": None,
+        "title_match": "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st?",
+    },
+    {
         "id": "short_28",
         "video_id": "7704068444592950541",
         "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? Why you always care more first",
+    },
+    {
+        "id": "short_27",
+        "video_id": None,
+        "title_match": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st?",
+    },
+    {
+        "id": "short_26",
+        "video_id": None,
+        "title_match": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean",
     },
     {
         "id": "short_25",
@@ -43,21 +63,41 @@ TIKTOK_TARGETS = [
         "title_match": "Born on the 1st, 5th, 10th, 14th, 19th, 23rd, or 28th? Intense chemistry can be a karmic trap",
     },
     {
+        "id": "short_24",
+        "video_id": None,
+        "title_match": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th",
+    },
+    {
+        "id": "short_23",
+        "video_id": None,
+        "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting",
+    },
+    {
         "id": "short_22",
         "video_id": "7703622747489963278",
         "title_match": "Born on the 4th, 7th, 8th, 16th, 17th, 25th, or 26th? Why they act obsessed",
     },
     {
-        "id": "short_20",
+        "id": "short_21",
         "video_id": None,
+        "title_match": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th",
+    },
+    {
+        "id": "short_20",
+        "video_id": "7704137393049308430",
         "title_match": "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy",
     },
 ]
 
 IG_TARGETS = [
+    {"id": "short_30", "shortcode": "DfVZcSZOe8a"},
+    {"id": "short_29", "shortcode": "DfVZUGgOpJ5"},
+    {"id": "short_27", "shortcode": "DfVZMjvOwbP"},
+    {"id": "short_26", "shortcode": "DfVZE-MOd5x"},
     {"id": "short_28", "shortcode": "DfS6Iu5OEhv"},
     {"id": "short_25", "shortcode": "DfP3a8aOUPF"},
     {"id": "short_22", "shortcode": "DfPp_HOOJS3"},
+    {"id": "short_21", "shortcode": "DfTR1XxublV"},
     {"id": "short_20", "shortcode": "DfN3fVRul_X"},
 ]
 
@@ -249,7 +289,7 @@ async def seed_ig_sample_replies():
         for t in IG_TARGETS:
             tid = t["id"]
             sc = t["shortcode"]
-            if tid in tracker.get("instagram", {}):
+            if tid in tracker.get("instagram", {}) and tracker["instagram"][tid].get("shortcode") == sc:
                 print(f"  ✓ [IG {tid}] Sample match comment already seeded ({sc}), skipping.", flush=True)
                 continue
 

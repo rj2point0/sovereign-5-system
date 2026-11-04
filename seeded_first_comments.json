@@ -149,14 +149,20 @@
       "title_match": "Every birthday has 3 natural soulmate dates—and 3 dates that drain your energy",
       "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
       "seeded_at": "2026-11-03T17:35:31.899910"
+    },
+    "short_21": {
+      "video_id": "7704122197744291085",
+      "title_match": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th",
+      "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+      "seeded_at": "2026-11-04T12:34:27.190412"
     }
   },
-  "updated_at": "2026-11-03T17:36:24.645657",
+  "updated_at": "2026-11-04T12:35:26.740554",
   "last_verification": {
-    "checked_at": "2026-11-03T17:35:53.600316",
+    "checked_at": "2026-11-04T12:34:57.779759",
     "videos": {
-      "short_20": {
-        "browse_comment_count": "3",
+      "short_21": {
+        "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
       }

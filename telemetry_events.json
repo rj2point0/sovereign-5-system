@@ -517,5 +517,29 @@
     "partner_dob": "",
     "compatibility_score": "",
     "fields_touched": []
+  },
+  {
+    "dedup_key": "sess_mvu5y52q_x3zky::page_view",
+    "timestamp": "2026-11-04T19:40:04.760Z",
+    "session_id": "sess_mvu5y52q_x3zky",
+    "event_type": "page_view",
+    "browser_label": "Desktop Chrome",
+    "is_tiktok_inapp": false,
+    "is_instagram_inapp": false,
+    "device_type": "Desktop",
+    "referrer": "Direct / Bio Link",
+    "source_attribution": "Organic Bio",
+    "utm": {},
+    "name": "",
+    "dob": "",
+    "email": "",
+    "top_3_overlap_numbers": "",
+    "life_path": "",
+    "vedic_moolank": "",
+    "chaldean_name": "",
+    "tier_label": "",
+    "partner_dob": "",
+    "compatibility_score": "",
+    "fields_touched": []
   }
 ]
