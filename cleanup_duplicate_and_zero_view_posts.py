@@ -69,6 +69,10 @@ TT_PUBLISHED_TO_PRIVATE = [
 
 # Instagram Reels to Delete (duplicate short_21 + lakeside silhouette short_27 + old white-box short_26/29/30)
 IG_SHORTCODES_TO_DELETE = [
+    ("DfVZE-MOd5x", "replace_old_smalltext_short_26_with_emotional_face_giant"),
+    ("DfVZMjvOwbP", "replace_old_smalltext_short_27_with_emotional_face_giant"),
+    ("DfVZUGgOpJ5", "replace_old_smalltext_short_29_with_emotional_face_giant"),
+    ("DfVZcSZOe8a", "replace_old_smalltext_short_30_with_emotional_face_giant"),
     ("DfN3scQOV9B", "duplicate_short_21_old_14s_vs_DfTR1XxublV_122v"),
     ("DfP3rbpu_81", "duplicate_lakeside_silhouette_short_27_7v"),
     ("DfP3jR_OPp6", "replace_old_whitebox_short_26_with_format_A"),

@@ -1141,18 +1141,19 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_26",
         "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
         "format_type": "cohort_c_short",
-        "visual_format": "imessage_thread",
-        "imessage_theme": "blue_crimson",
-        "imessage_incoming": "I just need some space to figure my head out right now...",
-        "imessage_outgoing": "Did I do something wrong? Why did you go completely quiet?",
-        "imessage_status": "Delivered · Read 1:14 AM",
-        "imessage_days_pill": "BORN 2nd · 6th · 7th · 11th · 15th · 16th · 20th · 24th · 25th",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("DO THEY", "white"),
+            ("MISS YOU", "gold"),
+            ("IN NO CONTACT?", "coral"),
+        ],
+        "giant_sub_pill": "BORN 2nd · 6th · 7th · 11th · 15th · 16th · 20th · 24th · 25th",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_26_7sec_no_contact_thoughts.mp4",
         "grid_headline": "DO THEY MISS YOU\nIN NO CONTACT?",
         "grid_sub": "CHECK THEIR BIRTH DAY",
         "hook_box_text": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th:",
-        "hook_end_sec": 2.9,
+        "hook_end_sec": 4.6,
         "cta_tail_sec": 2.8,
         "broll_cutoff": 4.6,
         "tail_hold_sec": 0.25,
@@ -1168,8 +1169,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So check their exact text script in our bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_06_laptop_focus.mp4"),
-            (2.3, 4.6, "broll_04_stressed_temples.mp4"),
+            (0.0, 2.5, "emo_11_worried_sad_woman_closeup.mp4"),
+            (2.5, 4.6, "emo_01_woman_phone_night.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1190,16 +1191,21 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_27",
         "cohort": "Cohort C · Outlier Batch 6 (7.5s Visual Demo)",
         "format_type": "cohort_c_short",
-        "visual_format": "birthday_matrix",
-        "matrix_days": [3, 4, 8, 9, 12, 13, 17, 18, 21, 22, 26, 27, 30, 31],
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("WHY HE", "white"),
+            ("PULLS AWAY", "coral"),
+            ("BY BIRTH DAY", "gold"),
+        ],
+        "giant_sub_pill": "BORN 3rd · 4th · 8th · 9th · 12th · 13th · 17th · 18th · 22nd · 27th",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_27_7sec_november_turning_point.mp4",
-        "grid_headline": "3 LOVE DATES\nTO WATCH NEXT",
+        "grid_headline": "WHY HE\nPULLS AWAY\nBY BIRTH DAY",
         "grid_sub": "YOUR 90-DAY CALENDAR",
         "hook_box_text": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st?",
-        "hook_end_sec": 2.9,
-        "cta_tail_sec": 2.8,
-        "broll_cutoff": 4.6,
+        "hook_end_sec": 5.8,
+        "cta_tail_sec": 1.8,
+        "broll_cutoff": 5.8,
         "tail_hold_sec": 0.25,
         "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
@@ -1213,8 +1219,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So tap our bio to see your dates."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_15_sunset_ocean_waves.mp4"),
-            (2.3, 4.6, "broll_08_phone_discovery.mp4"),
+            (0.0, 2.9, "emo_05_couple_upset_disappointed.mp4"),
+            (2.9, 5.8, "emo_04_guy_apologizing_upset_gf.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_anchors.png", 1.5),
@@ -1278,15 +1284,19 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_29",
         "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
         "format_type": "cohort_c_short",
-        "visual_format": "editorial_broll",
-        "editorial_badge": "SILENT TREATMENT DECODER · DAYS 1–31",
-        "editorial_days_pill": "BORN 4th · 7th · 8th · 13th · 16th · 17th · 22nd · 25th · 26th · 31st",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("BIRTH DAYS", "white"),
+            ("THAT GO COLD", "coral"),
+            ("& SILENT", "gold"),
+        ],
+        "giant_sub_pill": "BORN 4th · 7th · 8th · 13th · 16th · 17th · 22nd · 25th · 26th · 31st",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_29_7sec_silent_treatment_days.mp4",
         "grid_headline": "BIRTH DAYS THAT\nGO SILENT",
         "grid_sub": "HOW TO FLIP IT",
         "hook_box_text": "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st?",
-        "hook_end_sec": 2.9,
+        "hook_end_sec": 4.6,
         "cta_tail_sec": 2.8,
         "broll_cutoff": 4.6,
         "tail_hold_sec": 0.25,
@@ -1302,8 +1312,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "So get their exact text script in our bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_12_beach_shore_brooding.mp4"),
-            (2.3, 4.6, "broll_07_journaling_ritual.mp4"),
+            (0.0, 2.5, "emo_06_sofa_back_to_back.mp4"),
+            (2.5, 4.6, "emo_02_couple_bed_backs.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1324,18 +1334,19 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_30",
         "cohort": "Cohort C · Outlier Batch 7 (7.5s Comment Both Days + Visual Demo)",
         "format_type": "cohort_c_short",
-        "visual_format": "imessage_thread",
-        "imessage_theme": "gold_emerald",
-        "imessage_incoming": "We either feel like 100% soulmates or we trigger each other...",
-        "imessage_outgoing": "Are our birthdays endgame or just a 3-month lesson?",
-        "imessage_status": "Delivered · Read 2:08 AM",
-        "imessage_days_pill": "DAY 19 × DAY 23  •  96% TWIN-SPARK LOCK",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("ARE YOUR", "white"),
+            ("BIRTHDAYS", "gold"),
+            ("ENDGAME?", "coral"),
+        ],
+        "giant_sub_pill": "DAY 19 × DAY 23  •  96% SOULMATE LOCK",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_30_7sec_endgame_birthdays.mp4",
         "grid_headline": "ARE YOUR BIRTHDAYS\nENDGAME?",
         "grid_sub": "96% SOULMATE LOCK",
         "hook_box_text": "Some birthdays are built to last, and some are just a three month lesson.",
-        "hook_end_sec": 2.9,
+        "hook_end_sec": 4.6,
         "cta_tail_sec": 2.8,
         "broll_cutoff": 4.6,
         "tail_hold_sec": 0.25,
@@ -1350,8 +1361,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Comment both birth days below or test your match free at the link in bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_02_late_night_phone.mp4"),
-            (2.3, 4.6, "broll_10_couple_sunset_embrace.mp4"),
+            (0.0, 2.5, "emo_09_couple_forgiveness_hug.mp4"),
+            (2.5, 4.6, "emo_10_loving_couple_close.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1606,6 +1617,102 @@ class BrollStoryGenerator:
                 break
         return dur
 
+    def draw_giant_emotional_headline(
+        self,
+        frame: Image.Image,
+        spec: Dict[str, Any],
+        compact_top: bool = False,
+    ) -> Image.Image:
+        """
+        Renders massive 115px-130px ultra-bold uppercase stacked headline across Y = 260..700
+        over a full-bleed emotional human face/couple frame:
+        - Soft dark top vignette gradient strictly behind Y = 0..760 so human faces in the
+          middle/lower-middle third stay 100% bright and expressive.
+        - Thick 8px black outline + heavy drop shadow.
+        - Color-highlights emotional trigger words in vibrant Gold (#FFE14D) or
+          Heartbreak Red/Coral (#FF4757) against Pure White (#FFFFFF).
+        """
+        arr = np.array(frame, dtype=np.float32)
+        vig_h = 540 if compact_top else 760
+        ramp = np.ones((1920, 1, 1), dtype=np.float32)
+        ramp[:240, 0, 0] = 0.40
+        ramp[240:vig_h, 0, 0] = np.linspace(0.40, 1.0, vig_h - 240, dtype=np.float32)
+        arr = np.clip(arr * ramp, 0, 255).astype(np.uint8)
+        frame = Image.fromarray(arr)
+        draw = ImageDraw.Draw(frame)
+
+        heavy_font_path = r"C:\Windows\Fonts\ariblk.ttf"
+        if not os.path.exists(heavy_font_path):
+            heavy_font_path = r"C:\Windows\Fonts\impact.ttf"
+        if not os.path.exists(heavy_font_path):
+            heavy_font_path = FONT_BOLD
+
+        color_map = {
+            "white": (255, 255, 255),
+            "gold": (255, 225, 77),
+            "coral": (255, 71, 87),
+        }
+
+        giant_lines = spec.get("giant_lines") or [
+            ("WHY HE", "white"),
+            ("PULLS AWAY", "coral"),
+            ("BY BIRTH DAY", "gold"),
+        ]
+
+        cx = 540
+        curr_y = 185 if compact_top else 285
+        line_step = 116 if compact_top else 130
+        size_candidates = (116, 110, 104, 98, 92) if compact_top else (130, 124, 118, 112, 106, 100, 94)
+
+        for line_txt, col_key in giant_lines:
+            txt_up = line_txt.strip().upper()
+            fill_rgb = color_map.get(col_key, (255, 255, 255))
+            # Auto-fit between 130px down to 96px so the line spans ~85% of the 1080px width (<= 965px)
+            font_line = ImageFont.truetype(heavy_font_path, size_candidates[0])
+            for f_sz in size_candidates:
+                cand = ImageFont.truetype(heavy_font_path, f_sz)
+                bbox = draw.textbbox((0, 0), txt_up, font=cand, stroke_width=8)
+                w = bbox[2] - bbox[0]
+                if w <= 965:
+                    font_line = cand
+                    break
+
+            # Heavy black drop shadow + 8px black stroke
+            draw.text(
+                (cx + 6, curr_y + 8),
+                txt_up,
+                fill=(0, 0, 0),
+                font=font_line,
+                anchor="mm",
+                stroke_width=10,
+                stroke_fill=(0, 0, 0),
+            )
+            draw.text(
+                (cx, curr_y),
+                txt_up,
+                fill=fill_rgb,
+                font=font_line,
+                anchor="mm",
+                stroke_width=8,
+                stroke_fill=(0, 0, 0),
+            )
+            curr_y += line_step
+
+        sub_pill = spec.get("giant_sub_pill")
+        if sub_pill and not compact_top:
+            f_pill = ImageFont.truetype(FONT_BOLD, 27)
+            pill_y = curr_y - 34
+            draw.rounded_rectangle(
+                [56, pill_y - 30, 1024, pill_y + 30],
+                radius=18,
+                fill=(12, 13, 20),
+                outline=(255, 225, 77),
+                width=3,
+            )
+            draw.text((cx, pill_y), sub_pill, fill=(255, 225, 77), font=f_pill, anchor="mm")
+
+        return frame
+
     def draw_native_tiktok_hook_box(
         self,
         draw: ImageDraw.ImageDraw,
@@ -1786,28 +1893,53 @@ class BrollStoryGenerator:
         Upgrades the 7.5s video reveal phase (4.6s-7.5s) to visually display:
         1) Dark-mode Partner Match Card ('Born 19th × Born 23rd -> 96% SOULMATE LOCK') + 1-Tap Birth Day Strip
         2) iMessage 'Flip The Chase' Text Script Bubble (first line visible + Gaussian-blurred secret text + Gold Lock CTA)
+        When visual_format == 'emotional_face_giant', keeps the Giant 120px Headline at the top (Y=185..435)
+        so no platform auto-thumbnail ever loses the giant headline!
         """
-        frame = ImageEnhance.Brightness(frame).enhance(0.30)
+        is_emo_giant = spec.get("visual_format") == "emotional_face_giant"
+        frame = ImageEnhance.Brightness(frame).enhance(0.58 if is_emo_giant else 0.30)
+        if is_emo_giant:
+            frame = self.draw_giant_emotional_headline(frame, spec, compact_top=True)
         draw = ImageDraw.Draw(frame)
 
-        f_badge = ImageFont.truetype(FONT_BOLD, 24)
-        f_pair = ImageFont.truetype(FONT_BOLD, 35)
-        f_score = ImageFont.truetype(FONT_BOLD, 32)
-        f_day = ImageFont.truetype(FONT_BOLD, 24)
-        f_sms_hdr = ImageFont.truetype(FONT_BOLD, 25)
-        f_sms_txt = ImageFont.truetype(FONT_BOLD, 31)
+        f_badge = ImageFont.truetype(FONT_BOLD, 23 if is_emo_giant else 24)
+        f_pair = ImageFont.truetype(FONT_BOLD, 33 if is_emo_giant else 35)
+        f_score = ImageFont.truetype(FONT_BOLD, 30 if is_emo_giant else 32)
+        f_day = ImageFont.truetype(FONT_BOLD, 23 if is_emo_giant else 24)
+        f_sms_hdr = ImageFont.truetype(FONT_BOLD, 24 if is_emo_giant else 25)
+        f_sms_txt = ImageFont.truetype(FONT_BOLD, 29 if is_emo_giant else 31)
         f_lock = ImageFont.truetype(FONT_BOLD, 24)
 
-        # --- CARD 1: PARTNER MATCH CARD (y = 165..545) ---
-        draw.rounded_rectangle([58, 165, 1022, 545], radius=28, fill=(14, 16, 22), outline=(212, 175, 55), width=4)
-        draw.text((540, 210), "1-TAP PARTNER & CRUSH BIRTHDAY MATCH", fill=(243, 229, 171), font=f_badge, anchor="mm")
+        y_shift = 325 if is_emo_giant else 0
+
+        # --- CARD 1: PARTNER MATCH CARD ---
+        draw.rounded_rectangle(
+            [58, 165 + y_shift, 1022, 535 + y_shift],
+            radius=28,
+            fill=(14, 16, 22),
+            outline=(212, 175, 55),
+            width=4,
+        )
+        draw.text(
+            (540, 208 + y_shift),
+            "1-TAP PARTNER & CRUSH BIRTHDAY MATCH",
+            fill=(243, 229, 171),
+            font=f_badge,
+            anchor="mm",
+        )
 
         pair_txt = spec.get("reveal_match_pair", "Born 19th × Born 23rd")
         score_txt = spec.get("reveal_match_score", "96% SOULMATE LOCK")
-        draw.text((540, 274), f"{pair_txt}  →  {score_txt}", fill=(255, 255, 255), font=f_pair, anchor="mm")
+        draw.text((540, 268 + y_shift), f"{pair_txt}  →  {score_txt}", fill=(255, 255, 255), font=f_pair, anchor="mm")
 
-        draw.rounded_rectangle([110, 322, 970, 402], radius=20, fill=(20, 44, 32), outline=(74, 222, 128), width=3)
-        draw.text((540, 362), f"{score_txt} · HIGH INITIAL PULL", fill=(110, 245, 165), font=f_score, anchor="mm")
+        draw.rounded_rectangle(
+            [110, 314 + y_shift, 970, 392 + y_shift],
+            radius=20,
+            fill=(20, 44, 32),
+            outline=(74, 222, 128),
+            width=3,
+        )
+        draw.text((540, 353 + y_shift), f"{score_txt} · HIGH INITIAL PULL", fill=(110, 245, 165), font=f_score, anchor="mm")
 
         # Mini 1-Tap Birth Day Grid row inside Match Card
         days_demo = ["2", "7", "11", "14", "16", "*19*", "*23*", "25", "29"]
@@ -1820,46 +1952,69 @@ class BrollStoryGenerator:
             is_sel = "*" in d_lbl
             clean_lbl = d_lbl.replace("*", "")
             draw.rounded_rectangle(
-                [dx0, 432, dx1, 512],
+                [dx0, 422 + y_shift, dx1, 502 + y_shift],
                 radius=14,
                 fill=(212, 175, 55) if is_sel else (26, 28, 36),
                 outline=(255, 225, 110) if is_sel else (110, 95, 45),
                 width=3 if is_sel else 2,
             )
             draw.text(
-                ((dx0 + dx1) // 2, 472),
+                ((dx0 + dx1) // 2, 462 + y_shift),
                 clean_lbl,
                 fill=(18, 15, 8) if is_sel else (243, 229, 171),
                 font=f_day,
                 anchor="mm",
             )
 
-        # --- CARD 2: iMESSAGE "FLIP THE CHASE" TEXT SCRIPT BUBBLE (y = 575..1185) ---
-        draw.rounded_rectangle([58, 575, 1022, 1185], radius=28, fill=(11, 13, 19), outline=(96, 165, 250), width=3)
-        draw.text((540, 625), "YOUR \"FLIP THE CHASE\" TEXT SCRIPT (iMessage):", fill=(255, 209, 71), font=f_sms_hdr, anchor="mm")
+        # --- CARD 2: iMESSAGE "FLIP THE CHASE" TEXT SCRIPT BUBBLE ---
+        draw.rounded_rectangle(
+            [58, 560 + y_shift, 1022, 1155 + y_shift],
+            radius=28,
+            fill=(11, 13, 19),
+            outline=(96, 165, 250),
+            width=3,
+        )
+        draw.text(
+            (540, 608 + y_shift),
+            "YOUR \"FLIP THE CHASE\" TEXT SCRIPT (iMessage):",
+            fill=(255, 209, 71),
+            font=f_sms_hdr,
+            anchor="mm",
+        )
 
         # iMessage blue/slate speech bubble
-        draw.rounded_rectangle([94, 668, 986, 1002], radius=24, fill=(24, 38, 58), outline=(96, 165, 250), width=2)
+        draw.rounded_rectangle(
+            [94, 648 + y_shift, 986, 978 + y_shift],
+            radius=24,
+            fill=(24, 38, 58),
+            outline=(96, 165, 250),
+            width=2,
+        )
         sms_lead = spec.get("reveal_sms_lead", "“Hey, I loved hanging out, but I noticed...")
-        draw.text((130, 725), sms_lead, fill=(255, 255, 255), font=f_sms_txt, anchor="lm")
+        draw.text((130, 704 + y_shift), sms_lead, fill=(255, 255, 255), font=f_sms_txt, anchor="lm")
 
         # Render 2 realistic secret SMS lines and apply Gaussian blur so it looks like frosted glass
-        secret_box = (120, 775, 960, 980)
+        secret_box = (120, 752 + y_shift, 960, 956 + y_shift)
         secret_img = frame.crop(secret_box)
         s_draw = ImageDraw.Draw(secret_img)
-        s_draw.text((10, 42), "our pace works best when neither of us forces it.", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
-        s_draw.text((10, 112), "Reach out next week when your head is clear.”", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
+        s_draw.text((10, 40), "our pace works best when neither of us forces it.", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
+        s_draw.text((10, 108), "Reach out next week when your head is clear.”", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
         secret_blurred = secret_img.filter(ImageFilter.GaussianBlur(radius=7))
         frame.paste(secret_blurred, (secret_box[0], secret_box[1]))
 
         # Glowing Gold Lock Button inside Card 2 (with drawn vector padlock icon)
         draw = ImageDraw.Draw(frame)
-        draw.rounded_rectangle([94, 1030, 986, 1150], radius=20, fill=(212, 175, 55), outline=(255, 235, 150), width=3)
-        # Draw crisp vector padlock at x=138..162, y=1075..1105
-        draw.arc([141, 1068, 159, 1088], start=180, end=0, fill=(18, 15, 8), width=3)
-        draw.rounded_rectangle([137, 1083, 163, 1106], radius=4, fill=(18, 15, 8))
+        draw.rounded_rectangle(
+            [94, 1004 + y_shift, 986, 1122 + y_shift],
+            radius=20,
+            fill=(212, 175, 55),
+            outline=(255, 235, 150),
+            width=3,
+        )
+        draw.arc([141, 1042 + y_shift, 159, 1062 + y_shift], start=180, end=0, fill=(18, 15, 8), width=3)
+        draw.rounded_rectangle([137, 1057 + y_shift, 163, 1080 + y_shift], radius=4, fill=(18, 15, 8))
         draw.text(
-            (558, 1090),
+            (558, 1063 + y_shift),
             "Tap Link in Bio to Test Both Birthdays & Unlock Your Script",
             fill=(18, 15, 8),
             font=f_lock,
@@ -2150,6 +2305,7 @@ class BrollStoryGenerator:
             t = f_idx / float(fps)
 
             # 1. Background visual selection
+            v_fmt = spec.get("visual_format", "legacy")
             if t < broll_cutoff:
                 active_broll = spec["broll_clips"][-1][2]
                 local_t = t
@@ -2158,27 +2314,33 @@ class BrollStoryGenerator:
                         active_broll = b_fname
                         local_t = t - b_start
                         break
-                frame = broll_readers[active_broll].get_frame(local_t, darken_ratio=0.84)
+                d_ratio = 0.98 if v_fmt == "emotional_face_giant" else 0.84
+                frame = broll_readers[active_broll].get_frame(local_t, darken_ratio=d_ratio)
             elif is_short:
-                # Cohort C (broll_cutoff -> end): Fast dynamic zoom reveal across the 2 dossier scenes
-                reveal_dur = max(1.0, total_dur - broll_cutoff)
-                mid_t = broll_cutoff + (reveal_dur * 0.48)
-                if t < mid_t or len(p_imgs) == 1:
-                    img_key = p_imgs[0]
-                    u = max(0.0, min(1.0, (t - broll_cutoff) / max(0.5, mid_t - broll_cutoff)))
-                    zoom = 1.0 + 0.065 * u
-                else:
-                    img_key = p_imgs[1]
-                    u = max(0.0, min(1.0, (t - mid_t) / max(0.5, total_dur - mid_t)))
-                    zoom = 1.055 - 0.045 * u
-
-                base_img = prod_images[img_key]
-                new_w, new_h = int(1080 / zoom), int(1920 / zoom)
-                x0 = (1080 - new_w) // 2
-                y0 = (1920 - new_h) // 2
-                frame = base_img.crop((x0, y0, x0 + new_w, y0 + new_h)).resize((1080, 1920), Image.Resampling.BILINEAR)
-                if broll_cutoff <= 5.0:
+                if v_fmt == "emotional_face_giant":
+                    active_broll = spec["broll_clips"][-1][2]
+                    frame = broll_readers[active_broll].get_frame(t - broll_cutoff, darken_ratio=0.92)
                     frame = self.draw_imessage_match_reveal_card(frame, spec)
+                else:
+                    # Cohort C (broll_cutoff -> end): Fast dynamic zoom reveal across the 2 dossier scenes
+                    reveal_dur = max(1.0, total_dur - broll_cutoff)
+                    mid_t = broll_cutoff + (reveal_dur * 0.48)
+                    if t < mid_t or len(p_imgs) == 1:
+                        img_key = p_imgs[0]
+                        u = max(0.0, min(1.0, (t - broll_cutoff) / max(0.5, mid_t - broll_cutoff)))
+                        zoom = 1.0 + 0.065 * u
+                    else:
+                        img_key = p_imgs[1]
+                        u = max(0.0, min(1.0, (t - mid_t) / max(0.5, total_dur - mid_t)))
+                        zoom = 1.055 - 0.045 * u
+
+                    base_img = prod_images[img_key]
+                    new_w, new_h = int(1080 / zoom), int(1920 / zoom)
+                    x0 = (1080 - new_w) // 2
+                    y0 = (1920 - new_h) // 2
+                    frame = base_img.crop((x0, y0, x0 + new_w, y0 + new_h)).resize((1080, 1920), Image.Resampling.BILINEAR)
+                    if broll_cutoff <= 5.0:
+                        frame = self.draw_imessage_match_reveal_card(frame, spec)
             elif t < 19.5 and calc_reader is not None:
                 frame = calc_reader.get_frame(t - 15.0, darken_ratio=0.96)
             else:
@@ -2205,10 +2367,13 @@ class BrollStoryGenerator:
 
             draw = ImageDraw.Draw(frame)
 
-            # 2. Visual Format Hook (0.0s - hook_end_sec): 3 Distinct Cover & Hook Formats
-            v_fmt = spec.get("visual_format", "legacy")
+            # 2. Visual Format Hook (0.0s - hook_end_sec)
             if t <= hook_end_sec:
-                if v_fmt == "imessage_thread":
+                if v_fmt == "emotional_face_giant":
+                    if t < broll_cutoff:
+                        frame = self.draw_giant_emotional_headline(frame, spec, compact_top=False)
+                        draw = ImageDraw.Draw(frame)
+                elif v_fmt == "imessage_thread":
                     frame = self.draw_format_a_imessage_thread(frame, spec)
                     draw = ImageDraw.Draw(frame)
                 elif v_fmt == "birthday_matrix":

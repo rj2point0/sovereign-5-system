@@ -2,31 +2,31 @@
   "history": [
     {
       "id": "short_26",
-      "visual_format": "imessage_thread",
-      "primary_clip": "broll_06_laptop_focus.mp4",
-      "mean_luma": 141.2,
-      "updated_at": "2026-11-04T12:55:01"
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_11_worried_sad_woman_closeup.mp4",
+      "mean_luma": 79.2,
+      "updated_at": "2026-11-04T15:15:53"
     },
     {
       "id": "short_29",
-      "visual_format": "editorial_broll",
-      "primary_clip": "broll_12_beach_shore_brooding.mp4",
-      "mean_luma": 128.5,
-      "updated_at": "2026-11-04T12:55:38"
-    },
-    {
-      "id": "short_27",
-      "visual_format": "birthday_matrix",
-      "primary_clip": "broll_15_sunset_ocean_waves.mp4",
-      "mean_luma": 102.6,
-      "updated_at": "2026-11-04T12:57:19"
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_06_sofa_back_to_back.mp4",
+      "mean_luma": 86.2,
+      "updated_at": "2026-11-04T15:16:41"
     },
     {
       "id": "short_30",
-      "visual_format": "imessage_thread",
-      "primary_clip": "broll_02_late_night_phone.mp4",
-      "mean_luma": 88.0,
-      "updated_at": "2026-11-04T12:57:37"
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_09_couple_forgiveness_hug.mp4",
+      "mean_luma": 111.1,
+      "updated_at": "2026-11-04T15:17:08"
+    },
+    {
+      "id": "short_27",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_05_couple_upset_disappointed.mp4",
+      "mean_luma": 123.3,
+      "updated_at": "2026-11-04T15:23:52"
     }
   ]
 }

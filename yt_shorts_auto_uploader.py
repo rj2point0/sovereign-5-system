@@ -342,6 +342,59 @@ async def seed_and_pin_comments_on_short(page: Page, video_id: str) -> Dict[str,
     return res
 
 
+async def delete_old_short_uploads(page: Page, old_ids: List[str]):
+    """Deletes or privatizes the previous small-text Short uploads via their direct Studio edit URL."""
+    if not old_ids:
+        return
+    print(f"  [Cleanup] Removing/privatizing {len(old_ids)} old Short(s): {old_ids}", flush=True)
+    for vid in old_ids:
+        edit_url = f"https://studio.youtube.com/video/{vid}/edit"
+        try:
+            await page.goto(edit_url, wait_until="domcontentloaded", timeout=45000)
+            await asyncio.sleep(4.2)
+
+            # 1. Try Delete forever via #overflow-menu-button on video edit page
+            more_btn = page.locator("ytcp-button#overflow-menu-button, button[aria-label='More actions']").first
+            if await more_btn.count() > 0 and await more_btn.is_visible():
+                await more_btn.click(force=True)
+                await asyncio.sleep(0.8)
+                del_item = page.locator('tp-yt-paper-item:has-text("Delete forever")').first
+                if await del_item.count() > 0 and await del_item.is_visible():
+                    await del_item.click(force=True)
+                    await asyncio.sleep(1.0)
+                    chk = page.locator("ytcp-checkbox-lit#confirm-checkbox, ytcp-checkbox-lit#delete-confirm-checkbox, div[role='dialog'] ytcp-checkbox-lit").first
+                    if await chk.count() > 0:
+                        await chk.click(force=True)
+                        await asyncio.sleep(0.5)
+                    confirm_btn = page.locator("ytcp-button#confirm-button, div[role='dialog'] button:has-text('Delete forever')").first
+                    if await confirm_btn.count() > 0:
+                        await confirm_btn.click(force=True)
+                        await asyncio.sleep(4.0)
+                        print(f"    ✓ Deleted old Short {vid} forever!", flush=True)
+                        continue
+
+            # 2. Fallback: set Visibility to Private + Save on edit page
+            vis_box = page.locator("ytcp-video-metadata-visibility #select-button, ytcp-video-metadata-visibility").first
+            if await vis_box.count() > 0:
+                await vis_box.click(force=True)
+                await asyncio.sleep(0.8)
+                priv_radio = page.locator('tp-yt-paper-radio-button[name="PRIVATE"], tp-yt-paper-radio-button:has-text("Private")').first
+                if await priv_radio.count() > 0:
+                    await priv_radio.click(force=True)
+                    await asyncio.sleep(0.5)
+                    done_btn = page.locator("ytcp-button#done-button, div[role='dialog'] ytcp-button#save-button").first
+                    if await done_btn.count() > 0:
+                        await done_btn.click(force=True)
+                        await asyncio.sleep(0.8)
+                    save_btn = page.locator("ytcp-button#save").first
+                    if await save_btn.count() > 0:
+                        await save_btn.click(force=True)
+                        await asyncio.sleep(2.5)
+                        print(f"    ✓ Set old Short {vid} to Private", flush=True)
+        except Exception as e:
+            print(f"    [Cleanup Notice] {vid}: {e}", flush=True)
+
+
 async def upload_single_short(page: Page, item: Dict[str, Any]) -> Optional[str]:
     """Uploads or schedules a single Short via YouTube Studio."""
     video_path = os.path.join(VIDEO_DIR, item["filename"])
@@ -392,6 +445,15 @@ async def upload_single_short(page: Page, item: Dict[str, Any]) -> Optional[str]
         await page.keyboard.press("Control+A")
         await dbox.fill(SHORT_DESCRIPTION)
         await asyncio.sleep(0.5)
+
+    # Select first auto-thumbnail cell (or custom frame0 if unlocked) so early emotional face + giant text is locked
+    try:
+        still_cell = page.locator("ytcp-still-cell, ytcp-thumbnail-editor ytcp-still-cell").first
+        if await still_cell.count() > 0 and await still_cell.is_visible():
+            await still_cell.click(force=True)
+            await asyncio.sleep(0.5)
+    except Exception:
+        pass
 
     # Not made for kids
     not_kids = page.locator(
@@ -701,6 +763,18 @@ async def run_pipeline(do_rebrand: bool = True, do_upload: bool = True):
                 save_tracker(tracker)
 
         if do_upload:
+            old_ids = [
+                v.get("video_id")
+                for v in tracker.get("videos", {}).values()
+                if v.get("video_id") and v.get("ReplaceOld")
+            ]
+            if old_ids:
+                await delete_old_short_uploads(page, old_ids)
+                for k in list(tracker.get("videos", {}).keys()):
+                    if tracker["videos"][k].get("ReplaceOld"):
+                        del tracker["videos"][k]
+                save_tracker(tracker)
+
             for item in YT_SHORTS_QUEUE:
                 sid = item["id"]
                 if sid in tracker.get("videos", {}) and tracker["videos"][sid].get("status") in ("published", "scheduled"):
