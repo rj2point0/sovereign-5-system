@@ -311,7 +311,7 @@ async def test_all():
 
         assert await page_prod.is_visible('#partner-compat-email-box') is True, "Expected #partner-compat-email-box to be visible inside #partner-compat-result when !state.profile.email"
         p_email_txt = await page_prod.locator('#partner-compat-email-box').inner_text()
-        assert "want to save this partner compatibility score" in p_email_txt.lower() and "email our match report" in p_email_txt.lower(), f"Unexpected #partner-compat-email-box text: {p_email_txt}"
+        assert "want to save this partner compatibility score" in p_email_txt.lower() and "3 dates this month they pull closer" in p_email_txt.lower() and "email our match report" in p_email_txt.lower(), f"Unexpected #partner-compat-email-box text: {p_email_txt}"
         await page_prod.fill('#partner-compat-email-input', 'sarah.compat@gmail.com')
         await page_prod.click('#btn-save-partner-email')
         await asyncio.sleep(0.2)
@@ -319,9 +319,13 @@ async def test_all():
         assert await page_prod.is_visible('#part1-unlocked-badge') is True, "Expected #part1-unlocked-badge to appear immediately on email submit!"
         assert await page_prod.is_visible('#partner-secret-fear-unlocked') is True, "Expected #partner-secret-fear-unlocked to appear on email submit!"
         assert await page_prod.is_visible('#imessage-part2-locked-callout') is True, "Expected #imessage-part2-locked-callout to appear on email submit!"
+        p2_callout_txt = await page_prod.locator('#imessage-part2-locked-callout').inner_text()
+        assert "3 best days to text them this month" in p2_callout_txt.lower(), f"Unexpected #imessage-part2-locked-callout text: {p2_callout_txt}"
         p1_filter = await page_prod.evaluate("() => getComputedStyle(document.querySelector('#imessage-part1-text')).filter")
         assert p1_filter == "none", f"Expected #imessage-part1-text filter to be 'none' after email submit, got '{p1_filter}'"
         assert await page_prod.is_visible('#vip-fast-action-offer') is True, "Expected #vip-fast-action-offer to appear immediately on email submit!"
+        vip_btn_txt = await page_prod.locator('#btn-vip-fast-action-17').inner_text()
+        assert "best days to text them ($17)" in vip_btn_txt.lower(), f"Unexpected #btn-vip-fast-action-17 text: {vip_btn_txt}"
         vip_stripe_url = await page_prod.locator('#btn-vip-fast-action-17').get_attribute('data-stripe-url')
         assert vip_stripe_url and "prefilled_email=sarah.compat%40gmail.com" in vip_stripe_url, f"Expected prefilled_email in #btn-vip-fast-action-17 data-stripe-url, got '{vip_stripe_url}'"
         lead_evs = [p for p in ntfy_payloads if p.get("event_type") == "lead_submitted"]
@@ -490,9 +494,21 @@ async def test_all():
         assert len(p_qd_evs) >= 1, f"Expected partner_check_run after tapping partner day 16, got {[e.get('event_type') for e in demo_events]}"
         assert (p_qd_evs[-1].get("extra") or {}).get("via_quick_day") is True, f"Expected via_quick_day=True in partner_check_run: {p_qd_evs[-1]}"
         assert await page_mob.is_visible('#flip-chase-preview-bubble') is True, "Expected #flip-chase-preview-bubble visible inside #partner-compat-result"
+        assert await page_mob.is_visible('#situation-chip-strip') is True, "Expected #situation-chip-strip visible above #flip-chase-preview-bubble"
+        sit_chip_count = await page_mob.locator('#situation-chip-strip .situation-chip').count()
+        assert sit_chip_count == 4, f"Expected 4 situation chips, got {sit_chip_count}"
+        initial_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
+        await page_mob.click('#situation-chip-strip .situation-chip[data-situation="cold"]')
+        await asyncio.sleep(0.15)
+        cold_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
+        assert cold_leadin != initial_leadin and "energy shifted" in cold_leadin.lower(), f"Expected #imessage-leadin-text to update on situation chip click, got '{cold_leadin}'"
+        sit_evs = [e for e in demo_events if e.get("event_type") == "situation_chip_clicked"]
+        assert len(sit_evs) >= 1 and (sit_evs[-1].get("extra") or {}).get("situation") == "cold", f"Expected situation_chip_clicked telemetry for 'cold', got {sit_evs}"
         bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
         assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 25 × PARTNER DAY 16)' in bubble_txt.upper(), f"Unexpected bubble header: {bubble_txt}"
         assert await page_mob.is_visible('#btn-unlock-text-script') is True, "Expected #btn-unlock-text-script visible inside #flip-chase-preview-bubble"
+        unlock_btn_txt = await page_mob.locator('#btn-unlock-text-script').inner_text()
+        assert "best & worst days to text them ($17)" in unlock_btn_txt.lower(), f"Unexpected #btn-unlock-text-script text: {unlock_btn_txt}"
         blur_style = await page_mob.locator('#flip-chase-preview-bubble .imessage-blurred').first.get_attribute('style')
         assert 'blur(5px)' in (blur_style or ''), f"Expected blur(5px) on .imessage-blurred, got {blur_style}"
 
@@ -558,13 +574,13 @@ async def test_all():
         assert (mini_co_evs[-1].get("extra") or {}).get("total") == 17
         assert any("dRm8wP7VL0Md1gA0zd38404" in u for u in intercepted_stripe_urls), f"Expected navigation to $17 Stripe link dRm8wP7VL0Md1gA0zd38404, got {intercepted_stripe_urls}"
 
-        # Verify visiting /?tier=love_mini&unlocked=true renders the unlocked Partner Synastry & 90-Day Love Timing Report cleanly
+        # Verify visiting /?tier=love_mini&unlocked=true renders the unlocked Full Text Script & Best Days To Text Report cleanly
         await page_mob.goto("http://127.0.0.1:8080/?tier=love_mini&unlocked=true")
         await page_mob.wait_for_selector('#view-dossier:not(.hidden)', timeout=5000)
         assert await page_mob.is_visible('#partner-synastry-love-timing-report') is True, "Expected #partner-synastry-love-timing-report visible on ?tier=love_mini&unlocked=true"
         mini_rep_txt = await page_mob.locator('#partner-synastry-love-timing-report').inner_text()
-        assert "PARTNER SYNASTRY & 90-DAY LOVE TIMING REPORT" in mini_rep_txt.upper()
-        assert "90 DAYS OF ROSICRUCIAN LOVE TIMING" in mini_rep_txt.upper()
+        assert "THE BEST & WORST DAYS TO TEXT THEM" in mini_rep_txt.upper()
+        assert "3 DATES THIS MONTH THEY PULL CLOSER" in mini_rep_txt.upper()
 
         # Re-open sample reading if Stripe mock navigated, then click "Tap Here To Enter Your Real Birthday"
         await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&force_telemetry=1")

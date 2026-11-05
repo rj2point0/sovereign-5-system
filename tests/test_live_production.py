@@ -154,6 +154,12 @@ async def verify_live_pages():
         assert "19 × Day 23" in live_sp_txt or "Partner Compatibility" in live_sp_txt
         assert await page_clean.is_visible("#partner-compat-result") is True
         assert await page_clean.is_visible("#flip-chase-preview-bubble") is True
+        assert await page_clean.is_visible("#situation-chip-strip") is True
+        live_init_leadin = await page_clean.locator("#imessage-leadin-text").inner_text()
+        await page_clean.click('#situation-chip-strip .situation-chip[data-situation="cold"]')
+        await asyncio.sleep(0.15)
+        live_cold_leadin = await page_clean.locator("#imessage-leadin-text").inner_text()
+        assert live_cold_leadin != live_init_leadin and "energy shifted" in live_cold_leadin.lower()
         assert await page_clean.is_visible("#btn-share-partner-match") is True
         live_compat_txt = await page_clean.locator("#partner-compat-result").inner_text()
         assert "BIRTH DAY 19 × PARTNER DAY 23" in live_compat_txt.upper()
@@ -166,7 +172,7 @@ async def verify_live_pages():
         assert await page_clean.is_visible("#vip-fast-action-offer") is True
         live_vip_url = await page_clean.locator("#btn-vip-fast-action-17").get_attribute("data-stripe-url")
         assert live_vip_url and "prefilled_email=sarah.live%40gmail.com" in live_vip_url
-        print("Live ?d1=19&d2=23 Viral Partner Share deep-link, 19x23 Brand Icon, #social-proof-toast, Instant Part 1 Unblur & $17 VIP Fast-Action Offer verified on live site!")
+        print("Live ?d1=19&d2=23 Viral Partner Share deep-link, 19x23 Brand Icon, #social-proof-toast, #situation-chip-strip, Instant Part 1 Unblur & $17 VIP Fast-Action Offer verified on live site!")
         await ctx_clean.close()
 
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")

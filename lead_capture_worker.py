@@ -777,7 +777,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
               </a>
               <br>
               <a href="{stripe_mini_url}" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.45);border-radius:8px;margin-bottom:10px;">
-                ⚡ Or Grab the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →
+                ⚡ Or Unlock the Full Text Script &amp; Best Days To Text ($17) →
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
@@ -1231,10 +1231,10 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
         f"system faster than a partner who acts hot one week and distant the next.\n\n"
         f"HERE IS THE SNAPSHOT OF THE PARTNER BIRTHDAYS YOU TESTED:\n"
         f"{match_breakdown_plain}\n\n"
-        f"UNLOCK YOUR COMPLETE PARTNER SYNASTRY & 90-DAY LOVE TIMING MINI-READ FOR JUST $17 (Instead of $37):\n"
+        f"UNLOCK YOUR FULL TEXT SCRIPT & THE BEST & WORST DAYS TO TEXT THEM FOR JUST $17 (Instead of $37):\n"
         f"• Full 5-System Synastry Breakdown for Dec 23 (96%), Aug 19 (85%), and Aug 08 (94%)\n"
         f"• The Exact 'Flip The Chase' Text Script For Their Birth Number (word-for-word what to text a #1/19th vs. a #5/23rd or #8 when they pull away)\n"
-        f"• Your Next 3 Relationship Turning-Point Dates over the next 90 days\n\n"
+        f"• The Best & Worst Days To Text Them + 3 Dates This Month They Pull Closer\n\n"
         f"👉 1-CLICK $17 VIP UNLOCK:\n{stripe_mini_url}\n\n"
         f"Or unlock your complete 20-Page All-5-Systems Sovereign Dossier ($37):\n{stripe_base_url}\n\n"
         f"Return to your saved interactive Partner Check:\n{teaser_url}\n"
@@ -1267,7 +1267,7 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
           <tr>
             <td style="padding:22px 24px 16px;font-family:'Arial',sans-serif;font-size:14px;line-height:1.62;color:#E4E4E7;">
               <p style="margin:0 0 14px;">
-                We saw you test your Partner Compatibility scores and click the checkout button right before we released our new <strong>$17 Partner Synastry &amp; 90-Day Love Timing Mini-Read</strong>—so we saved your exact partner matches for you below:
+                We saw you test your Partner Compatibility scores and click the checkout button right before we released our new <strong>$17 Full Text Script &amp; Best Days To Text</strong> unlock—so we saved your exact partner matches for you below:
               </p>
               <p style="margin:0 0 16px;">
                 Because you were born on the <strong>{html.escape(birth_day_ord)} ({html.escape(birth_day_title)} · Ruled by {html.escape(calc['vedic_moolank'])})</strong> with a <strong>#{a1['number']} ({html.escape(a1['archetype'])})</strong> 5-System Overlap, you carry rare loyalty and emotional depth—yet you hate feeling like you are the only one over-investing when someone goes cold.
@@ -1280,7 +1280,7 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
                 <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.65;color:#E4E4E7;">
                   <li><strong>Side-by-Side 5-System Partner Synastry:</strong> Why <strong>Dec 23 (96%)</strong> feels effortless while <strong>Aug 19 (85%)</strong> triggers silent ego standoffs.</li>
                   <li><strong>The Exact “Flip The Chase” Text Script For Their Birth Number:</strong> Word-for-word what to text a <strong>#1 (19th)</strong>, <strong>#5 (23rd)</strong>, or <strong>#8 (8th)</strong> when they pull away so they lean back in without you chasing.</li>
-                  <li><strong>Your Next 3 Relationship Turning-Point Dates:</strong> Exact 90-day Rosicrucian &amp; Vedic love timing windows for commitment vs. space.</li>
+                  <li><strong>The Best &amp; Worst Days To Text Them:</strong> The exact <strong>3 Dates This Month They Pull Closer</strong> vs. when to give space.</li>
                 </ul>
               </div>
             </td>
@@ -1662,6 +1662,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "calc_preview": "calc_preview",
         "partner_check_run": "partner_check_run",
         "partner_compat_checked": "partner_check_run",
+        "situation_chip_clicked": "situation_chip_clicked",
         "partner_match_shared": "partner_match_shared",
         "shared_match_opened": "shared_match_opened",
         "lead_capture": "lead_submitted",
@@ -1715,7 +1716,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     if event_type == "checkout_clicked":
         raw_tier = str(extra.get("tier") or "").strip().lower()
         if raw_tier == "love_mini" and not tier_label:
-            tier_label = "$17 Partner Synastry & 90-Day Love Timing Mini-Read"
+            tier_label = "$17 Full Text Script & Best Days To Text"
         elif not tier_label:
             total_p = extra.get("total") or (84 if extra.get("bump") else 37)
             tier_label = f"${total_p} ({'Bundle' if extra.get('bump') else 'Base'})"
@@ -1866,6 +1867,7 @@ def update_obsidian_dashboard():
                 "demo_preview_clicked": "⚡ `demo_preview_clicked`",
                 "calc_preview": "🔮 `calc_preview`",
                 "partner_check_run": "💑 `partner_check_run`",
+                "situation_chip_clicked": "💬 `situation_chip_clicked`",
                 "partner_match_shared": "📲 `partner_match_shared`",
                 "shared_match_opened": "🔗 `shared_match_opened`",
                 "lead_submitted": "📩 `lead_submitted`",

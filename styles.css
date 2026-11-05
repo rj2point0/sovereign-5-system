@@ -671,6 +671,49 @@ main, header, footer { position: relative; z-index: 1; }
   border-radius: 14px;
 }
 
+.situation-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+@media (min-width: 640px) {
+  .situation-chip-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.situation-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px 9px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #E4E4E7;
+  background: rgba(15, 16, 22, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  cursor: pointer;
+  transition: all 0.16s ease;
+  text-align: center;
+}
+
+.situation-chip:hover {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.14);
+  color: #F3E5AB;
+}
+
+.situation-chip.active {
+  background: linear-gradient(135deg, rgba(243, 229, 171, 0.25), rgba(212, 175, 55, 0.32));
+  border-color: #D4AF37;
+  color: #FFFFFF;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+}
+
 .social-proof-toast {
   position: fixed;
   left: 18px;

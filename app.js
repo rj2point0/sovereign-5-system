@@ -1149,12 +1149,12 @@ const CONFIG = {
         <div id="tier-card-mini" class="mt-6 p-4 rounded-xl card-soft border border-white/15 hover:border-gold/40 transition-all">
           <div class="flex items-start justify-between gap-3">
             <div>
-              <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Opción Rápida · Mini-Lectura' : 'Quick-Start Impulse Option'}</span>
-              <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Mini-Lectura de Sinastría de Pareja y Sincronía de 90 Días' : 'Partner Synastry &amp; 90-Day Love Timing Mini-Read'}</h4>
-              <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Descifra tu bucle de apego Día Natal vs. Sendero de Vida, tu puntaje de compatibilidad con tu pareja y tus próximos 90 días en el amor.' : 'Decodes your Birth Day vs. Life Path attachment loop, your Partner/Crush Birthday Compatibility score, and your next 90 days of love timing.'}</p>
+              <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Opción Rápida · Acceso Instantáneo' : 'Quick-Start Impulse Option'}</span>
+              <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Guion de Texto Completo y Mejores Días Para Escribir ($17)' : 'Full Text Script &amp; Best Days To Text ($17)'}</h4>
+              <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Descifra tu puntaje de compatibilidad con tu pareja, qué escribirle hoy mismo y las 3 fechas de este mes en que se acercará más a ti.' : 'Decodes your Partner/Crush Birthday Compatibility score, what to text them right now, and the 3 dates this month they pull closer.'}</p>
               <ul class="mt-2.5 space-y-1 text-xs text-champagne">
                 <li>✓ <b>${isEs ? 'El Guion Exacto de Texto para "Invertir la Persecución" Según Su Número Natal' : 'The Exact "Flip The Chase" Text Script For Their Birth Number'}</b> ${isEs ? '(qué escribir palabra por palabra cuando se aleja o te deja en visto)' : '(word-for-word what to text when they pull away or leave you on read)'}</li>
-                <li>✓ ${isEs ? 'Mapa de Compatibilidad y Fricción de Pareja (5 Sistemas) + Tus Próximas 3 Fechas Clave en el Amor (90 Días)' : 'Side-by-Side Partner Compatibility &amp; Friction Map + Your Next 3 Relationship Turning-Point Dates (90 Days)'}</li>
+                <li>✓ ${isEs ? 'Los Mejores y Peores Días Para Escribirle + 3 Fechas Este Mes En Que Se Acerca Más' : 'The Best &amp; Worst Days To Text Them + 3 Dates This Month They Pull Closer'}</li>
               </ul>
             </div>
             <div class="text-right shrink-0">
@@ -1162,7 +1162,7 @@ const CONFIG = {
             </div>
           </div>
           <button type="button" id="btn-checkout-mini" data-action="checkout-mini" data-trigger="checkout_tier_17" class="btn-ghost mt-3.5 w-full !py-2.5 !px-4 border-gold/45 hover:border-gold hover:bg-gold/15 text-champagne text-xs sm:text-sm font-semibold">
-            ⚡ ${isEs ? 'Desbloquear Mini-Lectura de Pareja y Guion de Texto · $17 →' : 'Unlock $17 Partner Synastry &amp; "Flip The Chase" Text Script →'}
+            ⚡ ${isEs ? 'Desbloquear Guion de Texto Completo y Mejores Días Para Escribir ($17) →' : 'Unlock Full Text Script &amp; Best Days To Text ($17) →'}
           </button>
         </div>
 
@@ -1427,7 +1427,7 @@ const CONFIG = {
     const link = CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE;
     const total = CONFIG.PRICE_MINI;
     const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
-    const tierLabel = `$${total} Partner Synastry & 90-Day Love Timing Mini-Read`;
+    const tierLabel = `$${total} Full Text Script & Best Days To Text`;
     sendWebhook('checkout_clicked', {
       bump: false,
       total,
@@ -1478,12 +1478,12 @@ const CONFIG = {
       ? [
           '🔒 Sarah (Día 19 × Día 23) acaba de desbloquear el Guion de Alma Gemela 96% · hace 2m',
           '💬 Chloe (Día 7 × Día 14) verificó su Compatibilidad de Pareja · hace 4m',
-          '🔒 Jessica (Día 25 × Día 8) desbloqueó la Mini-Lectura de 90 Días ($17) · hace 6m',
+          '🔒 Jessica (Día 25 × Día 8) desbloqueó el Guion de Texto Completo y Mejores Días Para Escribir ($17) · hace 6m',
         ]
       : [
           '🔒 Sarah (Day 19 × Day 23) just unlocked the 96% Soulmate Text Script · 2m ago',
           '💬 Chloe (Day 7 × Day 14) ran a Partner Compatibility Check · 4m ago',
-          '🔒 Jessica (Day 25 × Day 8) unlocked the 90-Day Love Timing Mini-Read ($17) · 6m ago',
+          '🔒 Jessica (Day 25 × Day 8) unlocked the Full Text Script & Best Days To Text ($17) · 6m ago',
         ];
     if (typeof state.socialProofShownCount !== 'number') {
       state.socialProofShownCount = 0;
@@ -2410,12 +2410,12 @@ const CONFIG = {
     return `
       <section id="partner-synastry-love-timing-report" class="card p-5 sm:p-7 mb-8 border-2 border-gold/65 bg-gradient-to-b from-gold/10 via-[#121318] to-[#0E0F14] rounded-2xl avoid-break">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gold/25 pb-4">
-          <span class="badge-gold !text-[0.62rem]">✦ ${isEs ? 'DESBLOQUEADO · SINASTRÍA DE PAREJA Y TIMING AMOROSO DE 90 DÍAS' : 'UNLOCKED · PARTNER SYNASTRY & 90-DAY LOVE TIMING REPORT'}</span>
+          <span class="badge-gold !text-[0.62rem]">✦ ${isEs ? 'DESBLOQUEADO · GUION DE TEXTO COMPLETO Y MEJORES DÍAS PARA ESCRIBIR' : 'UNLOCKED · FULL TEXT SCRIPT & THE BEST & WORST DAYS TO TEXT THEM'}</span>
           <span class="text-xs text-zinc-400">${isEs ? 'Preparado para' : 'Prepared for'} <b class="text-ivory">${name}</b> (${esc(r.input.birthDate)})</span>
         </div>
 
         <h2 class="font-display text-2xl sm:text-3xl text-gold-grad mt-4 leading-snug">
-          ${isEs ? 'Tu Código de Apego, Compatibilidad de Pareja y Próximos 90 Días en el Amor' : 'Your Attachment Loop, Partner Synastry & Next 90 Days of Love Timing'}
+          ${isEs ? 'Tu Compatibilidad de Pareja, Guion de Texto y las 3 Fechas Este Mes En Que Se Acerca Más' : 'Your Partner Compatibility, Full Text Script & 3 Dates This Month They Pull Closer'}
         </h2>
         <p class="text-xs sm:text-sm text-zinc-300 mt-2 leading-relaxed">
           ${isEs
@@ -2487,10 +2487,10 @@ const CONFIG = {
           </div>
         </div>
 
-        <!-- 3. Next 90 Days of Rosicrucian Love Timing -->
+        <!-- 3. The Best & Worst Days To Text Them (3 Dates This Month They Pull Closer) -->
         <div class="mt-5 p-4 sm:p-5 rounded-xl bg-black/40 border border-white/10">
           <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gold font-semibold">
-            ${isEs ? '3 · TUS PRÓXIMOS 90 DÍAS DE TIMING AMOROSO ROSACRUZ' : '3 · YOUR NEXT 90 DAYS OF ROSICRUCIAN LOVE TIMING'}
+            ${isEs ? '3 · LOS MEJORES Y PEORES DÍAS PARA ESCRIBIRLE · 3 FECHAS ESTE MES EN QUE SE ACERCA MÁS' : '3 · THE BEST & WORST DAYS TO TEXT THEM · 3 DATES THIS MONTH THEY PULL CLOSER'}
           </div>
           <div class="grid sm:grid-cols-2 gap-3.5 mt-3">
             <div class="card-soft p-4 border border-gold/45">
@@ -2687,6 +2687,9 @@ const CONFIG = {
     else if (a === 'save-partner-email') {
       submitPartnerCompatEmail();
     }
+    else if (a === 'select-situation') {
+      selectPartnerSituation(t.dataset.situation || 'read');
+    }
     else if (a === 'demo-unlock') demoUnlock();
     else if (a === 'print') window.print();
     else if (a === 'share-code') shareCode();
@@ -2816,29 +2819,10 @@ const CONFIG = {
     }
   }
 
-  function runPartnerCompatibilityCheck(opts) {
-    if (!state.result) return;
-    const options = opts || {};
-    const mEl = $('#partnerDobMonth');
-    const dEl = $('#partnerDobDay');
-    const yEl = $('#partnerDobYear');
-    const resBox = $('#partner-compat-result');
-    if (!mEl || !dEl || !yEl || !resBox) return;
-    const m = mEl.value;
-    const d = dEl.value;
-    const y = yEl.value;
-    const isEs = state.lang === 'es';
-    if (!m || !d || !y) {
-      toast(isEs ? 'Selecciona el Mes, Día y Año de nacimiento de tu pareja.' : 'Please select your partner or crush\'s Birth Month, Day, and Year.');
-      return;
-    }
-    const rep = getPartnerCompatReport(state.result, m, d, y, state.lang);
-    const userBirthDay = (state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || 19;
-    const partnerBirthDay = parseInt(d, 10) || 13;
-    $$('#partner-quick-day-strip .quick-day-btn').forEach((btn) => {
-      btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === partnerBirthDay);
-    });
-    const smsPreviewMapEn = {
+  function getPartnerSituationScript(pMoolank, situationKey, lang) {
+    const isEs = lang === 'es';
+    const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
+    const baseEn = {
       1: {
         leadIn: 'Hey, I loved hanging out, but I noticed ',
         part1: 'our pace works best when neither of us forces it. ',
@@ -2894,7 +2878,7 @@ const CONFIG = {
         secretFear: 'Getting pulled into emotional drama that drains their fire and mission.',
       },
     };
-    const smsPreviewMapEs = {
+    const baseEs = {
       1: {
         leadIn: 'Oye, me encantó verte, pero noté que ',
         part1: 'nuestro ritmo fluye mejor cuando ninguno lo fuerza. ',
@@ -2950,7 +2934,95 @@ const CONFIG = {
         secretFear: 'Entrar en dramas emocionales que desgasten su energía.',
       },
     };
-    const smsPreview = (isEs ? smsPreviewMapEs : smsPreviewMapEn)[rep.pMoolank] || (isEs ? smsPreviewMapEs[7] : smsPreviewMapEn[7]);
+    const item = (isEs ? baseEs : baseEn)[pMoolank] || (isEs ? baseEs[7] : baseEn[7]);
+    if (sit === 'cold') {
+      return {
+        leadIn: isEs
+          ? `Noté que tu energía cambió de golpe, así que para un #${pMoolank} prefiero `
+          : `I can feel your energy shifted this week, so instead of chasing a #${pMoolank} I'm `,
+        part1: isEs
+          ? 'enfocarme en mi propia paz y dejar que baje la tensión sin reclamos. '
+          : 'giving you space to reset while I focus on my own week without pressure. ',
+        part2: item.part2,
+        secretFear: item.secretFear,
+      };
+    }
+    if (sit === 'pulled_away') {
+      return {
+        leadIn: isEs
+          ? `Lo pasamos increíble hace unos días, pero como te alejaste de repente voy a `
+          : `We got super close the other night, so instead of over-texting while you pull back I'm `,
+        part1: isEs
+          ? 'tomar mi propio espacio esta semana para que ninguno sienta presión. '
+          : 'stepping back to let our pace breathe naturally without forcing a label. ',
+        part2: item.part2,
+        secretFear: item.secretFear,
+      };
+    }
+    if (sit === 'silence') {
+      return {
+        leadIn: isEs
+          ? `No me gustan las guerras de orgullo ni el silencio, así que te dejo `
+          : `I don't do stubborn silent standoffs with someone I care about, so I'm `,
+        part1: isEs
+          ? 'espacio total esta semana para que proceses sin que yo te insista. '
+          : 'dropping the tug-of-war on my end and taking space to protect my peace. ',
+        part2: item.part2,
+        secretFear: item.secretFear,
+      };
+    }
+    return item;
+  }
+
+  function selectPartnerSituation(situationKey) {
+    const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
+    state.selectedSituation = sit;
+    $$('#situation-chip-strip .situation-chip').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.situation === sit);
+    });
+    const dEl = $('#partnerDobDay');
+    const partnerBirthDay = (dEl && parseInt(dEl.value, 10)) || state.lastPartnerBirthDay || 13;
+    const pMoolank = state.lastPartnerMoolank || 7;
+    const sms = getPartnerSituationScript(pMoolank, sit, state.lang);
+    const leadInEl = $('#imessage-leadin-text');
+    const p1El = $('#imessage-part1-text');
+    const p2El = $('#imessage-part2-text');
+    if (leadInEl) leadInEl.textContent = sms.leadIn;
+    if (p1El) p1El.textContent = sms.part1;
+    if (p2El) p2El.textContent = sms.part2;
+    sendWebhook('situation_chip_clicked', {
+      situation: sit,
+      partner_day: partnerBirthDay,
+      partner_moolank: pMoolank,
+    });
+  }
+
+  function runPartnerCompatibilityCheck(opts) {
+    if (!state.result) return;
+    const options = opts || {};
+    const mEl = $('#partnerDobMonth');
+    const dEl = $('#partnerDobDay');
+    const yEl = $('#partnerDobYear');
+    const resBox = $('#partner-compat-result');
+    if (!mEl || !dEl || !yEl || !resBox) return;
+    const m = mEl.value;
+    const d = dEl.value;
+    const y = yEl.value;
+    const isEs = state.lang === 'es';
+    if (!m || !d || !y) {
+      toast(isEs ? 'Selecciona el Mes, Día y Año de nacimiento de tu pareja.' : 'Please select your partner or crush\'s Birth Month, Day, and Year.');
+      return;
+    }
+    const rep = getPartnerCompatReport(state.result, m, d, y, state.lang);
+    const userBirthDay = (state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || 19;
+    const partnerBirthDay = parseInt(d, 10) || 13;
+    state.lastPartnerBirthDay = partnerBirthDay;
+    state.lastPartnerMoolank = rep.pMoolank;
+    const activeSit = state.selectedSituation || 'read';
+    $$('#partner-quick-day-strip .quick-day-btn').forEach((btn) => {
+      btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === partnerBirthDay);
+    });
+    const smsPreview = getPartnerSituationScript(rep.pMoolank, activeSit, state.lang);
     state.partnerDob = rep.pIso;
     if (state.profile && !state.profile.isSample) {
       state.profile.partner_dob = rep.pIso;
@@ -2997,8 +3069,29 @@ const CONFIG = {
       </div>
       <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-3.5">${rep.summary}</p>
 
+      <!-- 1-TAP "WHAT DID THEY JUST DO?" SITUATION SELECTOR (#situation-chip-strip) -->
+      <div id="situation-chip-strip" class="mt-4 p-2.5 sm:p-3 rounded-xl bg-black/45 border border-gold/40 text-left">
+        <p class="text-[0.68rem] sm:text-xs font-extrabold uppercase tracking-wider text-champagne mb-2">
+          👇 ${isEs ? '¿Qué acaba de hacer? Toca para adaptar tu guion de texto:' : 'What did they just do? Tap to tailor your text script:'}
+        </p>
+        <div class="situation-chip-grid" role="group" aria-label="Select Current Relationship Situation">
+          <button type="button" class="situation-chip ${activeSit === 'read' ? 'active' : ''}" data-action="select-situation" data-situation="read">
+            ${isEs ? '📱 Me dejó en visto' : '📱 Left me on read'}
+          </button>
+          <button type="button" class="situation-chip ${activeSit === 'cold' ? 'active' : ''}" data-action="select-situation" data-situation="cold">
+            ${isEs ? '🥶 Actúa frío/a' : '🥶 Acting cold'}
+          </button>
+          <button type="button" class="situation-chip ${activeSit === 'pulled_away' ? 'active' : ''}" data-action="select-situation" data-situation="pulled_away">
+            ${isEs ? '💔 Se alejó de golpe' : '💔 Pulled away fast'}
+          </button>
+          <button type="button" class="situation-chip ${activeSit === 'silence' ? 'active' : ''}" data-action="select-situation" data-situation="silence">
+            ${isEs ? '😤 Silencio orgulloso' : '😤 Stubborn silence'}
+          </button>
+        </div>
+      </div>
+
       <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->
-      <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-4 text-left">
+      <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-3 text-left">
         <div id="part1-unlocked-badge" class="hidden mb-2 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-400/60 text-[0.68rem] sm:text-xs font-extrabold text-emerald-300 tracking-wide">
           ✅ ${isEs
             ? `CORREO VERIFICADO — PARTE 1 DE TU GUION [Día ${userBirthDay} × Día ${partnerBirthDay}] DESBLOQUEADA`
@@ -3015,20 +3108,20 @@ const CONFIG = {
           </span>
         </div>
         <div class="imessage-bubble">
-          <span class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span id="imessage-part1-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part1}</span><span id="imessage-part2-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part2}</span>
+          <span id="imessage-leadin-text" class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span id="imessage-part1-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part1}</span><span id="imessage-part2-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part2}</span>
         </div>
         <div id="partner-secret-fear-unlocked" class="hidden mt-2.5 p-2.5 rounded-lg bg-amber-950/40 border border-gold/45 text-xs text-champagne leading-snug">
           🧠 <b>${isEs ? `Su Miedo Secreto #1 (#${rep.pMoolank} · ${rep.pRuler}):` : `Their #${rep.pMoolank} (${rep.pRuler}) #1 Secret Fear:`}</b> ${smsPreview.secretFear}
         </div>
         <div id="imessage-part2-locked-callout" class="hidden mt-2 p-2.5 rounded-lg bg-black/55 border border-gold/55 text-[0.7rem] sm:text-xs text-gold font-semibold leading-snug">
           🔒 ${isEs
-            ? 'BLOQUEADO EN LA PARTE 2: El Gancho de Seguimiento de 24 Horas + Qué Te Responderá Exactamente + Tus 3 Fechas Clave de Noviembre'
-            : 'LOCKED IN PART 2: The "24-Hour Follow-Up Hook" + "What They Will Text Back" + "Your 3 Exact November Turning-Point Dates"'}
+            ? 'BLOQUEADO EN LA PARTE 2: El resto de este mensaje + qué te responderá + los 3 mejores días para escribirle este mes'
+            : 'LOCKED IN PART 2: The rest of this text + what they will reply + the 3 best days to text them this month'}
         </div>
         <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
           🔒 ${isEs
-            ? 'Desbloquear el guion exacto palabra por palabra + Calendario de Amor de 90 Días ($17 Mini-Lectura) →'
-            : 'Unlock the exact word-for-word text script + 90-Day Love Timing Calendar ($17 Mini-Read) →'}
+            ? 'Desbloquear el guion de texto completo + los mejores y peores días para escribirle ($17) →'
+            : 'Unlock the full text script + the best & worst days to text them ($17) →'}
         </button>
       </div>
 
@@ -3042,13 +3135,13 @@ const CONFIG = {
         </div>
         <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
           ${isEs
-            ? `Parte 1 desbloqueada arriba. Desbloquea ahora mismo la Parte 2 de tu guion [Día ${userBirthDay} × Día ${partnerBirthDay}] + Qué Te Responderá + Tu Calendario de Amor de 90 Días:`
-            : `Part 1 is unlocked above! Lock in Part 2 of your [Day ${userBirthDay} × Day ${partnerBirthDay}] Script + What They'll Reply + Your 90-Day Love Timing Calendar right now:`}
+            ? `Parte 1 desbloqueada arriba. Desbloquea ahora la Parte 2 de tu guion [Día ${userBirthDay} × Día ${partnerBirthDay}] + qué te responderá + los mejores días para escribirle:`
+            : `Part 1 is unlocked above! Lock in Part 2 of your [Day ${userBirthDay} × Day ${partnerBirthDay}] Script + what they'll reply + the best & worst days to text them right now:`}
         </p>
         <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
           ⚡ ${isEs
-            ? 'DESBLOQUEO VIP RÁPIDO (EXPIRA EN <span data-vip-timer>14:59</span>): Obtén la Parte 2 de Tu Guion + Qué Te Responderá + Calendario de 90 Días al Instante ($17) →'
-            : 'VIP FAST-ACTION UNLOCK (EXPIRES IN <span data-vip-timer>14:59</span>): Get Part 2 of Your Word-For-Word Text Script + What They\'ll Reply + Your 90-Day Love Timing Calendar Instantly On-Screen ($17) →'}
+            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer>14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($17) →'
+            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer>14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($17) →'}
         </button>
       </div>
 
@@ -3061,7 +3154,7 @@ const CONFIG = {
               : `Not ready for the full $17 unlock yet? Enter your email below and we'll send your [Day ${userBirthDay} × Day ${partnerBirthDay}] Compatibility Breakdown + Opening Reset Line to your inbox free:`}
           </div>
           <p class="text-xs text-champagne font-medium leading-snug">
-            📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y desbloquear la Parte 1 de tu guion gratis?' : 'Want to save this Partner Compatibility score &amp; see your next 3 relationship turning-point dates for free?'}
+            📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver las 3 fechas este mes en que se acerca más gratis?' : 'Want to save this Partner Compatibility score &amp; see the 3 dates this month they pull closer for free?'}
           </p>
           <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
             <input id="partner-compat-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
@@ -3072,13 +3165,13 @@ const CONFIG = {
         </div>` : ''}
         <p class="text-xs sm:text-sm text-champagne text-left leading-relaxed">
           🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa y Dossier de 20 Páginas:' : 'Locked Inside Your Partner Synastry &amp; Full Dossier:'}</b>
-          ${isEs ? 'Incluye <b>El Guion Exacto de Texto para "Invertir la Persecución"</b> para una pareja #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo, más tus fechas clave en los próximos 12 meses.' : 'Includes <b>The Exact "Flip The Chase" Text Script For Their #' + rep.pMoolank + ' (' + rep.pRuler + ') Birth Number</b> so neither of you pulls away—plus your peak relationship dates over the next 12 months.'}
+          ${isEs ? 'Incluye <b>El Guion Exacto de Texto para "Invertir la Persecución"</b> para una pareja #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo, más los mejores y peores días para escribirle.' : 'Includes <b>The Exact "Flip The Chase" Text Script For Their #' + rep.pMoolank + ' (' + rep.pRuler + ') Birth Number</b> so neither of you pulls away—plus the best &amp; worst days to text them.'}
         </p>
         <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
           ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
         </button>
         <button type="button" id="btn-partner-mini-cta" data-action="checkout-mini" data-trigger="partner_compat_mini_17" class="btn-ghost mt-2.5 !py-2.5 !px-4 w-full text-xs text-champagne border-gold/40 hover:border-gold">
-          ⚡ ${isEs ? 'O desbloquea solo la Mini-Lectura de Pareja y 90 Días por $17 →' : 'Or grab just the $17 Partner Synastry &amp; 90-Day Love Timing Mini-Read →'}
+          ⚡ ${isEs ? 'O desbloquea el Guion de Texto Completo y Mejores Días Para Escribir ($17) →' : 'Or unlock the Full Text Script &amp; Best Days To Text ($17) →'}
         </button>
       </div>
     `;
