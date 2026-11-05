@@ -41,6 +41,27 @@
       "primary_clip": "emo_07_upset_after_argument.mp4",
       "mean_luma": 109.1,
       "updated_at": "2026-11-04T20:36:01"
+    },
+    {
+      "id": "short_31",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_03_couple_silence_apart.mp4",
+      "mean_luma": 101.6,
+      "updated_at": "2026-11-05T12:16:15"
+    },
+    {
+      "id": "short_32",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_12_upset_couple_closeup.mp4",
+      "mean_luma": 116.7,
+      "updated_at": "2026-11-05T12:16:51"
+    },
+    {
+      "id": "short_33",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_04_guy_apologizing_upset_gf.mp4",
+      "mean_luma": 122.2,
+      "updated_at": "2026-11-05T12:17:23"
     }
   ]
 }

@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_33",
+        "video_id": None,
+        "title_match": "Why you keep falling for people who pull away",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_32",
+        "video_id": None,
+        "title_match": "Left on read at 11:42 PM? Instead of sending a long paragraph",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_31",
+        "video_id": None,
+        "title_match": "He texted me every morning for 6 weeks, then went cold on a Tuesday",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_30",
         "video_id": None,
         "title_match": "Are your birthdays endgame—or just a 3-month karmic lesson?",

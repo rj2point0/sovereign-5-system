@@ -33,6 +33,21 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_33",
+        "video_id": None,
+        "title_match": "Why you keep falling for people who pull away",
+    },
+    {
+        "id": "short_32",
+        "video_id": None,
+        "title_match": "Left on read at 11:42 PM? Instead of sending a long paragraph",
+    },
+    {
+        "id": "short_31",
+        "video_id": "7704784636659961102",
+        "title_match": "He texted me every morning for 6 weeks, then went cold on a Tuesday",
+    },
+    {
         "id": "short_30",
         "video_id": None,
         "title_match": "Are your birthdays endgame—or just a 3-month karmic lesson?",
@@ -90,6 +105,9 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_33", "shortcode": "DfX4Mdsuqc1"},
+    {"id": "short_32", "shortcode": "DfX4E4QOsUB"},
+    {"id": "short_31", "shortcode": "DfX39C3Owgn"},
     {"id": "short_24", "shortcode": "DfWMtB2OLJc"},
     {"id": "short_23", "shortcode": "DfWMlPuumkQ"},
     {"id": "short_30", "shortcode": "DfVoPn9u4rG"},

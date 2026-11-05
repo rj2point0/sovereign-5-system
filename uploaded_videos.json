@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-04T20:43:33.737657",
+  "updated_at": "2026-11-05T12:21:24.924845",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -320,6 +320,33 @@
       "schedule_time": "2026-11-07 18:30",
       "uploaded_at": "2026-11-04T15:45:52.737595",
       "caption_preview": "Are your birthdays endgame—or just a 3-month karmic lesson? (Comment both birth days below or test your match free at th"
+    },
+    "tiktok_short_31_7sec_six_weeks_vanished.mp4": {
+      "filename": "tiktok_short_31_7sec_six_weeks_vanished.mp4",
+      "ad_id": "short_31",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-05T12:19:48.634917",
+      "caption_preview": "He texted me every morning for 6 weeks, then went cold on a Tuesday 💔 (Crush born 4th, 7th, 13th, 16th, 22nd, 25th, or 3"
+    },
+    "tiktok_short_32_7sec_read_at_midnight.mp4": {
+      "filename": "tiktok_short_32_7sec_read_at_midnight.mp4",
+      "ad_id": "short_32",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-08 11:00",
+      "uploaded_at": "2026-11-05T12:20:49.081120",
+      "caption_preview": "Left on read at 11:42 PM? Instead of sending a long paragraph, I used his birth day to send this 9-word reset text 📱✨ (B"
+    },
+    "tiktok_short_33_7sec_wrong_birthday_match.mp4": {
+      "filename": "tiktok_short_33_7sec_wrong_birthday_match.mp4",
+      "ad_id": "short_33",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-08 18:30",
+      "uploaded_at": "2026-11-05T12:21:24.924845",
+      "caption_preview": "Why you keep falling for people who pull away 💔 (Born 2nd, 3rd, 6th, 11th, 12th, 15th, 20th, 24th, or 29th? Test both bi"
     }
   }
 }

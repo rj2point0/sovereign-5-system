@@ -155,14 +155,37 @@
       "title_match": "Born on the 1st, 4th, 7th, 8th, 9th, 10th, 13th, 16th, 17th",
       "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
       "seeded_at": "2026-11-04T12:34:27.190412"
+    },
+    "short_23": {
+      "video_id": "7704542849571900685",
+      "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting",
+      "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+      "seeded_at": "2026-11-04T22:38:34.884898"
+    },
+    "short_31": {
+      "video_id": "7704784636659961102",
+      "title_match": "He texted me every morning for 6 weeks, then went cold on a Tuesday",
+      "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+      "seeded_at": "2026-11-05T12:23:44.841527"
+    },
+    "short_24": {
+      "video_id": "7704543122772086029",
+      "title_match": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th",
+      "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+      "seeded_at": "2026-11-05T12:24:24.811626"
     }
   },
-  "updated_at": "2026-11-04T12:35:26.740554",
+  "updated_at": "2026-11-05T12:25:35.755484",
   "last_verification": {
-    "checked_at": "2026-11-04T12:34:57.779759",
+    "checked_at": "2026-11-05T12:24:55.384050",
     "videos": {
-      "short_21": {
-        "browse_comment_count": "1",
+      "short_31": {
+        "browse_comment_count": "2",
+        "comment_intact": true,
+        "in_studio_comment_feed": true
+      },
+      "short_24": {
+        "browse_comment_count": "2",
         "comment_intact": true,
         "in_studio_comment_feed": true
       }

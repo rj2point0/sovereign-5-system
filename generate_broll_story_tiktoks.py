@@ -1393,6 +1393,159 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
         ],
     },
+    {
+        "id": "short_31",
+        "cohort": "Cohort C · Batch 8 (Dr. Plants Micro-Story + SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("HE TEXTED DAILY", "white"),
+            ("FOR 6 WEEKS", "gold"),
+            ("THEN VANISHED", "coral"),
+        ],
+        "giant_sub_pill": "CRUSH BORN 4th · 7th · 13th · 16th · 22nd · 25th · 31st",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_31_7sec_six_weeks_vanished.mp4",
+        "yt_title": "He Texted Daily For 6 Weeks Then Vanished 💔 #Shorts",
+        "grid_headline": "HE TEXTED DAILY\nFOR 6 WEEKS\nTHEN VANISHED",
+        "grid_sub": "CRUSH BORN 4, 7, 13, 16, 22, 25, 31",
+        "hook_box_text": "He texted me every morning for six weeks, then went cold on a Tuesday.",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+24%",
+        "reveal_match_pair": "Born 19th × Born 25th",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved catching up this week, and I...",
+        "spoken_script": (
+            "He texted me every morning for six weeks, then went cold on a Tuesday. "
+            "I blamed myself until I tested his birth day against mine. "
+            "Tap our bio before you text him."
+        ),
+        "broll_clips": [
+            (0.0, 2.5, "emo_03_couple_silence_apart.mp4"),
+            (2.5, 4.6, "emo_01_woman_phone_night.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "He texted me every morning for 6 weeks, then went cold on a Tuesday 💔 "
+            "(Crush born 4th, 7th, 13th, 16th, 22nd, 25th, or 31st? Test both birth days free in our bio before you text him) "
+            "#relationships #situationship #textingadvice #avoidantattachment #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#situationship", "#textingadvice", "#avoidantattachment",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_32",
+        "cohort": "Cohort C · Batch 8 (Dr. Plants Micro-Story + SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("LEFT ON READ", "coral"),
+            ("AT 11:42 PM?", "gold"),
+            ("SEND THIS TEXT", "white"),
+        ],
+        "giant_sub_pill": "BORN 1st · 5th · 9th · 14th · 18th · 19th · 23rd · 27th · 28th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_32_7sec_read_at_midnight.mp4",
+        "yt_title": "Left On Read At Midnight? Send This 9-Word Text 📱 #Shorts",
+        "grid_headline": "LEFT ON READ\nAT 11:42 PM?\nSEND THIS TEXT",
+        "grid_sub": "9-WORD RESET TEXT",
+        "hook_box_text": "When he left me on read at midnight, I almost sent a long paragraph.",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+24%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“No rush replying—I'm unplugging for the...",
+        "spoken_script": (
+            "When he left me on read at midnight, I almost sent a long paragraph. "
+            "Instead, I used his birth day to send this nine word reset text. "
+            "And he called me in ten minutes."
+        ),
+        "broll_clips": [
+            (0.0, 2.5, "emo_12_upset_couple_closeup.mp4"),
+            (2.5, 4.6, "emo_08_couple_bedroom_tension.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Left on read at 11:42 PM? Instead of sending a long paragraph, I used his birth day to send this 9-word reset text 📱✨ "
+            "(Born 1st, 5th, 9th, 14th, 18th, 19th, 23rd, 27th, or 28th—unlock your text script in our bio) "
+            "#leftonread #textingadvice #relationships #situationship #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#leftonread", "#textingadvice", "#relationships", "#situationship",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_33",
+        "cohort": "Cohort C · Batch 8 (Dr. Plants Micro-Story + SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("WHY YOU FALL", "white"),
+            ("FOR PEOPLE WHO", "gold"),
+            ("PULL AWAY", "coral"),
+        ],
+        "giant_sub_pill": "BORN 2nd · 3rd · 6th · 11th · 12th · 15th · 20th · 24th · 29th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_33_7sec_wrong_birthday_match.mp4",
+        "yt_title": "Why You Always Fall For People Who Pull Away 💔 #Shorts",
+        "grid_headline": "WHY YOU FALL\nFOR PEOPLE WHO\nPULL AWAY",
+        "grid_sub": "TEST BOTH BIRTH DAYS",
+        "hook_box_text": "I spent a year begging for bare minimum attention from someone who could never open up.",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+24%",
+        "reveal_match_pair": "Born 11th × Born 16th",
+        "reveal_match_score": "94% PUSH-PULL MAGNET",
+        "reveal_sms_lead": "“I really value what we have, so I'm giving...",
+        "spoken_script": (
+            "I spent a year begging for bare minimum attention from someone who could never open up. "
+            "Then I saw why our two birth days clash. "
+            "Test both birth days free in our bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.5, "emo_04_guy_apologizing_upset_gf.mp4"),
+            (2.5, 4.6, "emo_02_couple_bed_backs.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why you keep falling for people who pull away 💔 "
+            "(Born 2nd, 3rd, 6th, 11th, 12th, 15th, 20th, 24th, or 29th? Test both birth days free in our bio to see why your numbers clash) "
+            "#relationships #attachmentstyle #anxiousattachment #numerology #datingadvice #situationship #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#attachmentstyle", "#anxiousattachment", "#numerology",
+            "#datingadvice", "#situationship", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -1441,7 +1594,7 @@ def validate_jenny_hoyos_readability(spec: Dict[str, Any]) -> Dict[str, Any]:
     fk_grade = compute_flesch_kincaid_grade(script)
     lower_words = set(script.lower().replace(",", " ").replace(".", " ").replace("?", " ").split())
     jargon_found = sorted(lower_words.intersection(BANNED_JENNY_HOYOS_JARGON))
-    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so"))
+    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so", "until", "instead", "then"))
     tail_hold = float(spec.get("tail_hold_sec", 0.5))
 
     if fk_grade > 5.5:
@@ -1561,6 +1714,138 @@ class BrollStoryGenerator:
         print(f"   [TTS] Built {len(cues)} 3-word CapCut-style caption cues.", flush=True)
         return cues
 
+    def synthesize_sfx_and_riser_bed(
+        self,
+        total_dur: float,
+        broll_cutoff: float,
+        out_sfx_wav: str,
+    ) -> None:
+        """
+        Synthesizes a studio-grade 44.1kHz stereo WAV sound design bed in Python (numpy + wave):
+        1. 0.00s (Hook Impact): Subtle warm cinematic sub-bass impact (65Hz-110Hz soft thud, -14dB)
+           when the Giant 120px Headline appears.
+        2. 1.40s (Emotional Text Trigger): Crisp iMessage 'Sent' swoosh / midnight notification chime (-16dB)
+           right when the story mentions texting or being left on read.
+        3. 0.00s-4.55s (Tension Riser): Soft, warm heartbeat/pad swell (-24dB rising to -18dB)
+           underneath the voiceover that creates emotional suspense.
+        4. 4.60s (The Product Reveal Click): Crisp UI lock-pop / camera-shutter sound (-14dB)
+           the exact frame the 96% SOULMATE LOCK + Situation Chip + Blurred iMessage Reveal Card
+           docks into the lower third.
+        """
+        import wave
+
+        sr = 44100
+        dur_pad = max(total_dur + 0.5, 8.0)
+        n_samples = int(dur_pad * sr)
+        t_full = np.arange(n_samples, dtype=np.float64) / sr
+        mix_l = np.zeros(n_samples, dtype=np.float64)
+        mix_r = np.zeros(n_samples, dtype=np.float64)
+
+        def db_to_amp(db: float) -> float:
+            return float(10.0 ** (db / 20.0))
+
+        # --- 3. 0.00s-4.55s TENSION RISER (-24dB rising to -18dB) ---
+        riser_end = min(4.55, max(2.5, broll_cutoff - 0.05))
+        pad_chord = (
+            0.40 * np.sin(2.0 * np.pi * 110.0 * t_full)
+            + 0.28 * np.sin(2.0 * np.pi * 165.0 * t_full)
+            + 0.20 * np.sin(2.0 * np.pi * 220.0 * t_full)
+            + 0.12 * np.sin(2.0 * np.pi * 330.0 * t_full)
+        )
+        # Subtle 75 BPM (1.25Hz) warm heartbeat throb (68Hz sub-pulse)
+        hb_phase = (t_full * 1.25) % 1.0
+        hb_env = np.exp(-((hb_phase - 0.12) / 0.055) ** 2) + 0.65 * np.exp(-((hb_phase - 0.30) / 0.065) ** 2)
+        hb_wave = np.sin(2.0 * np.pi * 68.0 * t_full) * hb_env
+        riser_raw = 0.62 * pad_chord + 0.38 * hb_wave
+        riser_raw = riser_raw / max(1e-6, float(np.max(np.abs(riser_raw))))
+
+        amp_start = db_to_amp(-24.0)  # 0.0631
+        amp_peak = db_to_amp(-18.0)   # 0.1259
+        amp_tail = db_to_amp(-24.5)
+        env_riser = np.where(
+            t_full <= riser_end,
+            amp_start + (amp_peak - amp_start) * (t_full / max(0.1, riser_end)),
+            amp_tail * np.exp(-np.maximum(0.0, t_full - riser_end) * 0.35),
+        )
+        # Smooth 0.25s fade-out at total_dur
+        fade_mask = np.clip((total_dur - t_full) / 0.25, 0.0, 1.0)
+        env_riser = env_riser * fade_mask
+        mix_l += riser_raw * env_riser
+        mix_r += np.roll(riser_raw, 18) * env_riser
+
+        # --- 1. 0.00s HOOK IMPACT (65Hz-110Hz soft sub-bass thud, -14dB) ---
+        imp_dur = 0.46
+        imp_n = int(imp_dur * sr)
+        t_imp = np.arange(imp_n, dtype=np.float64) / sr
+        # Instantaneous frequency sweeping from 110Hz down to 65Hz
+        phase_imp = 2.0 * np.pi * (65.0 * t_imp + 45.0 * 0.095 * (1.0 - np.exp(-t_imp / 0.095)))
+        imp_wave = 0.78 * np.sin(phase_imp) + 0.22 * np.sin(2.0 * phase_imp)
+        imp_attack = np.minimum(1.0, t_imp / 0.010)
+        imp_decay = np.exp(-t_imp * 7.8)
+        imp_sig = imp_wave * imp_attack * imp_decay
+        imp_sig = imp_sig / max(1e-6, float(np.max(np.abs(imp_sig)))) * db_to_amp(-14.0)
+        mix_l[:imp_n] += imp_sig
+        mix_r[:imp_n] += imp_sig
+
+        # --- 2. 1.40s EMOTIONAL TEXT TRIGGER (iMessage 'Sent' swoosh + midnight chime, -16dB) ---
+        trig_t0 = 1.40
+        trig_idx0 = int(trig_t0 * sr)
+        trig_dur = 0.38
+        trig_n = int(trig_dur * sr)
+        if trig_idx0 + trig_n < n_samples:
+            t_tr = np.arange(trig_n, dtype=np.float64) / sr
+            # Part A (0.00s-0.14s): Upward iMessage 'Sent' swoosh (420Hz -> 1240Hz)
+            sw_mask = (t_tr <= 0.14).astype(np.float64)
+            u_sw = np.clip(t_tr / 0.14, 0.0, 1.0)
+            phase_sw = 2.0 * np.pi * (420.0 * t_tr + (820.0 / (2.0 * 0.14)) * (t_tr ** 2))
+            swoosh = np.sin(phase_sw) * np.sin(np.pi * u_sw) * sw_mask
+            # Part B (0.08s-0.38s): Crisp two-note glassy midnight chime (880Hz A5 -> 1318.5Hz E6)
+            t_ch = np.maximum(0.0, t_tr - 0.08)
+            ch_mask = (t_tr >= 0.08).astype(np.float64)
+            ch_att = np.minimum(1.0, t_ch / 0.006)
+            ch_dec = np.exp(-t_ch * 13.5)
+            chime = (0.55 * np.sin(2.0 * np.pi * 880.0 * t_ch) + 0.45 * np.sin(2.0 * np.pi * 1318.5 * t_ch)) * ch_att * ch_dec * ch_mask
+            trig_sig = 0.52 * swoosh + 0.68 * chime
+            trig_sig = trig_sig / max(1e-6, float(np.max(np.abs(trig_sig)))) * db_to_amp(-16.0)
+            mix_l[trig_idx0 : trig_idx0 + trig_n] += trig_sig * 0.95
+            mix_r[trig_idx0 : trig_idx0 + trig_n] += trig_sig * 1.05
+
+        # --- 4. 4.60s PRODUCT REVEAL CLICK (UI lock-pop / camera-shutter sound, -14dB) ---
+        rev_t0 = float(broll_cutoff if broll_cutoff <= 6.2 else 4.60)
+        rev_idx0 = int(rev_t0 * sr)
+        rev_dur = 0.16
+        rev_n = int(rev_dur * sr)
+        if rev_idx0 + rev_n < n_samples:
+            t_rv = np.arange(rev_n, dtype=np.float64) / sr
+            # Transient 1 (0.00s): Tactile shutter click (1800Hz -> 620Hz)
+            click1 = (
+                0.65 * np.sin(2.0 * np.pi * (620.0 * t_rv + 1180.0 * 0.012 * (1.0 - np.exp(-t_rv / 0.012))))
+                + 0.35 * np.sin(2.0 * np.pi * 2400.0 * t_rv)
+            ) * np.exp(-t_rv * 55.0)
+            # Transient 2 (0.036s): Warm UI lock-pop harmonic snap (1046Hz C6 + 1568Hz G6)
+            t_rv2 = np.maximum(0.0, t_rv - 0.036)
+            m2 = (t_rv >= 0.036).astype(np.float64)
+            pop2 = (
+                0.60 * np.sin(2.0 * np.pi * 1046.5 * t_rv2)
+                + 0.40 * np.sin(2.0 * np.pi * 1568.0 * t_rv2)
+            ) * np.minimum(1.0, t_rv2 / 0.004) * np.exp(-t_rv2 * 32.0) * m2
+            rev_sig = 0.65 * click1 + 0.75 * pop2
+            rev_sig = rev_sig / max(1e-6, float(np.max(np.abs(rev_sig)))) * db_to_amp(-14.0)
+            mix_l[rev_idx0 : rev_idx0 + rev_n] += rev_sig
+            mix_r[rev_idx0 : rev_idx0 + rev_n] += rev_sig
+
+        stereo = np.stack([mix_l, mix_r], axis=-1)
+        stereo_i16 = np.clip(stereo * 32767.0, -32767, 32767).astype(np.int16)
+        with wave.open(out_sfx_wav, "wb") as wf:
+            wf.setnchannels(2)
+            wf.setsampwidth(2)
+            wf.setframerate(sr)
+            wf.writeframes(stereo_i16.tobytes())
+        print(
+            f"   [SFX] Synthesized 4-layer sound design bed (0.00s -14dB Sub-Impact | 1.40s -16dB iMessage Chime | 0.00-{riser_end:.2f}s -24->-18dB Riser | {rev_t0:.2f}s -14dB Reveal Lock-Pop)",
+            flush=True,
+        )
+
     def mix_audio_with_subtle_pad(
         self,
         voice_path: str,
@@ -1568,11 +1853,13 @@ class BrollStoryGenerator:
         cues: List[Dict[str, Any]],
         tail_hold_sec: float = 1.2,
         target_voice_sec: Optional[float] = None,
+        broll_cutoff: float = 4.60,
     ) -> float:
         """
-        Mixes the spoken story with a subtle 432Hz ambient pad and `tail_hold_sec` tail hold.
+        Mixes the spoken story with the 4-layer studio sound design bed (SFX + Tension Riser)
+        and `tail_hold_sec` tail hold.
         If `target_voice_sec` is specified and raw voice exceeds it, gently speeds up voice & cues
-        via FFmpeg `atempo` so Cohort C shorts stay strictly between 11.5s and 14.0s (<14.5s).
+        via FFmpeg `atempo` so Cohort C shorts stay strictly on target (~7.5s).
         """
         cmd_probe0 = [FFMPEG_EXE, "-i", voice_path]
         r0 = subprocess.run(cmd_probe0, capture_output=True, text=True)
@@ -1593,21 +1880,16 @@ class BrollStoryGenerator:
             v_dur = v_dur / tempo
             print(f"   [TTS] Applied pace tempo={tempo:.3f}x -> voice={v_dur:.2f}s (+{tail_hold_sec:.1f}s tail)", flush=True)
 
-        amb_path = voice_path + "_amb.wav"
-        cmd_amb = [
-            FFMPEG_EXE, "-y", "-f", "lavfi",
-            "-i", f"aevalsrc=0.25*sin(2*PI*108*t)+0.25*sin(2*PI*216*t)+0.25*sin(2*PI*324*t)+0.25*sin(2*PI*432*t):s=44100:d={v_dur + tail_hold_sec + 1.0:.2f}",
-            "-af", "lowpass=f=420,volume=0.08",
-            amb_path,
-        ]
-        subprocess.run(cmd_amb, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        total_est_dur = v_dur + tail_hold_sec
+        amb_path = voice_path + "_sfx_bed.wav"
+        self.synthesize_sfx_and_riser_bed(total_est_dur, broll_cutoff=broll_cutoff, out_sfx_wav=amb_path)
 
         atempo_filter = f"atempo={tempo:.4f}," if tempo > 1.001 else ""
         filter_complex = (
             f"[0:a]{atempo_filter}apad=pad_dur={tail_hold_sec:.2f}[vpad];"
             f"[vpad]volume=1.0[v];"
-            f"[1:a]volume=0.09[bg];"
-            f"[v][bg]amix=inputs=2:duration=first:dropout_transition=1"
+            f"[1:a]volume=1.0[bg];"
+            f"[v][bg]amix=inputs=2:duration=first:dropout_transition=0:weights=1 1:normalize=0"
         )
         cmd_mix = [
             FFMPEG_EXE, "-y",
@@ -1821,10 +2103,11 @@ class BrollStoryGenerator:
             draw.text((cx, curr_y), ln, fill=(14, 14, 18), font=self.font_hook, anchor="mm")
             curr_y += line_h
 
-    def draw_capcut_caption(self, draw: ImageDraw.ImageDraw, cue_text: str):
+    def draw_capcut_caption(self, draw: ImageDraw.ImageDraw, cue_text: str, cy: int = 1320):
         """
         Renders 56px bold white text with thick black stroke (width=5) and drop shadow
-        at y=1320, highlighting at most 1 power word per phrase in warm gold (#FFD147).
+        at y=cy (default 1320, or 1072 during lower-third reveal dock), highlighting at most
+        1 power word per phrase in warm gold (#FFD147).
         """
         words = cue_text.split()
         if not words:
@@ -1848,7 +2131,7 @@ class BrollStoryGenerator:
             if tot_w <= 940:
                 break
 
-        cx, cy = 540, 1320
+        cx = 540
         cur_x = cx - tot_w // 2
         for idx, (w_str, ww) in enumerate(zip(words, w_widths)):
             col = (255, 209, 71) if idx == gold_idx else (255, 255, 255)
@@ -1905,45 +2188,74 @@ class BrollStoryGenerator:
     def draw_imessage_match_reveal_card(self, frame: Image.Image, spec: Dict[str, Any]) -> Image.Image:
         """
         Upgrades the 7.5s video reveal phase (4.6s-7.5s) to visually display:
-        1) Dark-mode Partner Match Card ('Born 19th × Born 23rd -> 96% SOULMATE LOCK') + 1-Tap Birth Day Strip
-        2) iMessage 'Flip The Chase' Text Script Bubble (first line visible + Gaussian-blurred secret text + Gold Lock CTA)
-        When visual_format == 'emotional_face_giant', keeps Y = 0..1185 (Giant 120px Headline + Expressive Human Face)
-        100% unobstructed and renders a compact Lower-Third Match + Blurred iMessage Dock at Y = 1185..1545 so NO frame
-        of the video ever hides the human face or giant headline!
+        1) Dark-mode Partner Match Card ('Born 19th × Born 23rd -> 96% SOULMATE LOCK')
+        2) 1-Tap Situation Chip Strip (#situation-chip-strip: '[📱 Left me on read]' lit in gold,
+           '[🥶 Acting cold]', '[💔 Pulled away]') right above the blurred iMessage bubble
+        3) iMessage 'Flip The Chase' Text Script Bubble (first line visible + Gaussian-blurred secret text)
+        4) Plain 5th-Grade Gold Lock CTA:
+           '🔒 Unlock Full Text + Best & Worst Days To Text ($17) — Link in Bio'
         """
         is_emo_giant = spec.get("visual_format") == "emotional_face_giant"
         if is_emo_giant:
             frame = self.draw_giant_emotional_headline(frame, spec, compact_top=False)
             draw = ImageDraw.Draw(frame)
-            f_pair = ImageFont.truetype(FONT_BOLD, 30)
-            f_sms_txt = ImageFont.truetype(FONT_BOLD, 27)
-            f_lock = ImageFont.truetype(FONT_BOLD, 23)
+            f_pair = ImageFont.truetype(FONT_BOLD, 28)
+            f_chip = ImageFont.truetype(FONT_BOLD, 20)
+            f_sms_txt = ImageFont.truetype(FONT_BOLD, 26)
+            f_lock = ImageFont.truetype(FONT_BOLD, 22)
+            emoji_font_path = r"C:\Windows\Fonts\seguiemj.ttf"
+            f_emoji = ImageFont.truetype(emoji_font_path, 20) if os.path.exists(emoji_font_path) else f_chip
 
             pair_txt = spec.get("reveal_match_pair", "Born 19th × Born 23rd")
             score_txt = spec.get("reveal_match_score", "96% SOULMATE LOCK")
 
-            # Lower-Third Compact Match + Blurred iMessage Dock (Y = 1185..1535) — never covers faces at Y = 550..1180!
-            draw.rounded_rectangle([54, 1185, 1026, 1535], radius=24, fill=(12, 14, 20), outline=(212, 175, 55), width=3)
-            draw.rounded_rectangle([84, 1202, 996, 1264], radius=16, fill=(20, 44, 32), outline=(74, 222, 128), width=2)
-            draw.text((540, 1233), f"{pair_txt}  →  {score_txt}", fill=(110, 245, 165), font=f_pair, anchor="mm")
+            # Lower-Third Compact Match + Situation Chips + Blurred iMessage Dock (Y = 1138..1538)
+            draw.rounded_rectangle([48, 1138, 1032, 1538], radius=24, fill=(12, 14, 20), outline=(212, 175, 55), width=3)
 
-            # iMessage speech bubble with 1 clear line + 1 blurred secret line
-            draw.rounded_rectangle([84, 1276, 996, 1436], radius=18, fill=(24, 38, 58), outline=(96, 165, 250), width=2)
+            # Row 1: Partner Match Score Bar (Y = 1152..1206)
+            draw.rounded_rectangle([76, 1152, 1004, 1206], radius=14, fill=(20, 44, 32), outline=(74, 222, 128), width=2)
+            draw.text((540, 1179), f"{pair_txt}  →  {score_txt}", fill=(110, 245, 165), font=f_pair, anchor="mm")
+
+            # Row 2: 1-Tap Situation Selector Pills (#situation-chip-strip, Y = 1216..1266)
+            chips = [
+                ("📱", "Left me on read", True, 76, 404),
+                ("🥶", "Acting cold", False, 416, 704),
+                ("💔", "Pulled away", False, 716, 1004),
+            ]
+            for emj, lbl, is_active, cx0, cx1 in chips:
+                bg_c = (52, 40, 14) if is_active else (22, 26, 36)
+                bd_c = (255, 215, 77) if is_active else (88, 98, 122)
+                tx_c = (255, 225, 88) if is_active else (210, 218, 235)
+                draw.rounded_rectangle([cx0, 1216, cx1, 1266], radius=14, fill=bg_c, outline=bd_c, width=2 if is_active else 1)
+                mid_x = (cx0 + cx1) // 2
+                try:
+                    draw.text((cx0 + 20, 1241), emj, fill=tx_c, font=f_emoji, anchor="lm", embedded_color=True)
+                    draw.text((mid_x + 14, 1241), lbl, fill=tx_c, font=f_chip, anchor="mm")
+                except Exception:
+                    draw.text((mid_x, 1241), lbl, fill=tx_c, font=f_chip, anchor="mm")
+
+            # Row 3: iMessage speech bubble with 1 clear line + 1 blurred secret line (Y = 1276..1442)
+            draw.rounded_rectangle([76, 1276, 1004, 1442], radius=18, fill=(24, 38, 58), outline=(96, 165, 250), width=2)
             sms_lead = spec.get("reveal_sms_lead", "“Hey, I loved hanging out, but I noticed...")
-            draw.text((114, 1316), sms_lead, fill=(255, 255, 255), font=f_sms_txt, anchor="lm")
+            draw.text((108, 1316), sms_lead, fill=(255, 255, 255), font=f_sms_txt, anchor="lm")
 
-            secret_box = (108, 1348, 970, 1426)
+            secret_box = (102, 1350, 976, 1432)
             secret_img = frame.crop(secret_box)
             s_draw = ImageDraw.Draw(secret_img)
             s_draw.text((8, 34), "our pace works best when neither of us forces it.”", fill=(225, 235, 250), font=f_sms_txt, anchor="lm")
             secret_blurred = secret_img.filter(ImageFilter.GaussianBlur(radius=6))
             frame.paste(secret_blurred, (secret_box[0], secret_box[1]))
 
+            # Row 4: Gold 5th-Grade Unlock CTA Button (Y = 1454..1524)
             draw = ImageDraw.Draw(frame)
-            draw.rounded_rectangle([84, 1448, 996, 1518], radius=16, fill=(212, 175, 55), outline=(255, 235, 150), width=2)
+            draw.rounded_rectangle([76, 1454, 1004, 1524], radius=16, fill=(212, 175, 55), outline=(255, 235, 150), width=2)
+            # Vector padlock icon + 5th-grade button text:
+            # "🔒 Unlock Full Text + Best & Worst Days To Text ($17) — Link in Bio"
+            draw.arc([104, 1473, 120, 1491], start=180, end=0, fill=(18, 15, 8), width=3)
+            draw.rounded_rectangle([101, 1486, 123, 1505], radius=3, fill=(18, 15, 8))
             draw.text(
-                (540, 1483),
-                "🔒 Tap Link in Bio to Test Both Birthdays & Unlock Your Script",
+                (554, 1489),
+                "Unlock Full Text + Best & Worst Days To Text ($17) — Link in Bio",
                 fill=(18, 15, 8),
                 font=f_lock,
                 anchor="mm",
@@ -2365,12 +2677,25 @@ class BrollStoryGenerator:
                         active_broll = b_fname
                         local_t = t - b_start
                         break
-                d_ratio = 0.98 if v_fmt == "emotional_face_giant" else 0.84
+                d_ratio = 1.00 if v_fmt == "emotional_face_giant" else 0.84
                 frame = broll_readers[active_broll].get_frame(local_t, darken_ratio=d_ratio)
+                if v_fmt == "emotional_face_giant":
+                    # Warm, vibrant color grade (especially in the first 1.5s to stop early swipe-aways)
+                    sat_boost = 1.20 if t <= 1.5 else 1.12
+                    frame = ImageEnhance.Color(frame).enhance(sat_boost)
+                    arr_w = np.array(frame, dtype=np.float32)
+                    arr_w[:, :, 0] = np.clip(arr_w[:, :, 0] * 1.05 + 4.0, 0, 255)
+                    arr_w[:, :, 1] = np.clip(arr_w[:, :, 1] * 1.02 + 2.0, 0, 255)
+                    arr_w[:, :, 2] = np.clip(arr_w[:, :, 2] * 0.96, 0, 255)
+                    if float(np.mean(arr_w)) < 88.0:
+                        lift = 88.0 / max(20.0, float(np.mean(arr_w)))
+                        arr_w = np.clip(arr_w * lift, 0, 255)
+                    frame = Image.fromarray(arr_w.astype(np.uint8))
             elif is_short:
                 if v_fmt == "emotional_face_giant":
                     active_broll = spec["broll_clips"][-1][2]
-                    frame = broll_readers[active_broll].get_frame(t - broll_cutoff, darken_ratio=0.92)
+                    frame = broll_readers[active_broll].get_frame(t - broll_cutoff, darken_ratio=0.95)
+                    frame = ImageEnhance.Color(frame).enhance(1.10)
                     frame = self.draw_imessage_match_reveal_card(frame, spec)
                 else:
                     # Cohort C (broll_cutoff -> end): Fast dynamic zoom reveal across the 2 dossier scenes
@@ -2449,7 +2774,8 @@ class BrollStoryGenerator:
                 active_cue_text = cues[cue_idx]["text"]
 
             if active_cue_text:
-                self.draw_capcut_caption(draw, active_cue_text)
+                cap_cy = 1072 if (v_fmt == "emotional_face_giant" and t >= broll_cutoff) else 1320
+                self.draw_capcut_caption(draw, active_cue_text, cy=cap_cy)
 
             # 4. Closing Call-to-Action Pill
             if t >= (total_dur - cta_tail_sec):
@@ -2522,6 +2848,7 @@ class BrollStoryGenerator:
                 "id": spec["id"],
                 "cohort": spec.get("cohort", "Cohort B"),
                 "filename": spec["filename"],
+                "yt_title": spec.get("yt_title", ""),
                 "hook_name": spec["hook_box_text"],
                 "lang": "en",
                 "voice": spec["voice"],
@@ -2574,6 +2901,7 @@ class BrollStoryGenerator:
                 cues=cues,
                 tail_hold_sec=spec.get("tail_hold_sec", 0.5 if is_short else 1.2),
                 target_voice_sec=spec.get("target_voice_sec"),
+                broll_cutoff=float(spec.get("broll_cutoff", 4.60)),
             )
             self.render_video(spec, cues, m_mp3, dur, out_mp4)
 

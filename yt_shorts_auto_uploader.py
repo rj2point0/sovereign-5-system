@@ -67,6 +67,30 @@ SAMPLE_MATCH_REPLY = (
 )
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
+    {
+        "id": "short_31",
+        "filename": "tiktok_short_31_7sec_six_weeks_vanished.mp4",
+        "title": "He Texted Daily For 6 Weeks Then Vanished 💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_32",
+        "filename": "tiktok_short_32_7sec_read_at_midnight.mp4",
+        "title": "Left On Read At Midnight? Send This 9-Word Text 📱 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_33",
+        "filename": "tiktok_short_33_7sec_wrong_birthday_match.mp4",
+        "title": "Why You Always Fall For People Who Pull Away 💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
     # Upload the newly rendered emotional_face_giant Shorts (short_23, short_24, short_26, short_27, short_29, short_30) with pinned 2-birthday comments
     {
         "id": "short_23",
