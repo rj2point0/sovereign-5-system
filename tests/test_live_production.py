@@ -49,8 +49,10 @@ async def verify_live_pages():
         for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#quick-day-strip', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
             assert box is not None and (box["y"] + box["height"]) <= 635, f"Expected live {sel} bottom <= 635px at 390x660, got {box}"
-        # Test 1-Tap #quick-day-strip + 1-Tap #partner-quick-day-strip + #flip-chase-preview-bubble on live site
+        # Test 2-Tap #quick-day-strip -> #hero-partner-day-strip (and #btn-hero-single-day-skip) + 1-Tap #partner-quick-day-strip + #flip-chase-preview-bubble on live site
         await page_mob.click('#quick-day-strip button[data-action="quick-day"][data-day="16"]')
+        await page_mob.wait_for_selector('#hero-partner-day-strip:not(.hidden)', timeout=5000)
+        await page_mob.click('#btn-hero-single-day-skip')
         await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=8000)
         assert await page_mob.is_visible('#quick-day-banner') is True
         assert await page_mob.is_visible('#partner-quick-day-strip') is True
