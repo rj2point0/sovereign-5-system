@@ -1467,9 +1467,50 @@ const CONFIG = {
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  let _socialProofTimers = [];
+  function startTeaserSocialProofToasts() {
+    _socialProofTimers.forEach((tid) => clearTimeout(tid));
+    _socialProofTimers = [];
+    const el = $('#social-proof-toast');
+    if (!el) return;
+    const isEs = state.lang === 'es';
+    const items = isEs
+      ? [
+          '🔒 Sarah (Día 19 × Día 23) acaba de desbloquear el Guion de Alma Gemela 96% · hace 2m',
+          '💬 Chloe (Día 7 × Día 14) verificó su Compatibilidad de Pareja · hace 4m',
+          '🔒 Jessica (Día 25 × Día 8) desbloqueó la Mini-Lectura de 90 Días ($17) · hace 6m',
+        ]
+      : [
+          '🔒 Sarah (Day 19 × Day 23) just unlocked the 96% Soulmate Text Script · 2m ago',
+          '💬 Chloe (Day 7 × Day 14) ran a Partner Compatibility Check · 4m ago',
+          '🔒 Jessica (Day 25 × Day 8) unlocked the 90-Day Love Timing Mini-Read ($17) · 6m ago',
+        ];
+    if (typeof state.socialProofShownCount !== 'number') {
+      state.socialProofShownCount = 0;
+    }
+    const showToastAt = (idx, delayMs) => {
+      const tShow = setTimeout(() => {
+        if (document.body.dataset.view !== 'teaser') return;
+        if (state.socialProofShownCount >= 3 && idx > 0) return;
+        el.textContent = items[idx % items.length];
+        el.classList.add('show');
+        state.socialProofShownCount += 1;
+        const tHide = setTimeout(() => {
+          el.classList.remove('show');
+        }, 4500);
+        _socialProofTimers.push(tHide);
+      }, delayMs);
+      _socialProofTimers.push(tShow);
+    };
+    showToastAt(0, 350);
+    showToastAt(1, 22350);
+    showToastAt(2, 44350);
+  }
+
   function openTeaser() {
     showView('teaser');
     renderTeaser();
+    startTeaserSocialProofToasts();
   }
 
   function checkout() {
@@ -1487,13 +1528,24 @@ const CONFIG = {
     goToStripe(link, state.bump ? 'full' : 'base');
   }
 
+  function buildStripeUrl(link, tier) {
+    if (!link) return '';
+    try {
+      const url = new URL(link);
+      if (state.profile && state.profile.email) url.searchParams.set('prefilled_email', state.profile.email);
+      if (state.profile && state.profile.id) url.searchParams.set('client_reference_id', state.profile.id);
+      return url.toString();
+    } catch (e) {
+      return '';
+    }
+  }
+
   function goToStripe(link, tier) {
     store.set(KEYS.pending, tier);
-    let url;
-    try { url = new URL(link); } catch (e) { toast('Invalid Stripe link in CONFIG.'); return; }
-    if (state.profile && state.profile.email) url.searchParams.set('prefilled_email', state.profile.email);
-    if (state.profile && state.profile.id) url.searchParams.set('client_reference_id', state.profile.id);
-    location.href = url.toString();
+    const finalUrl = buildStripeUrl(link, tier);
+    if (!finalUrl) { toast('Invalid Stripe link in CONFIG.'); return; }
+    window.__LAST_STRIPE_CHECKOUT_URL = finalUrl;
+    location.href = finalUrl;
   }
 
   function demoUnlock() {
@@ -2633,32 +2685,7 @@ const CONFIG = {
       }
     }
     else if (a === 'save-partner-email') {
-      const emInput = $('#partner-compat-email-input');
-      const emVal = emInput ? emInput.value.trim() : '';
-      if (!emVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emVal)) {
-        toast(state.lang === 'es' ? 'Ingresa un correo electrónico válido.' : 'Please enter a valid email address.');
-        return;
-      }
-      const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
-      if (state.profile) {
-        state.profile.email = emVal;
-        if (pDob) {
-          state.profile.partner_dob = pDob;
-          state.profile.partnerDob = pDob;
-        }
-        if (!state.profile.isSample) saveProfile(state.profile);
-        sendWebhook('lead_submitted', {
-          trigger: 'partner_compat_email_bar',
-          partner_dob: pDob,
-        });
-        const pBox = $('#partner-compat-email-box');
-        if (pBox) {
-          pBox.innerHTML = `<div id="partner-compat-email-confirmed" class="p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-400/50 text-emerald-300 text-xs sm:text-sm font-semibold text-center">✓ ${state.lang === 'es' ? '¡Reporte de Pareja y 3 Fechas Clave enviados a ' + esc(emVal) + '!' : 'Match Report &amp; Next 3 Turning-Point Dates sent to ' + esc(emVal) + '!'}</div>`;
-        }
-        const tBox = $('#teaser-email-box');
-        if (tBox) tBox.classList.add('hidden');
-        toast(state.lang === 'es' ? '✦ ¡Reporte de Compatibilidad enviado a tu correo!' : '✦ Partner Match Report emailed to you!');
-      }
+      submitPartnerCompatEmail();
     }
     else if (a === 'demo-unlock') demoUnlock();
     else if (a === 'print') window.print();
@@ -2711,6 +2738,84 @@ const CONFIG = {
     }
   });
 
+  let _vipCountdownInterval = null;
+  function startVipFastActionTimer() {
+    if (_vipCountdownInterval) clearInterval(_vipCountdownInterval);
+    let secsLeft = 14 * 60 + 59; // 14:59
+    const renderClock = () => {
+      const mm = String(Math.floor(secsLeft / 60)).padStart(2, '0');
+      const ss = String(secsLeft % 60).padStart(2, '0');
+      const txt = `${mm}:${ss}`;
+      const mainClock = $('#vip-countdown-timer');
+      if (mainClock) mainClock.textContent = txt;
+      $$('[data-vip-timer]').forEach((el) => { el.textContent = txt; });
+    };
+    renderClock();
+    _vipCountdownInterval = setInterval(() => {
+      if (secsLeft > 0) secsLeft -= 1;
+      renderClock();
+    }, 1000);
+  }
+
+  function unlockPartnerScriptPart1OnScreen(emailVal) {
+    const badgeEl = $('#part1-unlocked-badge');
+    if (badgeEl) badgeEl.classList.remove('hidden');
+    const p1El = $('#imessage-part1-text');
+    if (p1El) {
+      p1El.classList.remove('imessage-blurred');
+      p1El.classList.add('imessage-part1-unblurred');
+      p1El.style.filter = 'none';
+      p1El.style.webkitFilter = 'none';
+      p1El.style.userSelect = 'auto';
+      p1El.style.pointerEvents = 'auto';
+      p1El.removeAttribute('aria-hidden');
+    }
+    const fearEl = $('#partner-secret-fear-unlocked');
+    if (fearEl) fearEl.classList.remove('hidden');
+    const p2LockEl = $('#imessage-part2-locked-callout');
+    if (p2LockEl) p2LockEl.classList.remove('hidden');
+    const vipOfferEl = $('#vip-fast-action-offer');
+    if (vipOfferEl) vipOfferEl.classList.remove('hidden');
+
+    const stripeUrl = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
+    ['#btn-vip-fast-action-17', '#btn-unlock-text-script', '#btn-partner-mini-cta', '#btn-checkout-mini'].forEach((sel) => {
+      const btn = $(sel);
+      if (btn && stripeUrl) btn.setAttribute('data-stripe-url', stripeUrl);
+    });
+    startVipFastActionTimer();
+
+    const pBox = $('#partner-compat-email-box');
+    if (pBox && emailVal) {
+      pBox.innerHTML = `<div id="partner-compat-email-confirmed" class="p-2.5 rounded-lg bg-emerald-950/60 border border-emerald-400/60 text-emerald-300 text-xs sm:text-sm font-semibold text-center">✓ ${state.lang === 'es' ? '¡Correo verificado (' + esc(emailVal) + ')! Parte 1 desbloqueada arriba en pantalla + copia enviada.' : 'Email Verified (' + esc(emailVal) + ') — Part 1 Unlocked On-Screen Above &amp; Backup Copy Sent!'}</div>`;
+    }
+    const tBox = $('#teaser-email-box');
+    if (tBox) tBox.classList.add('hidden');
+  }
+
+  function submitPartnerCompatEmail() {
+    const emInput = $('#partner-compat-email-input');
+    const emVal = emInput ? emInput.value.trim() : '';
+    if (!emVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emVal)) {
+      toast(state.lang === 'es' ? 'Ingresa un correo electrónico válido.' : 'Please enter a valid email address.');
+      return;
+    }
+    const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
+    if (state.profile) {
+      state.profile.email = emVal;
+      if (pDob) {
+        state.profile.partner_dob = pDob;
+        state.profile.partnerDob = pDob;
+      }
+      if (!state.profile.isSample) saveProfile(state.profile);
+      sendWebhook('lead_submitted', {
+        trigger: 'partner_compat_email_bar',
+        partner_dob: pDob,
+      });
+      unlockPartnerScriptPart1OnScreen(emVal);
+      toast(state.lang === 'es' ? '✦ ¡Parte 1 de tu guion desbloqueada en pantalla!' : '✦ Part 1 of your Text Script unlocked right on screen!');
+    }
+  }
+
   function runPartnerCompatibilityCheck(opts) {
     if (!state.result) return;
     const options = opts || {};
@@ -2736,77 +2841,113 @@ const CONFIG = {
     const smsPreviewMapEn = {
       1: {
         leadIn: 'Hey, I loved hanging out, but I noticed ',
-        blurred: 'our pace works best when neither of us forces it. Let\'s catch up next week when your schedule clears and we can do something real.',
+        part1: 'our pace works best when neither of us forces it. ',
+        part2: 'Let\'s catch up next week when your schedule clears and we can do something real.',
+        secretFear: 'Being micromanaged or losing their autonomy once they let someone close.',
       },
       2: {
         leadIn: 'Hey, I really value our connection, so I\'m ',
-        blurred: 'giving us both breathing room this week instead of overthinking mixed signals. Talk to you in a few days when things feel grounded.',
+        part1: 'giving us both breathing room this week instead of overthinking mixed signals. ',
+        part2: 'Talk to you in a few days when things feel grounded.',
+        secretFear: 'Saying the wrong thing during conflict and being emotionally abandoned.',
       },
       3: {
         leadIn: 'Loved our energy the other night, and I\'m ',
-        blurred: 'heads-down on my own plans this week. Hit me when your schedule opens up and you\'re ready to lock in a real plan.',
+        part1: 'heads-down on my own plans this week. ',
+        part2: 'Hit me when your schedule opens up and you\'re ready to lock in a real plan.',
+        secretFear: 'Feeling trapped in heavy emotional routine where the spark dies out.',
       },
       4: {
         leadIn: 'I\'m taking a step back this week because ',
-        blurred: 'I only invest in consistency that matches mine. Reach out when you\'re free to actually lock in a plan without the guesswork.',
+        part1: 'I only invest in consistency that matches mine. ',
+        part2: 'Reach out when you\'re free to actually lock in a plan without the guesswork.',
+        secretFear: 'Opening up emotionally before they are 100% certain the foundation is stable.',
       },
       5: {
         leadIn: 'Hey, had fun catching up, but I noticed ',
-        blurred: 'we\'re on totally different wavelengths this week. Going offline for a few days—let\'s talk when things settle down on your end.',
+        part1: 'we\'re on totally different wavelengths this week. ',
+        part2: 'Going offline for a few days—let\'s talk when things settle down on your end.',
+        secretFear: 'Feeling suffocated by clinginess or pressured into labels too fast.',
       },
       6: {
         leadIn: 'You know I care about us, so I\'m ',
-        blurred: 'stepping back from the back-and-forth this week instead of forcing a talk. Let me know when you want to sit down together.',
+        part1: 'stepping back from the back-and-forth this week instead of forcing a talk. ',
+        part2: 'Let me know when you want to sit down together.',
+        secretFear: 'Pouring their whole heart in and discovering their devotion isn\'t reciprocated.',
       },
       7: {
         leadIn: 'I\'m taking a step back this week because ',
-        blurred: 'I know you need space to process and I value my peace too. Text me when you\'re ready to show up fully.',
+        part1: 'I know you need space to process and I value my peace too. ',
+        part2: 'Text me when you\'re ready to show up fully.',
+        secretFear: 'Having their quiet need for solitude misread as not caring.',
       },
       8: {
         leadIn: 'Hey, I loved hanging out, but I noticed ',
-        blurred: 'you\'ve got a lot on your plate right now. Taking space on my end this week—reach out when your head is clear.',
+        part1: 'you\'ve got a lot on your plate right now. ',
+        part2: 'Taking space on my end this week—reach out when your head is clear.',
+        secretFear: 'Showing vulnerability when their work or personal life feels out of control.',
       },
       9: {
         leadIn: 'I felt a real spark with you, so ',
-        blurred: 'I\'m stepping back instead of chasing mixed signals this week. Call me when you\'re ready to match my energy 100%.',
+        part1: 'I\'m stepping back instead of chasing mixed signals this week. ',
+        part2: 'Call me when you\'re ready to match my energy 100%.',
+        secretFear: 'Getting pulled into emotional drama that drains their fire and mission.',
       },
     };
     const smsPreviewMapEs = {
       1: {
         leadIn: 'Oye, me encantó verte, pero noté que ',
-        blurred: 'nuestro ritmo fluye mejor cuando ninguno lo fuerza. Hablemos la próxima semana cuando tengas tiempo real.',
+        part1: 'nuestro ritmo fluye mejor cuando ninguno lo fuerza. ',
+        part2: 'Hablemos la próxima semana cuando tengas tiempo real.',
+        secretFear: 'Sentirse controlado o perder su independencia al enamorarse.',
       },
       2: {
         leadIn: 'Valoro mucho nuestra conexión, así que voy a ',
-        blurred: 'darnos espacio esta semana para no sobrepensar las cosas. Hablamos en unos días con calma.',
+        part1: 'darnos espacio esta semana para no sobrepensar las cosas. ',
+        part2: 'Hablamos en unos días con calma.',
+        secretFear: 'Equivocarse en una discusión y ser rechazado emocionalmente.',
       },
       3: {
         leadIn: 'Me encantó nuestra energía la otra noche, y ',
-        blurred: 'esta semana estaré enfocado en mis planes. Escríbeme cuando estés listo para armar un plan real.',
+        part1: 'esta semana estaré enfocado en mis planes. ',
+        part2: 'Escríbeme cuando estés listo para armar un plan real.',
+        secretFear: 'Caer en una rutina pesada donde se apague la chispa.',
       },
       4: {
         leadIn: 'Voy a tomar distancia esta semana porque yo ',
-        blurred: 'solo invierto donde hay constancia mutua. Avísame cuando tengas claro qué quieres construir.',
+        part1: 'solo invierto donde hay constancia mutua. ',
+        part2: 'Avísame cuando tengas claro qué quieres construir.',
+        secretFear: 'Entregarse antes de estar 100% seguro de que hay estabilidad.',
       },
       5: {
         leadIn: 'Oye, la pasé genial contigo, pero noté que ',
-        blurred: 'estamos en sintonías distintas esta semana. Me desconecto unos días; hablamos cuando todo se calme.',
+        part1: 'estamos en sintonías distintas esta semana. ',
+        part2: 'Me desconecto unos días; hablamos cuando todo se calme.',
+        secretFear: 'Sentirse asfixiado por reclamos o presionado antes de tiempo.',
       },
       6: {
         leadIn: 'Sabes que me importas mucho, así que prefiero ',
-        blurred: 'dar un paso atrás esta semana en vez de forzar conversaciones. Avísame cuando quieras hablar bien.',
+        part1: 'dar un paso atrás esta semana en vez de forzar conversaciones. ',
+        part2: 'Avísame cuando quieras hablar bien.',
+        secretFear: 'Dar todo su corazón y sentir que no lo valoran igual.',
       },
       7: {
         leadIn: 'Voy a tomar un respiro esta semana porque ',
-        blurred: 'sé que necesitas tu espacio para procesar y yo también valoro mi paz. Escríbeme cuando estés presente.',
+        part1: 'sé que necesitas tu espacio para procesar y yo también valoro mi paz. ',
+        part2: 'Escríbeme cuando estés presente.',
+        secretFear: 'Que su necesidad de silencio se malinterprete como falta de amor.',
       },
       8: {
         leadIn: 'Oye, me encantó salir contigo, pero noté que ',
-        blurred: 'tienes mil cosas en la cabeza ahora mismo. Tomo distancia de mi lado; búscame cuando estés libre.',
+        part1: 'tienes mil cosas en la cabeza ahora mismo. ',
+        part2: 'Tomo distancia de mi lado; búscame cuando estés libre.',
+        secretFear: 'Mostrarse vulnerable cuando siente presión en su vida o trabajo.',
       },
       9: {
         leadIn: 'Sentí una chispa real contigo, así que prefiero ',
-        blurred: 'dar un paso atrás en lugar de perseguir señales confusas. Llámame cuando quieras igualar mi energía.',
+        part1: 'dar un paso atrás en lugar de perseguir señales confusas. ',
+        part2: 'Llámame cuando quieras igualar mi energía.',
+        secretFear: 'Entrar en dramas emocionales que desgasten su energía.',
       },
     };
     const smsPreview = (isEs ? smsPreviewMapEs : smsPreviewMapEn)[rep.pMoolank] || (isEs ? smsPreviewMapEs[7] : smsPreviewMapEn[7]);
@@ -2858,6 +2999,11 @@ const CONFIG = {
 
       <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->
       <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-4 text-left">
+        <div id="part1-unlocked-badge" class="hidden mb-2 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-400/60 text-[0.68rem] sm:text-xs font-extrabold text-emerald-300 tracking-wide">
+          ✅ ${isEs
+            ? `CORREO VERIFICADO — PARTE 1 DE TU GUION [Día ${userBirthDay} × Día ${partnerBirthDay}] DESBLOQUEADA`
+            : `EMAIL VERIFIED — PART 1 OF YOUR [Day ${userBirthDay} × Day ${partnerBirthDay}] SCRIPT UNLOCKED`}
+        </div>
         <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
           <span class="text-[0.68rem] sm:text-xs font-extrabold uppercase tracking-wider text-gold">
             ${isEs
@@ -2869,12 +3015,40 @@ const CONFIG = {
           </span>
         </div>
         <div class="imessage-bubble">
-          <span class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.blurred}</span>
+          <span class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span id="imessage-part1-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part1}</span><span id="imessage-part2-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part2}</span>
+        </div>
+        <div id="partner-secret-fear-unlocked" class="hidden mt-2.5 p-2.5 rounded-lg bg-amber-950/40 border border-gold/45 text-xs text-champagne leading-snug">
+          🧠 <b>${isEs ? `Su Miedo Secreto #1 (#${rep.pMoolank} · ${rep.pRuler}):` : `Their #${rep.pMoolank} (${rep.pRuler}) #1 Secret Fear:`}</b> ${smsPreview.secretFear}
+        </div>
+        <div id="imessage-part2-locked-callout" class="hidden mt-2 p-2.5 rounded-lg bg-black/55 border border-gold/55 text-[0.7rem] sm:text-xs text-gold font-semibold leading-snug">
+          🔒 ${isEs
+            ? 'BLOQUEADO EN LA PARTE 2: El Gancho de Seguimiento de 24 Horas + Qué Te Responderá Exactamente + Tus 3 Fechas Clave de Noviembre'
+            : 'LOCKED IN PART 2: The "24-Hour Follow-Up Hook" + "What They Will Text Back" + "Your 3 Exact November Turning-Point Dates"'}
         </div>
         <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
           🔒 ${isEs
             ? 'Desbloquear el guion exacto palabra por palabra + Calendario de Amor de 90 Días ($17 Mini-Lectura) →'
             : 'Unlock the exact word-for-word text script + 90-Day Love Timing Calendar ($17 Mini-Read) →'}
+        </button>
+      </div>
+
+      <!-- INLINE 15-MINUTE FAST-ACTION $17 VIP OFFER (REVEALED INSTANTLY ON EMAIL SUBMIT) -->
+      <div id="vip-fast-action-offer" class="vip-fast-action-card hidden mt-3.5 p-4 text-left">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <span class="badge-gold !text-[0.62rem] !py-0.5">⚡ ${isEs ? 'DESBLOQUEO RÁPIDO VIP' : 'VIP FAST-ACTION UNLOCK'}</span>
+          <span class="text-xs font-mono font-extrabold text-rose-300 bg-rose-950/75 border border-rose-400/45 px-2.5 py-0.5 rounded-full">
+            ${isEs ? 'EXPIRA EN' : 'EXPIRES IN'} <span id="vip-countdown-timer">14:59</span>
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
+          ${isEs
+            ? `Parte 1 desbloqueada arriba. Desbloquea ahora mismo la Parte 2 de tu guion [Día ${userBirthDay} × Día ${partnerBirthDay}] + Qué Te Responderá + Tu Calendario de Amor de 90 Días:`
+            : `Part 1 is unlocked above! Lock in Part 2 of your [Day ${userBirthDay} × Day ${partnerBirthDay}] Script + What They'll Reply + Your 90-Day Love Timing Calendar right now:`}
+        </p>
+        <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
+          ⚡ ${isEs
+            ? 'DESBLOQUEO VIP RÁPIDO (EXPIRA EN <span data-vip-timer>14:59</span>): Obtén la Parte 2 de Tu Guion + Qué Te Responderá + Calendario de 90 Días al Instante ($17) →'
+            : 'VIP FAST-ACTION UNLOCK (EXPIRES IN <span data-vip-timer>14:59</span>): Get Part 2 of Your Word-For-Word Text Script + What They\'ll Reply + Your 90-Day Love Timing Calendar Instantly On-Screen ($17) →'}
         </button>
       </div>
 
@@ -2887,12 +3061,12 @@ const CONFIG = {
               : `Not ready for the full $17 unlock yet? Enter your email below and we'll send your [Day ${userBirthDay} × Day ${partnerBirthDay}] Compatibility Breakdown + Opening Reset Line to your inbox free:`}
           </div>
           <p class="text-xs text-champagne font-medium leading-snug">
-            📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver tus próximas 3 fechas clave en el amor gratis?' : 'Want to save this Partner Compatibility score &amp; see your next 3 relationship turning-point dates for free?'}
+            📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y desbloquear la Parte 1 de tu guion gratis?' : 'Want to save this Partner Compatibility score &amp; see your next 3 relationship turning-point dates for free?'}
           </p>
           <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
             <input id="partner-compat-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
             <button type="button" id="btn-save-partner-email" data-action="save-partner-email" class="btn-gold !py-2 !px-4 sm:w-auto text-xs font-bold whitespace-nowrap">
-              ${isEs ? 'Enviar Nuestro Reporte →' : 'Email Our Match Report →'}
+              ${isEs ? 'Desbloquear Parte 1 + Enviar Reporte →' : 'Email Our Match Report →'}
             </button>
           </div>
         </div>` : ''}
@@ -2908,6 +3082,10 @@ const CONFIG = {
         </button>
       </div>
     `;
+
+    if (state.profile && state.profile.email) {
+      unlockPartnerScriptPart1OnScreen(state.profile.email);
+    }
 
     state.hasClickedMiniUnlock = false;
     if (state.partnerHesitationTimer) {

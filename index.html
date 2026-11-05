@@ -23,6 +23,7 @@
   <meta name="twitter:image" content="https://blueprint.megavegaventures.com/og-preview.png" />
   <link rel="canonical" href="https://blueprint.megavegaventures.com/" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="sacred_avatar_512.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -178,19 +179,10 @@
   <!-- ============ HEADER ============ -->
   <header class="no-print">
     <div class="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between">
-      <button type="button" data-action="home" class="flex items-center gap-2.5">
-        <svg width="32" height="32" viewBox="0 0 120 120" aria-hidden="true" class="shrink-0">
-          <circle cx="60" cy="60" r="52" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="3 3"/>
-          <circle cx="60" cy="60" r="46" fill="none" stroke="#D4AF37" stroke-width="1.8"/>
-          <circle cx="60" cy="38" r="19" fill="rgba(212,175,55,0.06)" stroke="#D4AF37" stroke-width="1.8"/>
-          <circle cx="81" cy="53" r="19" fill="rgba(212,175,55,0.06)" stroke="#D4AF37" stroke-width="1.8"/>
-          <circle cx="73" cy="78" r="19" fill="rgba(212,175,55,0.06)" stroke="#D4AF37" stroke-width="1.8"/>
-          <circle cx="47" cy="78" r="19" fill="rgba(212,175,55,0.06)" stroke="#D4AF37" stroke-width="1.8"/>
-          <circle cx="39" cy="53" r="19" fill="rgba(212,175,55,0.06)" stroke="#D4AF37" stroke-width="1.8"/>
-          <circle cx="60" cy="60" r="11" fill="#0A0A0C" stroke="#F3E5AB" stroke-width="2"/>
-          <circle cx="60" cy="60" r="3.5" fill="#D4AF37"/>
-        </svg>
-        <span class="font-display text-[0.8rem] tracking-[0.25em] text-champagne">SOVEREIGN<span class="text-gold"> · </span>5</span>
+      <button type="button" data-action="home" class="flex items-center gap-2">
+        <img id="header-19x23-avatar" src="sacred_avatar_512.png" alt="19×23 · 96% Match" width="32" height="32" class="w-8 h-8 rounded-full shrink-0 border border-gold/70 shadow-sm" />
+        <span class="font-display text-[0.78rem] sm:text-[0.8rem] tracking-[0.22em] text-champagne">SOVEREIGN<span class="text-gold"> · </span>5</span>
+        <span id="header-19x23-badge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/15 border border-gold/45 text-[0.62rem] font-extrabold text-champagne tracking-wider">19×23 <span class="text-rose-400">96%</span></span>
       </button>
       <div class="flex items-center gap-3">
         <span class="badge-olive hidden sm:inline-flex" data-i18n="badge_systems">5 Ancient Systems · 1 Code</span>
@@ -516,6 +508,9 @@
   <div id="sticky-cta" class="sticky-cta no-print">
     <button type="button" data-action="scroll-checkout" class="btn-gold max-w-xl mx-auto flex"><span data-i18n="unlock_cta">Unlock My Full Dossier · </span><span data-total>$37</span></button>
   </div>
+
+  <!-- Subtle Social Proof Toast (Teaser View Only) -->
+  <div id="social-proof-toast" class="social-proof-toast no-print" aria-live="polite"></div>
 
   <!-- Toast -->
   <div id="toast" class="toast no-print card px-4 py-3 text-sm text-champagne"></div>

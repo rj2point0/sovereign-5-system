@@ -299,7 +299,16 @@ async def test_all():
         checkout_ev = [p for p in ntfy_payloads if p.get("event_type") == "checkout_clicked"]
         assert len(checkout_ev) >= 1 and checkout_ev[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob in checkout_clicked: {checkout_ev}"
 
-        # Submit email in inline Partner Compatibility Email Capture Bar (#partner-compat-email-box) and verify partner_dob is included in lead_submitted + green confirmation badge appears
+        # Submit email in inline Partner Compatibility Email Capture Bar (#partner-compat-email-box) and verify:
+        # 1) Part 1 unblurs immediately on-screen (#imessage-part1-text, #part1-unlocked-badge, #partner-secret-fear-unlocked, #imessage-part2-locked-callout)
+        # 2) #vip-fast-action-offer reveals with 15-minute timer & prefilled_email wired into $17 Stripe URL
+        # 3) #header-19x23-avatar, #header-19x23-badge, and #social-proof-toast render cleanly on view2
+        assert await page_prod.is_visible('#header-19x23-avatar') is True, "Expected 32x32 19x23 avatar #header-19x23-avatar in header!"
+        assert await page_prod.is_visible('#header-19x23-badge') is True, "Expected 19x23 96% badge #header-19x23-badge in header!"
+        await asyncio.sleep(0.45)
+        sp_toast_txt = await page_prod.locator('#social-proof-toast').inner_text()
+        assert "19 × Day 23" in sp_toast_txt or "Partner Compatibility" in sp_toast_txt or "Mini-Read" in sp_toast_txt, f"Expected #social-proof-toast content on view2, got '{sp_toast_txt}'"
+
         assert await page_prod.is_visible('#partner-compat-email-box') is True, "Expected #partner-compat-email-box to be visible inside #partner-compat-result when !state.profile.email"
         p_email_txt = await page_prod.locator('#partner-compat-email-box').inner_text()
         assert "want to save this partner compatibility score" in p_email_txt.lower() and "email our match report" in p_email_txt.lower(), f"Unexpected #partner-compat-email-box text: {p_email_txt}"
@@ -307,10 +316,18 @@ async def test_all():
         await page_prod.click('#btn-save-partner-email')
         await asyncio.sleep(0.2)
         assert await page_prod.is_visible('#partner-compat-email-confirmed') is True, "Expected green confirmation badge #partner-compat-email-confirmed after submitting partner email"
+        assert await page_prod.is_visible('#part1-unlocked-badge') is True, "Expected #part1-unlocked-badge to appear immediately on email submit!"
+        assert await page_prod.is_visible('#partner-secret-fear-unlocked') is True, "Expected #partner-secret-fear-unlocked to appear on email submit!"
+        assert await page_prod.is_visible('#imessage-part2-locked-callout') is True, "Expected #imessage-part2-locked-callout to appear on email submit!"
+        p1_filter = await page_prod.evaluate("() => getComputedStyle(document.querySelector('#imessage-part1-text')).filter")
+        assert p1_filter == "none", f"Expected #imessage-part1-text filter to be 'none' after email submit, got '{p1_filter}'"
+        assert await page_prod.is_visible('#vip-fast-action-offer') is True, "Expected #vip-fast-action-offer to appear immediately on email submit!"
+        vip_stripe_url = await page_prod.locator('#btn-vip-fast-action-17').get_attribute('data-stripe-url')
+        assert vip_stripe_url and "prefilled_email=sarah.compat%40gmail.com" in vip_stripe_url, f"Expected prefilled_email in #btn-vip-fast-action-17 data-stripe-url, got '{vip_stripe_url}'"
         lead_evs = [p for p in ntfy_payloads if p.get("event_type") == "lead_submitted"]
         assert len(lead_evs) >= 1 and lead_evs[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob=1988-10-26 in lead_submitted payload: {lead_evs}"
         assert (lead_evs[-1].get("extra") or {}).get("trigger") == "partner_compat_email_bar", f"Expected trigger=partner_compat_email_bar, got {lead_evs[-1]}"
-        print("[OK] Mobile Month/Day/Year dropdowns, Teaser Relationship Clash, 3-Part Triangle, Partner Compatibility CTA & partner_dob lead payload verified!")
+        print("[OK] Mobile Month/Day/Year dropdowns, Instant Part 1 Unblur, 15-Min $17 VIP Offer (prefilled_email), 19x23 Emblem & Social Proof Toast verified!")
 
         # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO + Jenny Hoyos Gate Verification
         print("\n--- Test 9: Reverse Order (DOB -> Name) calc_preview, <=38-Char og:title, 5-Circle Logo & Jenny Hoyos Gate ---")
@@ -476,7 +493,7 @@ async def test_all():
         bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
         assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 25 × PARTNER DAY 16)' in bubble_txt.upper(), f"Unexpected bubble header: {bubble_txt}"
         assert await page_mob.is_visible('#btn-unlock-text-script') is True, "Expected #btn-unlock-text-script visible inside #flip-chase-preview-bubble"
-        blur_style = await page_mob.locator('#flip-chase-preview-bubble .imessage-blurred').get_attribute('style')
+        blur_style = await page_mob.locator('#flip-chase-preview-bubble .imessage-blurred').first.get_attribute('style')
         assert 'blur(5px)' in (blur_style or ''), f"Expected blur(5px) on .imessage-blurred, got {blur_style}"
 
         # Intercept Stripe redirect for #btn-unlock-text-script and verify it routes to $17 love_mini with trigger='unlock_text_script_17'

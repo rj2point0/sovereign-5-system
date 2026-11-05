@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
   <defs>
     <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.28"/>
-      <stop offset="70%" stop-color="#D4AF37" stop-opacity="0.06"/>
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.22"/>
+      <stop offset="70%" stop-color="#D4AF37" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="#0A0A0C" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="goldRing" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
@@ -11,17 +11,20 @@
       <stop offset="100%" stop-color="#9A7B2C"/>
     </linearGradient>
   </defs>
-  <rect width="120" height="120" rx="26" fill="#0A0A0C"/>
-  <circle cx="60" cy="60" r="54" fill="url(#bgGlow)"/>
-  <circle cx="60" cy="60" r="50" stroke="url(#goldRing)" stroke-width="1.2" stroke-opacity="0.55" stroke-dasharray="3 3"/>
-  <circle cx="60" cy="60" r="45" stroke="url(#goldRing)" stroke-width="1.5" stroke-opacity="0.85"/>
-  <!-- 5 Interlocking Sacred Venn Circles -->
-  <circle cx="60" cy="38" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
-  <circle cx="81" cy="53" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
-  <circle cx="73" cy="78" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
-  <circle cx="47" cy="78" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
-  <circle cx="39" cy="53" r="19" stroke="url(#goldRing)" stroke-width="1.8" fill="rgba(212,175,55,0.05)"/>
-  <!-- Center Medallion -->
-  <circle cx="60" cy="60" r="11" fill="#0D0E13" stroke="url(#goldRing)" stroke-width="2"/>
-  <circle cx="60" cy="60" r="3.5" fill="#D4AF37"/>
+  <rect width="120" height="120" rx="60" fill="#090A0F"/>
+  <circle cx="60" cy="60" r="56" fill="url(#bgGlow)"/>
+  <!-- Outer Gold Ring & Inner Coral-Rose Ring (19x23 · 96% MATCH Emblem) -->
+  <circle cx="60" cy="60" r="54" stroke="url(#goldRing)" stroke-width="3.2"/>
+  <circle cx="60" cy="60" r="49.5" stroke="#FF4D79" stroke-width="1.6"/>
+  <!-- 5 Interlocking Sacred Venn Circles (Subtle Background Geometry) -->
+  <circle cx="60" cy="38" r="19" stroke="url(#goldRing)" stroke-width="1" stroke-opacity="0.24" fill="none"/>
+  <circle cx="81" cy="53" r="19" stroke="url(#goldRing)" stroke-width="1" stroke-opacity="0.24" fill="none"/>
+  <circle cx="73" cy="78" r="19" stroke="url(#goldRing)" stroke-width="1" stroke-opacity="0.24" fill="none"/>
+  <circle cx="47" cy="78" r="19" stroke="url(#goldRing)" stroke-width="1" stroke-opacity="0.24" fill="none"/>
+  <circle cx="39" cy="53" r="19" stroke="url(#goldRing)" stroke-width="1" stroke-opacity="0.24" fill="none"/>
+  <!-- Rotated Gold Diamond -->
+  <polygon points="60,18 102,60 60,102 18,60" stroke="#E5C97B" stroke-width="1.4" stroke-opacity="0.85" fill="rgba(10,10,14,0.55)"/>
+  <!-- 19×23 + 96% MATCH -->
+  <text x="60" y="64" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-weight="700" fill="#F5EBC6">19×23</text>
+  <text x="60" y="83" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11.5" font-weight="800" letter-spacing="0.6" fill="#FF4D79">96% MATCH</text>
 </svg>
