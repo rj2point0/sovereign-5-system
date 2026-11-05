@@ -47,37 +47,17 @@ REPORT_PATH = os.path.join(BASE_DIR, "grid_cleanup_report.json")
 
 # Scheduled duplicates + old white-box scheduled videos to delete in TikTok Studio
 TT_SCHEDULED_TO_DELETE = [
-    ("7703601254852824333", "scheduled_dup_short_22_already_live_157v"),
-    ("7703601237857455374", "scheduled_dup_short_23"),
-    ("7703601405159869710", "scheduled_dup_short_24"),
-    ("7703630452141067534", "replace_old_whitebox_short_26_with_format_A"),
-    ("7703630711911206157", "replace_old_silhouette_short_27_with_format_B"),
-    ("7704068719772699917", "replace_old_whitebox_short_29_with_format_C"),
-    ("7704068831345413390", "replace_old_dark_short_30_with_format_A"),
+    ("7703990374565498125", "replace_old_whitebox_short_23_with_emotional_face_giant"),
+    ("7703990588911193357", "replace_old_whitebox_short_24_with_emotional_face_giant"),
 ]
 
 # Published duplicate copies (keeping higher-view copy public) + >1h 0-view videos -> set to 'Only me' (Private)
-TT_PUBLISHED_TO_PRIVATE = [
-    ("7704122197744291085", "duplicate_short_21_12v_vs_36v"),
-    ("7703341818120768781", "duplicate_short_20_94v_vs_106v"),
-    ("7703341562952043789", "duplicate_short_19_33v_vs_72v"),
-    ("7703623597469748493", "duplicate_short_17_96v_vs_104v"),
-    ("7702469276480916749", "duplicate_short_15_0v_vs_95v"),
-    ("7702844869877828877", "zero_views_short_18_bare_minimum"),
-    ("7702844640541641997", "zero_views_short_16_begging_for_crumbs"),
-]
+TT_PUBLISHED_TO_PRIVATE = []
 
-# Instagram Reels to Delete (duplicate short_21 + lakeside silhouette short_27 + old white-box short_26/29/30)
+# Instagram Reels to Delete (old white-box short_23 & short_24 before uploading emotional_face_giant)
 IG_SHORTCODES_TO_DELETE = [
-    ("DfVZE-MOd5x", "replace_old_smalltext_short_26_with_emotional_face_giant"),
-    ("DfVZMjvOwbP", "replace_old_smalltext_short_27_with_emotional_face_giant"),
-    ("DfVZUGgOpJ5", "replace_old_smalltext_short_29_with_emotional_face_giant"),
-    ("DfVZcSZOe8a", "replace_old_smalltext_short_30_with_emotional_face_giant"),
-    ("DfN3scQOV9B", "duplicate_short_21_old_14s_vs_DfTR1XxublV_122v"),
-    ("DfP3rbpu_81", "duplicate_lakeside_silhouette_short_27_7v"),
-    ("DfP3jR_OPp6", "replace_old_whitebox_short_26_with_format_A"),
-    ("DfS6QdAuGPY", "replace_old_whitebox_short_29_with_format_C"),
-    ("DfS6YOPO8hJ", "replace_old_dark_short_30_with_format_A"),
+    ("DfPqHCVucCA", "replace_old_whitebox_short_23_with_emotional_face_giant"),
+    ("DfPqO5wupcl", "replace_old_whitebox_short_24_with_emotional_face_giant"),
 ]
 
 

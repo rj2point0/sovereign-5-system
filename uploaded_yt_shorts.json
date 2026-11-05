@@ -53,7 +53,33 @@
       "prompt_seeded": true,
       "sample_seeded": true,
       "pinned": true
+    },
+    "short_23": {
+      "id": "short_23",
+      "filename": "tiktok_short_23_7sec_double_text.mp4",
+      "title": "Never Double Text When This Birth Day Goes Quiet 📱💔 #Shorts",
+      "video_id": "mhbNVSmjYQg",
+      "url": "https://www.youtube.com/shorts/mhbNVSmjYQg",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-04T20:38:52.342274",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_24": {
+      "id": "short_24",
+      "filename": "tiktok_short_24_7sec_soulmate_day.mp4",
+      "title": "Only 1 Birth Day Can Handle Your Fire Without Drama 🔥 #Shorts",
+      "video_id": "9jgH8Hssjw8",
+      "url": "https://www.youtube.com/shorts/9jgH8Hssjw8",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-04T20:39:39.971329",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
     }
   },
-  "updated_at": "2026-11-04T15:46:32.170545"
+  "updated_at": "2026-11-04T20:40:01.838337"
 }

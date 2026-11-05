@@ -69,7 +69,7 @@ TIKTOK_TARGETS = [
     },
     {
         "id": "short_23",
-        "video_id": None,
+        "video_id": "7704542849571900685",
         "title_match": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting",
     },
     {
@@ -90,6 +90,8 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_24", "shortcode": "DfWMtB2OLJc"},
+    {"id": "short_23", "shortcode": "DfWMlPuumkQ"},
     {"id": "short_30", "shortcode": "DfVoPn9u4rG"},
     {"id": "short_29", "shortcode": "DfVoH1Lu2xB"},
     {"id": "short_27", "shortcode": "DfVoASXOCCL"},

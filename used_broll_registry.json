@@ -5,28 +5,42 @@
       "visual_format": "emotional_face_giant",
       "primary_clip": "emo_11_worried_sad_woman_closeup.mp4",
       "mean_luma": 79.2,
-      "updated_at": "2026-11-04T15:15:53"
-    },
-    {
-      "id": "short_29",
-      "visual_format": "emotional_face_giant",
-      "primary_clip": "emo_06_sofa_back_to_back.mp4",
-      "mean_luma": 86.2,
-      "updated_at": "2026-11-04T15:16:41"
-    },
-    {
-      "id": "short_30",
-      "visual_format": "emotional_face_giant",
-      "primary_clip": "emo_09_couple_forgiveness_hug.mp4",
-      "mean_luma": 111.1,
-      "updated_at": "2026-11-04T15:17:08"
+      "updated_at": "2026-11-04T15:40:23"
     },
     {
       "id": "short_27",
       "visual_format": "emotional_face_giant",
       "primary_clip": "emo_05_couple_upset_disappointed.mp4",
       "mean_luma": 123.3,
-      "updated_at": "2026-11-04T15:23:52"
+      "updated_at": "2026-11-04T15:40:46"
+    },
+    {
+      "id": "short_29",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_06_sofa_back_to_back.mp4",
+      "mean_luma": 86.2,
+      "updated_at": "2026-11-04T15:41:08"
+    },
+    {
+      "id": "short_30",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_09_couple_forgiveness_hug.mp4",
+      "mean_luma": 111.1,
+      "updated_at": "2026-11-04T15:41:34"
+    },
+    {
+      "id": "short_24",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_10_loving_couple_close.mp4",
+      "mean_luma": 114.7,
+      "updated_at": "2026-11-04T20:33:51"
+    },
+    {
+      "id": "short_23",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_07_upset_after_argument.mp4",
+      "mean_luma": 109.1,
+      "updated_at": "2026-11-04T20:36:01"
     }
   ]
 }

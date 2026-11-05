@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-04T15:28:39.084835",
+  "updated_at": "2026-11-04T20:43:33.737657",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -252,10 +252,10 @@
     "tiktok_short_23_7sec_double_text.mp4": {
       "filename": "tiktok_short_23_7sec_double_text.mp4",
       "ad_id": "short_23",
-      "status": "scheduled",
-      "mode": "schedule",
-      "schedule_time": "2026-11-05 11:00",
-      "uploaded_at": "2026-11-03T08:58:04.057782",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-04T20:41:59.797880",
       "caption_preview": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting when they go quiet—here is how to flip t"
     },
     "tiktok_short_24_7sec_soulmate_day.mp4": {
@@ -263,8 +263,8 @@
       "ad_id": "short_24",
       "status": "scheduled",
       "mode": "schedule",
-      "schedule_time": "2026-11-05 18:30",
-      "uploaded_at": "2026-11-03T08:58:51.366371",
+      "schedule_time": "2026-11-05 11:00",
+      "uploaded_at": "2026-11-04T20:42:58.494154",
       "caption_preview": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? Only one birth number can handle your fire"
     },
     "tiktok_short_25_7sec_karmic_or_soulmate.mp4": {
@@ -281,8 +281,8 @@
       "ad_id": "short_26",
       "status": "scheduled",
       "mode": "schedule",
-      "schedule_time": "2026-11-06 11:00",
-      "uploaded_at": "2026-11-04T15:20:14.178079",
+      "schedule_time": "2026-11-05 18:30",
+      "uploaded_at": "2026-11-04T20:43:33.737657",
       "caption_preview": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean they forgot you (ch"
     },
     "tiktok_short_27_7sec_november_turning_point.mp4": {
@@ -291,7 +291,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-06 18:30",
-      "uploaded_at": "2026-11-04T15:28:39.084835",
+      "uploaded_at": "2026-11-04T15:44:42.779894",
       "caption_preview": "Born on the 3rd, 4th, 8th, 9th, 12th, 13th, 17th, 18th, 21st, 22nd, 26th, 27th, 30th, or 31st? Your next love shift star"
     },
     "tiktok_short_28_7sec_who_chases_who.mp4": {
@@ -309,7 +309,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-07 11:00",
-      "uploaded_at": "2026-11-04T15:21:24.845633",
+      "uploaded_at": "2026-11-04T15:45:17.504071",
       "caption_preview": "Dating someone born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, 26th, or 31st? Never chase when they go silent—g"
     },
     "tiktok_short_30_7sec_endgame_birthdays.mp4": {
@@ -318,7 +318,7 @@
       "status": "scheduled",
       "mode": "schedule",
       "schedule_time": "2026-11-07 18:30",
-      "uploaded_at": "2026-11-04T15:22:00.100966",
+      "uploaded_at": "2026-11-04T15:45:52.737595",
       "caption_preview": "Are your birthdays endgame—or just a 3-month karmic lesson? (Comment both birth days below or test your match free at th"
     }
   }

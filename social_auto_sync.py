@@ -6,12 +6,11 @@ social_auto_sync.py
 -----------------------------------------------------------------------------
 Invoked every 2 hours by the Windows Scheduled Task `\Sovereign5SocialAutoSync`.
 Executes in sequence:
-1. `tiktok_comment_responder.py --live --limit 10`
-2. `ig_comment_responder.py --live --limit 10`
-3. `seed_first_comments.py --wait-seconds 15` (seeds first comments on any newly
-   published TikTok videos such as `short_06`, `short_07`, `short_08`, `short_09`)
-4. Cross-posts the next unposted Cohort-C video (`short_08`, `short_09`) to
-   Instagram Reels if its scheduled window has arrived.
+1. `seed_first_comments.py --wait-seconds 15` & `seed_sample_reading_replies.py --platform all`
+2. `tiktok_comment_responder.py --live --limit 15`
+3. `ig_comment_responder.py --live --limit 15`
+4. `yt_comment_responder.py --live --limit 15`
+5. `lead_capture_worker.py --poll-once`
 =============================================================================
 """
 
@@ -22,8 +21,8 @@ from datetime import datetime
 
 if sys.platform == "win32":
     try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
 
@@ -53,28 +52,28 @@ def run_step(label: str, cmd: list):
 
 def main():
     run_step(
-        "1. TikTok Comment Auto-Responder",
-        [PYTHON_EXE, os.path.join(BASE_DIR, "tiktok_comment_responder.py"), "--live", "--limit", "10"],
-    )
-    run_step(
-        "2. Instagram Comment Auto-Responder",
-        [PYTHON_EXE, os.path.join(BASE_DIR, "ig_comment_responder.py"), "--live", "--limit", "10"],
-    )
-    run_step(
-        "3. YouTube Shorts Comment Auto-Responder",
-        [PYTHON_EXE, os.path.join(BASE_DIR, "yt_comment_responder.py"), "--live", "--limit", "10"],
-    )
-    run_step(
-        "4. TikTok First-Comment Seeder (Newly Live Videos)",
+        "1a. TikTok First-Comment Seeder (Newly Live Videos)",
         [PYTHON_EXE, os.path.join(BASE_DIR, "seed_first_comments.py"), "--wait-seconds", "15"],
     )
     run_step(
-        "5. Social Proof Sample Match Follow-Up Seeder (TikTok + IG)",
+        "1b. Social Proof Sample Match Follow-Up Seeder (TikTok + IG)",
         [PYTHON_EXE, os.path.join(BASE_DIR, "seed_sample_reading_replies.py"), "--platform", "all"],
     )
     run_step(
-        "6. TikTok Top-3 Video Pinner (short_02, short_10, short_11)",
-        [PYTHON_EXE, os.path.join(BASE_DIR, "pin_top_videos.py")],
+        "2. TikTok Comment Auto-Responder",
+        [PYTHON_EXE, os.path.join(BASE_DIR, "tiktok_comment_responder.py"), "--live", "--limit", "15"],
+    )
+    run_step(
+        "3. Instagram Comment Auto-Responder",
+        [PYTHON_EXE, os.path.join(BASE_DIR, "ig_comment_responder.py"), "--live", "--limit", "15"],
+    )
+    run_step(
+        "4. YouTube Shorts Comment Auto-Responder",
+        [PYTHON_EXE, os.path.join(BASE_DIR, "yt_comment_responder.py"), "--live", "--limit", "15"],
+    )
+    run_step(
+        "5. Lead Capture Telemetry & Brevo Email Worker Poll",
+        [PYTHON_EXE, os.path.join(BASE_DIR, "lead_capture_worker.py"), "--poll-once"],
     )
 
 

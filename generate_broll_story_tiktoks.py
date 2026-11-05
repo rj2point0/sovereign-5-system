@@ -1012,14 +1012,21 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_23",
         "cohort": "Cohort C · Outlier Batch 6 (7-Sec Retention)",
         "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("NEVER", "coral"),
+            ("DOUBLE TEXT", "gold"),
+            ("THIS BIRTH DAY", "white"),
+        ],
+        "giant_sub_pill": "BORN 2nd · 6th · 9th · 11th · 15th · 20th · 24th · 29th",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_23_7sec_double_text.mp4",
-        "grid_headline": "NEVER DOUBLE\nTEXT THEM",
+        "grid_headline": "NEVER\nDOUBLE TEXT\nTHESE BIRTH DAYS",
         "grid_sub": "DO THIS INSTEAD",
         "hook_box_text": "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Never double text them:",
-        "hook_end_sec": 2.9,
-        "cta_tail_sec": 2.8,
-        "broll_cutoff": 4.6,
+        "hook_end_sec": 5.8,
+        "cta_tail_sec": 1.8,
+        "broll_cutoff": 5.8,
         "tail_hold_sec": 0.25,
         "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
@@ -1034,8 +1041,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Match their silence and check bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_18_hands_texting_phone.mp4"),
-            (2.3, 4.6, "broll_02_late_night_phone.mp4"),
+            (0.0, 2.9, "emo_07_upset_after_argument.mp4"),
+            (2.9, 5.8, "emo_12_upset_couple_closeup.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1045,7 +1052,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th? Stop double texting when they go quiet—here is how to flip the chase 📱💔 "
             "#relationships #textingadvice #doubletext #anxiousattachment #numerology #datingadvice #nocontact #lovecode"
         ),
-        "first_comment": "Were you born on the 2nd, 6th, 9th, 11th, 15th, 20th, 24th, or 29th—and do you fight the urge to double text? Drop your day below 👇",
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
         "hashtags": [
             "#relationships", "#textingadvice", "#doubletext", "#anxiousattachment",
             "#numerology", "#datingadvice", "#nocontact", "#lovecode"
@@ -1055,14 +1062,21 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "id": "short_24",
         "cohort": "Cohort C · Outlier Batch 6 (7-Sec Retention)",
         "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("YOUR TRUE", "white"),
+            ("SOULMATE", "gold"),
+            ("BIRTH DAY", "coral"),
+        ],
+        "giant_sub_pill": "BORN 1st · 3rd · 5th · 10th · 12th · 14th · 19th · 23rd · 28th",
         "jenny_hoyos_gate": True,
         "filename": "tiktok_short_24_7sec_soulmate_day.mp4",
-        "grid_headline": "YOUR TRUE\nSOULMATE DAY",
+        "grid_headline": "YOUR TRUE\nSOULMATE\nBIRTH DAY",
         "grid_sub": "TEST BOTH BIRTHDAYS",
         "hook_box_text": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th? Your soulmate day:",
-        "hook_end_sec": 2.9,
-        "cta_tail_sec": 2.8,
-        "broll_cutoff": 4.6,
+        "hook_end_sec": 5.8,
+        "cta_tail_sec": 1.8,
+        "broll_cutoff": 5.8,
         "tail_hold_sec": 0.25,
         "target_voice_sec": 7.25,
         "voice": "en-US-AvaNeural",
@@ -1077,8 +1091,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Check your match in bio."
         ),
         "broll_clips": [
-            (0.0, 2.3, "broll_10_couple_sunset_embrace.mp4"),
-            (2.3, 4.6, "broll_17_candle_dark_glow.mp4"),
+            (0.0, 2.9, "emo_10_loving_couple_close.mp4"),
+            (2.9, 5.8, "emo_03_couple_silence_apart.mp4"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1089,7 +1103,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Only one birth number can handle your fire without starting a power struggle 🔥❤️‍🔥 "
             "#relationships #soulmate #compatibility #numerology #datingadvice #lovecode #birthdaycompatibility #crush"
         ),
-        "first_comment": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th—what day was your crush or partner born? Drop both 👇",
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
         "hashtags": [
             "#relationships", "#soulmate", "#compatibility", "#numerology",
             "#datingadvice", "#lovecode", "#birthdaycompatibility", "#crush"
@@ -1662,13 +1676,13 @@ class BrollStoryGenerator:
         cx = 540
         curr_y = 185 if compact_top else 285
         line_step = 116 if compact_top else 130
-        size_candidates = (116, 110, 104, 98, 92) if compact_top else (130, 124, 118, 112, 106, 100, 94)
+        size_candidates = (116, 110, 104, 98, 92, 86, 80) if compact_top else (130, 124, 118, 112, 106, 100, 94, 88, 82)
 
         for line_txt, col_key in giant_lines:
             txt_up = line_txt.strip().upper()
             fill_rgb = color_map.get(col_key, (255, 255, 255))
-            # Auto-fit between 130px down to 96px so the line spans ~85% of the 1080px width (<= 965px)
-            font_line = ImageFont.truetype(heavy_font_path, size_candidates[0])
+            # Auto-fit between 130px down to 82px so the line spans ~85% of the 1080px width (<= 965px)
+            font_line = ImageFont.truetype(heavy_font_path, size_candidates[-1])
             for f_sz in size_candidates:
                 cand = ImageFont.truetype(heavy_font_path, f_sz)
                 bbox = draw.textbbox((0, 0), txt_up, font=cand, stroke_width=8)

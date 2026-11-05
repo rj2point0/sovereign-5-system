@@ -67,7 +67,23 @@ SAMPLE_MATCH_REPLY = (
 )
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
-    # Upload ONLY the newly rendered 3-Format Shorts (short_26, short_27, short_29, short_30) with pinned 2-birthday comments
+    # Upload the newly rendered emotional_face_giant Shorts (short_23, short_24, short_26, short_27, short_29, short_30) with pinned 2-birthday comments
+    {
+        "id": "short_23",
+        "filename": "tiktok_short_23_7sec_double_text.mp4",
+        "title": "Never Double Text When This Birth Day Goes Quiet 📱💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_24",
+        "filename": "tiktok_short_24_7sec_soulmate_day.mp4",
+        "title": "Only 1 Birth Day Can Handle Your Fire Without Drama 🔥 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
     {
         "id": "short_26",
         "filename": "tiktok_short_26_7sec_no_contact_thoughts.mp4",
