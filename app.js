@@ -1289,7 +1289,65 @@ const CONFIG = {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function runQuickDayPreview(dayRaw) {
+  function selectHeroMyDay(dayRaw) {
+    const dNum = parseInt(dayRaw, 10);
+    if (!dNum || dNum < 1 || dNum > 31) return;
+    const strip2 = $('#hero-partner-day-strip');
+    if (state.heroMyDay === dNum && strip2 && !strip2.classList.contains('hidden')) {
+      runQuickDayPreview(dNum);
+      return;
+    }
+    state.heroMyDay = dNum;
+    const dayStr = String(dNum).padStart(2, '0');
+    const dEl = $('#dobDay');
+    if (dEl) dEl.value = dayStr;
+    $$('#quick-day-pills .quick-day-btn').forEach((btn) => {
+      btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === dNum);
+    });
+    const isEs = state.lang === 'es';
+    const lbl2 = $('#hero-partner-day-label');
+    if (lbl2) {
+      lbl2.innerHTML = isEs
+        ? `2️⃣ Ahora Toca SU Día de Nacimiento (1–31) Para Ver Tu Compatibilidad [Día ${dNum} × ?] y Guion:`
+        : `2️⃣ Now Tap THEIR Birth Day (1–31) To See Your [Day ${dNum} × ?] Match % &amp; Text Script:`;
+    }
+    const skipBtn = $('#btn-hero-single-day-skip');
+    if (skipBtn) {
+      skipBtn.textContent = isEs
+        ? `Solo ver mi propio Día ${dNum} primero →`
+        : `Just Check My Own Day (Day ${dNum}) First →`;
+    }
+    if (strip2) {
+      strip2.classList.remove('hidden');
+      strip2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    sendWebhook('hero_my_day_selected', {
+      birth_day: dNum,
+      day_str: dayStr,
+    });
+  }
+
+  function selectHeroPartnerDay(partnerDayRaw) {
+    const pNum = parseInt(partnerDayRaw, 10);
+    if (!pNum || pNum < 1 || pNum > 31) return;
+    const myNum = state.heroMyDay || parseInt(($('#dobDay') && $('#dobDay').value) || '19', 10) || 19;
+    $$('#hero-partner-day-pills .quick-day-btn').forEach((btn) => {
+      btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === pNum);
+    });
+    runQuickDayPreview(myNum, { skipScrollTop: true });
+    runPartnerQuickDayCheck(pNum);
+    sendWebhook('hero_pair_match_selected', {
+      my_day: myNum,
+      partner_day: pNum,
+    });
+    const resBox = $('#partner-compat-result');
+    if (resBox) {
+      resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function runQuickDayPreview(dayRaw, opts) {
+    const options = opts || {};
     const dNum = parseInt(dayRaw, 10);
     if (!dNum || dNum < 1 || dNum > 31) return;
     const dayStr = String(dNum).padStart(2, '0');
@@ -1340,7 +1398,9 @@ const CONFIG = {
     });
 
     openTeaser();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!options.skipScrollTop) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   function runPartnerQuickDayCheck(dayRaw) {
@@ -2608,10 +2668,49 @@ const CONFIG = {
       runInstantSampleDemo();
     }
     else if (a === 'quick-day') {
-      runQuickDayPreview(t.dataset.day);
+      selectHeroMyDay(t.dataset.day);
+    }
+    else if (a === 'hero-partner-day') {
+      selectHeroPartnerDay(t.dataset.day);
+    }
+    else if (a === 'hero-single-day-skip') {
+      runQuickDayPreview(state.heroMyDay || parseInt(($('#dobDay') && $('#dobDay').value) || '25', 10) || 25);
     }
     else if (a === 'partner-quick-day') {
       runPartnerQuickDayCheck(t.dataset.day);
+    }
+    else if (a === 'show-downsell-box') {
+      revealDownsellBox('manual_click');
+    }
+    else if (a === 'save-downsell-email') {
+      const emInput = $('#downsell-fast-email-input');
+      const emVal = emInput ? emInput.value.trim() : '';
+      if (!emVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emVal)) {
+        toast(state.lang === 'es' ? 'Ingresa un correo electrónico válido.' : 'Please enter a valid email address.');
+        return;
+      }
+      const pInput = $('#partner-compat-email-input');
+      if (pInput) pInput.value = emVal;
+      submitPartnerCompatEmail();
+      const wrap = $('#downsell-fast-email-wrap');
+      if (wrap) wrap.classList.add('hidden');
+    }
+    else if (a === 'copy-part1-script') {
+      const lEl = $('#imessage-leadin-text');
+      const p1El = $('#imessage-part1-text');
+      const txt = ((lEl ? lEl.textContent : '') + (p1El ? p1El.textContent : '')).trim();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).catch(() => {});
+        }
+      } catch (err) { /* ignore */ }
+      sendWebhook('downsell_part1_copied', { partner_dob: state.partnerDob || '' });
+      toast(
+        state.lang === 'es'
+          ? '✅ ¡Parte 1 de tu mensaje copiada al portapapeles!'
+          : '✅ Part 1 Opening Line Copied! Paste in iMessage or unlock Part 2 below.',
+        4500
+      );
     }
     else if (a === 'scroll-partner-compat') {
       const pBox = $('#partner-compat-box');
@@ -2781,10 +2880,12 @@ const CONFIG = {
     if (vipOfferEl) vipOfferEl.classList.remove('hidden');
 
     const stripeUrl = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
-    ['#btn-vip-fast-action-17', '#btn-unlock-text-script', '#btn-partner-mini-cta', '#btn-checkout-mini'].forEach((sel) => {
+    ['#btn-vip-fast-action-17', '#btn-unlock-text-script', '#btn-partner-mini-cta', '#btn-checkout-mini', '#btn-downsell-fast-checkout'].forEach((sel) => {
       const btn = $(sel);
       if (btn && stripeUrl) btn.setAttribute('data-stripe-url', stripeUrl);
     });
+    const dsEmailWrap = $('#downsell-fast-email-wrap');
+    if (dsEmailWrap) dsEmailWrap.classList.add('hidden');
     startVipFastActionTimer();
 
     const pBox = $('#partner-compat-email-box');
@@ -3143,6 +3244,44 @@ const CONFIG = {
             ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer>14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($17) →'
             : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer>14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($17) →'}
         </button>
+        <div class="mt-2.5 text-center">
+          <button type="button" id="btn-show-downsell-box" data-action="show-downsell-box" class="text-[0.7rem] sm:text-xs text-amber-300 underline font-semibold hover:text-ivory cursor-pointer">
+            ${isEs ? '¿Solo quieres el mensaje de texto desbloqueado ahora mismo? Haz clic aquí ↓' : 'Wait — Just want the unblurred text message right now? Tap here ↓'}
+          </button>
+        </div>
+      </div>
+
+      <!-- INSTANT HESITATION / TAB-RETURN DOWNSELL & FAST-CHECKOUT BOX (#downsell-script-only-box) -->
+      <div id="downsell-script-only-box" class="hidden mt-3.5 p-3.5 sm:p-4 rounded-xl bg-amber-950/55 border-2 border-amber-400/75 text-left shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+          <span class="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/60 text-[0.62rem] font-extrabold uppercase tracking-wider text-amber-200">
+            ⚡ ${isEs ? 'OPCIÓN RÁPIDA · SOLO EL GUION DE TEXTO' : 'WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE?'}
+          </span>
+          <span class="text-[0.65rem] font-bold text-emerald-300">
+            ${isEs ? 'Acceso Instantáneo en 1 Toque' : '1-Tap Express Unlock'}
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
+          ${isEs
+            ? `No necesitas leer un reporte largo hoy. Desbloquea al instante el resto de tu mensaje palabra por palabra para [Día ${userBirthDay} × Día ${partnerBirthDay}] + su respuesta exacta:`
+            : `Skip the long reading—get the exact word-for-word [Day ${userBirthDay} × Day ${partnerBirthDay}] "Flip The Chase" text message unblurred on your screen in 1 tap:`}
+        </p>
+        <div id="downsell-fast-email-wrap" class="${(state.profile && state.profile.email) ? 'hidden' : ''} mt-2.5 flex flex-col sm:flex-row gap-2">
+          <input id="downsell-fast-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Tu correo para desbloquear Parte 1 gratis...' : 'Enter email to unblur Part 1 free right now...'}" />
+          <button type="button" id="btn-downsell-fast-email" data-action="save-downsell-email" class="btn-ghost !py-2 !px-3 text-xs font-extrabold text-amber-200 border-amber-300/70 bg-amber-400/15 whitespace-nowrap">
+            ${isEs ? 'Desbloquear Parte 1 Gratis →' : 'Unblur Part 1 Free →'}
+          </button>
+        </div>
+        <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
+          <button type="button" id="btn-downsell-fast-checkout" data-action="checkout-mini" data-trigger="downsell_fast_checkout_script" class="btn-gold !py-3 !px-4 flex-1 text-xs sm:text-sm font-extrabold tracking-wide">
+            ⚡ ${isEs
+              ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($17) →'
+              : '1-Tap Express Unlock: Unblur Full Text Message Now ($17) →'}
+          </button>
+          <button type="button" id="btn-copy-part1-script" data-action="copy-part1-script" class="btn-ghost !py-2.5 !px-3 text-xs font-bold text-champagne border-gold/45 hover:border-gold whitespace-nowrap">
+            📋 ${isEs ? 'Copiar Parte 1 Gratis' : 'Copy Free Opening Line'}
+          </button>
+        </div>
       </div>
 
       <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
@@ -3187,7 +3326,9 @@ const CONFIG = {
     }
     const hesitationDelayMs = Number(window.__S5_HESITATION_MS) > 0 ? Number(window.__S5_HESITATION_MS) : 10000;
     state.partnerHesitationTimer = setTimeout(() => {
-      if (state.hasClickedMiniUnlock || (state.profile && state.profile.email)) return;
+      if (state.hasClickedMiniUnlock) return;
+      revealDownsellBox('hesitation_timer');
+      if (state.profile && state.profile.email) return;
       const calloutEl = $('#partner-hesitation-callout');
       const emailBoxEl = $('#partner-compat-email-box');
       if (calloutEl && emailBoxEl) {
@@ -3195,6 +3336,30 @@ const CONFIG = {
         emailBoxEl.classList.add('gold-pulse-highlight');
       }
     }, hesitationDelayMs);
+  }
+
+  function revealDownsellBox(reason) {
+    const dsBox = $('#downsell-script-only-box');
+    if (!dsBox) return;
+    const wasHidden = dsBox.classList.contains('hidden');
+    dsBox.classList.remove('hidden');
+    const wrap = $('#downsell-fast-email-wrap');
+    if (wrap) {
+      wrap.classList.toggle('hidden', Boolean(state.profile && state.profile.email));
+    }
+    const stripeUrl = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
+    const dsBtn = $('#btn-downsell-fast-checkout');
+    if (dsBtn && stripeUrl) dsBtn.setAttribute('data-stripe-url', stripeUrl);
+    if (wasHidden) {
+      sendWebhook('downsell_box_shown', {
+        reason: reason || 'hesitation',
+        partner_dob: state.partnerDob || '',
+        has_email: Boolean(state.profile && state.profile.email),
+      });
+    }
+    if (reason === 'manual_click') {
+      dsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   function playTriangleBriefing(partNum) {
@@ -3436,6 +3601,16 @@ const CONFIG = {
 
     // Fire page_view telemetry on load for real visitor sessions
     sendWebhook('page_view', { path: location.pathname + location.search });
+
+    // If a visitor clicked a $17 checkout button and returns to the tab without completing checkout, reveal the 1-Tap Downsell / Express box
+    const onReturnFromCheckoutHesitation = () => {
+      if (document.visibilityState && document.visibilityState !== 'visible') return;
+      if (state.hasClickedMiniUnlock || store.get(KEYS.pending) === 'love_mini') {
+        revealDownsellBox('tab_return_after_checkout');
+      }
+    };
+    window.addEventListener('focus', onReturnFromCheckoutHesitation);
+    document.addEventListener('visibilitychange', onReturnFromCheckoutHesitation);
 
     // Determine target tier from URL (?tier=love_mini&unlocked=true, ?tier=base&unlocked=true, ?tier=full&unlocked=true)
     const isUnlockedParam = q.get('unlocked') === 'true';

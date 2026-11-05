@@ -465,19 +465,39 @@ async def test_all():
         await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=6000)
         assert await page_mob.is_visible('#teaser-relationship-clash') is True, "Expected Teaser view to open when #fullName is left blank!"
 
-        # 10b) Return to Hero and verify tapping a day in #quick-day-strip fires quick_day_selected and opens Teaser immediately
+        # 10b) Return to Hero and verify 2-Tap "Your Day × Their Day" Instant Match Calculator on view1 (#quick-day-strip -> #hero-partner-day-strip)
+        await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
+        await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        assert await page_mob.is_visible('#hero-partner-day-strip') is False, "Expected #hero-partner-day-strip hidden on initial load"
+        await page_mob.click('#quick-day-strip button[data-action="quick-day"][data-day="19"]')
+        await asyncio.sleep(0.15)
+        assert await page_mob.is_visible('#hero-partner-day-strip') is True, "Expected #hero-partner-day-strip revealed in-place after tapping Step 1 day"
+        step2_lbl = await page_mob.locator('#hero-partner-day-label').inner_text()
+        assert "2️⃣" in step2_lbl and "Day 19" in step2_lbl, f"Unexpected #hero-partner-day-label: {step2_lbl}"
+        await page_mob.click('#hero-partner-day-strip button[data-action="hero-partner-day"][data-day="23"]')
+        await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=5000)
+        await asyncio.sleep(0.2)
+        pair_evs = [e for e in demo_events if e.get("event_type") == "hero_pair_match_selected"]
+        assert len(pair_evs) >= 1 and (pair_evs[-1].get("extra") or {}).get("my_day") == 19 and (pair_evs[-1].get("extra") or {}).get("partner_day") == 23, f"Expected hero_pair_match_selected(19, 23), got {pair_evs}"
+        assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result immediately visible after 2-tap hero match"
+        assert await page_mob.is_visible('#situation-chip-strip') is True, "Expected #situation-chip-strip immediately visible after 2-tap hero match"
+        assert await page_mob.is_visible('#flip-chase-preview-bubble') is True, "Expected #flip-chase-preview-bubble immediately visible after 2-tap hero match"
+
+        # Also verify 1-tap single-day skip (#btn-hero-single-day-skip) from view1 opens Teaser with #quick-day-banner
         await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
         await page_mob.click('#quick-day-strip button[data-action="quick-day"][data-day="25"]')
+        await page_mob.wait_for_selector('#hero-partner-day-strip:not(.hidden)', timeout=3000)
+        await page_mob.click('#btn-hero-single-day-skip')
         await page_mob.wait_for_selector('#view-teaser:not(.hidden)', timeout=5000)
         await asyncio.sleep(0.2)
         qd_ev_list = [e for e in demo_events if e.get("event_type") == "quick_day_selected"]
         assert len(qd_ev_list) >= 1, f"Expected quick_day_selected event, got {[e.get('event_type') for e in demo_events]}"
         assert (qd_ev_list[-1].get("extra") or {}).get("birth_day") == 25, f"Expected birth_day=25 in quick_day_selected: {qd_ev_list[-1]}"
-        assert await page_mob.is_visible('#quick-day-banner') is True, "Expected #quick-day-banner visible on Teaser after 1-tap quick-day click"
+        assert await page_mob.is_visible('#quick-day-banner') is True, "Expected #quick-day-banner visible on Teaser after single-day skip click"
         assert await page_mob.is_visible('#btn-jump-partner-strip') is True, "Expected #btn-jump-partner-strip inside #quick-day-banner"
 
-        # 10c) Verify tapping a partner day (1-31) in #partner-quick-day-strip immediately fires partner_check_run without Partner Month/Year dropdowns & renders #flip-chase-preview-bubble + #btn-unlock-text-script
+        # 10c) Verify tapping a partner day (1-31) in #partner-quick-day-strip immediately fires partner_check_run without Partner Month/Year dropdowns & renders #flip-chase-preview-bubble + #btn-unlock-text-script + #downsell-script-only-box
         assert await page_mob.is_visible('#partner-quick-day-strip') is True, "Expected #partner-quick-day-strip visible inside #partner-compat-box"
         pqd_box = await page_mob.locator('#partner-quick-day-strip').bounding_box()
         assert pqd_box is not None and pqd_box["y"] >= 0 and (pqd_box["y"] + pqd_box["height"]) <= 635, f"Expected #partner-quick-day-strip immediately visible inside 390x660 viewport after quick_day_selected, got {pqd_box}"
@@ -486,6 +506,9 @@ async def test_all():
         await asyncio.sleep(0.25)
         assert await page_mob.is_visible('#partner-compat-result') is True, "Expected #partner-compat-result to render immediately on 1-tap partner day click"
         assert await page_mob.is_visible('#partner-hesitation-callout') is True, "Expected #partner-hesitation-callout to reveal inside #partner-compat-email-box after hesitation timer!"
+        assert await page_mob.is_visible('#downsell-script-only-box') is True, "Expected #downsell-script-only-box to reveal after hesitation timer!"
+        ds_txt = await page_mob.locator('#downsell-script-only-box').inner_text()
+        assert "WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE?" in ds_txt.upper(), f"Unexpected #downsell-script-only-box text: {ds_txt}"
         hes_txt = await page_mob.locator('#partner-hesitation-callout').inner_text()
         assert "Not ready for the full $17 unlock yet?" in hes_txt and "[Day 25 × Day 16] Compatibility Breakdown + Opening Reset Line" in hes_txt, f"Unexpected #partner-hesitation-callout text: {hes_txt}"
         has_pulse_cls = await page_mob.evaluate("document.querySelector('#partner-compat-email-box').classList.contains('gold-pulse-highlight')")

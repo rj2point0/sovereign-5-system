@@ -144,7 +144,17 @@ async def verify_live_pages():
         assert vsl_live is True, "Live VSL video player should be visible on Teaser deep-link!"
         print("Cross-browser email Teaser deep-link and VSL video verified on live site!")
 
-        # Test 6: Viral Partner Share deep-link (/?d1=19&d2=23), 19x23 Header Icon, #social-proof-toast, and Instant Part 1 Unblur + $17 VIP Offer on live site
+        # Test 6: 2-Tap Hero Match Calculator (Your Day x Their Day), Viral Partner Share deep-link (/?d1=19&d2=23), #situation-chip-strip, Instant Part 1 Unblur, $17 VIP Offer & #downsell-script-only-box on live site
+        await page_clean.goto(f"{base_url}?utm_source=yt_shorts")
+        await page_clean.wait_for_selector("#view-hero:not(.hidden)", timeout=8000)
+        assert await page_clean.is_visible("#hero-partner-day-strip") is False
+        await page_clean.click('#quick-day-strip button[data-action="quick-day"][data-day="19"]')
+        await page_clean.wait_for_selector("#hero-partner-day-strip:not(.hidden)", timeout=4000)
+        await page_clean.click('#hero-partner-day-strip button[data-action="hero-partner-day"][data-day="23"]')
+        await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=6000)
+        assert await page_clean.is_visible("#partner-compat-result") is True
+        assert await page_clean.is_visible("#flip-chase-preview-bubble") is True
+
         await page_clean.goto(f"{base_url}?d1=19&d2=23&utm_source=partner_share")
         await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
         assert await page_clean.is_visible("#header-19x23-avatar") is True
@@ -170,9 +180,12 @@ async def verify_live_pages():
         assert await page_clean.is_visible("#partner-secret-fear-unlocked") is True
         assert await page_clean.is_visible("#imessage-part2-locked-callout") is True
         assert await page_clean.is_visible("#vip-fast-action-offer") is True
+        await page_clean.click("#btn-show-downsell-box")
+        await asyncio.sleep(0.15)
+        assert await page_clean.is_visible("#downsell-script-only-box") is True
         live_vip_url = await page_clean.locator("#btn-vip-fast-action-17").get_attribute("data-stripe-url")
         assert live_vip_url and "prefilled_email=sarah.live%40gmail.com" in live_vip_url
-        print("Live ?d1=19&d2=23 Viral Partner Share deep-link, 19x23 Brand Icon, #social-proof-toast, #situation-chip-strip, Instant Part 1 Unblur & $17 VIP Fast-Action Offer verified on live site!")
+        print("Live 2-Tap Hero Match Calculator, ?d1=19&d2=23 Viral Partner Share deep-link, #situation-chip-strip, Instant Part 1 Unblur, $17 VIP Offer & #downsell-script-only-box verified on live site!")
         await ctx_clean.close()
 
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")
