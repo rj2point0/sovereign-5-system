@@ -1655,6 +1655,9 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     raw_ev = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
     ev_map = {
         "page_view": "page_view",
+        "hero_engaged_3s": "hero_engaged_3s",
+        "hero_my_day_selected": "hero_my_day_selected",
+        "hero_pair_match_selected": "hero_pair_match_selected",
         "calc_started": "calc_started",
         "field_progress": "calc_started",
         "quick_day_selected": "quick_day_selected",
@@ -1665,6 +1668,8 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "situation_chip_clicked": "situation_chip_clicked",
         "partner_match_shared": "partner_match_shared",
         "shared_match_opened": "shared_match_opened",
+        "downsell_box_shown": "downsell_box_shown",
+        "downsell_part1_copied": "downsell_part1_copied",
         "lead_capture": "lead_submitted",
         "lead_submitted": "lead_submitted",
         "checkout_click": "checkout_clicked",
@@ -1725,7 +1730,17 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     partner_dob = normalize_dob(raw_partner_dob) if raw_partner_dob else ""
     compat_score = extra.get("compatibility_score") or extra.get("magnetism_score") or ""
 
-    if event_type in ("page_view", "calc_started", "demo_preview_clicked", "quick_day_selected"):
+    if event_type in (
+        "page_view",
+        "hero_engaged_3s",
+        "hero_my_day_selected",
+        "hero_pair_match_selected",
+        "calc_started",
+        "demo_preview_clicked",
+        "quick_day_selected",
+        "downsell_box_shown",
+        "downsell_part1_copied",
+    ):
         dedup_key = f"{session_id}::{event_type}"
     elif event_type == "calc_preview":
         dedup_key = f"{session_id}::calc_preview::{clean_name.lower()}::{iso_dob}"
@@ -1862,6 +1877,9 @@ def update_obsidian_dashboard():
 
             stage_badges = {
                 "page_view": "👀 `page_view`",
+                "hero_engaged_3s": "⏱️ `hero_engaged_3s`",
+                "hero_my_day_selected": "1️⃣ `hero_my_day_selected`",
+                "hero_pair_match_selected": "2️⃣ `hero_pair_match_selected`",
                 "calc_started": "✍️ `calc_started`",
                 "quick_day_selected": "⚡ `quick_day_selected`",
                 "demo_preview_clicked": "⚡ `demo_preview_clicked`",
@@ -1870,6 +1888,8 @@ def update_obsidian_dashboard():
                 "situation_chip_clicked": "💬 `situation_chip_clicked`",
                 "partner_match_shared": "📲 `partner_match_shared`",
                 "shared_match_opened": "🔗 `shared_match_opened`",
+                "downsell_box_shown": "🛑 `downsell_box_shown`",
+                "downsell_part1_copied": "📋 `downsell_part1_copied`",
                 "lead_submitted": "📩 `lead_submitted`",
                 "checkout_clicked": "💳 `checkout_clicked`",
                 "purchase_return": "🏆 `purchase_return`",

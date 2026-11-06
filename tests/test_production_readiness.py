@@ -372,24 +372,24 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_30
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_36
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30")]
-        assert len(jh_specs) == 21, f"Expected 21 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36")]
+        assert len(jh_specs) == 27, f"Expected 27 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
-            if s["id"] == "short_13":
-                assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for short_13, got {gate_res['fk_grade']}"
+            if s["id"] in ("short_13", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36"):
+                assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for {s['id']}, got {gate_res['fk_grade']}"
             elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
         from seed_first_comments import TARGET_FIRST_COMMENTS, is_automod_safe_first_comment
         for tfc in TARGET_FIRST_COMMENTS:
             assert is_automod_safe_first_comment(tfc["comment"]), f"First comment for {tfc['id']} failed automod-safe check: {tfc['comment']}"
-            if tfc["id"] in ("short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30"):
+            if tfc["id"] in ("short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36"):
                 assert "Compatibility % score" in tfc["comment"] and len(tfc["comment"]) <= 145, f"Expected 2-Birthday Match % Bait on {tfc['id']}, got {tfc['comment']}"
         from lead_capture_worker import build_cart_recovery_email, collect_lead_partner_checks_and_intent, calculate_5_systems
         geet_intent = collect_lead_partner_checks_and_intent("geet08190@gmail.com", "1986-02-19", "1988-08-19")
@@ -445,12 +445,20 @@ async def test_all():
                 await route.fulfill(status=200, body="ok")
             else:
                 await route.continue_()
+        await page_mob.add_init_script("window.__S5_ENGAGED_MS = 120;")
         await page_mob.route("**/*", capture_demo_webhook)
         await page_mob.goto("http://127.0.0.1:8080/?utm_source=ig_bio&cohort=ig_reels&public_test=1&force_telemetry=1")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=5000)
+        await asyncio.sleep(0.25)
+        eng_evs = [e for e in demo_events if e.get("event_type") == "hero_engaged_3s"]
+        assert len(eng_evs) >= 1, f"Expected hero_engaged_3s event on view1, got {[e.get('event_type') for e in demo_events]}"
         assert await page_mob.is_visible('.system-strip') is False, "Expected .system-strip to be hidden on <600px mobile viewport"
         assert await page_mob.is_visible('#hero-email-block') is False, "Expected #hero-email-block to be collapsed by default on <600px mobile viewport"
-        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#quick-day-strip', '#hero-micro-badge', '#btn-instant-demo'):
+        assert await page_mob.is_visible('#quick-day-hero-box') is True, "Expected #quick-day-hero-box visible at top of view1"
+        assert await page_mob.is_visible('#hero-live-imessage-preview') is True, "Expected #hero-live-imessage-preview visible at 0.0s on view1"
+        qbox = await page_mob.locator('#quick-day-hero-box').bounding_box()
+        assert qbox is not None and qbox["y"] < 140, f"Expected #quick-day-hero-box at very top of view1 (y < 140px), got y={qbox['y'] if qbox else None}"
+        for sel in ('#quick-day-hero-box', '#quick-day-strip', '#hero-live-imessage-preview', '#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
             assert box is not None, f"Missing bounding box for {sel} at 390x660"
             bottom_y = box["y"] + box["height"]

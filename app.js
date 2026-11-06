@@ -1302,14 +1302,27 @@ const CONFIG = {
     const dEl = $('#dobDay');
     if (dEl) dEl.value = dayStr;
     $$('#quick-day-pills .quick-day-btn').forEach((btn) => {
+      btn.classList.remove('demo-pulse');
       btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === dNum);
     });
     const isEs = state.lang === 'es';
     const lbl2 = $('#hero-partner-day-label');
     if (lbl2) {
       lbl2.innerHTML = isEs
-        ? `2️⃣ Ahora Toca SU Día de Nacimiento (1–31) Para Ver Tu Compatibilidad [Día ${dNum} × ?] y Guion:`
+        ? `2️⃣ Ahora Toca SU Día de Nacimiento (1–31) Para Ver Tu Compatibilidad [Día ${dNum} × ?]:`
         : `2️⃣ Now Tap THEIR Birth Day (1–31) To See Your [Day ${dNum} × ?] Match % &amp; Text Script:`;
+    }
+    const liveBadge = $('#hero-live-match-badge');
+    if (liveBadge) {
+      liveBadge.innerHTML = isEs
+        ? `💑 Día ${dNum} × Día ? → <span class="text-emerald-300">¡Toca Su Día Arriba Para Calcular! 🔥</span>`
+        : `💑 Day ${dNum} × Day ? → <span class="text-emerald-300">Tap Their Birth Day Above! 🔥</span>`;
+    }
+    const liveCta = $('#hero-live-imessage-cta');
+    if (liveCta) {
+      liveCta.textContent = isEs
+        ? `👆 ¡Ahora toca SU día de nacimiento (1–31) arriba para desbloquear tu guion!`
+        : `👆 Now Tap THEIR Birth Day (1–31) Above To Unblur Your [Day ${dNum} × ?] Script!`;
     }
     const skipBtn = $('#btn-hero-single-day-skip');
     if (skipBtn) {
@@ -2676,6 +2689,19 @@ const CONFIG = {
     else if (a === 'hero-single-day-skip') {
       runQuickDayPreview(state.heroMyDay || parseInt(($('#dobDay') && $('#dobDay').value) || '25', 10) || 25);
     }
+    else if (a === 'hero-preview-nudge') {
+      const targetEl = state.heroMyDay ? $('#hero-partner-day-strip') : $('#quick-day-strip');
+      if (targetEl) {
+        targetEl.classList.add('gold-pulse-highlight');
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      toast(
+        state.heroMyDay
+          ? (state.lang === 'es' ? '👆 ¡Ahora toca SU día de nacimiento (1–31) arriba!' : '👆 Now tap THEIR birth day (1–31) above to unlock your match & script!')
+          : (state.lang === 'es' ? '👆 ¡Toca TU día de nacimiento (1–31) arriba primero!' : '👆 Tap YOUR birth day (1–31) above first, then tap theirs!'),
+        3500
+      );
+    }
     else if (a === 'partner-quick-day') {
       runPartnerQuickDayCheck(t.dataset.day);
     }
@@ -3601,6 +3627,28 @@ const CONFIG = {
 
     // Fire page_view telemetry on load for real visitor sessions
     sendWebhook('page_view', { path: location.pathname + location.search });
+
+    // Zero-click micro-telemetry on view1: fire hero_engaged_3s when visitor stays >= 3s (or window.__S5_ENGAGED_MS) or scrolls/touches
+    let _heroEngagedFired = false;
+    const fireHeroEngaged = (reason) => {
+      if (_heroEngagedFired) return;
+      if (document.visibilityState === 'hidden') return;
+      _heroEngagedFired = true;
+      sendWebhook('hero_engaged_3s', {
+        trigger: reason || 'dwell_3s',
+        path: location.pathname + location.search,
+      });
+    };
+    const engagedDelayMs = Number(window.__S5_ENGAGED_MS) > 0 ? Number(window.__S5_ENGAGED_MS) : 3000;
+    setTimeout(() => {
+      if (document.visibilityState !== 'hidden') {
+        fireHeroEngaged('dwell_3s');
+      }
+    }, engagedDelayMs);
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 8) fireHeroEngaged('scroll');
+    }, { once: true, passive: true });
+    window.addEventListener('touchstart', () => fireHeroEngaged('touch'), { once: true, passive: true });
 
     // If a visitor clicked a $17 checkout button and returns to the tab without completing checkout, reveal the 1-Tap Downsell / Express box
     const onReturnFromCheckoutHesitation = () => {

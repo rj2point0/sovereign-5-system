@@ -1546,6 +1546,159 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#datingadvice", "#situationship", "#lovecode", "#birthdaycompatibility"
         ],
     },
+    {
+        "id": "short_34",
+        "cohort": "Cohort C · Batch 9 (Dr. Plants Micro-Story + SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("WHEN HE ACTS", "white"),
+            ("COLD & DISTANT", "coral"),
+            ("DO THIS FIRST", "gold"),
+        ],
+        "giant_sub_pill": "CRUSH BORN 3rd · 7th · 8th · 12th · 16th · 17th · 21st · 25th · 26th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_34_7sec_acting_distant_test.mp4",
+        "yt_title": "When He Acts Cold & Distant, Do This First 🥶 #Shorts",
+        "grid_headline": "WHEN HE ACTS\nCOLD & DISTANT\nDO THIS FIRST",
+        "grid_sub": "CRUSH BORN 3, 7, 8, 12, 16, 17, 21, 25, 26",
+        "hook_box_text": "The night he started acting distant, I almost asked him what was wrong.",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+24%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "The night he started acting distant, I almost asked him what was wrong. "
+            "Then I checked his birth day against mine and sent this one line instead. "
+            "Test both birth days in our bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.5, "emo_02_couple_bed_backs.mp4"),
+            (2.5, 4.6, "emo_07_upset_after_argument.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "When he starts acting cold & distant, do NOT ask him 'what's wrong'—send this 1 line instead 🥶📱 "
+            "(Crush born 3rd, 7th, 8th, 12th, 16th, 17th, 21st, 25th, or 26th? Test both birth days free in our bio) "
+            "#relationships #situationship #textingadvice #actingdistant #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#situationship", "#textingadvice", "#actingdistant",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_35",
+        "cohort": "Cohort C · Batch 9 (Dr. Plants Micro-Story + SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("BIRTH DAYS THAT", "white"),
+            ("BREADCRUMB YOU", "coral"),
+            ("FOR MONTHS", "gold"),
+        ],
+        "giant_sub_pill": "BORN 5th · 9th · 10th · 14th · 18th · 19th · 23rd · 27th · 28th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_35_7sec_breadcrumbing_days.mp4",
+        "yt_title": "Birth Days That Breadcrumb You For Months 💔 #Shorts",
+        "grid_headline": "BIRTH DAYS THAT\nBREADCRUMB YOU\nFOR MONTHS",
+        "grid_sub": "BREADCRUMBING BIRTH CODE",
+        "hook_box_text": "He gave me just enough attention to keep me hooked, but never committed.",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+24%",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "He gave me just enough attention to keep me hooked, but never committed. "
+            "When I ran our two birth days, the warning was right there. "
+            "Check your match free in our bio."
+        ),
+        "broll_clips": [
+            (0.0, 2.5, "emo_01_woman_phone_night.mp4"),
+            (2.5, 4.6, "emo_05_couple_upset_disappointed.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Birth days that breadcrumb you for months (just enough attention to keep you hooked) 💔 "
+            "(Born 5th, 9th, 10th, 14th, 18th, 19th, 23rd, 27th, or 28th? Check your match free in our bio) "
+            "#breadcrumbing #situationship #relationships #textingadvice #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#breadcrumbing", "#situationship", "#relationships", "#textingadvice",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_36",
+        "cohort": "Cohort C · Batch 9 (Dr. Plants Micro-Story + SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "emotional_face_giant",
+        "giant_lines": [
+            ("DO THEY ALWAYS", "white"),
+            ("COME BACK", "gold"),
+            ("AFTER SILENCE?", "coral"),
+        ],
+        "giant_sub_pill": "BORN 1st · 2nd · 4th · 6th · 11th · 13th · 15th · 20th · 22nd · 24th · 31st",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_36_7sec_who_comes_back.mp4",
+        "yt_title": "Why They Always Come Back When You Pull Away 🔥 #Shorts",
+        "grid_headline": "DO THEY ALWAYS\nCOME BACK\nAFTER SILENCE?",
+        "grid_sub": "PULL-AWAY MAGNET DAYS",
+        "hook_box_text": "Every time I pulled my energy back, he suddenly found time to text me.",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.25,
+        "voice": "en-US-AvaNeural",
+        "rate": "+24%",
+        "reveal_match_pair": "Born 11th × Born 16th",
+        "reveal_match_score": "94% PUSH-PULL MAGNET",
+        "reveal_sms_lead": "“I really value what we have, so I'm giving...",
+        "spoken_script": (
+            "Every time I pulled my energy back, he suddenly found time to text me. "
+            "It all comes down to how your two birth days lock together. "
+            "Tap our bio to test both days."
+        ),
+        "broll_clips": [
+            (0.0, 2.5, "emo_08_couple_bedroom_tension.mp4"),
+            (2.5, 4.6, "emo_09_couple_forgiveness_hug.mp4"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why they always come back the second you pull your energy away 🔥 "
+            "(Born 1st, 2nd, 4th, 6th, 11th, 13th, 15th, 20th, 22nd, 24th, or 31st? Tap our bio to test both birth days) "
+            "#relationships #nocontact #situationship #textingadvice #numerology #datingadvice #lovecode #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#relationships", "#nocontact", "#situationship", "#textingadvice",
+            "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -1594,7 +1747,7 @@ def validate_jenny_hoyos_readability(spec: Dict[str, Any]) -> Dict[str, Any]:
     fk_grade = compute_flesch_kincaid_grade(script)
     lower_words = set(script.lower().replace(",", " ").replace(".", " ").replace("?", " ").split())
     jargon_found = sorted(lower_words.intersection(BANNED_JENNY_HOYOS_JARGON))
-    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so", "until", "instead", "then"))
+    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so", "until", "instead", "then", "suddenly"))
     tail_hold = float(spec.get("tail_hold_sec", 0.5))
 
     if fk_grade > 5.5:

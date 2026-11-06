@@ -42,11 +42,14 @@ async def verify_live_pages():
         assert sample_pub_vis is False, "Founder Sample button MUST be hidden on public landing page!"
         print("Founder Sample button cleanly hidden for public visitors!")
 
-        # Test 2b: Verify 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Submit Button, #quick-day-strip, Blank-Name Submit, Micro-Badge & 1-Tap Sample Demo on Live Site
+        # Test 2b: Verify 390x660 TikTok In-App Browser Mobile Viewport Above-The-Fold Submit Button, #quick-day-hero-box (y < 140px), #hero-live-imessage-preview, Blank-Name Submit, Micro-Badge & 1-Tap Sample Demo on Live Site
         page_mob = await browser.new_page(viewport={"width": 390, "height": 660})
         await page_mob.goto(f"{base_url}?utm_source=ig_bio&cohort=ig_reels")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)
-        for sel in ('#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#quick-day-strip', '#hero-micro-badge', '#btn-instant-demo'):
+        qbox_live = await page_mob.locator('#quick-day-hero-box').bounding_box()
+        assert qbox_live is not None and qbox_live["y"] < 140, f"Expected live #quick-day-hero-box y < 140px at 390x660, got {qbox_live}"
+        assert await page_mob.is_visible('#hero-live-imessage-preview') is True
+        for sel in ('#quick-day-hero-box', '#quick-day-strip', '#hero-live-imessage-preview', '#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
             box = await page_mob.locator(sel).first.bounding_box()
             assert box is not None and (box["y"] + box["height"]) <= 635, f"Expected live {sel} bottom <= 635px at 390x660, got {box}"
         # Test 2-Tap #quick-day-strip -> #hero-partner-day-strip (and #btn-hero-single-day-skip) + 1-Tap #partner-quick-day-strip + #flip-chase-preview-bubble on live site
