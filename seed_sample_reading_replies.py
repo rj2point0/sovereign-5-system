@@ -33,6 +33,21 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_36",
+        "video_id": None,
+        "title_match": "Why they always come back the second you pull your energy away",
+    },
+    {
+        "id": "short_35",
+        "video_id": None,
+        "title_match": "Birth days that breadcrumb you for months (just enough attention",
+    },
+    {
+        "id": "short_34",
+        "video_id": "7704901851963018510",
+        "title_match": "When he starts acting cold & distant, do NOT ask him",
+    },
+    {
         "id": "short_33",
         "video_id": None,
         "title_match": "Why you keep falling for people who pull away",
@@ -105,6 +120,9 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_36", "shortcode": "DfYsPKVudA0"},
+    {"id": "short_35", "shortcode": "DfYsGWmOnNh"},
+    {"id": "short_34", "shortcode": "DfYr-ceOLlN"},
     {"id": "short_33", "shortcode": "DfX4Mdsuqc1"},
     {"id": "short_32", "shortcode": "DfX4E4QOsUB"},
     {"id": "short_31", "shortcode": "DfX39C3Owgn"},

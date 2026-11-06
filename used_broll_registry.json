@@ -62,6 +62,27 @@
       "primary_clip": "emo_04_guy_apologizing_upset_gf.mp4",
       "mean_luma": 122.2,
       "updated_at": "2026-11-05T12:17:23"
+    },
+    {
+      "id": "short_35",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_01_woman_phone_night.mp4",
+      "mean_luma": 96.4,
+      "updated_at": "2026-11-05T19:46:58"
+    },
+    {
+      "id": "short_34",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_02_couple_bed_backs.mp4",
+      "mean_luma": 112.0,
+      "updated_at": "2026-11-05T19:51:43"
+    },
+    {
+      "id": "short_36",
+      "visual_format": "emotional_face_giant",
+      "primary_clip": "emo_08_couple_bedroom_tension.mp4",
+      "mean_luma": 139.7,
+      "updated_at": "2026-11-05T19:52:15"
     }
   ]
 }

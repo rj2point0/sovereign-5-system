@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-05T12:21:24.924845",
+  "updated_at": "2026-11-05T19:56:17.695487",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -347,6 +347,33 @@
       "schedule_time": "2026-11-08 18:30",
       "uploaded_at": "2026-11-05T12:21:24.924845",
       "caption_preview": "Why you keep falling for people who pull away 💔 (Born 2nd, 3rd, 6th, 11th, 12th, 15th, 20th, 24th, or 29th? Test both bi"
+    },
+    "tiktok_short_34_7sec_acting_distant_test.mp4": {
+      "filename": "tiktok_short_34_7sec_acting_distant_test.mp4",
+      "ad_id": "short_34",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-05T19:54:39.323570",
+      "caption_preview": "When he starts acting cold & distant, do NOT ask him 'what's wrong'—send this 1 line instead 🥶📱 (Crush born 3rd, 7th, 8t"
+    },
+    "tiktok_short_35_7sec_breadcrumbing_days.mp4": {
+      "filename": "tiktok_short_35_7sec_breadcrumbing_days.mp4",
+      "ad_id": "short_35",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-09 11:00",
+      "uploaded_at": "2026-11-05T19:55:41.109590",
+      "caption_preview": "Birth days that breadcrumb you for months (just enough attention to keep you hooked) 💔 (Born 5th, 9th, 10th, 14th, 18th,"
+    },
+    "tiktok_short_36_7sec_who_comes_back.mp4": {
+      "filename": "tiktok_short_36_7sec_who_comes_back.mp4",
+      "ad_id": "short_36",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-09 18:30",
+      "uploaded_at": "2026-11-05T19:56:17.695487",
+      "caption_preview": "Why they always come back the second you pull your energy away 🔥 (Born 1st, 2nd, 4th, 6th, 11th, 13th, 15th, 20th, 22nd,"
     }
   }
 }

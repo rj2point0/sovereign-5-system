@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_36",
+        "video_id": None,
+        "title_match": "Why they always come back the second you pull your energy away",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_35",
+        "video_id": None,
+        "title_match": "Birth days that breadcrumb you for months (just enough attention",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_34",
+        "video_id": None,
+        "title_match": "When he starts acting cold & distant, do NOT ask him",
+        "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_33",
         "video_id": None,
         "title_match": "Why you keep falling for people who pull away",

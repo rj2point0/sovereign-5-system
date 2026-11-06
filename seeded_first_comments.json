@@ -173,19 +173,26 @@
       "title_match": "Born on the 1st, 3rd, 5th, 10th, 12th, 14th, 19th, 21st, 23rd, 28th, or 30th",
       "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
       "seeded_at": "2026-11-05T12:24:24.811626"
+    },
+    "short_26": {
+      "video_id": "7704543339755916558",
+      "title_match": "If they were born on the 2nd, 6th, 7th, 11th, 15th, 16th, 20th, 24th, or 25th, silence does not mean",
+      "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+      "seeded_at": "2026-11-05T18:39:12.132738"
+    },
+    "short_34": {
+      "video_id": "7704901851963018510",
+      "title_match": "When he starts acting cold & distant, do NOT ask him",
+      "comment": "Drop YOUR birth day (1-31) + THEIR birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+      "seeded_at": "2026-11-05T19:56:50.305032"
     }
   },
-  "updated_at": "2026-11-05T12:25:35.755484",
+  "updated_at": "2026-11-05T19:59:01.310015",
   "last_verification": {
-    "checked_at": "2026-11-05T12:24:55.384050",
+    "checked_at": "2026-11-05T19:58:31.955136",
     "videos": {
-      "short_31": {
-        "browse_comment_count": "2",
-        "comment_intact": true,
-        "in_studio_comment_feed": true
-      },
-      "short_24": {
-        "browse_comment_count": "2",
+      "short_34": {
+        "browse_comment_count": "1",
         "comment_intact": true,
         "in_studio_comment_feed": true
       }

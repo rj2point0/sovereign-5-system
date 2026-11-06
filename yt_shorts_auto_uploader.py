@@ -68,6 +68,30 @@ SAMPLE_MATCH_REPLY = (
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
     {
+        "id": "short_34",
+        "filename": "tiktok_short_34_7sec_acting_distant_test.mp4",
+        "title": "When He Acts Cold & Distant, Do This First 🥶 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_35",
+        "filename": "tiktok_short_35_7sec_breadcrumbing_days.mp4",
+        "title": "Birth Days That Breadcrumb You For Months 💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_36",
+        "filename": "tiktok_short_36_7sec_who_comes_back.mp4",
+        "title": "Why They Always Come Back When You Pull Away 🔥 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
         "id": "short_31",
         "filename": "tiktok_short_31_7sec_six_weeks_vanished.mp4",
         "title": "He Texted Daily For 6 Weeks Then Vanished 💔 #Shorts",

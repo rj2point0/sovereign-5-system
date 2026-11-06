@@ -448,9 +448,12 @@ main, header, footer { position: relative; z-index: 1; }
     line-height: 1.12 !important;
   }
   #view-hero p[data-i18n="hero_sub"] {
-    margin-top: 0.08rem !important;
-    font-size: 0.64rem !important;
-    line-height: 1.14 !important;
+    margin-top: 0.04rem !important;
+    font-size: 0.62rem !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
   #view-hero p[data-i18n="hero_sub"] span {
     display: none !important;
