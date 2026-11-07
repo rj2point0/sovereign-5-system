@@ -24,6 +24,12 @@ IG_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\ig_browser_profile"
 TT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\tiktok_browser_profile"
 
 YT_VIDEOS = [
+    ("short_42", "BqWALaHQXB0", "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts"),
+    ("short_41", "e4GQk6903_c", "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts"),
+    ("short_40", "MeCHD1iMk2Y", "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts"),
+    ("short_39", "L_MDz5EMc0k", "When Men Actually Regret Pulling Away 🎙️🔥 #Shorts"),
+    ("short_38", "LVGf3qKgyXs", "He Left You On Read? A Guy Explains Why 🎙️📱 #Shorts"),
+    ("short_37", "NMNeglNvzJo", "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts"),
     ("short_36", "zcWFaLsddFA", "Why They Always Come Back When You Pull Away 🔥 #Shorts"),
     ("short_35", "BtPMMrR85Bs", "Birth Days That Breadcrumb You For Months 💔 #Shorts"),
     ("short_34", "IWLCRnUZ-LI", "When He Acts Cold & Distant, Do This First 🥶 #Shorts"),
@@ -39,6 +45,12 @@ YT_VIDEOS = [
 ]
 
 IG_VIDEOS = [
+    ("short_42", "DfbGIHLuhe0", "Batch #11 · Dry 1-Word Text Replies (AI Podcast Duet)"),
+    ("short_41", "DfbGAQ1ORKe", "Batch #11 · 6-Week Mark Switch Up (AI Podcast Duet)"),
+    ("short_40", "DfbF4Y2Ou_S", "Batch #11 · Watches Stories Won't Text (AI Podcast Duet)"),
+    ("short_39", "Dfa-YZ_OAX0", "Batch #10 · When Men Regret Pulling Away (AI Podcast Duet)"),
+    ("short_38", "Dfa-QkgOwur", "Batch #10 · Left On Read Male Insider (AI Podcast Duet)"),
+    ("short_37", "Dfa-IggucmA", "Batch #10 · Why Men Go Dead Silent (AI Podcast Duet)"),
     ("short_36", "DfYsPKVudA0", "Batch #9 · Come Back After Silence (Giant 120px + SFX)"),
     ("short_35", "DfYsGWmOnNh", "Batch #9 · Breadcrumbing Days (Giant 120px + SFX)"),
     ("short_34", "DfYr-ceOLlN", "Batch #9 · Cold & Distant Test (Giant 120px + SFX)"),
@@ -57,6 +69,7 @@ IG_VIDEOS = [
 ]
 
 TT_VIDEOS = [
+    ("short_37", "7705230841303043341", "LIVE (Nov 6)", "Why men text every day then go dead silent (Maya x Julian)"),
     ("short_34", "7704901851963018510", "LIVE (Nov 5)", "When he starts acting cold & distant, do NOT ask what's wrong"),
     ("short_31", "7704784636659961102", "LIVE (Nov 5)", "He texted me every morning for 6 weeks"),
     ("short_23", "7704542849571900685", "LIVE (Nov 5)", "Stop double texting when they go quiet"),
@@ -73,6 +86,11 @@ TT_VIDEOS = [
     ("short_33", "SCHEDULED", "Scheduled (Nov 8 18:30)", "Why you keep falling for people who pull away"),
     ("short_35", "SCHEDULED", "Scheduled (Nov 9 11:00)", "Birth days that breadcrumb you for months"),
     ("short_36", "SCHEDULED", "Scheduled (Nov 9 18:30)", "Why they always come back when you pull away"),
+    ("short_38", "SCHEDULED", "Scheduled (Nov 10 11:00)", "When a guy leaves you on read, is it over?"),
+    ("short_39", "SCHEDULED", "Scheduled (Nov 10 18:30)", "At what point does a man regret pulling away?"),
+    ("short_40", "SCHEDULED", "Scheduled (Nov 11 11:00)", "Why he watches every story but won't text back"),
+    ("short_41", "SCHEDULED", "Scheduled (Nov 11 18:30)", "Why men act obsessed for 6 weeks then switch up"),
+    ("short_42", "SCHEDULED", "Scheduled (Nov 12 11:00)", "What to do when he sends dry 1-word replies"),
 ]
 
 

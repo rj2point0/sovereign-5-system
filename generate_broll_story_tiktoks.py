@@ -1874,6 +1874,184 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
         ],
     },
+    # =========================================================================
+    # BATCH #11 (short_40, short_41, short_42):
+    # Listener DM Call-In Podcast Episodes ("Maya" x "Julian" · podcast_duet_giant)
+    # =========================================================================
+    {
+        "id": "short_40",
+        "cohort": "Cohort C · Batch 11 (AI Podcast Duet: Listener DM Call-In + 4-Layer SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "DM CALL-IN · STORY WATCHER",
+        "giant_lines": [
+            ("WATCHES YOUR", "white"),
+            ("STORIES BUT", "gold"),
+            ("WON'T TEXT BACK?", "coral"),
+        ],
+        "giant_sub_pill": "HIM BORN 3rd · 5th · 7th · 12th · 14th · 16th · 21st · 23rd · 25th · 30th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_40_podcast_watches_stories.mp4",
+        "yt_title": "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts",
+        "grid_headline": "WATCHES YOUR\nSTORIES BUT\nWON'T TEXT BACK?",
+        "grid_sub": "LATE NIGHT PODCAST · STORY WATCHER",
+        "hook_box_text": "Why does a guy watch every single one of your stories, but still not text you back?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why does a guy watch every single one of your stories, but still not text you back?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "If he's born on the fifth, fourteenth, or twenty-third, he's checking if you're still hooked. Send the reset line in our bio to make him text first.",
+        "reveal_match_pair": "Born 14th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, had fun catching up, but I noticed...",
+        "spoken_script": (
+            "Why does a guy watch every single one of your stories, but still not text you back? "
+            "If he's born on the fifth, fourteenth, or twenty-third, he's checking if you're still hooked. "
+            "Send the reset line in our bio to make him text first."
+        ),
+        "broll_clips": [
+            (0.0, 2.4, "podcast_avatars/maya_speaking_open.png#ep40"),
+            (2.4, 4.6, "podcast_avatars/julian_speaking_open.png#ep40"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why he watches every single one of your stories in 3 minutes but still won't text you back 🎙️👀 "
+            "(Born 3rd, 5th, 7th, 12th, 14th, 16th, 21st, 23rd, 25th, or 30th? Tap our bio for the reset line) "
+            "#datingpodcast #situationship #storyviews #nocontact #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#situationship", "#storyviews", "#nocontact",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_41",
+        "cohort": "Cohort C · Batch 11 (AI Podcast Duet: Listener DM Call-In + 4-Layer SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "DM CALL-IN · 6-WEEK SWITCH",
+        "giant_lines": [
+            ("WHY MEN PULL", "white"),
+            ("AWAY AT THE", "coral"),
+            ("6-WEEK MARK", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 1st · 4th · 8th · 10th · 13th · 17th · 19th · 22nd · 26th · 28th · 31st",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_41_podcast_three_month_curse.mp4",
+        "yt_title": "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts",
+        "grid_headline": "WHY MEN PULL\nAWAY AT THE\n6-WEEK MARK",
+        "grid_sub": "LATE NIGHT PODCAST · 6-WEEK CURSE",
+        "hook_box_text": "Why do so many guys act obsessed for six weeks, and then switch up overnight?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why do so many guys act obsessed for six weeks, and then switch up overnight?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "Because that's when the chase ends for his birth number. Test both birth days in our bio to see the exact day his fear kicks in.",
+        "reveal_match_pair": "Born 19th × Born 28th",
+        "reveal_match_score": "95% PUSH-PULL MAGNET",
+        "reveal_sms_lead": "“We got super close the other night, so instead...",
+        "spoken_script": (
+            "Why do so many guys act obsessed for six weeks, and then switch up overnight? "
+            "Because that's when the chase ends for his birth number. "
+            "Test both birth days in our bio to see the exact day his fear kicks in."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "podcast_avatars/maya_speaking_mid.png#ep41"),
+            (2.3, 4.6, "podcast_avatars/julian_intense_lean_in.png#ep41"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why men act obsessed for 6 weeks and then switch up overnight (decoded by his birth day) 🎙️💔 "
+            "(Born 1st, 4th, 8th, 10th, 13th, 17th, 19th, 22nd, 26th, 28th, or 31st? Test both birth days in our bio) "
+            "#datingpodcast #situationship #hepulledaway #relationshipadvice #textingadvice #numerology #datingadvice #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 28') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#situationship", "#hepulledaway", "#relationshipadvice",
+            "#textingadvice", "#numerology", "#datingadvice", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_42",
+        "cohort": "Cohort C · Batch 11 (AI Podcast Duet: Listener DM Call-In + 4-Layer SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "DM CALL-IN · 1-WORD REPLIES",
+        "giant_lines": [
+            ("WHEN HE SENDS", "white"),
+            ("DRY 1-WORD", "coral"),
+            ("TEXT REPLIES", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 2nd · 6th · 9th · 11th · 15th · 18th · 20th · 24th · 27th · 29th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_42_podcast_one_word_reply.mp4",
+        "yt_title": "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts",
+        "grid_headline": "WHEN HE SENDS\nDRY 1-WORD\nTEXT REPLIES",
+        "grid_sub": "LATE NIGHT PODCAST · DRY TEXT DECODER",
+        "hook_box_text": "What should a girl do when a guy starts sending dry, one word replies?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "What should a girl do when a guy starts sending dry, one word replies?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "Never ask if he's mad at you. Paste his dry text into our bio link instead to see what his birth day is hiding and how to answer.",
+        "reveal_match_pair": "Born 9th × Born 24th",
+        "reveal_match_score": "94% TWIN-SPARK LOCK",
+        "reveal_sms_lead": "“Haha I'll let you get back to your day—I'm...",
+        "spoken_script": (
+            "What should a girl do when a guy starts sending dry, one word replies? "
+            "Never ask if he's mad at you. "
+            "Paste his dry text into our bio link instead to see what his birth day is hiding and how to answer."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "podcast_avatars/maya_shocked_reaction.png#ep42"),
+            (2.3, 4.6, "podcast_avatars/julian_speaking_mid.png#ep42"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "What to do when a guy starts sending dry 1-word text replies (never ask if he's mad!) 🎙️📱 "
+            "(Born 2nd, 6th, 9th, 11th, 15th, 18th, 20th, 24th, 27th, or 29th? Paste his text into our bio link) "
+            "#datingpodcast #drytexter #situationship #textingadvice #relationshipadvice #numerology #datingadvice #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '9 & 24') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#drytexter", "#situationship", "#textingadvice",
+            "#relationshipadvice", "#numerology", "#datingadvice", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -2699,12 +2877,15 @@ class BrollStoryGenerator:
         draw.rounded_rectangle([julian_x0, panel_y0, julian_x1, panel_y1], radius=22, outline=julian_border_col, width=3 if maya_active else 5)
 
         # Top-Corner LIVE Studio Indicator inside Active Speaker Panel
-        f_tag = ImageFont.truetype(FONT_BOLD, 21)
+        f_tag = ImageFont.truetype(FONT_BOLD, 20)
         f_name = ImageFont.truetype(FONT_BOLD, 23)
+        call_in_badge = spec.get("podcast_call_in_badge")
         if maya_active:
-            draw.rounded_rectangle([maya_x0 + 16, panel_y0 + 16, maya_x0 + 218, panel_y0 + 54], radius=12, fill=(18, 16, 12), outline=(255, 225, 77), width=2)
-            draw.ellipse([maya_x0 + 28, panel_y0 + 27, maya_x0 + 44, panel_y0 + 43], fill=(255, 71, 87))
-            draw.text((maya_x0 + 130, panel_y0 + 35), "MIC LIVE · HOST", fill=(255, 225, 77), font=f_tag, anchor="mm")
+            tag_txt = call_in_badge if call_in_badge else "MIC LIVE · HOST"
+            tag_w = max(218, int(draw.textbbox((0, 0), tag_txt, font=f_tag)[2]) + 56)
+            draw.rounded_rectangle([maya_x0 + 14, panel_y0 + 16, maya_x0 + 14 + tag_w, panel_y0 + 54], radius=12, fill=(18, 16, 12), outline=(255, 225, 77), width=2)
+            draw.ellipse([maya_x0 + 26, panel_y0 + 27, maya_x0 + 42, panel_y0 + 43], fill=(255, 71, 87))
+            draw.text((maya_x0 + 14 + (tag_w + 22) // 2, panel_y0 + 35), tag_txt, fill=(255, 225, 77), font=f_tag, anchor="mm")
         else:
             draw.rounded_rectangle([julian_x0 + 16, panel_y0 + 16, julian_x0 + 252, panel_y0 + 54], radius=12, fill=(10, 20, 32), outline=(56, 189, 248), width=2)
             draw.ellipse([julian_x0 + 28, panel_y0 + 27, julian_x0 + 44, panel_y0 + 43], fill=(56, 189, 248))
@@ -3310,9 +3491,10 @@ class BrollStoryGenerator:
                 reg = {"history": []}
 
         primary_clip = spec["broll_clips"][0][2]
-        clip_path = os.path.join(BROLL_DIR, primary_clip)
+        clip_file = primary_clip.split("#")[0]
+        clip_path = os.path.join(BROLL_DIR, clip_file)
         if not os.path.exists(clip_path):
-            clip_path = os.path.join(BASE_DIR, primary_clip)
+            clip_path = os.path.join(BASE_DIR, clip_file)
         if clip_path.lower().endswith(".png"):
             bgr = cv2.imread(clip_path)
             ret = bgr is not None

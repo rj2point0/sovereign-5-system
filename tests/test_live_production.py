@@ -188,6 +188,7 @@ async def verify_live_pages():
         await page_clean.click("#btn-show-downsell-box")
         await asyncio.sleep(0.15)
         assert await page_clean.is_visible("#downsell-script-only-box") is True
+        assert await page_clean.is_visible("#julian-insider-take-box") is True
         assert await page_clean.is_visible("#crush-text-decoder") is True
         assert await page_clean.is_visible("#live-advisor-upsell-card") is True
         await page_clean.fill("#crush-last-text-input", "sorry been super busy this week")

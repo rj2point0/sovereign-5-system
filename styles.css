@@ -539,19 +539,31 @@ main, header, footer { position: relative; z-index: 1; }
     border-radius: 8px !important;
   }
   #hero-micro-badge {
-    margin-top: 0.14rem !important;
-    padding: 0.12rem 0.32rem !important;
-    font-size: 0.54rem !important;
-    line-height: 1.1 !important;
+    margin-top: 0.12rem !important;
+    padding: 0.1rem 0.28rem !important;
+    font-size: 0.52rem !important;
+    line-height: 1.05 !important;
+  }
+  #hero-podcast-host-pill {
+    margin-bottom: 0.18rem !important;
+    padding-bottom: 0.16rem !important;
+  }
+  #hero-podcast-host-pill img {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  #hero-podcast-host-label {
+    font-size: 0.52rem !important;
+    line-height: 1.05 !important;
   }
   #btn-instant-demo {
-    margin-top: 0.12rem !important;
-    padding: 0.14rem 0.32rem !important;
-    font-size: 0.56rem !important;
-    line-height: 1.1 !important;
+    margin-top: 0.1rem !important;
+    padding: 0.12rem 0.28rem !important;
+    font-size: 0.54rem !important;
+    line-height: 1.05 !important;
   }
   #sample-row {
-    margin-top: 0.12rem !important;
+    margin-top: 0.1rem !important;
   }
 }
 

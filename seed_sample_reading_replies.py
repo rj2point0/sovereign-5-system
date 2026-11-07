@@ -33,6 +33,21 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_42",
+        "video_id": None,
+        "title_match": "What to do when a guy starts sending dry 1-word text replies",
+    },
+    {
+        "id": "short_41",
+        "video_id": None,
+        "title_match": "Why men act obsessed for 6 weeks and then switch up overnight",
+    },
+    {
+        "id": "short_40",
+        "video_id": None,
+        "title_match": "Why he watches every single one of your stories in 3 minutes",
+    },
+    {
         "id": "short_39",
         "video_id": None,
         "title_match": "At what point does a man actually regret pulling away from you",
@@ -135,6 +150,9 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_42", "shortcode": "DfbGIHLuhe0"},
+    {"id": "short_41", "shortcode": "DfbGAQ1ORKe"},
+    {"id": "short_40", "shortcode": "DfbF4Y2Ou_S"},
     {"id": "short_39", "shortcode": "Dfa-YZ_OAX0"},
     {"id": "short_38", "shortcode": "Dfa-QkgOwur"},
     {"id": "short_37", "shortcode": "Dfa-IggucmA"},

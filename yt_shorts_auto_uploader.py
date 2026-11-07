@@ -68,6 +68,30 @@ SAMPLE_MATCH_REPLY = (
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
     {
+        "id": "short_40",
+        "filename": "tiktok_short_40_podcast_watches_stories.mp4",
+        "title": "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_41",
+        "filename": "tiktok_short_41_podcast_three_month_curse.mp4",
+        "title": "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_42",
+        "filename": "tiktok_short_42_podcast_one_word_reply.mp4",
+        "title": "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
         "id": "short_37",
         "filename": "tiktok_short_37_podcast_male_silence.mp4",
         "title": "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts",

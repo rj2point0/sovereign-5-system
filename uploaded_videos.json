@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-06T17:13:51.754753",
+  "updated_at": "2026-11-06T18:20:15.062073",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -401,6 +401,33 @@
       "schedule_time": "2026-11-10 18:30",
       "uploaded_at": "2026-11-06T17:13:51.754753",
       "caption_preview": "At what point does a man actually regret pulling away from you? 🎙️🔥 (Born 2nd, 6th, 11th, 12th, 15th, 20th, 21st, 24th, "
+    },
+    "tiktok_short_40_podcast_watches_stories.mp4": {
+      "filename": "tiktok_short_40_podcast_watches_stories.mp4",
+      "ad_id": "short_40",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-11 11:00",
+      "uploaded_at": "2026-11-06T18:19:03.893375",
+      "caption_preview": "Why he watches every single one of your stories in 3 minutes but still won't text you back 🎙️👀 (Born 3rd, 5th, 7th, 12th"
+    },
+    "tiktok_short_41_podcast_three_month_curse.mp4": {
+      "filename": "tiktok_short_41_podcast_three_month_curse.mp4",
+      "ad_id": "short_41",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-11 18:30",
+      "uploaded_at": "2026-11-06T18:19:39.324181",
+      "caption_preview": "Why men act obsessed for 6 weeks and then switch up overnight (decoded by his birth day) 🎙️💔 (Born 1st, 4th, 8th, 10th, "
+    },
+    "tiktok_short_42_podcast_one_word_reply.mp4": {
+      "filename": "tiktok_short_42_podcast_one_word_reply.mp4",
+      "ad_id": "short_42",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-12 11:00",
+      "uploaded_at": "2026-11-06T18:20:15.062073",
+      "caption_preview": "What to do when a guy starts sending dry 1-word text replies (never ask if he's mad!) 🎙️📱 (Born 2nd, 6th, 9th, 11th, 15t"
     }
   }
 }

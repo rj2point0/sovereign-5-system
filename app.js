@@ -3299,6 +3299,27 @@ if (typeof window !== 'undefined') {
     }
   }
 
+  function getJulianInsiderTake(pMoolank, pRuler, partnerBirthDay, situationKey, lang) {
+    const isEs = lang === 'es';
+    const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
+    const dNum = partnerBirthDay || 23;
+    const mNum = pMoolank || 5;
+    const ruler = pRuler || 'Mercury';
+    const sitNotesEn = {
+      read: `When a Day ${dNum} (#${mNum} ${ruler}) leaves you on read, he's testing if you'll double-text and feed his ego—sending the 9-word reset line below removes his leverage and forces him to chase you.`,
+      cold: `When a Day ${dNum} (#${mNum} ${ruler}) suddenly acts cold, his attachment alarm just went off—sending the 9-word reset line below drops the pressure so his fear of losing you kicks in immediately.`,
+      pulled_away: `When a Day ${dNum} (#${mNum} ${ruler}) pulls away right after getting close, he's scared of losing control—sending the 9-word reset line below flips the script so he has to work for your attention.`,
+      silence: `When a Day ${dNum} (#${mNum} ${ruler}) locks into stubborn silence, he expects you to break first—sending the 9-word reset line below shatters his pride standoff and makes him reach out.`,
+    };
+    const sitNotesEs = {
+      read: `Cuando un Día ${dNum} (#${mNum} ${ruler}) te deja en visto, está probando si vas a insistirle; enviar la línea de 9 palabras de abajo le quita el control y hace que él te busque.`,
+      cold: `Cuando un Día ${dNum} (#${mNum} ${ruler}) actúa frío de golpe, su alarma de apego se activó; enviar la línea de 9 palabras de abajo desactiva la presión y despierta su miedo a perderte.`,
+      pulled_away: `Cuando un Día ${dNum} (#${mNum} ${ruler}) se aleja justo después de acercarse, teme perder el control; enviar la línea de 9 palabras de abajo invierte los roles al instante.`,
+      silence: `Cuando un Día ${dNum} (#${mNum} ${ruler}) entra en silencio orgulloso, espera que tú cedas primero; enviar la línea de 9 palabras de abajo rompe su orgullo y lo hace escribirte.`,
+    };
+    return (isEs ? sitNotesEs : sitNotesEn)[sit] || (isEs ? sitNotesEs.read : sitNotesEn.read);
+  }
+
   function selectPartnerSituation(situationKey) {
     const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
     state.selectedSituation = sit;
@@ -3308,6 +3329,7 @@ if (typeof window !== 'undefined') {
     const dEl = $('#partnerDobDay');
     const partnerBirthDay = (dEl && parseInt(dEl.value, 10)) || state.lastPartnerBirthDay || 13;
     const pMoolank = state.lastPartnerMoolank || 7;
+    const pRuler = state.lastPartnerRuler || 'Ketu';
     const sms = getPartnerSituationScript(pMoolank, sit, state.lang);
     const leadInEl = $('#imessage-leadin-text');
     const p1El = $('#imessage-part1-text');
@@ -3315,6 +3337,10 @@ if (typeof window !== 'undefined') {
     if (leadInEl) leadInEl.textContent = sms.leadIn;
     if (p1El) p1El.textContent = sms.part1;
     if (p2El) p2El.textContent = sms.part2;
+    const julianTakeEl = $('#julian-insider-take-text');
+    if (julianTakeEl) {
+      julianTakeEl.textContent = getJulianInsiderTake(pMoolank, pRuler, partnerBirthDay, sit, state.lang);
+    }
     sendWebhook('situation_chip_clicked', {
       situation: sit,
       partner_day: partnerBirthDay,
@@ -3430,6 +3456,17 @@ if (typeof window !== 'undefined') {
           </button>
         </div>
         <div id="crush-text-decoded-output" class="hidden mt-2.5 p-2.5 rounded-lg bg-indigo-950/75 border border-indigo-400/55 text-xs text-ivory leading-snug"></div>
+      </div>
+
+      <!-- JULIAN'S MALE-INSIDER TAKE ON THIS BIRTH DAY (#julian-insider-take-box) -->
+      <div id="julian-insider-take-box" class="mt-3 p-3 rounded-xl bg-[#0c1220] border border-sky-400/45 text-left flex items-start gap-2.5 shadow-md">
+        <img src="julian_avatar_128.webp" alt="Julian — Male Insider Host" width="42" height="42" class="w-10 h-10 rounded-full border-2 border-gold object-cover shrink-0 mt-0.5" />
+        <div class="text-xs leading-snug">
+          <div id="julian-insider-take-heading" class="font-extrabold text-gold tracking-wide">
+            🎙️ ${isEs ? `La Verdad Masculina de Julian sobre un Día ${partnerBirthDay}:` : `Julian's Male-Insider Take on a Day ${partnerBirthDay}:`}
+          </div>
+          <p id="julian-insider-take-text" class="text-zinc-200 mt-1 leading-relaxed">${esc(getJulianInsiderTake(rep.pMoolank, rep.pRuler, partnerBirthDay, activeSit, state.lang))}</p>
+        </div>
       </div>
 
       <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->

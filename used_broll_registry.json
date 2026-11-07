@@ -104,6 +104,27 @@
       "primary_clip": "podcast_avatars/maya_shocked_reaction.png",
       "mean_luma": 87.7,
       "updated_at": "2026-11-06T17:07:27"
+    },
+    {
+      "id": "short_40",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "podcast_avatars/maya_speaking_open.png#ep40",
+      "mean_luma": 86.8,
+      "updated_at": "2026-11-06T18:12:01"
+    },
+    {
+      "id": "short_41",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "podcast_avatars/maya_speaking_mid.png#ep41",
+      "mean_luma": 86.4,
+      "updated_at": "2026-11-06T18:12:53"
+    },
+    {
+      "id": "short_42",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "podcast_avatars/maya_shocked_reaction.png#ep42",
+      "mean_luma": 87.7,
+      "updated_at": "2026-11-06T18:13:40"
     }
   ]
 }

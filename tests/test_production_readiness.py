@@ -372,24 +372,24 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_39
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_42
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39")]
-        assert len(jh_specs) == 30, f"Expected 30 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42")]
+        assert len(jh_specs) == 33, f"Expected 33 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
-            if s["id"] in ("short_13", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39"):
+            if s["id"] in ("short_13", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42"):
                 assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for {s['id']}, got {gate_res['fk_grade']}"
             elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
         from seed_first_comments import TARGET_FIRST_COMMENTS, is_automod_safe_first_comment
         for tfc in TARGET_FIRST_COMMENTS:
             assert is_automod_safe_first_comment(tfc["comment"]), f"First comment for {tfc['id']} failed automod-safe check: {tfc['comment']}"
-            if tfc["id"] in ("short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39"):
+            if tfc["id"] in ("short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42"):
                 assert "Compatibility % score" in tfc["comment"] and len(tfc["comment"]) <= 145, f"Expected 2-Birthday Match % Bait on {tfc['id']}, got {tfc['comment']}"
         from lead_capture_worker import build_cart_recovery_email, collect_lead_partner_checks_and_intent, calculate_5_systems
         geet_intent = collect_lead_partner_checks_and_intent("geet08190@gmail.com", "1986-02-19", "1988-08-19")
@@ -456,6 +456,9 @@ async def test_all():
         assert await page_mob.is_visible('#hero-email-block') is False, "Expected #hero-email-block to be collapsed by default on <600px mobile viewport"
         assert await page_mob.is_visible('#quick-day-hero-box') is True, "Expected #quick-day-hero-box visible at top of view1"
         assert await page_mob.is_visible('#hero-live-imessage-preview') is True, "Expected #hero-live-imessage-preview visible at 0.0s on view1"
+        assert await page_mob.is_visible('#hero-podcast-host-pill') is True, "Expected #hero-podcast-host-pill (Maya x Julian) visible inside #hero-live-imessage-preview on view1"
+        host_pill_txt = await page_mob.locator('#hero-podcast-host-pill').inner_text()
+        assert "LATE NIGHT TRUTH (MAYA × JULIAN)" in host_pill_txt.upper(), f"Unexpected #hero-podcast-host-pill text: {host_pill_txt}"
         qbox = await page_mob.locator('#quick-day-hero-box').bounding_box()
         assert qbox is not None and qbox["y"] < 140, f"Expected #quick-day-hero-box at very top of view1 (y < 140px), got y={qbox['y'] if qbox else None}"
         for sel in ('#quick-day-hero-box', '#quick-day-strip', '#hero-live-imessage-preview', '#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
@@ -525,14 +528,19 @@ async def test_all():
         assert len(p_qd_evs) >= 1, f"Expected partner_check_run after tapping partner day 16, got {[e.get('event_type') for e in demo_events]}"
         assert (p_qd_evs[-1].get("extra") or {}).get("via_quick_day") is True, f"Expected via_quick_day=True in partner_check_run: {p_qd_evs[-1]}"
         assert await page_mob.is_visible('#flip-chase-preview-bubble') is True, "Expected #flip-chase-preview-bubble visible inside #partner-compat-result"
+        assert await page_mob.is_visible('#julian-insider-take-box') is True, "Expected #julian-insider-take-box visible above #flip-chase-preview-bubble"
         assert await page_mob.is_visible('#situation-chip-strip') is True, "Expected #situation-chip-strip visible above #flip-chase-preview-bubble"
         sit_chip_count = await page_mob.locator('#situation-chip-strip .situation-chip').count()
         assert sit_chip_count == 4, f"Expected 4 situation chips, got {sit_chip_count}"
         initial_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
+        initial_julian_take = await page_mob.locator('#julian-insider-take-text').inner_text()
+        assert "Day 16" in initial_julian_take and "leaves you on read" in initial_julian_take, f"Unexpected initial #julian-insider-take-text: {initial_julian_take}"
         await page_mob.click('#situation-chip-strip .situation-chip[data-situation="cold"]')
         await asyncio.sleep(0.15)
         cold_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
+        cold_julian_take = await page_mob.locator('#julian-insider-take-text').inner_text()
         assert cold_leadin != initial_leadin and "energy shifted" in cold_leadin.lower(), f"Expected #imessage-leadin-text to update on situation chip click, got '{cold_leadin}'"
+        assert cold_julian_take != initial_julian_take and "acts cold" in cold_julian_take, f"Expected #julian-insider-take-text to update on situation chip click, got '{cold_julian_take}'"
         sit_evs = [e for e in demo_events if e.get("event_type") == "situation_chip_clicked"]
         assert len(sit_evs) >= 1 and (sit_evs[-1].get("extra") or {}).get("situation") == "cold", f"Expected situation_chip_clicked telemetry for 'cold', got {sit_evs}"
         bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()

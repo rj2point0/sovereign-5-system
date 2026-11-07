@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_42",
+        "video_id": None,
+        "title_match": "What to do when a guy starts sending dry 1-word text replies",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '9 & 24') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_41",
+        "video_id": None,
+        "title_match": "Why men act obsessed for 6 weeks and then switch up overnight",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 28') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_40",
+        "video_id": None,
+        "title_match": "Why he watches every single one of your stories in 3 minutes",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_39",
         "video_id": None,
         "title_match": "At what point does a man actually regret pulling away from you",

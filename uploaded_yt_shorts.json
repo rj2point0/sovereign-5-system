@@ -196,7 +196,46 @@
       "prompt_seeded": true,
       "sample_seeded": true,
       "pinned": true
+    },
+    "short_40": {
+      "id": "short_40",
+      "filename": "tiktok_short_40_podcast_watches_stories.mp4",
+      "title": "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts",
+      "video_id": "MeCHD1iMk2Y",
+      "url": "https://www.youtube.com/shorts/MeCHD1iMk2Y",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-06T18:15:25.767905",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_41": {
+      "id": "short_41",
+      "filename": "tiktok_short_41_podcast_three_month_curse.mp4",
+      "title": "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts",
+      "video_id": "e4GQk6903_c",
+      "url": "https://www.youtube.com/shorts/e4GQk6903_c",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-06T18:16:13.213245",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_42": {
+      "id": "short_42",
+      "filename": "tiktok_short_42_podcast_one_word_reply.mp4",
+      "title": "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts",
+      "video_id": "BqWALaHQXB0",
+      "url": "https://www.youtube.com/shorts/BqWALaHQXB0",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-06T18:17:01.014019",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
     }
   },
-  "updated_at": "2026-11-06T17:13:00.332800"
+  "updated_at": "2026-11-06T18:17:23.022576"
 }
