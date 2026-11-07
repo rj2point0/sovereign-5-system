@@ -188,9 +188,17 @@ async def verify_live_pages():
         await page_clean.click("#btn-show-downsell-box")
         await asyncio.sleep(0.15)
         assert await page_clean.is_visible("#downsell-script-only-box") is True
+        assert await page_clean.is_visible("#crush-text-decoder") is True
+        assert await page_clean.is_visible("#live-advisor-upsell-card") is True
+        await page_clean.fill("#crush-last-text-input", "sorry been super busy this week")
+        await page_clean.click("#btn-decode-crush-text")
+        await asyncio.sleep(0.15)
+        assert await page_clean.is_visible("#crush-text-decoded-output") is True
+        live_dec_txt = await page_clean.locator("#crush-text-decoded-output").inner_text()
+        assert "Why a Day 23" in live_dec_txt
         live_vip_url = await page_clean.locator("#btn-vip-fast-action-17").get_attribute("data-stripe-url")
         assert live_vip_url and "prefilled_email=sarah.live%40gmail.com" in live_vip_url
-        print("Live 2-Tap Hero Match Calculator, ?d1=19&d2=23 Viral Partner Share deep-link, #situation-chip-strip, Instant Part 1 Unblur, $17 VIP Offer & #downsell-script-only-box verified on live site!")
+        print("Live 2-Tap Hero Match Calculator, ?d1=19&d2=23 Viral Partner Share deep-link, #situation-chip-strip, #crush-text-decoder, #live-advisor-upsell-card, Instant Part 1 Unblur, $17 VIP Offer & #downsell-script-only-box verified on live site!")
         await ctx_clean.close()
 
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")

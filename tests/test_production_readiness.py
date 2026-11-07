@@ -644,6 +644,34 @@ async def test_all():
         shared_click_evs = [e for e in demo_events if e.get("event_type") == "partner_match_shared"]
         assert len(shared_click_evs) >= 1, f"Expected partner_match_shared telemetry event after clicking #btn-share-partner-match, got {[e.get('event_type') for e in demo_events]}"
 
+        # Verify #crush-text-decoder ("Paste Their Last Text" Decoder) and #live-advisor-upsell-card (Secondary Affiliate / Advisor Slot)
+        assert await page_mob.is_visible('#crush-text-decoder') is True, "Expected #crush-text-decoder visible inside #partner-compat-result"
+        assert await page_mob.is_visible('#crush-last-text-input') is True, "Expected #crush-last-text-input visible"
+        assert await page_mob.is_visible('#btn-decode-crush-text') is True, "Expected #btn-decode-crush-text visible"
+        assert await page_mob.is_visible('#crush-text-decoded-output') is False, "Expected #crush-text-decoded-output hidden before decoding"
+        pre_decode_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
+        await page_mob.fill('#crush-last-text-input', 'sorry been super busy this week')
+        await page_mob.click('#btn-decode-crush-text')
+        await asyncio.sleep(0.2)
+        assert await page_mob.is_visible('#crush-text-decoded-output') is True, "Expected #crush-text-decoded-output visible after clicking #btn-decode-crush-text"
+        decoded_out_txt = await page_mob.locator('#crush-text-decoded-output').inner_text()
+        assert "Why a Day 23" in decoded_out_txt, f"Expected 'Why a Day 23' in #crush-text-decoded-output, got '{decoded_out_txt}'"
+        post_decode_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
+        assert post_decode_leadin != pre_decode_leadin and ("packed week" in post_decode_leadin.lower() or "swamped" in post_decode_leadin.lower()), f"Expected #imessage-leadin-text to update after decoding busy text, got '{post_decode_leadin}'"
+        decode_evs = [e for e in demo_events if e.get("event_type") == "crush_text_decoded"]
+        assert len(decode_evs) >= 1, f"Expected crush_text_decoded telemetry event, got {[e.get('event_type') for e in demo_events]}"
+        dec_extra = decode_evs[-1].get("extra") or {}
+        assert dec_extra.get("intent_category") == "excuse_busy" and dec_extra.get("partner_day") == 23 and "sorry been super busy" not in str(decode_evs[-1]), f"Unexpected crush_text_decoded payload: {decode_evs[-1]}"
+
+        assert await page_mob.is_visible('#live-advisor-upsell-card') is True, "Expected #live-advisor-upsell-card visible inside #partner-compat-result"
+        assert await page_mob.is_visible('#btn-live-advisor-affiliate') is True, "Expected #btn-live-advisor-affiliate visible"
+        await page_mob.evaluate("window.open = (u) => { window.__OPENED_AFF_URL = u; return null; };")
+        await page_mob.click('#btn-live-advisor-affiliate')
+        await asyncio.sleep(0.2)
+        adv_evs = [e for e in demo_events if e.get("event_type") == "advisor_affiliate_clicked"]
+        assert len(adv_evs) >= 1, f"Expected advisor_affiliate_clicked telemetry event, got {[e.get('event_type') for e in demo_events]}"
+        assert (adv_evs[-1].get("extra") or {}).get("d1") == 19 and (adv_evs[-1].get("extra") or {}).get("d2") == 23
+
         await page_mob.close()
         print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill, $17 Impulse Tier & ?d1=19&d2=23 Viral Partner Share verified!")
 

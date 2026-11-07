@@ -73,6 +73,15 @@ STRIPE_BUMP_URL = "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402"
 BASE_FUNNEL_URL = "https://blueprint.megavegaventures.com/"
 APP_BASE_URL = BASE_FUNNEL_URL
 
+AFFILIATE_OFFER_CONFIG = {
+    "ENABLED": True,
+    "PROVIDER_NAME": "1-on-1 Live Relationship & Synastry Advisor",
+    "AFFILIATE_URL": "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402?utm_source=email_advisor_ps&utm_medium=affiliate_slot",
+    "HEADLINE": "Want a Live Relationship Specialist to Read Both of Your Birth Charts Tonight?",
+    "SUBTEXT": "Need deeper 1-on-1 guidance beyond the text script? Unlock a private 5-System Synastry & 365-Day Timing Deep-Dive session now.",
+    "CTA": "🔮 Speak to a Live Relationship Advisor / Unlock Full VIP Synastry →",
+}
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOCAL_CSV_PATH = os.path.join(BASE_DIR, "leads_captured.csv")
 GDRIVE_CSV_PATH = r"G:\My Drive\5_System_Numerology_MVP\leads_captured.csv"
@@ -783,6 +792,11 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
                 ↻ Return to Your Interactive 5-System Teaser &amp; Watch Video Briefing
               </a>
+              <div style="margin-top:16px;padding:12px 14px;background-color:#191224;border:1px solid rgba(192,132,252,0.45);border-radius:10px;text-align:left;font-family:'Arial',sans-serif;font-size:12px;line-height:1.5;color:#E9D5FF;">
+                <strong style="color:#F3E5AB;">🔮 P.S. {html.escape(AFFILIATE_OFFER_CONFIG['HEADLINE'])}</strong><br>
+                {html.escape(AFFILIATE_OFFER_CONFIG['SUBTEXT'])}<br>
+                <a href="{AFFILIATE_OFFER_CONFIG['AFFILIATE_URL']}&amp;prefilled_email={urllib.parse.quote(email_addr)}" style="display:inline-block;margin-top:6px;color:#D8B4FE;font-weight:700;text-decoration:underline;">{html.escape(AFFILIATE_OFFER_CONFIG['CTA'])}</a>
+              </div>
             </td>
           </tr>
 
@@ -908,6 +922,11 @@ def build_followup_email_2_loshu(lead: Dict[str, Any]) -> Tuple[str, str, str]:
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
                 ↻ Return to Your Interactive 5-System Teaser &amp; Watch Video Briefing
               </a>
+              <div style="margin-top:16px;padding:12px 14px;background-color:#191224;border:1px solid rgba(192,132,252,0.45);border-radius:10px;text-align:left;font-family:'Arial',sans-serif;font-size:12px;line-height:1.5;color:#E9D5FF;">
+                <strong style="color:#F3E5AB;">🔮 P.S. {html.escape(AFFILIATE_OFFER_CONFIG['HEADLINE'])}</strong><br>
+                {html.escape(AFFILIATE_OFFER_CONFIG['SUBTEXT'])}<br>
+                <a href="{AFFILIATE_OFFER_CONFIG['AFFILIATE_URL']}&amp;prefilled_email={urllib.parse.quote(email_addr)}" style="display:inline-block;margin-top:6px;color:#D8B4FE;font-weight:700;text-decoration:underline;">{html.escape(AFFILIATE_OFFER_CONFIG['CTA'])}</a>
+              </div>
             </td>
           </tr>
         </table>
@@ -1028,6 +1047,11 @@ def build_followup_email_3_cycles(lead: Dict[str, Any]) -> Tuple[str, str, str]:
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
                 ↻ Return to Your Interactive 5-System Teaser &amp; Watch Video Briefing
               </a>
+              <div style="margin-top:16px;padding:12px 14px;background-color:#191224;border:1px solid rgba(192,132,252,0.45);border-radius:10px;text-align:left;font-family:'Arial',sans-serif;font-size:12px;line-height:1.5;color:#E9D5FF;">
+                <strong style="color:#F3E5AB;">🔮 P.S. {html.escape(AFFILIATE_OFFER_CONFIG['HEADLINE'])}</strong><br>
+                {html.escape(AFFILIATE_OFFER_CONFIG['SUBTEXT'])}<br>
+                <a href="{AFFILIATE_OFFER_CONFIG['AFFILIATE_URL']}&amp;prefilled_email={urllib.parse.quote(email_addr)}" style="display:inline-block;margin-top:6px;color:#D8B4FE;font-weight:700;text-decoration:underline;">{html.escape(AFFILIATE_OFFER_CONFIG['CTA'])}</a>
+              </div>
             </td>
           </tr>
         </table>
@@ -1298,6 +1322,11 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:6px 14px;">
                 ↻ Re-Open Your Interactive Partner Compatibility Check
               </a>
+              <div style="margin-top:16px;padding:12px 14px;background-color:#191224;border:1px solid rgba(192,132,252,0.45);border-radius:10px;text-align:left;font-family:'Arial',sans-serif;font-size:12px;line-height:1.5;color:#E9D5FF;">
+                <strong style="color:#F3E5AB;">🔮 P.S. {html.escape(AFFILIATE_OFFER_CONFIG['HEADLINE'])}</strong><br>
+                {html.escape(AFFILIATE_OFFER_CONFIG['SUBTEXT'])}<br>
+                <a href="{AFFILIATE_OFFER_CONFIG['AFFILIATE_URL']}&amp;prefilled_email={urllib.parse.quote(email_addr)}" style="display:inline-block;margin-top:6px;color:#D8B4FE;font-weight:700;text-decoration:underline;">{html.escape(AFFILIATE_OFFER_CONFIG['CTA'])}</a>
+              </div>
             </td>
           </tr>
         </table>
@@ -1666,6 +1695,8 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "partner_check_run": "partner_check_run",
         "partner_compat_checked": "partner_check_run",
         "situation_chip_clicked": "situation_chip_clicked",
+        "crush_text_decoded": "crush_text_decoded",
+        "advisor_affiliate_clicked": "advisor_affiliate_clicked",
         "partner_match_shared": "partner_match_shared",
         "shared_match_opened": "shared_match_opened",
         "downsell_box_shown": "downsell_box_shown",
@@ -1738,6 +1769,8 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "calc_started",
         "demo_preview_clicked",
         "quick_day_selected",
+        "crush_text_decoded",
+        "advisor_affiliate_clicked",
         "downsell_box_shown",
         "downsell_part1_copied",
     ):
@@ -1886,6 +1919,8 @@ def update_obsidian_dashboard():
                 "calc_preview": "🔮 `calc_preview`",
                 "partner_check_run": "💑 `partner_check_run`",
                 "situation_chip_clicked": "💬 `situation_chip_clicked`",
+                "crush_text_decoded": "🔍 `crush_text_decoded`",
+                "advisor_affiliate_clicked": "🔮 `advisor_affiliate_clicked`",
                 "partner_match_shared": "📲 `partner_match_shared`",
                 "shared_match_opened": "🔗 `shared_match_opened`",
                 "downsell_box_shown": "🛑 `downsell_box_shown`",

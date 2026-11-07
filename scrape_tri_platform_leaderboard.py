@@ -24,6 +24,9 @@ IG_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\ig_browser_profile"
 TT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\tiktok_browser_profile"
 
 YT_VIDEOS = [
+    ("short_36", "zcWFaLsddFA", "Why They Always Come Back When You Pull Away 🔥 #Shorts"),
+    ("short_35", "BtPMMrR85Bs", "Birth Days That Breadcrumb You For Months 💔 #Shorts"),
+    ("short_34", "IWLCRnUZ-LI", "When He Acts Cold & Distant, Do This First 🥶 #Shorts"),
     ("short_33", "UbkEA3YjgyU", "You Fall For People Who Pull Away 💔 #Shorts"),
     ("short_32", "2NEQkRMDARQ", "Left On Read At Midnight? Send This 9-Word Text 📱 #Shorts"),
     ("short_31", "IOFdayPUpoA", "He Texted Daily For 6 Weeks Then Vanished 💔 #Shorts"),
@@ -36,6 +39,9 @@ YT_VIDEOS = [
 ]
 
 IG_VIDEOS = [
+    ("short_36", "DfYsPKVudA0", "Batch #9 · Come Back After Silence (Giant 120px + SFX)"),
+    ("short_35", "DfYsGWmOnNh", "Batch #9 · Breadcrumbing Days (Giant 120px + SFX)"),
+    ("short_34", "DfYr-ceOLlN", "Batch #9 · Cold & Distant Test (Giant 120px + SFX)"),
     ("short_33", "DfX4Mdsuqc1", "Batch #8 · Pull Away Micro-Story (Giant 120px + SFX)"),
     ("short_32", "DfX4E4QOsUB", "Batch #8 · Left On Read 11:42 PM (Giant 120px + SFX)"),
     ("short_31", "DfX39C3Owgn", "Batch #8 · 6 Weeks Vanished (Giant 120px + SFX)"),
@@ -51,19 +57,22 @@ IG_VIDEOS = [
 ]
 
 TT_VIDEOS = [
+    ("short_34", "7704901851963018510", "LIVE (Nov 5)", "When he starts acting cold & distant, do NOT ask what's wrong"),
     ("short_31", "7704784636659961102", "LIVE (Nov 5)", "He texted me every morning for 6 weeks"),
     ("short_23", "7704542849571900685", "LIVE (Nov 5)", "Stop double texting when they go quiet"),
     ("short_28", "7704068444592950541", "LIVE", "Why you always care more first"),
     ("short_25", "7703630255013104910", "LIVE", "Intense chemistry can be a karmic trap"),
     ("short_22", "7703622747489963278", "LIVE", "Why they act obsessed then pull away"),
     ("short_20", "7704137393049308430", "LIVE", "Every birthday has 3 natural soulmate dates"),
-    ("short_24", "SCHEDULED", "Scheduled (Nov 5 18:30)", "Only 1 birth day can handle your fire"),
-    ("short_26", "SCHEDULED", "Scheduled (Nov 6 11:00)", "Silence does not mean they forgot you"),
+    ("short_24", "7704543122772086029", "Scheduled (Nov 5 18:30)", "Only 1 birth day can handle your fire"),
+    ("short_26", "7704543339755916558", "Scheduled (Nov 6 11:00)", "Silence does not mean they forgot you"),
     ("short_27", "SCHEDULED", "Scheduled (Nov 6 18:30)", "November love turning point"),
     ("short_29", "SCHEDULED", "Scheduled (Nov 7 11:00)", "Never chase when these birth days go silent"),
     ("short_30", "SCHEDULED", "Scheduled (Nov 7 18:30)", "Are your birthdays endgame or a 3-month lesson"),
     ("short_32", "SCHEDULED", "Scheduled (Nov 8 11:00)", "Left on read at 11:42 PM? Send this 9-word text"),
     ("short_33", "SCHEDULED", "Scheduled (Nov 8 18:30)", "Why you keep falling for people who pull away"),
+    ("short_35", "SCHEDULED", "Scheduled (Nov 9 11:00)", "Birth days that breadcrumb you for months"),
+    ("short_36", "SCHEDULED", "Scheduled (Nov 9 18:30)", "Why they always come back when you pull away"),
 ]
 
 
@@ -174,26 +183,21 @@ async def scrape_tiktok(p) -> list:
     results = []
     ctx = await p.chromium.launch_persistent_context(
         TT_PROFILE_DIR,
-        headless=True,
-        args=["--disable-blink-features=AutomationControlled"],
+        headless=False,
+        args=["--disable-blink-features=AutomationControlled", "--window-position=-2000,-2000"],
         viewport={"width": 1280, "height": 900},
     )
     page = ctx.pages[0] if ctx.pages else await ctx.new_page()
     try:
         await page.goto(
-            "https://www.tiktok.com/tiktokstudio/content",
-            wait_until="domcontentloaded",
-            timeout=30000,
-        )
-        await asyncio.sleep(5.0)
-        studio_text = await page.evaluate("() => document.body.innerText")
-        # Also visit public profile for fast view counts
-        await page.goto(
             "https://www.tiktok.com/@sacrednumberblueprint",
             wait_until="domcontentloaded",
-            timeout=30000,
+            timeout=35000,
         )
-        await asyncio.sleep(4.0)
+        await asyncio.sleep(5.0)
+        for _ in range(3):
+            await page.mouse.wheel(0, 1000)
+            await asyncio.sleep(1.0)
         pub_cards = await page.evaluate(
             """() => {
                 const links = Array.from(document.querySelectorAll('a[href*="/video/"]'));
@@ -203,7 +207,7 @@ async def scrape_tiktok(p) -> list:
                     if (!m) continue;
                     const vid = m[1];
                     const container = a.closest('[data-e2e="user-post-item"]') || a.parentElement;
-                    const viewsEl = container ? container.querySelector('[data-e2e="video-views"]') : null;
+                    const viewsEl = container ? container.querySelector('[data-e2e="video-views"], strong[data-e2e="video-views"]') : null;
                     const views = viewsEl ? viewsEl.innerText.trim() : (a.innerText || '').trim();
                     out[vid] = views;
                 }
@@ -231,7 +235,22 @@ def dump_telemetry():
     with open(tpath, "r", encoding="utf-8") as f:
         evs = json.load(f)
     pviews = [e for e in evs if e.get("event_type") == "page_view"]
+    counts = {}
+    for e in evs:
+        et = e.get("event_type", "unknown")
+        counts[et] = counts.get(et, 0) + 1
     print(f"\n=== TELEMETRY: {len(pviews)} PAGE_VIEW EVENTS / {len(evs)} TOTAL EVENTS ===")
+    print(
+        f"Event Breakdown: hero_engaged_3s={counts.get('hero_engaged_3s', 0)} | "
+        f"hero_my_day_selected={counts.get('hero_my_day_selected', 0)} | "
+        f"hero_pair_match_selected={counts.get('hero_pair_match_selected', 0)} | "
+        f"quick_day_selected={counts.get('quick_day_selected', 0)} | "
+        f"partner_check_run={counts.get('partner_check_run', 0)} | "
+        f"crush_text_decoded={counts.get('crush_text_decoded', 0)} | "
+        f"lead_submitted={counts.get('lead_submitted', 0)} | "
+        f"checkout_clicked={counts.get('checkout_clicked', 0)} | "
+        f"advisor_affiliate_clicked={counts.get('advisor_affiliate_clicked', 0)}"
+    )
     for idx, pv in enumerate(pviews, 1):
         ts = pv.get("timestamp", "")[:19]
         utm = pv.get("utm_source", "") or "direct"

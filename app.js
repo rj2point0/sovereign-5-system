@@ -29,6 +29,30 @@ const CONFIG = {
   BRAND: 'Sovereign 5-System',
 };
 
+const AFFILIATE_OFFER_CONFIG = {
+  ENABLED: true,
+  PROVIDER_NAME: 'Relationship Hero · Certified Love & Birth-Code Advisors',
+  BADGE_EN: '💬 LIVE 1-ON-1 HUMAN ADVISOR OPTION',
+  BADGE_ES: '💬 OPCIÓN DE ASESOR HUMANO EN VIVO 1-A-1',
+  BADGE_TEXT_EN: '💬 LIVE 1-ON-1 HUMAN ADVISOR OPTION',
+  BADGE_TEXT_ES: '💬 OPCIÓN DE ASESOR HUMANO EN VIVO 1-A-1',
+  HEADLINE_EN: 'Need to talk to a live specialist about a Day {d2} right now?',
+  HEADLINE_ES: '¿Necesitas hablar en vivo con un especialista sobre un Día {d2} ahora mismo?',
+  SUBTEXT_EN: 'Get a private 1-on-1 live chat or phone session with a vetted relationship & astrology advisor for your [Day {d1} × Day {d2}] (#{pMoolank} {pRuler}) situation:',
+  SUBTEXT_ES: 'Obtén una sesión privada 1-a-1 por chat o teléfono con un asesor certificado de parejas para tu situación [Día {d1} × Día {d2}] (#{pMoolank} {pRuler}):',
+  BODY_EN: 'Get a private 1-on-1 live chat or phone session with a vetted relationship & astrology advisor (First 3 Minutes Free + High-Priority Match):',
+  BODY_ES: 'Obtén una sesión privada 1-a-1 por chat o teléfono con un asesor certificado de parejas y astrología (Primeros 3 Minutos Gratis):',
+  CTA_EN: '✨ Chat With A Live Love & Birth-Code Advisor (3 Mins Free) →',
+  CTA_ES: '✨ Chatear Con Un Asesor de Amor en Vivo (3 Min Gratis) →',
+  CTA_TEXT_EN: '✨ Chat With A Live Love & Birth-Code Advisor (3 Mins Free) →',
+  CTA_TEXT_ES: '✨ Chatear Con Un Asesor de Amor en Vivo (3 Min Gratis) →',
+  // Drop in any high-CPA ClickBank / Keen / Kasamba / Relationship Hero tracking link here:
+  AFFILIATE_URL: 'https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403',
+};
+if (typeof window !== 'undefined') {
+  window.AFFILIATE_OFFER_CONFIG = AFFILIATE_OFFER_CONFIG;
+}
+
 (function () {
   'use strict';
   const E = window.S5Engine;
@@ -2815,6 +2839,12 @@ const CONFIG = {
     else if (a === 'select-situation') {
       selectPartnerSituation(t.dataset.situation || 'read');
     }
+    else if (a === 'decode-crush-text') {
+      decodeCrushText();
+    }
+    else if (a === 'click-advisor-affiliate') {
+      clickAdvisorAffiliate(t);
+    }
     else if (a === 'demo-unlock') demoUnlock();
     else if (a === 'print') window.print();
     else if (a === 'share-code') shareCode();
@@ -2918,6 +2948,8 @@ const CONFIG = {
     if (pBox && emailVal) {
       pBox.innerHTML = `<div id="partner-compat-email-confirmed" class="p-2.5 rounded-lg bg-emerald-950/60 border border-emerald-400/60 text-emerald-300 text-xs sm:text-sm font-semibold text-center">✓ ${state.lang === 'es' ? '¡Correo verificado (' + esc(emailVal) + ')! Parte 1 desbloqueada arriba en pantalla + copia enviada.' : 'Email Verified (' + esc(emailVal) + ') — Part 1 Unlocked On-Screen Above &amp; Backup Copy Sent!'}</div>`;
     }
+    const advCard = $('#live-advisor-upsell-card');
+    if (advCard) advCard.classList.add('gold-pulse-highlight');
     const tBox = $('#teaser-email-box');
     if (tBox) tBox.classList.add('hidden');
   }
@@ -3101,6 +3133,172 @@ const CONFIG = {
     return item;
   }
 
+  function classifyCrushTextIntent(rawText) {
+    const s = String(rawText || '').trim().toLowerCase();
+    if (!s || /\b(nothing|ghost|ghosted|silent|silence|left on read|no reply|haven't heard)\b/.test(s)) {
+      return 'no_contact';
+    }
+    if (/\b(busy|work|swamped|tired|exhausted|later|next week|raincheck|sorry|can't|cant|hectic|crazy week)\b/.test(s)) {
+      return 'excuse_busy';
+    }
+    if (/\b(idk|maybe|we'll see|not sure|space|slow|confused|friend|friends|figure out)\b/.test(s) || s.includes('?')) {
+      return 'mixed_signals';
+    }
+    if (s.length <= 15 || /\b(k|ok|okay|lol|haha|yeah|yep|cool|nice|sure|bet|nm)\b/.test(s)) {
+      return 'short_dry_reply';
+    }
+    return 'mixed_signals';
+  }
+
+  function getCrushTextDecodedTranslation(pMoolank, pRuler, partnerBirthDay, category, lang) {
+    const isEs = lang === 'es';
+    const dLabel = `Day ${partnerBirthDay} (#${pMoolank} ${pRuler})`;
+    const dLabelEs = `Día ${partnerBirthDay} (#${pMoolank} ${pRuler})`;
+    const driverTraitsEn = {
+      1: 'protects their pride and tests whether you will chase or hold your frame',
+      2: 'retreats into cautious surface words when they fear emotional conflict',
+      3: 'keeps things light or vague when a conversation starts feeling heavy',
+      4: 'pulls behind a logical wall until they feel 100% in control of the pace',
+      5: 'uses short or non-committal replies whenever they sense pressure or labels',
+      6: 'tests whether your warmth is steady before opening their heart again',
+      7: 'goes quiet inside their head to process deep feelings without being pushed',
+      8: 'Compartmentalizes emotions behind work/busyness when they feel vulnerable',
+      9: 'pulls back to see if you will match their intensity without drama',
+    };
+    const driverTraitsEs = {
+      1: 'protege su orgullo y prueba si vas a perseguirlo o mantener tu centro',
+      2: 'se refugia en palabras breves cuando teme un conflicto emocional',
+      3: 'mantiene las cosas ligeras o vagas cuando siente presión',
+      4: 'levanta un muro lógico hasta sentir control total del ritmo',
+      5: 'usa respuestas cortas o evasivas cuando siente que pierde libertad',
+      6: 'prueba si tu afecto es seguro antes de volver a abrirse',
+      7: 'se encierra en su mente para procesar lo que siente sin que lo presionen',
+      8: 'se escuda en el trabajo o estar ocupado cuando se siente vulnerable',
+      9: 'toma distancia para ver si mantienes tu valor sin caer en dramas',
+    };
+    const trait = (isEs ? driverTraitsEs : driverTraitsEn)[pMoolank] || (isEs ? driverTraitsEs[7] : driverTraitsEn[7]);
+
+    if (category === 'excuse_busy') {
+      return {
+        translation: isEs
+          ? `🧠 <b>Por qué un ${dLabelEs} envió esto:</b> Un #${pMoolank} (${pRuler}) ${trait}. Cuando dice que está "ocupado/a", en realidad está midiendo si le reclamas o si tienes tu propia vida emocionante.`
+          : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. When they use the "busy/swamped" excuse, their nervous system is testing whether you'll react with needy pressure or calm high-value independence.`,
+        leadIn: isEs
+          ? 'Totalmente, sé que tu semana está a mil, así que '
+          : 'Totally get it—sounds like a packed week, so I\'m ',
+        part1: isEs
+          ? 'enfócate en lo tuyo y yo aprovecho para avanzar en mis propios planes esta semana. '
+          : 'letting you handle your schedule while I dive into my own plans this week. ',
+        part2: isEs
+          ? 'Escríbeme cuando estés libre de verdad y armamos algo sin prisa.'
+          : 'Hit me when your head is clear and you\'re ready to lock in real time together.',
+      };
+    }
+    if (category === 'short_dry_reply') {
+      return {
+        translation: isEs
+          ? `🧠 <b>Por qué un ${dLabelEs} envió esto:</b> Un #${pMoolank} (${pRuler}) ${trait}. Este mensaje corto/seco es un reflejo de bajo esfuerzo porque siente que ya tiene tu atención asegurada.`
+          : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. This short, dry reply happens when they feel 100% certain you'll keep carrying the conversation for both of you.`,
+        leadIn: isEs
+          ? 'Jaja te dejo seguir con tu día, yo me desconecto porque '
+          : 'Haha I\'ll let you get back to your day—I\'m unplugging because ',
+        part1: isEs
+          ? 'prefiero hablar cuando ambos tengamos tiempo y ganas de conversar bien. '
+          : 'I only like texting when we both have the energy for a real conversation. ',
+        part2: isEs
+          ? 'Hablamos en unos días cuando tengas algo bueno que contarme.'
+          : 'Catch up with me later this week when you\'re ready to actually talk.',
+      };
+    }
+    if (category === 'no_contact') {
+      return {
+        translation: isEs
+          ? `🧠 <b>Por qué un ${dLabelEs} actúa así:</b> Un #${pMoolank} (${pRuler}) ${trait}. Su silencio no es olvido; necesita sentir tu ausencia para que se active su miedo a perderte.`
+          : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. Their silence is a decompression shield—they need to feel your absence before their fear of losing you kicks in.`,
+        leadIn: isEs
+          ? 'Oye, noté que ambos hemos estado en nuestro mundo, así que '
+          : 'Hey, noticed we\'ve both been in our own worlds lately, so I\'m ',
+        part1: isEs
+          ? 'te doy espacio total esta semana sin presionar nada entre nosotros. '
+          : 'taking a step back from texting this week so neither of us feels pressured. ',
+        part2: isEs
+          ? 'Avísame cuando extrañes nuestra energía y quieras vernos.'
+          : 'Reach out when you\'re ready to pick things back up in person.',
+      };
+    }
+    return {
+      translation: isEs
+        ? `🧠 <b>Por qué un ${dLabelEs} envió esto:</b> Un #${pMoolank} (${pRuler}) ${trait}. Esas señales mixtas significan que la atracción existe, pero teme perder el control si se entrega demasiado rápido.`
+        : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. These mixed signals mean the attraction is real, but they are testing whether you'll chase their uncertainty or lean back with confidence.`,
+      leadIn: isEs
+        ? 'Me encanta cuando fluimos bien, pero ante la duda prefiero '
+        : 'I love our vibe when it\'s clear, so instead of guessing mixed signals I\'m ',
+      part1: isEs
+        ? 'dar un paso atrás esta semana para que todo se acomode sin forzarlo. '
+        : 'stepping back this week and letting things breathe naturally on both sides. ',
+      part2: isEs
+        ? 'Búscame cuando tengas claro qué quieres que hagamos.'
+        : 'Text me when you know what you want and we\'ll take it from there.',
+    };
+  }
+
+  function decodeCrushText() {
+    const inp = $('#crush-last-text-input');
+    const outBox = $('#crush-text-decoded-output');
+    if (!inp || !outBox) return;
+    const rawText = inp.value.trim();
+    const dEl = $('#partnerDobDay');
+    const partnerBirthDay = (dEl && parseInt(dEl.value, 10)) || state.lastPartnerBirthDay || 23;
+    const pMoolank = state.lastPartnerMoolank || 5;
+    const pRuler = state.lastPartnerRuler || 'Mercury';
+    const category = classifyCrushTextIntent(rawText);
+    const decoded = getCrushTextDecodedTranslation(pMoolank, pRuler, partnerBirthDay, category, state.lang);
+
+    outBox.classList.remove('hidden');
+    outBox.innerHTML = decoded.translation;
+
+    const leadInEl = $('#imessage-leadin-text');
+    const p1El = $('#imessage-part1-text');
+    const p2El = $('#imessage-part2-text');
+    if (leadInEl) leadInEl.textContent = decoded.leadIn;
+    if (p1El) p1El.textContent = decoded.part1;
+    if (p2El) p2El.textContent = decoded.part2;
+
+    sendWebhook('crush_text_decoded', {
+      partner_day: partnerBirthDay,
+      partner_moolank: pMoolank,
+      text_length: rawText.length,
+      intent_category: category,
+    });
+  }
+
+  function clickAdvisorAffiliate(btnEl) {
+    const d1 = parseInt((btnEl && btnEl.dataset && btnEl.dataset.d1) || '', 10) || ((state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || 19);
+    const d2 = parseInt((btnEl && btnEl.dataset && btnEl.dataset.d2) || '', 10) || state.lastPartnerBirthDay || 23;
+    const source = (btnEl && btnEl.dataset && btnEl.dataset.source) || 'partner_compat_card';
+    sendWebhook('advisor_affiliate_clicked', {
+      d1,
+      d2,
+      source,
+      provider: AFFILIATE_OFFER_CONFIG.PROVIDER_NAME,
+    });
+    const baseUrl = AFFILIATE_OFFER_CONFIG.AFFILIATE_URL || CONFIG.STRIPE_LINK_UPGRADE || CONFIG.STRIPE_LINK_BASE;
+    if (!baseUrl) return;
+    try {
+      const u = new URL(baseUrl, location.origin);
+      u.searchParams.set('d1', String(d1));
+      u.searchParams.set('d2', String(d2));
+      if (state.profile && state.profile.email) {
+        u.searchParams.set('prefilled_email', state.profile.email);
+      }
+      window.__LAST_ADVISOR_AFFILIATE_URL = u.toString();
+      window.open(u.toString(), '_blank', 'noopener');
+    } catch (e) {
+      window.__LAST_ADVISOR_AFFILIATE_URL = baseUrl;
+      location.href = baseUrl;
+    }
+  }
+
   function selectPartnerSituation(situationKey) {
     const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
     state.selectedSituation = sit;
@@ -3145,6 +3343,7 @@ const CONFIG = {
     const partnerBirthDay = parseInt(d, 10) || 13;
     state.lastPartnerBirthDay = partnerBirthDay;
     state.lastPartnerMoolank = rep.pMoolank;
+    state.lastPartnerRuler = rep.pRuler;
     const activeSit = state.selectedSituation || 'read';
     $$('#partner-quick-day-strip .quick-day-btn').forEach((btn) => {
       btn.classList.toggle('active', parseInt(btn.dataset.day, 10) === partnerBirthDay);
@@ -3215,6 +3414,22 @@ const CONFIG = {
             ${isEs ? '😤 Silencio orgulloso' : '😤 Stubborn silence'}
           </button>
         </div>
+      </div>
+
+      <!-- INTERACTIVE "PASTE THEIR LAST TEXT" DECODER (#crush-text-decoder) -->
+      <div id="crush-text-decoder" class="mt-3 p-3 rounded-xl bg-indigo-950/35 border border-indigo-400/40 text-left">
+        <label id="crush-text-decoder-label" for="crush-last-text-input" class="block text-[0.7rem] sm:text-xs font-extrabold text-champagne leading-snug mb-2">
+          💬 ${isEs
+            ? `O pega el último mensaje exacto que te envió (o lo que quieres decirle) para descifrar el motivo oculto de un Día ${partnerBirthDay}:`
+            : `Or paste the exact text they sent you (or what you want to say) to decode a Day ${partnerBirthDay}'s hidden motive:`}
+        </label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="crush-last-text-input" type="text" maxlength="220" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Ej: &quot;Perdón, he estado súper ocupado esta semana...&quot;' : 'e.g. &quot;sorry been super busy this week&quot; or &quot;idk what I want right now&quot;'}" />
+          <button type="button" id="btn-decode-crush-text" data-action="decode-crush-text" class="btn-ghost !py-2 !px-3.5 text-xs font-extrabold text-gold border-gold/60 bg-gold/15 hover:bg-gold/25 whitespace-nowrap rounded-xl">
+            🔍 ${isEs ? 'Descifrar Su Texto' : 'Decode Their Text'}
+          </button>
+        </div>
+        <div id="crush-text-decoded-output" class="hidden mt-2.5 p-2.5 rounded-lg bg-indigo-950/75 border border-indigo-400/55 text-xs text-ivory leading-snug"></div>
       </div>
 
       <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->
@@ -3339,6 +3554,36 @@ const CONFIG = {
           ⚡ ${isEs ? 'O desbloquea el Guion de Texto Completo y Mejores Días Para Escribir ($17) →' : 'Or unlock the Full Text Script &amp; Best Days To Text ($17) →'}
         </button>
       </div>
+
+      ${AFFILIATE_OFFER_CONFIG.ENABLED ? `
+      <!-- SECONDARY HIGH-CPA LIVE ADVISOR / VIP SYNASTRY MONETIZATION SLOT (#live-advisor-upsell-card) -->
+      <div id="live-advisor-upsell-card" class="mt-3.5 p-3.5 sm:p-4 rounded-xl bg-purple-950/35 border border-purple-400/45 text-left transition-all">
+        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+          <span class="px-2 py-0.5 rounded-full bg-purple-400/20 border border-purple-300/50 text-[0.6rem] font-extrabold uppercase tracking-wider text-purple-200">
+            ${isEs ? AFFILIATE_OFFER_CONFIG.BADGE_ES : AFFILIATE_OFFER_CONFIG.BADGE_EN}
+          </span>
+          <span class="text-[0.62rem] font-bold text-emerald-300">
+            ● ${isEs ? 'Disponible 24/7' : '24/7 Instant Access'}
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm font-bold text-ivory leading-snug">
+          ${(isEs ? AFFILIATE_OFFER_CONFIG.HEADLINE_ES : AFFILIATE_OFFER_CONFIG.HEADLINE_EN)
+            .replace(/\{d1\}/g, String(userBirthDay))
+            .replace(/\{d2\}/g, String(partnerBirthDay))}
+        </p>
+        <p class="text-[0.7rem] sm:text-xs text-zinc-300 leading-relaxed mt-1">
+          ${(isEs ? AFFILIATE_OFFER_CONFIG.SUBTEXT_ES : AFFILIATE_OFFER_CONFIG.SUBTEXT_EN)
+            .replace(/\{d1\}/g, String(userBirthDay))
+            .replace(/\{d2\}/g, String(partnerBirthDay))
+            .replace(/\{pMoolank\}/g, String(rep.pMoolank))
+            .replace(/\{pRuler\}/g, String(rep.pRuler))}
+        </p>
+        <button type="button" id="btn-live-advisor-affiliate" data-action="click-advisor-affiliate" data-d1="${userBirthDay}" data-d2="${partnerBirthDay}" data-source="partner_compat_card" class="btn-ghost mt-2.5 !py-2.5 !px-4 w-full text-xs font-extrabold text-purple-200 border-purple-300/60 bg-purple-500/15 hover:bg-purple-500/25 rounded-xl">
+          ${(isEs ? AFFILIATE_OFFER_CONFIG.CTA_ES : AFFILIATE_OFFER_CONFIG.CTA_EN)
+            .replace(/\{d1\}/g, String(userBirthDay))
+            .replace(/\{d2\}/g, String(partnerBirthDay))}
+        </button>
+      </div>` : ''}
     `;
 
     if (state.profile && state.profile.email) {
@@ -3424,6 +3669,14 @@ const CONFIG = {
     } catch (e) { /* ignore */ }
     sendWebhook('triangle_briefing_played', { part: partNum });
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (!e.target) return;
+    if (e.target.id === 'crush-last-text-input' && e.key === 'Enter') {
+      e.preventDefault();
+      decodeCrushText();
+    }
+  });
 
   document.addEventListener('change', (e) => {
     if (!e.target) return;
