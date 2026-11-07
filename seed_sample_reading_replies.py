@@ -59,7 +59,7 @@ TIKTOK_TARGETS = [
     },
     {
         "id": "short_37",
-        "video_id": "7705230841303043341",
+        "video_id": "7705432066799701262",
         "title_match": "Why men text you every single day and then go dead silent",
     },
     {
@@ -150,12 +150,12 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
-    {"id": "short_42", "shortcode": "DfbGIHLuhe0"},
-    {"id": "short_41", "shortcode": "DfbGAQ1ORKe"},
-    {"id": "short_40", "shortcode": "DfbF4Y2Ou_S"},
-    {"id": "short_39", "shortcode": "Dfa-YZ_OAX0"},
-    {"id": "short_38", "shortcode": "Dfa-QkgOwur"},
-    {"id": "short_37", "shortcode": "Dfa-IggucmA"},
+    {"id": "short_42", "shortcode": "DfcX9v4uTny"},
+    {"id": "short_41", "shortcode": "DfcX2Kcu8-g"},
+    {"id": "short_40", "shortcode": "DfcXuEju4Sm"},
+    {"id": "short_39", "shortcode": "DfcXmCmuXBn"},
+    {"id": "short_38", "shortcode": "DfcXeAPur38"},
+    {"id": "short_37", "shortcode": "DfcXWKpuDAv"},
     {"id": "short_36", "shortcode": "DfYsPKVudA0"},
     {"id": "short_35", "shortcode": "DfYsGWmOnNh"},
     {"id": "short_34", "shortcode": "DfYr-ceOLlN"},

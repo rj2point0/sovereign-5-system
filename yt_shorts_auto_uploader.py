@@ -468,13 +468,15 @@ async def delete_old_short_uploads(page: Page, old_ids: List[str]):
         row = rows.nth(idx)
         try:
             row_txt = await row.inner_text()
+            row_html = await row.inner_html()
         except Exception:
             continue
         if "Private" in row_txt:
             continue
         lines = [ln.strip() for ln in row_txt.splitlines() if len(ln.strip()) > 12]
         title_key = lines[0] if lines else f"row_{idx}"
-        if title_key not in seen_titles:
+        is_explicit_old = any(oid in row_html for oid in old_ids)
+        if not is_explicit_old and title_key not in seen_titles:
             seen_titles.add(title_key)
             print(f"    ✓ Keeping newest Public Short row #{idx+1}: {title_key[:55]}", flush=True)
             continue
@@ -896,7 +898,8 @@ async def run_pipeline(do_rebrand: bool = True, do_upload: bool = True):
                 save_tracker(tracker)
 
         if do_upload:
-            await delete_old_short_uploads(page, [])
+            old_puppet_ids = ["NMNeglNvzJo", "LVGf3qKgyXs", "L_MDz5EMc0k", "MeCHD1iMk2Y", "e4GQk6903_c", "BqWALaHQXB0"]
+            await delete_old_short_uploads(page, old_puppet_ids)
             for k in list(tracker.get("videos", {}).keys()):
                 if tracker["videos"][k].get("ReplaceOld"):
                     del tracker["videos"][k]
