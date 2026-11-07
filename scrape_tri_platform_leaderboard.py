@@ -24,12 +24,12 @@ IG_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\ig_browser_profile"
 TT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\tiktok_browser_profile"
 
 YT_VIDEOS = [
-    ("short_42", "BqWALaHQXB0", "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts"),
-    ("short_41", "e4GQk6903_c", "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts"),
-    ("short_40", "MeCHD1iMk2Y", "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts"),
-    ("short_39", "L_MDz5EMc0k", "When Men Actually Regret Pulling Away 🎙️🔥 #Shorts"),
-    ("short_38", "LVGf3qKgyXs", "He Left You On Read? A Guy Explains Why 🎙️📱 #Shorts"),
-    ("short_37", "NMNeglNvzJo", "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts"),
+    ("short_42", "4UBDJO2bgRk", "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts"),
+    ("short_41", "-gTPXdJw2t0", "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts"),
+    ("short_40", "bHEFsoDtSlY", "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts"),
+    ("short_39", "qWL3TXi1nIo", "When Men Actually Regret Pulling Away 🎙️🔥 #Shorts"),
+    ("short_38", "WEiPGnpKzRY", "He Left You On Read? A Guy Explains Why 🎙️📱 #Shorts"),
+    ("short_37", "OVz7TSxgygk", "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts"),
     ("short_36", "zcWFaLsddFA", "Why They Always Come Back When You Pull Away 🔥 #Shorts"),
     ("short_35", "BtPMMrR85Bs", "Birth Days That Breadcrumb You For Months 💔 #Shorts"),
     ("short_34", "IWLCRnUZ-LI", "When He Acts Cold & Distant, Do This First 🥶 #Shorts"),
@@ -45,12 +45,12 @@ YT_VIDEOS = [
 ]
 
 IG_VIDEOS = [
-    ("short_42", "DfbGIHLuhe0", "Batch #11 · Dry 1-Word Text Replies (AI Podcast Duet)"),
-    ("short_41", "DfbGAQ1ORKe", "Batch #11 · 6-Week Mark Switch Up (AI Podcast Duet)"),
-    ("short_40", "DfbF4Y2Ou_S", "Batch #11 · Watches Stories Won't Text (AI Podcast Duet)"),
-    ("short_39", "Dfa-YZ_OAX0", "Batch #10 · When Men Regret Pulling Away (AI Podcast Duet)"),
-    ("short_38", "Dfa-QkgOwur", "Batch #10 · Left On Read Male Insider (AI Podcast Duet)"),
-    ("short_37", "Dfa-IggucmA", "Batch #10 · Why Men Go Dead Silent (AI Podcast Duet)"),
+    ("short_42", "DfcX9v4uTny", "Batch #11 · Dry 1-Word Text Replies (Real-Human Podcast)"),
+    ("short_41", "DfcX2Kcu8-g", "Batch #11 · 6-Week Mark Switch Up (Real-Human Podcast)"),
+    ("short_40", "DfcXuEju4Sm", "Batch #11 · Watches Stories Won't Text (Real-Human Podcast)"),
+    ("short_39", "DfcXmCmuXBn", "Batch #10 · When Men Regret Pulling Away (Real-Human Podcast)"),
+    ("short_38", "DfcXeAPur38", "Batch #10 · Left On Read Male Insider (Real-Human Podcast)"),
+    ("short_37", "DfcXWKpuDAv", "Batch #10 · Why Men Go Dead Silent (Real-Human Podcast)"),
     ("short_36", "DfYsPKVudA0", "Batch #9 · Come Back After Silence (Giant 120px + SFX)"),
     ("short_35", "DfYsGWmOnNh", "Batch #9 · Breadcrumbing Days (Giant 120px + SFX)"),
     ("short_34", "DfYr-ceOLlN", "Batch #9 · Cold & Distant Test (Giant 120px + SFX)"),
@@ -69,18 +69,18 @@ IG_VIDEOS = [
 ]
 
 TT_VIDEOS = [
-    ("short_37", "7705230841303043341", "LIVE (Nov 6)", "Why men text every day then go dead silent (Maya x Julian)"),
+    ("short_37", "7705432066799701262", "LIVE (Nov 7)", "Why men text every day then go dead silent (Maya x Julian)"),
+    ("short_29", "LIVE_OR_SCHED", "Scheduled (Nov 7 11:00)", "Dating someone born on the 4th, 7th, 8th, 13th"),
+    ("short_27", "7704466354597940494", "LIVE (Nov 6 18:30)", "Born on the 3rd, 4th, 8th, 9th, 12th, 13th"),
     ("short_34", "7704901851963018510", "LIVE (Nov 5)", "When he starts acting cold & distant, do NOT ask what's wrong"),
     ("short_31", "7704784636659961102", "LIVE (Nov 5)", "He texted me every morning for 6 weeks"),
+    ("short_26", "7704543339755916558", "LIVE (Nov 5 18:30)", "Silence does not mean they forgot you"),
+    ("short_24", "7704543122772086029", "LIVE (Nov 5 11:00)", "Only 1 birth day can handle your fire"),
     ("short_23", "7704542849571900685", "LIVE (Nov 5)", "Stop double texting when they go quiet"),
     ("short_28", "7704068444592950541", "LIVE", "Why you always care more first"),
     ("short_25", "7703630255013104910", "LIVE", "Intense chemistry can be a karmic trap"),
     ("short_22", "7703622747489963278", "LIVE", "Why they act obsessed then pull away"),
     ("short_20", "7704137393049308430", "LIVE", "Every birthday has 3 natural soulmate dates"),
-    ("short_24", "7704543122772086029", "Scheduled (Nov 5 18:30)", "Only 1 birth day can handle your fire"),
-    ("short_26", "7704543339755916558", "Scheduled (Nov 6 11:00)", "Silence does not mean they forgot you"),
-    ("short_27", "SCHEDULED", "Scheduled (Nov 6 18:30)", "November love turning point"),
-    ("short_29", "SCHEDULED", "Scheduled (Nov 7 11:00)", "Never chase when these birth days go silent"),
     ("short_30", "SCHEDULED", "Scheduled (Nov 7 18:30)", "Are your birthdays endgame or a 3-month lesson"),
     ("short_32", "SCHEDULED", "Scheduled (Nov 8 11:00)", "Left on read at 11:42 PM? Send this 9-word text"),
     ("short_33", "SCHEDULED", "Scheduled (Nov 8 18:30)", "Why you keep falling for people who pull away"),

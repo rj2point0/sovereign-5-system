@@ -673,12 +673,23 @@ async def test_all():
 
         assert await page_mob.is_visible('#live-advisor-upsell-card') is True, "Expected #live-advisor-upsell-card visible inside #partner-compat-result"
         assert await page_mob.is_visible('#btn-live-advisor-affiliate') is True, "Expected #btn-live-advisor-affiliate visible"
+        adv_btn_txt = await page_mob.locator('#btn-live-advisor-affiliate').inner_text()
+        assert "priority 1-on-1 compatibility & text analysis unlock ($17 express / $37 full)" in adv_btn_txt.lower(), f"Unexpected #btn-live-advisor-affiliate text: {adv_btn_txt}"
         await page_mob.evaluate("window.open = (u) => { window.__OPENED_AFF_URL = u; return null; };")
         await page_mob.click('#btn-live-advisor-affiliate')
         await asyncio.sleep(0.2)
         adv_evs = [e for e in demo_events if e.get("event_type") == "advisor_affiliate_clicked"]
         assert len(adv_evs) >= 1, f"Expected advisor_affiliate_clicked telemetry event, got {[e.get('event_type') for e in demo_events]}"
         assert (adv_evs[-1].get("extra") or {}).get("d1") == 19 and (adv_evs[-1].get("extra") or {}).get("d2") == 23
+        opened_aff_url = await page_mob.evaluate("() => window.__LAST_ADVISOR_AFFILIATE_URL || window.__OPENED_AFF_URL || ''")
+        assert "dRm8wP7VL0Md1gA0zd38404" in opened_aff_url, f"Expected $17 Stripe URL dRm8wP7VL0Md1gA0zd38404 on #btn-live-advisor-affiliate click, got '{opened_aff_url}'"
+        assert await page_mob.is_visible('#priority-unlock-modal') is True, "Expected #priority-unlock-modal to open on #btn-live-advisor-affiliate click"
+        modal_17_href = await page_mob.locator('#btn-priority-modal-17').get_attribute('href')
+        modal_37_href = await page_mob.locator('#btn-priority-modal-37').get_attribute('href')
+        assert "dRm8wP7VL0Md1gA0zd38404" in (modal_17_href or ""), f"Expected $17 Stripe URL in #btn-priority-modal-17, got '{modal_17_href}'"
+        assert "6oU7sLek90MdbVechV38401" in (modal_37_href or ""), f"Expected $37 Stripe URL in #btn-priority-modal-37, got '{modal_37_href}'"
+        await page_mob.click('#btn-close-priority-modal')
+        await asyncio.sleep(0.1)
 
         # 10d) Mobile Input Focus/Blur Horizontal-Alignment E2E Audit (390x660):
         # Tap/focus #partner-compat-email-input and #crush-last-text-input, then blur/click outside without typing.

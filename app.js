@@ -31,23 +31,23 @@ const CONFIG = {
 
 const AFFILIATE_OFFER_CONFIG = {
   ENABLED: true,
-  PROVIDER_NAME: 'Relationship Hero · Certified Love & Birth-Code Advisors',
-  BADGE_EN: '💬 LIVE 1-ON-1 HUMAN ADVISOR OPTION',
-  BADGE_ES: '💬 OPCIÓN DE ASESOR HUMANO EN VIVO 1-A-1',
-  BADGE_TEXT_EN: '💬 LIVE 1-ON-1 HUMAN ADVISOR OPTION',
-  BADGE_TEXT_ES: '💬 OPCIÓN DE ASESOR HUMANO EN VIVO 1-A-1',
-  HEADLINE_EN: 'Need to talk to a live specialist about a Day {d2} right now?',
-  HEADLINE_ES: '¿Necesitas hablar en vivo con un especialista sobre un Día {d2} ahora mismo?',
-  SUBTEXT_EN: 'Get a private 1-on-1 live chat or phone session with a vetted relationship & astrology advisor for your [Day {d1} × Day {d2}] (#{pMoolank} {pRuler}) situation:',
-  SUBTEXT_ES: 'Obtén una sesión privada 1-a-1 por chat o teléfono con un asesor certificado de parejas para tu situación [Día {d1} × Día {d2}] (#{pMoolank} {pRuler}):',
-  BODY_EN: 'Get a private 1-on-1 live chat or phone session with a vetted relationship & astrology advisor (First 3 Minutes Free + High-Priority Match):',
-  BODY_ES: 'Obtén una sesión privada 1-a-1 por chat o teléfono con un asesor certificado de parejas y astrología (Primeros 3 Minutos Gratis):',
-  CTA_EN: '✨ Chat With A Live Love & Birth-Code Advisor (3 Mins Free) →',
-  CTA_ES: '✨ Chatear Con Un Asesor de Amor en Vivo (3 Min Gratis) →',
-  CTA_TEXT_EN: '✨ Chat With A Live Love & Birth-Code Advisor (3 Mins Free) →',
-  CTA_TEXT_ES: '✨ Chatear Con Un Asesor de Amor en Vivo (3 Min Gratis) →',
-  // Drop in any high-CPA ClickBank / Keen / Kasamba / Relationship Hero tracking link here:
-  AFFILIATE_URL: 'https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403',
+  PROVIDER_NAME: 'Sacred Number Blueprint · Priority 1-on-1 Compatibility & Text Analysis',
+  BADGE_EN: '⚡ PRIORITY 1-ON-1 COMPATIBILITY & TEXT UNLOCK',
+  BADGE_ES: '⚡ DESBLOQUEO PRIORITARIO 1-A-1 DE TEXTO Y SINASTRÍA',
+  BADGE_TEXT_EN: '⚡ PRIORITY 1-ON-1 COMPATIBILITY & TEXT UNLOCK',
+  BADGE_TEXT_ES: '⚡ DESBLOQUEO PRIORITARIO 1-A-1 DE TEXTO Y SINASTRÍA',
+  HEADLINE_EN: 'Want the complete Day {d1} × Day {d2} word-for-word gameplan right now?',
+  HEADLINE_ES: '¿Quieres el plan palabra por palabra completo para Día {d1} × Día {d2} ahora mismo?',
+  SUBTEXT_EN: 'Choose your instant Priority Unlock below—get the unblurred [Day {d1} × Day {d2}] (#{pMoolank} {pRuler}) "Flip The Chase" Text Script ($17 Express) or the full 20-Page 5-System Synastry Dossier ($37):',
+  SUBTEXT_ES: 'Elige tu Desbloqueo Prioritario al instante: obtén el Guion de Texto [Día {d1} × Día {d2}] (#{pMoolank} {pRuler}) sin censura ($17 Express) o el Dossier Completo de 20 Páginas ($37):',
+  BODY_EN: 'Instant Priority 1-on-1 Compatibility & Text Analysis Unlock ($17 Express Text Script / $37 Full 20-Page Dossier):',
+  BODY_ES: 'Desbloqueo Prioritario Instantáneo de Compatibilidad y Análisis de Texto ($17 Express / $37 Dossier Completo):',
+  CTA_EN: '✨ Priority 1-on-1 Compatibility & Text Analysis Unlock ($17 Express / $37 Full) →',
+  CTA_ES: '✨ Desbloqueo Prioritario de Compatibilidad y Texto ($17 Express / $37 Completo) →',
+  CTA_TEXT_EN: '✨ Priority 1-on-1 Compatibility & Text Analysis Unlock ($17 Express / $37 Full) →',
+  CTA_TEXT_ES: '✨ Desbloqueo Prioritario de Compatibilidad y Texto ($17 Express / $37 Completo) →',
+  // Routes directly to our $17 Express Stripe Checkout (with prefilled_email) + opens the Priority $17 / $37 Modal:
+  AFFILIATE_URL: 'https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404',
 };
 if (typeof window !== 'undefined') {
   window.AFFILIATE_OFFER_CONFIG = AFFILIATE_OFFER_CONFIG;
@@ -3289,6 +3289,53 @@ if (typeof window !== 'undefined') {
     });
   }
 
+  function openPriorityUnlockModal(d1, d2, url17, url37) {
+    let modal = $('#priority-unlock-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'priority-unlock-modal';
+      modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm';
+      document.body.appendChild(modal);
+    }
+    const isEs = state.lang === 'es';
+    modal.classList.remove('hidden');
+    modal.innerHTML = `
+      <div class="card max-w-md w-full p-5 sm:p-6 border-2 border-gold shadow-2xl relative text-left" style="background:linear-gradient(180deg,#181424,#0d0b14)">
+        <button type="button" id="btn-close-priority-modal" class="absolute top-3 right-3 text-zinc-400 hover:text-ivory text-lg font-bold px-2 py-0.5 rounded-lg bg-white/5">✕</button>
+        <span class="badge-gold !text-[0.62rem]">⚡ ${isEs ? 'DESBLOQUEO PRIORITARIO 1-A-1' : 'PRIORITY 1-ON-1 UNLOCK'}</span>
+        <h3 class="font-display text-lg sm:text-xl text-ivory mt-2 leading-snug">
+          ${isEs
+            ? `Análisis Completo Día ${d1} × Día ${d2} y Guion de Texto`
+            : `Day ${d1} × Day ${d2} Compatibility & Text Analysis Unlock`}
+        </h3>
+        <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">
+          ${isEs
+            ? 'Selecciona tu nivel de acceso instantáneo (se desbloquea en tu pantalla inmediatamente después del pago en Stripe):'
+            : 'Select your instant access tier below (unlocks immediately on your screen the second Stripe checkout completes):'}
+        </p>
+        <div class="mt-4 space-y-2.5">
+          <a id="btn-priority-modal-17" href="${esc(url17)}" data-action="checkout-mini" data-trigger="priority_modal_17" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide rounded-xl">
+            ⚡ ${isEs
+              ? `Opción Express ($17): Guion de Texto Completo [Día ${d1} × Día ${d2}] + 3 Mejores Días Para Escribirle →`
+              : `Express Unlock ($17): Full [Day ${d1} × Day ${d2}] Text Script + 3 Best Days To Text →`}
+          </a>
+          <a id="btn-priority-modal-37" href="${esc(url37)}" data-action="partner-checkout" style="display:block;text-align:center;" class="btn-ghost !py-3 !px-4 w-full text-xs sm:text-sm font-bold text-champagne border-gold/60 bg-gold/10 hover:bg-gold/20 rounded-xl">
+            👑 ${isEs
+              ? `Dossier Completo de 20 Páginas ($37): Los 5 Sistemas + Sinastría de Pareja + Calendario de 12 Meses →`
+              : `Full 20-Page Dossier ($37): All 5 Systems + Partner Synastry + 12-Month Timing Calendar →`}
+          </a>
+        </div>
+      </div>
+    `;
+    const closeBtn = $('#btn-close-priority-modal', modal);
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    }
+    modal.addEventListener('click', (ev) => {
+      if (ev.target === modal) modal.classList.add('hidden');
+    });
+  }
+
   function clickAdvisorAffiliate(btnEl) {
     const d1 = parseInt((btnEl && btnEl.dataset && btnEl.dataset.d1) || '', 10) || ((state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || 19);
     const d2 = parseInt((btnEl && btnEl.dataset && btnEl.dataset.d2) || '', 10) || state.lastPartnerBirthDay || 23;
@@ -3299,8 +3346,10 @@ if (typeof window !== 'undefined') {
       source,
       provider: AFFILIATE_OFFER_CONFIG.PROVIDER_NAME,
     });
-    const baseUrl = AFFILIATE_OFFER_CONFIG.AFFILIATE_URL || CONFIG.STRIPE_LINK_UPGRADE || CONFIG.STRIPE_LINK_BASE;
+    const baseUrl = AFFILIATE_OFFER_CONFIG.AFFILIATE_URL || CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE;
     if (!baseUrl) return;
+    store.set(KEYS.pending, 'love_mini');
+    const url37 = buildStripeUrl(CONFIG.STRIPE_LINK_BASE, 'base') || CONFIG.STRIPE_LINK_BASE;
     try {
       const u = new URL(baseUrl, location.origin);
       u.searchParams.set('d1', String(d1));
@@ -3308,11 +3357,16 @@ if (typeof window !== 'undefined') {
       if (state.profile && state.profile.email) {
         u.searchParams.set('prefilled_email', state.profile.email);
       }
-      window.__LAST_ADVISOR_AFFILIATE_URL = u.toString();
-      window.open(u.toString(), '_blank', 'noopener');
+      if (state.profile && state.profile.id) {
+        u.searchParams.set('client_reference_id', state.profile.id);
+      }
+      const final17 = u.toString();
+      window.__LAST_ADVISOR_AFFILIATE_URL = final17;
+      openPriorityUnlockModal(d1, d2, final17, url37);
+      window.open(final17, '_blank', 'noopener');
     } catch (e) {
       window.__LAST_ADVISOR_AFFILIATE_URL = baseUrl;
-      location.href = baseUrl;
+      openPriorityUnlockModal(d1, d2, baseUrl, url37);
     }
   }
 

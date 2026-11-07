@@ -75,11 +75,11 @@ APP_BASE_URL = BASE_FUNNEL_URL
 
 AFFILIATE_OFFER_CONFIG = {
     "ENABLED": True,
-    "PROVIDER_NAME": "1-on-1 Live Relationship & Synastry Advisor",
-    "AFFILIATE_URL": "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402?utm_source=email_advisor_ps&utm_medium=affiliate_slot",
-    "HEADLINE": "Want a Live Relationship Specialist to Read Both of Your Birth Charts Tonight?",
-    "SUBTEXT": "Need deeper 1-on-1 guidance beyond the text script? Unlock a private 5-System Synastry & 365-Day Timing Deep-Dive session now.",
-    "CTA": "🔮 Speak to a Live Relationship Advisor / Unlock Full VIP Synastry →",
+    "PROVIDER_NAME": "Sacred Number Blueprint · Priority 1-on-1 Compatibility & Text Analysis",
+    "AFFILIATE_URL": "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404?utm_source=email_advisor_ps&utm_medium=affiliate_slot",
+    "HEADLINE": "Want the Complete Word-for-Word Text Script & 3 Best Days To Text Tonight?",
+    "SUBTEXT": "Unlock your complete 'Flip The Chase' Text Script, their exact reply prediction, and the 3 dates this month they pull closer ($17 Express Unlock).",
+    "CTA": "⚡ Priority Unlock: Full Text Script & Best Days To Text ($17) →",
 }
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -1850,6 +1850,9 @@ def update_obsidian_dashboard():
         tt_views = [e for e in page_views if e.get("is_tiktok_inapp")]
         ig_views = [e for e in page_views if e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", ""))]
         other_views = [e for e in page_views if not e.get("is_tiktok_inapp") and not (e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")))]
+        hero_engaged = [e for e in events if e.get("event_type") == "hero_engaged_3s"]
+        hero_my_day = [e for e in events if e.get("event_type") == "hero_my_day_selected"]
+        hero_pair_match = [e for e in events if e.get("event_type") == "hero_pair_match_selected"]
         calc_started = [e for e in events if e.get("event_type") == "calc_started"]
         quick_days = [e for e in events if e.get("event_type") == "quick_day_selected"]
         demo_previews = [e for e in events if e.get("event_type") == "demo_preview_clicked"]
@@ -1869,6 +1872,9 @@ def update_obsidian_dashboard():
                 f"total_page_views: {len(page_views)}",
                 f"tiktok_inapp_views: {len(tt_views)}",
                 f"instagram_inapp_views: {len(ig_views)}",
+                f"hero_engaged_3s: {len(hero_engaged)}",
+                f"hero_my_day_selected: {len(hero_my_day)}",
+                f"hero_pair_match_selected: {len(hero_pair_match)}",
                 f"quick_day_selects: {len(quick_days)}",
                 f"demo_previews: {len(demo_previews)}",
                 f"calc_previews: {len(calc_previews)}",
@@ -1885,13 +1891,16 @@ def update_obsidian_dashboard():
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
                 "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
-                "> Tracks every real visitor session from the moment they tap the TikTok or Instagram bio link (`page_view`), focus the calculator (`calc_started`), tap their 1-Tap Birth Day (`quick_day_selected`), tap the 1-Tap Sample Reading (`demo_preview_clicked`), test a Name & Birthday (`calc_preview` — captured even if they skip Email!), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`: `$17` Love Mini-Read, `$37` Full 20-Page Blueprint, or `$84` VIP Bundle). Headless Playwright/localhost test runs are automatically filtered out.",
+                "> Tracks every real visitor session from the moment they tap the TikTok, YouTube Shorts, or Instagram bio link (`page_view`), stay/engage for 3s (`hero_engaged_3s`), tap Step 1 (`hero_my_day_selected`) & Step 2 (`hero_pair_match_selected`), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`: `$17` Love Mini-Read, `$37` Full 20-Page Blueprint, or `$84` VIP Bundle). Headless Playwright/localhost test runs are automatically filtered out.",
                 "",
                 "## 1. Live Funnel Conversion Telemetry Summary",
                 "",
                 "| Funnel Stage | Event Key | Total Count | Breakdown / Conversion Notes |",
                 "| :--- | :--- | :---: | :--- |",
                 f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App:** `{len(tt_views)}` · **Instagram In-App:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` |",
+                f"| **1a. Engaged On Hero (>= 3s / Touch)** | `hero_engaged_3s` | **{len(hero_engaged)}** | Visitors who dwelled >= 3s or scrolled/touched on `view1` |",
+                f"| **1b. Step 1: Your Birth Day Selected** | `hero_my_day_selected` | **{len(hero_my_day)}** | Visitors who selected their Birth Day (`1–31`) on `view1` |",
+                f"| **1c. Step 2: Partner Pair Match Selected** | `hero_pair_match_selected` | **{len(hero_pair_match)}** | Visitors who completed the 2-Tap Pair Match on `view1` |",
                 f"| **2. Calculator Interactions** | `calc_started` | **{len(calc_started)}** | Visitors who tapped into the Name or Birth Date input field |",
                 f"| **2a. 1-Tap Birth Day Quick-Select** | `quick_day_selected` | **{len(quick_days)}** | Visitors who tapped their Birth Day (`1–31`) on the Hero quick-strip |",
                 f"| **2b. 1-Tap Sample Previews** | `demo_preview_clicked` | **{len(demo_previews)}** | Cold scrollers who tapped the 1-Tap Sample Reading (`7th × 4th`) |",
@@ -2293,8 +2302,7 @@ def poll_cloud_relay_once() -> int:
                     msg_str = envelope.get("message", "")
                     payload = json.loads(msg_str)
                     ev_name = str(payload.get("event_type") or payload.get("event") or "").strip().lower()
-                    if ev_name in ("page_view", "calc_started", "field_progress", "quick_day_selected", "demo_preview_clicked", "calc_preview", "partner_check_run", "partner_compat_checked", "lead_capture", "lead_submitted", "checkout_click", "checkout_clicked", "purchase_return"):
-                        record_telemetry_event(payload)
+                    record_telemetry_event(payload)
                     if ev_name not in ("lead_capture", "lead_submitted", "purchase_return"):
                         continue
                     prof = payload.get("profile") or {}
