@@ -1699,6 +1699,181 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#numerology", "#datingadvice", "#lovecode", "#birthdaycompatibility"
         ],
     },
+    # =========================================================================
+    # BATCH #10 (short_37, short_38, short_39):
+    # AI Influencer Dual-Host Podcast Format ("Maya" x "Julian" · podcast_duet_giant)
+    # =========================================================================
+    {
+        "id": "short_37",
+        "cohort": "Cohort C · Batch 10 (AI Podcast Duet: Maya x Julian + 4-Layer SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "giant_lines": [
+            ("WHY MEN GO", "white"),
+            ("DEAD SILENT", "coral"),
+            ("BY BIRTH DAY", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 4th · 7th · 8th · 13th · 16th · 17th · 22nd · 25th · 26th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_37_podcast_male_silence.mp4",
+        "yt_title": "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts",
+        "grid_headline": "WHY MEN GO\nDEAD SILENT\nBY BIRTH DAY",
+        "grid_sub": "LATE NIGHT PODCAST · MALE INSIDER",
+        "hook_box_text": "Why does a guy text you every day, then go dead silent?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why does a guy text you every day, then go dead silent?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "If he was born on the seventh, sixteenth, or twenty-fifth, he's testing if you'll chase. Send the nine word text in our bio instead.",
+        "reveal_match_pair": "Born 19th × Born 25th",
+        "reveal_match_score": "95% KARMIC TENSION",
+        "reveal_sms_lead": "“I'm taking a step back this week because...",
+        "spoken_script": (
+            "Why does a guy text you every day, then go dead silent? "
+            "If he was born on the seventh, sixteenth, or twenty-fifth, he's testing if you'll chase. "
+            "Send the nine word text in our bio instead."
+        ),
+        "broll_clips": [
+            (0.0, 2.4, "podcast_avatars/maya_speaking_open.png"),
+            (2.4, 4.6, "podcast_avatars/julian_speaking_open.png"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why men text you every single day and then go dead silent (decoded by his birth day) 🎙️💔 "
+            "(Is he born on the 4th, 7th, 8th, 13th, 16th, 17th, 22nd, 25th, or 26th? Tap our bio for the 9-word text) "
+            "#datingpodcast #relationshipadvice #situationship #nocontact #textingadvice #numerology #datingadvice #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#relationshipadvice", "#situationship", "#nocontact",
+            "#textingadvice", "#numerology", "#datingadvice", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_38",
+        "cohort": "Cohort C · Batch 10 (AI Podcast Duet: Maya x Julian + 4-Layer SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "giant_lines": [
+            ("HE READ YOUR", "white"),
+            ("TEXT AND DIDN'T", "gold"),
+            ("REPLY? WATCH", "coral"),
+        ],
+        "giant_sub_pill": "HIM BORN 1st · 3rd · 5th · 9th · 10th · 14th · 18th · 19th · 23rd · 28th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_38_podcast_he_read_it.mp4",
+        "yt_title": "He Left You On Read? A Guy Explains Why 🎙️📱 #Shorts",
+        "grid_headline": "HE READ YOUR\nTEXT AND DIDN'T\nREPLY? WATCH",
+        "grid_sub": "LATE NIGHT PODCAST · LEFT ON READ",
+        "hook_box_text": "Be honest. When a guy leaves a girl on read, is it over?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Be honest. When a guy leaves a girl on read, is it over?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "Not if he's a fifth, fourteenth, or twenty-third. He wants you to panic, so test both birth days in our bio to flip the chase on him.",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "Be honest. When a guy leaves a girl on read, is it over? "
+            "Not if he's a fifth, fourteenth, or twenty-third. "
+            "He wants you to panic, so test both birth days in our bio to flip the chase on him."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "podcast_avatars/maya_speaking_mid.png"),
+            (2.3, 4.6, "podcast_avatars/julian_speaking_mid.png"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "When a guy leaves you on read, is it actually over? A male insider breaks down his birth day 🎙️📱 "
+            "(Born 1st, 3rd, 5th, 9th, 10th, 14th, 18th, 19th, 23rd, or 28th? Test both birth days in our bio) "
+            "#datingpodcast #leftonread #situationship #relationshipadvice #textingadvice #numerology #datingadvice #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#leftonread", "#situationship", "#relationshipadvice",
+            "#textingadvice", "#numerology", "#datingadvice", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_39",
+        "cohort": "Cohort C · Batch 10 (AI Podcast Duet: Maya x Julian + 4-Layer SFX)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "giant_lines": [
+            ("WHEN DO MEN", "white"),
+            ("ACTUALLY REGRET", "coral"),
+            ("PULLING AWAY?", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 2nd · 6th · 11th · 12th · 15th · 20th · 21st · 24th · 29th · 30th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_39_podcast_who_regrets_it.mp4",
+        "yt_title": "When Men Actually Regret Pulling Away 🎙️🔥 #Shorts",
+        "grid_headline": "WHEN DO MEN\nACTUALLY REGRET\nPULLING AWAY?",
+        "grid_sub": "LATE NIGHT PODCAST · NO CONTACT",
+        "hook_box_text": "At what point does a guy actually regret pulling away from you?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "At what point does a guy actually regret pulling away from you?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "The exact night you stop asking what's wrong, and match his silence instead. Check our bio for the exact days his birth number cracks.",
+        "reveal_match_pair": "Born 11th × Born 24th",
+        "reveal_match_score": "94% TWIN-SPARK LOCK",
+        "reveal_sms_lead": "“You know I care about us, so I'm stepping...",
+        "spoken_script": (
+            "At what point does a guy actually regret pulling away from you? "
+            "The exact night you stop asking what's wrong, and match his silence instead. "
+            "Check our bio for the exact days his birth number cracks."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "podcast_avatars/maya_shocked_reaction.png"),
+            (2.3, 4.6, "podcast_avatars/julian_intense_lean_in.png"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "At what point does a man actually regret pulling away from you? 🎙️🔥 "
+            "(Born 2nd, 6th, 11th, 12th, 15th, 20th, 21st, 24th, 29th, or 30th? Check our bio for the days his number cracks) "
+            "#datingpodcast #nocontact #hecomesback #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#nocontact", "#hecomesback", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -1867,11 +2042,124 @@ class BrollStoryGenerator:
         print(f"   [TTS] Built {len(cues)} 3-word CapCut-style caption cues.", flush=True)
         return cues
 
+    async def generate_dual_podcast_voice_and_cues(
+        self, spec: Dict[str, Any], out_voice_path: str
+    ) -> List[Dict[str, Any]]:
+        """
+        Synthesizes Dual-Host Podcast Voiceover:
+        - Host #1 ('Maya'): en-US-AvaMultilingualNeural (+12% rate)
+        - Host #2 ('Julian'): en-US-AndrewMultilingualNeural (+12% rate)
+        Concatenates with a crisp 0.06s studio turn pause, builds unified 3-word CapCut cues
+        tagged with speaker='maya'|'julian', and sets spec['_switch_sec'].
+        """
+        vid_id = spec["id"]
+        maya_mp3 = os.path.join(BASE_DIR, f"_tmp_maya_{vid_id}.mp3")
+        julian_mp3 = os.path.join(BASE_DIR, f"_tmp_julian_{vid_id}.mp3")
+        maya_voice = spec.get("podcast_maya_voice", "en-US-AvaMultilingualNeural")
+        maya_rate = spec.get("podcast_maya_rate", "+12%")
+        maya_text = spec.get("podcast_maya_text", "")
+        julian_voice = spec.get("podcast_julian_voice", "en-US-AndrewMultilingualNeural")
+        julian_rate = spec.get("podcast_julian_rate", "+12%")
+        julian_text = spec.get("podcast_julian_text", "")
+
+        try:
+            cues_maya = await self.generate_voice_and_3word_cues(maya_text, maya_voice, maya_rate, maya_mp3)
+        except Exception:
+            cues_maya = await self.generate_voice_and_3word_cues(maya_text, "en-US-AvaNeural", maya_rate, maya_mp3)
+
+        try:
+            cues_julian = await self.generate_voice_and_3word_cues(julian_text, julian_voice, julian_rate, julian_mp3)
+        except Exception:
+            cues_julian = await self.generate_voice_and_3word_cues(julian_text, "en-US-AndrewNeural", julian_rate, julian_mp3)
+
+        def probe_audio_dur(path: str) -> float:
+            r = subprocess.run([FFMPEG_EXE, "-i", path], capture_output=True, text=True)
+            for ln in r.stderr.splitlines():
+                if "Duration:" in ln:
+                    part = ln.split("Duration:")[1].split(",")[0].strip()
+                    h, m, s = part.split(":")
+                    return float(h) * 3600 + float(m) * 60 + float(s)
+            return 2.3
+
+        maya_dur = probe_audio_dur(maya_mp3)
+        pause_sec = 0.06
+        switch_sec = maya_dur + (pause_sec * 0.5)
+        spec["_raw_switch_sec"] = switch_sec
+        spec["_switch_sec"] = switch_sec
+
+        # Concatenate Maya + 0.06s pause + Julian into out_voice_path
+        cmd_concat = [
+            FFMPEG_EXE, "-y",
+            "-i", maya_mp3,
+            "-i", julian_mp3,
+            "-filter_complex", f"[0:a]apad=pad_dur={pause_sec:.2f}[a0];[a0][1:a]concat=n=2:v=0:a=1[outa]",
+            "-map", "[outa]",
+            "-c:a", "libmp3lame", "-b:a", "192k",
+            out_voice_path,
+        ]
+        subprocess.run(cmd_concat, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        for tmp_p in (maya_mp3, julian_mp3):
+            if os.path.exists(tmp_p):
+                os.remove(tmp_p)
+
+        merged_cues = []
+        for c in cues_maya:
+            merged_cues.append({"start": c["start"], "end": c["end"], "text": c["text"], "speaker": "maya"})
+        offset = maya_dur + pause_sec
+        for c in cues_julian:
+            merged_cues.append({
+                "start": c["start"] + offset,
+                "end": c["end"] + offset,
+                "text": c["text"],
+                "speaker": "julian",
+            })
+        print(
+            f"   [PODCAST TTS] Maya={maya_dur:.2f}s | Switch={switch_sec:.2f}s | Total cues={len(merged_cues)}",
+            flush=True,
+        )
+        return merged_cues
+
+    def compute_rms_envelope_30fps(self, audio_path: str, total_dur: float, fps: int = 30) -> List[float]:
+        """Decodes audio_path to 16kHz mono PCM and returns normalized 30fps RMS values [0.0..1.0] for lip-sync."""
+        import wave
+        tmp_wav = audio_path + "_rms16k.wav"
+        cmd = [
+            FFMPEG_EXE, "-y",
+            "-i", audio_path,
+            "-ac", "1", "-ar", "16000",
+            tmp_wav,
+        ]
+        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        total_frames = max(1, int(total_dur * fps) + 10)
+        env = [0.0] * total_frames
+        try:
+            with wave.open(tmp_wav, "rb") as wf:
+                raw = wf.readframes(wf.getnframes())
+                samples = np.frombuffer(raw, dtype=np.int16).astype(np.float32) / 32768.0
+            sr = 16000
+            win = max(1, sr // fps)
+            for idx in range(total_frames):
+                s0 = idx * win
+                s1 = min(len(samples), s0 + win)
+                if s1 > s0:
+                    rms = float(np.sqrt(np.mean(samples[s0:s1] ** 2)))
+                    env[idx] = rms
+            p95 = float(np.percentile(env, 95)) if env else 0.1
+            scale = max(0.04, p95)
+            env = [min(1.0, max(0.0, v / scale)) for v in env]
+        except Exception:
+            pass
+        finally:
+            if os.path.exists(tmp_wav):
+                os.remove(tmp_wav)
+        return env
+
     def synthesize_sfx_and_riser_bed(
         self,
         total_dur: float,
         broll_cutoff: float,
         out_sfx_wav: str,
+        switch_sec: Optional[float] = None,
     ) -> None:
         """
         Synthesizes a studio-grade 44.1kHz stereo WAV sound design bed in Python (numpy + wave):
@@ -1963,6 +2251,22 @@ class BrollStoryGenerator:
             mix_l[trig_idx0 : trig_idx0 + trig_n] += trig_sig * 0.95
             mix_r[trig_idx0 : trig_idx0 + trig_n] += trig_sig * 1.05
 
+        # --- 2b. OPTIONAL STUDIO MIC SWITCH TRANSITION (at switch_sec, -15.5dB) ---
+        if switch_sec is not None and 0.4 < switch_sec < (dur_pad - 0.35):
+            sw_idx0 = int(max(0.0, switch_sec - 0.04) * sr)
+            sw_dur = 0.22
+            sw_n = int(sw_dur * sr)
+            if sw_idx0 + sw_n < n_samples:
+                t_sw = np.arange(sw_n, dtype=np.float64) / sr
+                # Warm studio condenser mic relay click + soft low-end air whoosh (180Hz -> 95Hz)
+                mic_click = (
+                    0.55 * np.sin(2.0 * np.pi * 1420.0 * t_sw) * np.exp(-t_sw * 65.0)
+                    + 0.45 * np.sin(2.0 * np.pi * (95.0 * t_sw + 85.0 * 0.04 * (1.0 - np.exp(-t_sw / 0.04)))) * np.exp(-t_sw * 18.0)
+                )
+                mic_sig = mic_click / max(1e-6, float(np.max(np.abs(mic_click)))) * db_to_amp(-15.5)
+                mix_l[sw_idx0 : sw_idx0 + sw_n] += mic_sig * 0.90
+                mix_r[sw_idx0 : sw_idx0 + sw_n] += mic_sig * 1.10
+
         # --- 4. 4.60s PRODUCT REVEAL CLICK (UI lock-pop / camera-shutter sound, -14dB) ---
         rev_t0 = float(broll_cutoff if broll_cutoff <= 6.2 else 4.60)
         rev_idx0 = int(rev_t0 * sr)
@@ -2007,6 +2311,7 @@ class BrollStoryGenerator:
         tail_hold_sec: float = 1.2,
         target_voice_sec: Optional[float] = None,
         broll_cutoff: float = 4.60,
+        spec: Optional[Dict[str, Any]] = None,
     ) -> float:
         """
         Mixes the spoken story with the 4-layer studio sound design bed (SFX + Tension Riser)
@@ -2033,9 +2338,19 @@ class BrollStoryGenerator:
             v_dur = v_dur / tempo
             print(f"   [TTS] Applied pace tempo={tempo:.3f}x -> voice={v_dur:.2f}s (+{tail_hold_sec:.1f}s tail)", flush=True)
 
+        switch_sec_scaled = None
+        if spec is not None and "_raw_switch_sec" in spec:
+            switch_sec_scaled = float(spec["_raw_switch_sec"]) / tempo
+            spec["_switch_sec"] = switch_sec_scaled
+
         total_est_dur = v_dur + tail_hold_sec
         amb_path = voice_path + "_sfx_bed.wav"
-        self.synthesize_sfx_and_riser_bed(total_est_dur, broll_cutoff=broll_cutoff, out_sfx_wav=amb_path)
+        self.synthesize_sfx_and_riser_bed(
+            total_est_dur,
+            broll_cutoff=broll_cutoff,
+            out_sfx_wav=amb_path,
+            switch_sec=switch_sec_scaled,
+        )
 
         atempo_filter = f"atempo={tempo:.4f}," if tempo > 1.001 else ""
         filter_complex = (
@@ -2064,6 +2379,9 @@ class BrollStoryGenerator:
                 h, m, s = part.split(":")
                 dur = float(h) * 3600 + float(m) * 60 + float(s)
                 break
+
+        if spec is not None and spec.get("visual_format") == "podcast_duet_giant":
+            spec["_rms_envelope_30fps"] = self.compute_rms_envelope_30fps(out_mixed_path, dur, fps=30)
         return dur
 
     def draw_giant_emotional_headline(
@@ -2159,6 +2477,272 @@ class BrollStoryGenerator:
                 width=3,
             )
             draw.text((cx, pill_y), sub_pill, fill=(255, 225, 77), font=f_pill, anchor="mm")
+
+        return frame
+
+    def load_podcast_avatars(self) -> Dict[str, Image.Image]:
+        """Loads and caches the 8 photorealistic studio podcast keyframes from podcast_avatars/."""
+        if hasattr(self, "_cached_podcast_avatars") and self._cached_podcast_avatars:
+            return self._cached_podcast_avatars
+        av_dir = os.path.join(BASE_DIR, "podcast_avatars")
+        mapping = {
+            "maya_idle": "maya_idle_listening.png",
+            "maya_mid": "maya_speaking_mid.png",
+            "maya_open": "maya_speaking_open.png",
+            "maya_shock": "maya_shocked_reaction.png",
+            "julian_idle": "julian_idle_nodding.png",
+            "julian_mid": "julian_speaking_mid.png",
+            "julian_open": "julian_speaking_open.png",
+            "julian_lean": "julian_intense_lean_in.png",
+        }
+        loaded: Dict[str, Image.Image] = {}
+        for k, fname in mapping.items():
+            p = os.path.join(av_dir, fname)
+            img = Image.open(p).convert("RGB")
+            if img.size != (1024, 1024):
+                img = img.resize((1024, 1024), Image.Resampling.LANCZOS)
+            loaded[k] = img
+        self._cached_podcast_avatars = loaded
+        return loaded
+
+    @staticmethod
+    def _crop_avatar_panel(
+        img: Image.Image,
+        panel_w: int,
+        panel_h: int,
+        zoom: float = 1.04,
+        pan_x: float = 0.0,
+        pan_y: float = -18.0,
+    ) -> Image.Image:
+        """Crops a 1024x1024 studio avatar into (panel_w, panel_h) with smooth zoom and subtle pan."""
+        src_w, src_h = img.size
+        target_aspect = panel_w / float(max(1, panel_h))
+        if target_aspect >= 1.0:
+            base_w = src_w
+            base_h = src_w / target_aspect
+        else:
+            base_h = src_h
+            base_w = src_h * target_aspect
+        crop_w = base_w / max(1.0, zoom)
+        crop_h = base_h / max(1.0, zoom)
+        cx = (src_w * 0.5) + pan_x
+        cy = (src_h * 0.48) + pan_y
+        x0 = max(0.0, min(src_w - crop_w, cx - crop_w * 0.5))
+        y0 = max(0.0, min(src_h - crop_h, cy - crop_h * 0.5))
+        cropped = img.crop((int(x0), int(y0), int(x0 + crop_w), int(y0 + crop_h)))
+        return cropped.resize((panel_w, panel_h), Image.Resampling.BILINEAR)
+
+    def draw_podcast_duet_studio_frame(
+        self,
+        t: float,
+        f_idx: int,
+        total_dur: float,
+        broll_cutoff: float,
+        spec: Dict[str, Any],
+        avatars: Dict[str, Image.Image],
+    ) -> Image.Image:
+        """
+        Renders the viral AI Influencer Dual-Host Podcast format ('podcast_duet_giant'):
+        - Top Giant 120px Headline (Y = 70..525) + Birth-Day Sub-Pill
+        - Dynamic Split-Screen Studio & Reaction Cut (Y = 540..1126):
+          * 0.0s .. switch_sec: Maya ('MAYA · LATE NIGHT TRUTH') speaking on left with 30fps RMS lip-sync
+            + active gold mic border + live soundwave while Julian listens/smirks on right.
+          * switch_sec .. total_dur: Dynamic 1.08x spotlight punch-in on Julian ('JULIAN · MALE INSIDER')
+            speaking on right with 30fps RMS lip-sync while Maya reacts in shock ('maya_shocked_reaction') on left.
+        - Before broll_cutoff (0.0s..4.6s), renders a live Studio Soundwave & Topic Dock at Y = 1142..1250.
+        """
+        import math
+
+        switch_sec = float(spec.get("_switch_sec", 2.30))
+        env = spec.get("_rms_envelope_30fps") or []
+        rms = float(env[min(f_idx, len(env) - 1)]) if env else 0.55
+
+        # 1. Warm high-luma bokeh studio canvas (composite of Maya's warm amber & Julian's royal-blue/gold studio)
+        if not hasattr(self, "_cached_podcast_bg"):
+            bg_l = avatars["maya_idle"].resize((540, 1920), Image.Resampling.BILINEAR)
+            bg_r = avatars["julian_idle"].resize((540, 1920), Image.Resampling.BILINEAR)
+            bg_comp = Image.new("RGB", (1080, 1920))
+            bg_comp.paste(bg_l, (0, 0))
+            bg_comp.paste(bg_r, (540, 0))
+            bg_comp = bg_comp.filter(ImageFilter.GaussianBlur(radius=28))
+            bg_comp = ImageEnhance.Brightness(bg_comp).enhance(0.88)
+            bg_comp = ImageEnhance.Color(bg_comp).enhance(1.25)
+            self._cached_podcast_bg = bg_comp
+        frame = self._cached_podcast_bg.copy()
+
+        # Soft top vignette strictly behind Y = 0..525 for Giant 120px Headline contrast
+        arr_bg = np.array(frame, dtype=np.float32)
+        ramp = np.ones((1920, 1, 1), dtype=np.float32)
+        ramp[:440, 0, 0] = 0.55
+        ramp[440:535, 0, 0] = np.linspace(0.55, 1.0, 95, dtype=np.float32)
+        arr_bg = np.clip(arr_bg * ramp, 0, 255).astype(np.uint8)
+        frame = Image.fromarray(arr_bg)
+        draw = ImageDraw.Draw(frame)
+
+        # 2. Top Giant 120px Stacked Headline (Y = 120..445) + Birth-Day Sub-Pill (Y = 462..522)
+        heavy_font_path = r"C:\Windows\Fonts\ariblk.ttf"
+        if not os.path.exists(heavy_font_path):
+            heavy_font_path = r"C:\Windows\Fonts\impact.ttf"
+        if not os.path.exists(heavy_font_path):
+            heavy_font_path = FONT_BOLD
+
+        color_map = {
+            "white": (255, 255, 255),
+            "gold": (255, 225, 77),
+            "coral": (255, 71, 87),
+        }
+        giant_lines = spec.get("giant_lines") or [
+            ("WHY MEN GO", "white"),
+            ("DEAD SILENT", "coral"),
+            ("BY BIRTH DAY", "gold"),
+        ]
+        cx = 540
+        curr_y = 122
+        line_step = 114
+        size_candidates = (122, 116, 110, 104, 98, 92, 86, 80)
+        for line_txt, col_key in giant_lines:
+            txt_up = line_txt.strip().upper()
+            fill_rgb = color_map.get(col_key, (255, 255, 255))
+            font_line = ImageFont.truetype(heavy_font_path, size_candidates[-1])
+            for f_sz in size_candidates:
+                cand = ImageFont.truetype(heavy_font_path, f_sz)
+                bbox = draw.textbbox((0, 0), txt_up, font=cand, stroke_width=8)
+                if (bbox[2] - bbox[0]) <= 975:
+                    font_line = cand
+                    break
+            draw.text((cx + 5, curr_y + 7), txt_up, fill=(0, 0, 0), font=font_line, anchor="mm", stroke_width=10, stroke_fill=(0, 0, 0))
+            draw.text((cx, curr_y), txt_up, fill=fill_rgb, font=font_line, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
+            curr_y += line_step
+
+        sub_pill = spec.get("giant_sub_pill")
+        if sub_pill:
+            f_pill = ImageFont.truetype(FONT_BOLD, 26)
+            pill_y = 486
+            draw.rounded_rectangle([42, pill_y - 28, 1038, pill_y + 28], radius=16, fill=(14, 16, 24), outline=(255, 225, 77), width=3)
+            draw.text((cx, pill_y), sub_pill, fill=(255, 225, 77), font=f_pill, anchor="mm")
+
+        # 3. Select & Blend 30fps Lip-Sync Keyframes for Maya (Left) and Julian (Right)
+        maya_active = t < switch_sec
+        u_switch = 0.0 if maya_active else min(1.0, max(0.0, (t - switch_sec) / 0.18))
+
+        if maya_active:
+            if f_idx == 0:
+                if spec["id"] == "short_37":
+                    maya_img = avatars["maya_open"]
+                elif spec["id"] == "short_38":
+                    maya_img = avatars["maya_mid"]
+                else:
+                    maya_img = Image.blend(avatars["maya_open"], avatars["maya_shock"], 0.65)
+            else:
+                eff_rms = min(1.0, max(0.0, rms * (0.84 + 0.16 * math.sin(t * 31.0))))
+                if eff_rms < 0.22:
+                    maya_img = Image.blend(avatars["maya_idle"], avatars["maya_mid"], eff_rms / 0.22)
+                else:
+                    maya_img = Image.blend(avatars["maya_mid"], avatars["maya_open"], min(1.0, (eff_rms - 0.22) / 0.42))
+            nod_alpha = 0.18 * (0.5 + 0.5 * math.sin(t * 4.8))
+            julian_img = Image.blend(avatars["julian_idle"], avatars["julian_mid"], nod_alpha)
+        else:
+            shock_u = min(1.0, max(0.0, (t - switch_sec) / 0.26))
+            maya_img = Image.blend(avatars["maya_idle"], avatars["maya_shock"], shock_u)
+            eff_rms = min(1.0, max(0.0, rms * (0.84 + 0.16 * math.sin(t * 29.0))))
+            if eff_rms < 0.20:
+                julian_img = Image.blend(avatars["julian_idle"], avatars["julian_mid"], eff_rms / 0.20)
+            elif eff_rms < 0.58:
+                julian_img = Image.blend(avatars["julian_mid"], avatars["julian_open"], (eff_rms - 0.20) / 0.38)
+            else:
+                julian_img = Image.blend(avatars["julian_open"], avatars["julian_lean"], min(1.0, (eff_rms - 0.58) / 0.32))
+
+        # 4. Dynamic Split-Screen Geometry:
+        # Before broll_cutoff (0.0s..4.6s): Y = 532..1235 (703px tall, CapCut captions sit cleanly below at Y = 1320)
+        # During Reveal Dock (4.6s..7.5s): Y = 532..1030 (498px tall, CapCut captions sit cleanly in Y = 1040..1125 above Y = 1138 dock)
+        panel_y0 = 532
+        panel_y1 = 1235 if t < broll_cutoff else 1030
+        panel_h = panel_y1 - panel_y0
+
+        # Smooth spotlight width shift at switch_sec:
+        # Maya active: Left = 24..620 (596px), Right = 632..1056 (424px)
+        # Julian active: Left = 24..448 (424px), Right = 460..1056 (596px)
+        maya_x0 = 24
+        maya_x1 = int(round(620 * (1.0 - u_switch) + 448 * u_switch))
+        julian_x0 = maya_x1 + 12
+        julian_x1 = 1056
+
+        maya_w = maya_x1 - maya_x0
+        julian_w = julian_x1 - julian_x0
+
+        # Subtle 30fps camera breathing + active speaker zoom
+        maya_zoom = (1.03 + 0.04 * (t / max(0.5, switch_sec))) if maya_active else (1.02 + 0.015 * math.sin(t * 2.2))
+        julian_zoom = (1.02 + 0.015 * math.cos(t * 2.0)) if maya_active else (1.08 + 0.025 * math.sin((t - switch_sec) * 2.6))
+
+        maya_pan_x = 4.0 * math.sin(t * 2.1)
+        maya_pan_y = -16.0 + 3.0 * math.cos(t * 1.8)
+        julian_pan_x = -4.0 * math.cos(t * 2.0)
+        julian_pan_y = -18.0 + 3.0 * math.sin(t * 1.9)
+
+        maya_crop = self._crop_avatar_panel(maya_img, maya_w, panel_h, zoom=maya_zoom, pan_x=maya_pan_x, pan_y=maya_pan_y)
+        julian_crop = self._crop_avatar_panel(julian_img, julian_w, panel_h, zoom=julian_zoom, pan_x=julian_pan_x, pan_y=julian_pan_y)
+
+        # Boost studio portrait vibrancy & warmth so human faces pop on mobile grids
+        maya_crop = ImageEnhance.Color(maya_crop).enhance(1.16)
+        maya_crop = ImageEnhance.Brightness(maya_crop).enhance(1.10 if maya_active else 1.03)
+        julian_crop = ImageEnhance.Color(julian_crop).enhance(1.16)
+        julian_crop = ImageEnhance.Brightness(julian_crop).enhance(1.03 if maya_active else 1.12)
+
+        frame.paste(maya_crop, (maya_x0, panel_y0))
+        frame.paste(julian_crop, (julian_x0, panel_y0))
+        draw = ImageDraw.Draw(frame)
+
+        # Panel Borders & Active Speaker Glowing Ring
+        maya_border_col = (255, 225, 77) if maya_active else (255, 92, 115)
+        julian_border_col = (110, 130, 165) if maya_active else (56, 189, 248)
+        draw.rounded_rectangle([maya_x0, panel_y0, maya_x1, panel_y1], radius=22, outline=maya_border_col, width=5 if maya_active else 3)
+        draw.rounded_rectangle([julian_x0, panel_y0, julian_x1, panel_y1], radius=22, outline=julian_border_col, width=3 if maya_active else 5)
+
+        # Top-Corner LIVE Studio Indicator inside Active Speaker Panel
+        f_tag = ImageFont.truetype(FONT_BOLD, 21)
+        f_name = ImageFont.truetype(FONT_BOLD, 23)
+        if maya_active:
+            draw.rounded_rectangle([maya_x0 + 16, panel_y0 + 16, maya_x0 + 218, panel_y0 + 54], radius=12, fill=(18, 16, 12), outline=(255, 225, 77), width=2)
+            draw.ellipse([maya_x0 + 28, panel_y0 + 27, maya_x0 + 44, panel_y0 + 43], fill=(255, 71, 87))
+            draw.text((maya_x0 + 130, panel_y0 + 35), "MIC LIVE · HOST", fill=(255, 225, 77), font=f_tag, anchor="mm")
+        else:
+            draw.rounded_rectangle([julian_x0 + 16, panel_y0 + 16, julian_x0 + 252, panel_y0 + 54], radius=12, fill=(10, 20, 32), outline=(56, 189, 248), width=2)
+            draw.ellipse([julian_x0 + 28, panel_y0 + 27, julian_x0 + 44, panel_y0 + 43], fill=(56, 189, 248))
+            draw.text((julian_x0 + 146, panel_y0 + 35), "MIC LIVE · INSIDER", fill=(125, 211, 252), font=f_tag, anchor="mm")
+
+        # Bottom Nameplate Pills + Live Audio Waveform Bars inside each panel (Y = panel_y1 - 62 .. panel_y1 - 12)
+        np_y0 = panel_y1 - 60
+        np_y1 = panel_y1 - 12
+        draw.rounded_rectangle([maya_x0 + 14, np_y0, maya_x1 - 14, np_y1], radius=12, fill=(14, 15, 22), outline=maya_border_col, width=2)
+        maya_lbl = "MAYA · LATE NIGHT TRUTH" if maya_active else "MAYA · LIVE REACTION"
+        draw.text(((maya_x0 + maya_x1) // 2, (np_y0 + np_y1) // 2), maya_lbl, fill=(255, 230, 120) if maya_active else (255, 165, 178), font=f_name, anchor="mm")
+
+        draw.rounded_rectangle([julian_x0 + 14, np_y0, julian_x1 - 14, np_y1], radius=12, fill=(14, 15, 22), outline=julian_border_col, width=2)
+        julian_lbl = "JULIAN · MALE INSIDER"
+        draw.text(((julian_x0 + julian_x1) // 2, (np_y0 + np_y1) // 2), julian_lbl, fill=(210, 220, 238) if maya_active else (125, 211, 252), font=f_name, anchor="mm")
+
+        # Live 14-Bar Studio Equalizer Strip on Active Speaker Panel (just above nameplate)
+        act_x0, act_x1 = (maya_x0, maya_x1) if maya_active else (julian_x0, julian_x1)
+        eq_col = (255, 225, 77) if maya_active else (56, 189, 248)
+        n_bars = 14
+        bar_w = 8
+        bar_gap = 6
+        tot_eq_w = n_bars * bar_w + (n_bars - 1) * bar_gap
+        eq_start_x = (act_x0 + act_x1 - tot_eq_w) // 2
+        eq_base_y = np_y0 - 10
+        for b_i in range(n_bars):
+            wave_mod = 0.35 + 0.65 * abs(math.sin(t * 18.0 + b_i * 0.75))
+            bh = int(max(6.0, min(38.0, (8.0 + 32.0 * max(0.28, rms)) * wave_mod)))
+            bx0 = eq_start_x + b_i * (bar_w + bar_gap)
+            draw.rounded_rectangle([bx0, eq_base_y - bh, bx0 + bar_w, eq_base_y], radius=3, fill=eq_col)
+
+        # 5. Guarantee Frame Luma >= 89.0 so mobile grid covers are vibrant and pass the >=85 gate
+        arr_out = np.array(frame, dtype=np.float32)
+        cur_luma = float(np.mean(arr_out))
+        if cur_luma < 89.5:
+            delta = (90.5 - cur_luma) * 1.18
+            arr_out = np.clip(arr_out * 1.04 + delta, 0, 255)
+            frame = Image.fromarray(arr_out.astype(np.uint8))
 
         return frame
 
@@ -2348,9 +2932,10 @@ class BrollStoryGenerator:
         4) Plain 5th-Grade Gold Lock CTA:
            '🔒 Unlock Full Text + Best & Worst Days To Text ($17) — Link in Bio'
         """
-        is_emo_giant = spec.get("visual_format") == "emotional_face_giant"
+        is_emo_giant = spec.get("visual_format") in ("emotional_face_giant", "podcast_duet_giant")
         if is_emo_giant:
-            frame = self.draw_giant_emotional_headline(frame, spec, compact_top=False)
+            if spec.get("visual_format") == "emotional_face_giant":
+                frame = self.draw_giant_emotional_headline(frame, spec, compact_top=False)
             draw = ImageDraw.Draw(frame)
             f_pair = ImageFont.truetype(FONT_BOLD, 28)
             f_chip = ImageFont.truetype(FONT_BOLD, 20)
@@ -2726,9 +3311,15 @@ class BrollStoryGenerator:
 
         primary_clip = spec["broll_clips"][0][2]
         clip_path = os.path.join(BROLL_DIR, primary_clip)
-        cap = cv2.VideoCapture(clip_path)
-        ret, bgr = cap.read()
-        cap.release()
+        if not os.path.exists(clip_path):
+            clip_path = os.path.join(BASE_DIR, primary_clip)
+        if clip_path.lower().endswith(".png"):
+            bgr = cv2.imread(clip_path)
+            ret = bgr is not None
+        else:
+            cap = cv2.VideoCapture(clip_path)
+            ret, bgr = cap.read()
+            cap.release()
         mean_luma = float(np.mean(bgr)) if ret else 0.0
         if mean_luma < 55.0:
             raise ValueError(f"[{spec['id']}] Brightness Gate FAILED on {primary_clip}: mean_luma={mean_luma:.1f} < 55.0")
@@ -2769,20 +3360,25 @@ class BrollStoryGenerator:
         hook_end_sec = spec.get("hook_end_sec", 4.5 if is_short else 4.2)
         cta_tail_sec = spec.get("cta_tail_sec", 3.5 if is_short else 5.0)
         broll_cutoff = float(spec.get("broll_cutoff", 7.5 if is_short else 15.0))
+        v_fmt = spec.get("visual_format", "legacy")
 
         print(
-            f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames, format={spec.get('format_type')}, visual_format={spec.get('visual_format', 'legacy')})...",
+            f"\n[RENDER] Building {spec['filename']} ({total_dur:.2f}s, {total_frames} frames, format={spec.get('format_type')}, visual_format={v_fmt})...",
             flush=True,
         )
         if spec.get("visual_format"):
             self.verify_and_record_broll_registry(spec)
 
-        # Preload human B-roll readers
+        # Preload human B-roll readers (or podcast studio avatars for podcast_duet_giant)
         broll_readers = {}
-        for _, _, b_fname in spec["broll_clips"]:
-            b_path = os.path.join(BROLL_DIR, b_fname)
-            if b_fname not in broll_readers:
-                broll_readers[b_fname] = VideoFrameReader(b_path, max_seconds=6.0)
+        podcast_avatars = {}
+        if v_fmt == "podcast_duet_giant":
+            podcast_avatars = self.load_podcast_avatars()
+        else:
+            for _, _, b_fname in spec["broll_clips"]:
+                b_path = os.path.join(BROLL_DIR, b_fname)
+                if b_fname not in broll_readers:
+                    broll_readers[b_fname] = VideoFrameReader(b_path, max_seconds=6.0)
 
         calc_reader = None
         if not is_short:
@@ -2821,8 +3417,11 @@ class BrollStoryGenerator:
             t = f_idx / float(fps)
 
             # 1. Background visual selection
-            v_fmt = spec.get("visual_format", "legacy")
-            if t < broll_cutoff:
+            if v_fmt == "podcast_duet_giant":
+                frame = self.draw_podcast_duet_studio_frame(t, f_idx, total_dur, broll_cutoff, spec, podcast_avatars)
+                if t >= broll_cutoff:
+                    frame = self.draw_imessage_match_reveal_card(frame, spec)
+            elif t < broll_cutoff:
                 active_broll = spec["broll_clips"][-1][2]
                 local_t = t
                 for b_start, b_end, b_fname in spec["broll_clips"]:
@@ -2897,7 +3496,7 @@ class BrollStoryGenerator:
             draw = ImageDraw.Draw(frame)
 
             # 2. Visual Format Hook (0.0s - hook_end_sec)
-            if t <= hook_end_sec:
+            if t <= hook_end_sec and v_fmt != "podcast_duet_giant":
                 if v_fmt == "emotional_face_giant":
                     if t < broll_cutoff:
                         frame = self.draw_giant_emotional_headline(frame, spec, compact_top=False)
@@ -2927,7 +3526,12 @@ class BrollStoryGenerator:
                 active_cue_text = cues[cue_idx]["text"]
 
             if active_cue_text:
-                cap_cy = 1072 if (v_fmt == "emotional_face_giant" and t >= broll_cutoff) else 1320
+                if v_fmt == "podcast_duet_giant" and t >= broll_cutoff:
+                    cap_cy = 1084
+                elif v_fmt == "emotional_face_giant" and t >= broll_cutoff:
+                    cap_cy = 1072
+                else:
+                    cap_cy = 1320
                 self.draw_capcut_caption(draw, active_cue_text, cy=cap_cy)
 
             # 4. Closing Call-to-Action Pill
@@ -3045,9 +3649,12 @@ class BrollStoryGenerator:
             print(f"\n▶ Generating [{spec.get('cohort', 'Video')}] [{vid_id}]: {fname}", flush=True)
             if spec.get("jenny_hoyos_gate"):
                 validate_jenny_hoyos_readability(spec)
-            cues = await self.generate_voice_and_3word_cues(
-                spec["spoken_script"], spec["voice"], spec["rate"], v_mp3
-            )
+            if spec.get("visual_format") == "podcast_duet_giant" and spec.get("podcast_maya_text"):
+                cues = await self.generate_dual_podcast_voice_and_cues(spec, v_mp3)
+            else:
+                cues = await self.generate_voice_and_3word_cues(
+                    spec["spoken_script"], spec["voice"], spec["rate"], v_mp3
+                )
             dur = self.mix_audio_with_subtle_pad(
                 v_mp3,
                 m_mp3,
@@ -3055,6 +3662,7 @@ class BrollStoryGenerator:
                 tail_hold_sec=spec.get("tail_hold_sec", 0.5 if is_short else 1.2),
                 target_voice_sec=spec.get("target_voice_sec"),
                 broll_cutoff=float(spec.get("broll_cutoff", 4.60)),
+                spec=spec,
             )
             self.render_video(spec, cues, m_mp3, dur, out_mp4)
 

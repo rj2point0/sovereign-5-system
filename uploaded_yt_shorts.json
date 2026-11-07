@@ -157,7 +157,46 @@
       "prompt_seeded": true,
       "sample_seeded": true,
       "pinned": true
+    },
+    "short_37": {
+      "id": "short_37",
+      "filename": "tiktok_short_37_podcast_male_silence.mp4",
+      "title": "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts",
+      "video_id": "NMNeglNvzJo",
+      "url": "https://www.youtube.com/shorts/NMNeglNvzJo",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-06T17:11:03.261598",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_38": {
+      "id": "short_38",
+      "filename": "tiktok_short_38_podcast_he_read_it.mp4",
+      "title": "He Left You On Read? A Guy Explains Why 🎙️📱 #Shorts",
+      "video_id": "LVGf3qKgyXs",
+      "url": "https://www.youtube.com/shorts/LVGf3qKgyXs",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-06T17:11:51.044587",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_39": {
+      "id": "short_39",
+      "filename": "tiktok_short_39_podcast_who_regrets_it.mp4",
+      "title": "When Men Actually Regret Pulling Away 🎙️🔥 #Shorts",
+      "video_id": "L_MDz5EMc0k",
+      "url": "https://www.youtube.com/shorts/L_MDz5EMc0k",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-06T17:12:38.131337",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
     }
   },
-  "updated_at": "2026-11-05T19:55:58.375711"
+  "updated_at": "2026-11-06T17:13:00.332800"
 }

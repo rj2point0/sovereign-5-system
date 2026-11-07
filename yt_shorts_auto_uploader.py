@@ -68,6 +68,30 @@ SAMPLE_MATCH_REPLY = (
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
     {
+        "id": "short_37",
+        "filename": "tiktok_short_37_podcast_male_silence.mp4",
+        "title": "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_38",
+        "filename": "tiktok_short_38_podcast_he_read_it.mp4",
+        "title": "He Left You On Read? A Guy Explains Why 🎙️📱 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_39",
+        "filename": "tiktok_short_39_podcast_who_regrets_it.mp4",
+        "title": "When Men Actually Regret Pulling Away 🎙️🔥 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
         "id": "short_34",
         "filename": "tiktok_short_34_7sec_acting_distant_test.mp4",
         "title": "When He Acts Cold & Distant, Do This First 🥶 #Shorts",

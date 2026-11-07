@@ -33,6 +33,21 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_39",
+        "video_id": None,
+        "title_match": "At what point does a man actually regret pulling away from you",
+    },
+    {
+        "id": "short_38",
+        "video_id": None,
+        "title_match": "When a guy leaves you on read, is it actually over",
+    },
+    {
+        "id": "short_37",
+        "video_id": "7705230841303043341",
+        "title_match": "Why men text you every single day and then go dead silent",
+    },
+    {
         "id": "short_36",
         "video_id": None,
         "title_match": "Why they always come back the second you pull your energy away",
@@ -120,6 +135,9 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_39", "shortcode": "Dfa-YZ_OAX0"},
+    {"id": "short_38", "shortcode": "Dfa-QkgOwur"},
+    {"id": "short_37", "shortcode": "Dfa-IggucmA"},
     {"id": "short_36", "shortcode": "DfYsPKVudA0"},
     {"id": "short_35", "shortcode": "DfYsGWmOnNh"},
     {"id": "short_34", "shortcode": "DfYr-ceOLlN"},

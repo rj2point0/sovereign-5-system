@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-05T19:56:17.695487",
+  "updated_at": "2026-11-06T17:13:51.754753",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -374,6 +374,33 @@
       "schedule_time": "2026-11-09 18:30",
       "uploaded_at": "2026-11-05T19:56:17.695487",
       "caption_preview": "Why they always come back the second you pull your energy away 🔥 (Born 1st, 2nd, 4th, 6th, 11th, 13th, 15th, 20th, 22nd,"
+    },
+    "tiktok_short_37_podcast_male_silence.mp4": {
+      "filename": "tiktok_short_37_podcast_male_silence.mp4",
+      "ad_id": "short_37",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-06T17:11:19.047055",
+      "caption_preview": "Why men text you every single day and then go dead silent (decoded by his birth day) 🎙️💔 (Is he born on the 4th, 7th, 8t"
+    },
+    "tiktok_short_38_podcast_he_read_it.mp4": {
+      "filename": "tiktok_short_38_podcast_he_read_it.mp4",
+      "ad_id": "short_38",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-10 11:00",
+      "uploaded_at": "2026-11-06T17:12:59.032156",
+      "caption_preview": "When a guy leaves you on read, is it actually over? A male insider breaks down his birth day 🎙️📱 (Born 1st, 3rd, 5th, 9t"
+    },
+    "tiktok_short_39_podcast_who_regrets_it.mp4": {
+      "filename": "tiktok_short_39_podcast_who_regrets_it.mp4",
+      "ad_id": "short_39",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-10 18:30",
+      "uploaded_at": "2026-11-06T17:13:51.754753",
+      "caption_preview": "At what point does a man actually regret pulling away from you? 🎙️🔥 (Born 2nd, 6th, 11th, 12th, 15th, 20th, 21st, 24th, "
     }
   }
 }

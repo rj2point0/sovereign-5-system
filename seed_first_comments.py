@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_39",
+        "video_id": None,
+        "title_match": "At what point does a man actually regret pulling away from you",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_38",
+        "video_id": None,
+        "title_match": "When a guy leaves you on read, is it actually over",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_37",
+        "video_id": None,
+        "title_match": "Why men text you every single day and then go dead silent",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_36",
         "video_id": None,
         "title_match": "Why they always come back the second you pull your energy away",

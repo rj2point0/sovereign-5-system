@@ -83,6 +83,27 @@
       "primary_clip": "emo_08_couple_bedroom_tension.mp4",
       "mean_luma": 139.7,
       "updated_at": "2026-11-05T19:52:15"
+    },
+    {
+      "id": "short_37",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "podcast_avatars/maya_speaking_open.png",
+      "mean_luma": 86.8,
+      "updated_at": "2026-11-06T17:06:18"
+    },
+    {
+      "id": "short_38",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "podcast_avatars/maya_speaking_mid.png",
+      "mean_luma": 86.4,
+      "updated_at": "2026-11-06T17:06:52"
+    },
+    {
+      "id": "short_39",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "podcast_avatars/maya_shocked_reaction.png",
+      "mean_luma": 87.7,
+      "updated_at": "2026-11-06T17:07:27"
     }
   ]
 }
