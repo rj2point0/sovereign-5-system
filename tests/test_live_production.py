@@ -185,10 +185,16 @@ async def verify_live_pages():
         assert await page_clean.is_visible("#partner-secret-fear-unlocked") is True
         assert await page_clean.is_visible("#imessage-part2-locked-callout") is True
         assert await page_clean.is_visible("#vip-fast-action-offer") is True
+        assert await page_clean.is_visible("#partner-compat-email-box") is False
+        assert await page_clean.is_visible("#downsell-script-only-box") is False
+        live_vip_display = await page_clean.evaluate("() => getComputedStyle(document.querySelector('#btn-vip-fast-action-17')).display")
+        assert live_vip_display == "block", f"Expected live #btn-vip-fast-action-17 display === 'block', got '{live_vip_display}'"
         await page_clean.click("#btn-show-downsell-box")
         await asyncio.sleep(0.15)
         assert await page_clean.is_visible("#downsell-script-only-box") is True
         assert await page_clean.is_visible("#julian-insider-take-box") is True
+        live_julian_hdr = await page_clean.locator("#julian-insider-take-heading").inner_text()
+        assert "Julian · Numerology & Relationship Expert" in live_julian_hdr, f"Expected 'Julian · Numerology & Relationship Expert' on live site, got '{live_julian_hdr}'"
         assert await page_clean.is_visible("#crush-text-decoder") is True
         assert await page_clean.is_visible("#live-advisor-upsell-card") is True
         await page_clean.fill("#crush-last-text-input", "sorry been super busy this week")

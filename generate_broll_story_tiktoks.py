@@ -1718,7 +1718,7 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
         "filename": "tiktok_short_37_podcast_male_silence.mp4",
         "yt_title": "Why Men Go Dead Silent (By His Birth Day) 🎙️💔 #Shorts",
         "grid_headline": "WHY MEN GO\nDEAD SILENT\nBY BIRTH DAY",
-        "grid_sub": "LATE NIGHT PODCAST · MALE INSIDER",
+        "grid_sub": "LATE NIGHT PODCAST · EXPERT DECODE",
         "hook_box_text": "Why does a guy text you every day, then go dead silent?",
         "hook_end_sec": 4.6,
         "cta_tail_sec": 2.8,
@@ -1742,8 +1742,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Send the nine word text in our bio instead."
         ),
         "broll_clips": [
-            (0.0, 2.4, "podcast_avatars/maya_speaking_open.png"),
-            (2.4, 4.6, "podcast_avatars/julian_speaking_open.png"),
+            (0.0, 2.4, "emo_01_woman_phone_night.mp4#podcast37"),
+            (2.4, 4.6, "emo_05_couple_upset_disappointed.mp4#podcast37"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1799,15 +1799,15 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "He wants you to panic, so test both birth days in our bio to flip the chase on him."
         ),
         "broll_clips": [
-            (0.0, 2.3, "podcast_avatars/maya_speaking_mid.png"),
-            (2.3, 4.6, "podcast_avatars/julian_speaking_mid.png"),
+            (0.0, 2.3, "emo_02_couple_bed_backs.mp4#podcast38"),
+            (2.3, 4.6, "emo_08_couple_bedroom_tension.mp4#podcast38"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
             ("image", "scenes_cache/scene_loshu.png", 99.0),
         ],
         "tiktok_caption": (
-            "When a guy leaves you on read, is it actually over? A male insider breaks down his birth day 🎙️📱 "
+            "When a guy leaves you on read, is it actually over? Numerology & relationship breakdown by his birth day 🎙️📱 "
             "(Born 1st, 3rd, 5th, 9th, 10th, 14th, 18th, 19th, 23rd, or 28th? Test both birth days in our bio) "
             "#datingpodcast #leftonread #situationship #relationshipadvice #textingadvice #numerology #datingadvice #birthdaycompatibility"
         ),
@@ -1856,8 +1856,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Check our bio for the exact days his birth number cracks."
         ),
         "broll_clips": [
-            (0.0, 2.3, "podcast_avatars/maya_shocked_reaction.png"),
-            (2.3, 4.6, "podcast_avatars/julian_intense_lean_in.png"),
+            (0.0, 2.3, "emo_04_guy_apologizing_upset_gf.mp4#podcast39"),
+            (2.3, 4.6, "emo_09_couple_forgiveness_hug.mp4#podcast39"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1918,8 +1918,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Send the reset line in our bio to make him text first."
         ),
         "broll_clips": [
-            (0.0, 2.4, "podcast_avatars/maya_speaking_open.png#ep40"),
-            (2.4, 4.6, "podcast_avatars/julian_speaking_open.png#ep40"),
+            (0.0, 2.4, "emo_06_sofa_back_to_back.mp4#podcast40"),
+            (2.4, 4.6, "emo_10_loving_couple_close.mp4#podcast40"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -1976,8 +1976,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Test both birth days in our bio to see the exact day his fear kicks in."
         ),
         "broll_clips": [
-            (0.0, 2.3, "podcast_avatars/maya_speaking_mid.png#ep41"),
-            (2.3, 4.6, "podcast_avatars/julian_intense_lean_in.png#ep41"),
+            (0.0, 2.3, "emo_03_couple_silence_apart.mp4#podcast41"),
+            (2.3, 4.6, "emo_11_worried_sad_woman_closeup.mp4#podcast41"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -2034,8 +2034,8 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "Paste his dry text into our bio link instead to see what his birth day is hiding and how to answer."
         ),
         "broll_clips": [
-            (0.0, 2.3, "podcast_avatars/maya_shocked_reaction.png#ep42"),
-            (2.3, 4.6, "podcast_avatars/julian_speaking_mid.png#ep42"),
+            (0.0, 2.3, "emo_07_upset_after_argument.mp4#podcast42"),
+            (2.3, 4.6, "emo_12_upset_couple_closeup.mp4#podcast42"),
         ],
         "product_scenes": [
             ("image", "scenes_cache/scene_relationships.png", 1.5),
@@ -2712,6 +2712,7 @@ class BrollStoryGenerator:
 
     def draw_podcast_duet_studio_frame(
         self,
+        base_frame: Image.Image,
         t: float,
         f_idx: int,
         total_dur: float,
@@ -2720,14 +2721,12 @@ class BrollStoryGenerator:
         avatars: Dict[str, Image.Image],
     ) -> Image.Image:
         """
-        Renders the viral AI Influencer Dual-Host Podcast format ('podcast_duet_giant'):
-        - Top Giant 120px Headline (Y = 70..525) + Birth-Day Sub-Pill
-        - Dynamic Split-Screen Studio & Reaction Cut (Y = 540..1126):
-          * 0.0s .. switch_sec: Maya ('MAYA · LATE NIGHT TRUTH') speaking on left with 30fps RMS lip-sync
-            + active gold mic border + live soundwave while Julian listens/smirks on right.
-          * switch_sec .. total_dur: Dynamic 1.08x spotlight punch-in on Julian ('JULIAN · MALE INSIDER')
-            speaking on right with 30fps RMS lip-sync while Maya reacts in shock ('maya_shocked_reaction') on left.
-        - Before broll_cutoff (0.0s..4.6s), renders a live Studio Soundwave & Topic Dock at Y = 1142..1250.
+        Renders the Real-Human-Motion + Dual-Voice Podcast Audio format ('podcast_duet_giant'):
+        - Full-screen 30fps Real Emotional Human Couple Video Footage ('emo_01'..'emo_12') with warm high-luma color grade
+        - Top Giant 120px Headline (Y = 120..445) + Birth-Day Sub-Pill (Y = 482)
+        - Compact Active-Speaker Podcast Studio Waveform Pill (Y = 524..588) with circular Maya & Julian avatars,
+          'MAYA · LATE NIGHT HOST' / 'JULIAN · NUMEROLOGY & RELATIONSHIP EXPERT' badge, and live 30fps audio equalizer bars
+          (leaving Y = 595..1280 100% unobstructed for the real human couple's faces and motion!).
         """
         import math
 
@@ -2735,29 +2734,26 @@ class BrollStoryGenerator:
         env = spec.get("_rms_envelope_30fps") or []
         rms = float(env[min(f_idx, len(env) - 1)]) if env else 0.55
 
-        # 1. Warm high-luma bokeh studio canvas (composite of Maya's warm amber & Julian's royal-blue/gold studio)
-        if not hasattr(self, "_cached_podcast_bg"):
-            bg_l = avatars["maya_idle"].resize((540, 1920), Image.Resampling.BILINEAR)
-            bg_r = avatars["julian_idle"].resize((540, 1920), Image.Resampling.BILINEAR)
-            bg_comp = Image.new("RGB", (1080, 1920))
-            bg_comp.paste(bg_l, (0, 0))
-            bg_comp.paste(bg_r, (540, 0))
-            bg_comp = bg_comp.filter(ImageFilter.GaussianBlur(radius=28))
-            bg_comp = ImageEnhance.Brightness(bg_comp).enhance(0.88)
-            bg_comp = ImageEnhance.Color(bg_comp).enhance(1.25)
-            self._cached_podcast_bg = bg_comp
-        frame = self._cached_podcast_bg.copy()
+        # 1. Warm, vibrant color grade on real 30fps human emotional couple footage
+        sat_boost = 1.20 if t <= 1.5 else 1.12
+        frame = ImageEnhance.Color(base_frame).enhance(sat_boost)
+        arr_w = np.array(frame, dtype=np.float32)
+        arr_w[:, :, 0] = np.clip(arr_w[:, :, 0] * 1.05 + 4.0, 0, 255)
+        arr_w[:, :, 1] = np.clip(arr_w[:, :, 1] * 1.02 + 2.0, 0, 255)
+        arr_w[:, :, 2] = np.clip(arr_w[:, :, 2] * 0.96, 0, 255)
+        if float(np.mean(arr_w)) < 89.5:
+            lift = 90.5 / max(20.0, float(np.mean(arr_w)))
+            arr_w = np.clip(arr_w * lift, 0, 255)
 
-        # Soft top vignette strictly behind Y = 0..525 for Giant 120px Headline contrast
-        arr_bg = np.array(frame, dtype=np.float32)
+        # Soft top vignette strictly behind Y = 0..535 for Giant 120px Headline contrast
         ramp = np.ones((1920, 1, 1), dtype=np.float32)
-        ramp[:440, 0, 0] = 0.55
-        ramp[440:535, 0, 0] = np.linspace(0.55, 1.0, 95, dtype=np.float32)
-        arr_bg = np.clip(arr_bg * ramp, 0, 255).astype(np.uint8)
-        frame = Image.fromarray(arr_bg)
+        ramp[:440, 0, 0] = 0.56
+        ramp[440:545, 0, 0] = np.linspace(0.56, 1.0, 105, dtype=np.float32)
+        arr_w = np.clip(arr_w * ramp, 0, 255).astype(np.uint8)
+        frame = Image.fromarray(arr_w)
         draw = ImageDraw.Draw(frame)
 
-        # 2. Top Giant 120px Stacked Headline (Y = 120..445) + Birth-Day Sub-Pill (Y = 462..522)
+        # 2. Top Giant 120px Stacked Headline (Y = 120..445) + Birth-Day Sub-Pill (Y = 480)
         heavy_font_path = r"C:\Windows\Fonts\ariblk.ttf"
         if not os.path.exists(heavy_font_path):
             heavy_font_path = r"C:\Windows\Fonts\impact.ttf"
@@ -2775,8 +2771,8 @@ class BrollStoryGenerator:
             ("BY BIRTH DAY", "gold"),
         ]
         cx = 540
-        curr_y = 122
-        line_step = 114
+        curr_y = 120
+        line_step = 112
         size_candidates = (122, 116, 110, 104, 98, 92, 86, 80)
         for line_txt, col_key in giant_lines:
             txt_up = line_txt.strip().upper()
@@ -2794,130 +2790,70 @@ class BrollStoryGenerator:
 
         sub_pill = spec.get("giant_sub_pill")
         if sub_pill:
-            f_pill = ImageFont.truetype(FONT_BOLD, 26)
-            pill_y = 486
-            draw.rounded_rectangle([42, pill_y - 28, 1038, pill_y + 28], radius=16, fill=(14, 16, 24), outline=(255, 225, 77), width=3)
+            f_pill = ImageFont.truetype(FONT_BOLD, 25)
+            pill_y = 478
+            draw.rounded_rectangle([42, pill_y - 26, 1038, pill_y + 26], radius=16, fill=(14, 16, 24), outline=(255, 225, 77), width=3)
             draw.text((cx, pill_y), sub_pill, fill=(255, 225, 77), font=f_pill, anchor="mm")
 
-        # 3. Select & Blend 30fps Lip-Sync Keyframes for Maya (Left) and Julian (Right)
+        # 3. Sleek Active-Speaker Podcast Studio Waveform Pill (Y = 516..580)
+        # Uses crisp circular studio headshots (maya_avatar_128.png & julian_avatar_128.png) + live 30fps equalizer waveform
+        if not hasattr(self, "_cached_circular_badges"):
+            self._cached_circular_badges = {}
+            for key, fn, border_rgb in [
+                ("maya", "maya_avatar_128.png", (255, 225, 77)),
+                ("julian", "julian_avatar_128.png", (56, 189, 248)),
+            ]:
+                p_av = os.path.join(BASE_DIR, fn)
+                if os.path.exists(p_av):
+                    av_img = Image.open(p_av).convert("RGBA").resize((48, 48), Image.Resampling.LANCZOS)
+                else:
+                    av_img = avatars["maya_idle" if key == "maya" else "julian_idle"].convert("RGBA").resize((48, 48), Image.Resampling.LANCZOS)
+                mask = Image.new("L", (48, 48), 0)
+                ImageDraw.Draw(mask).ellipse((0, 0, 47, 47), fill=255)
+                circ = Image.new("RGBA", (48, 48), (0, 0, 0, 0))
+                circ.paste(av_img, (0, 0), mask)
+                ImageDraw.Draw(circ).ellipse((0, 0, 47, 47), outline=border_rgb + (255,), width=3)
+                self._cached_circular_badges[key] = circ
+
         maya_active = t < switch_sec
-        u_switch = 0.0 if maya_active else min(1.0, max(0.0, (t - switch_sec) / 0.18))
+        bar_y0, bar_y1 = 516, 580
+        bar_mid_y = (bar_y0 + bar_y1) // 2
+        active_border = (255, 225, 77) if maya_active else (56, 189, 248)
+        draw.rounded_rectangle([42, bar_y0, 1038, bar_y1], radius=32, fill=(11, 14, 22), outline=active_border, width=3)
 
-        if maya_active:
-            if f_idx == 0:
-                if spec["id"] == "short_37":
-                    maya_img = avatars["maya_open"]
-                elif spec["id"] == "short_38":
-                    maya_img = avatars["maya_mid"]
-                else:
-                    maya_img = Image.blend(avatars["maya_open"], avatars["maya_shock"], 0.65)
-            else:
-                eff_rms = min(1.0, max(0.0, rms * (0.84 + 0.16 * math.sin(t * 31.0))))
-                if eff_rms < 0.22:
-                    maya_img = Image.blend(avatars["maya_idle"], avatars["maya_mid"], eff_rms / 0.22)
-                else:
-                    maya_img = Image.blend(avatars["maya_mid"], avatars["maya_open"], min(1.0, (eff_rms - 0.22) / 0.42))
-            nod_alpha = 0.18 * (0.5 + 0.5 * math.sin(t * 4.8))
-            julian_img = Image.blend(avatars["julian_idle"], avatars["julian_mid"], nod_alpha)
-        else:
-            shock_u = min(1.0, max(0.0, (t - switch_sec) / 0.26))
-            maya_img = Image.blend(avatars["maya_idle"], avatars["maya_shock"], shock_u)
-            eff_rms = min(1.0, max(0.0, rms * (0.84 + 0.16 * math.sin(t * 29.0))))
-            if eff_rms < 0.20:
-                julian_img = Image.blend(avatars["julian_idle"], avatars["julian_mid"], eff_rms / 0.20)
-            elif eff_rms < 0.58:
-                julian_img = Image.blend(avatars["julian_mid"], avatars["julian_open"], (eff_rms - 0.20) / 0.38)
-            else:
-                julian_img = Image.blend(avatars["julian_open"], avatars["julian_lean"], min(1.0, (eff_rms - 0.58) / 0.32))
-
-        # 4. Dynamic Split-Screen Geometry:
-        # Before broll_cutoff (0.0s..4.6s): Y = 532..1235 (703px tall, CapCut captions sit cleanly below at Y = 1320)
-        # During Reveal Dock (4.6s..7.5s): Y = 532..1030 (498px tall, CapCut captions sit cleanly in Y = 1040..1125 above Y = 1138 dock)
-        panel_y0 = 532
-        panel_y1 = 1235 if t < broll_cutoff else 1030
-        panel_h = panel_y1 - panel_y0
-
-        # Smooth spotlight width shift at switch_sec:
-        # Maya active: Left = 24..620 (596px), Right = 632..1056 (424px)
-        # Julian active: Left = 24..448 (424px), Right = 460..1056 (596px)
-        maya_x0 = 24
-        maya_x1 = int(round(620 * (1.0 - u_switch) + 448 * u_switch))
-        julian_x0 = maya_x1 + 12
-        julian_x1 = 1056
-
-        maya_w = maya_x1 - maya_x0
-        julian_w = julian_x1 - julian_x0
-
-        # Subtle 30fps camera breathing + active speaker zoom
-        maya_zoom = (1.03 + 0.04 * (t / max(0.5, switch_sec))) if maya_active else (1.02 + 0.015 * math.sin(t * 2.2))
-        julian_zoom = (1.02 + 0.015 * math.cos(t * 2.0)) if maya_active else (1.08 + 0.025 * math.sin((t - switch_sec) * 2.6))
-
-        maya_pan_x = 4.0 * math.sin(t * 2.1)
-        maya_pan_y = -16.0 + 3.0 * math.cos(t * 1.8)
-        julian_pan_x = -4.0 * math.cos(t * 2.0)
-        julian_pan_y = -18.0 + 3.0 * math.sin(t * 1.9)
-
-        maya_crop = self._crop_avatar_panel(maya_img, maya_w, panel_h, zoom=maya_zoom, pan_x=maya_pan_x, pan_y=maya_pan_y)
-        julian_crop = self._crop_avatar_panel(julian_img, julian_w, panel_h, zoom=julian_zoom, pan_x=julian_pan_x, pan_y=julian_pan_y)
-
-        # Boost studio portrait vibrancy & warmth so human faces pop on mobile grids
-        maya_crop = ImageEnhance.Color(maya_crop).enhance(1.16)
-        maya_crop = ImageEnhance.Brightness(maya_crop).enhance(1.10 if maya_active else 1.03)
-        julian_crop = ImageEnhance.Color(julian_crop).enhance(1.16)
-        julian_crop = ImageEnhance.Brightness(julian_crop).enhance(1.03 if maya_active else 1.12)
-
-        frame.paste(maya_crop, (maya_x0, panel_y0))
-        frame.paste(julian_crop, (julian_x0, panel_y0))
+        # Paste circular Maya & Julian studio avatars on the left of the pill
+        frame_rgba = frame.convert("RGBA")
+        frame_rgba.alpha_composite(self._cached_circular_badges["maya"], (58, bar_y0 + 8))
+        frame_rgba.alpha_composite(self._cached_circular_badges["julian"], (112, bar_y0 + 8))
+        frame = frame_rgba.convert("RGB")
         draw = ImageDraw.Draw(frame)
 
-        # Panel Borders & Active Speaker Glowing Ring
-        maya_border_col = (255, 225, 77) if maya_active else (255, 92, 115)
-        julian_border_col = (110, 130, 165) if maya_active else (56, 189, 248)
-        draw.rounded_rectangle([maya_x0, panel_y0, maya_x1, panel_y1], radius=22, outline=maya_border_col, width=5 if maya_active else 3)
-        draw.rounded_rectangle([julian_x0, panel_y0, julian_x1, panel_y1], radius=22, outline=julian_border_col, width=3 if maya_active else 5)
-
-        # Top-Corner LIVE Studio Indicator inside Active Speaker Panel
-        f_tag = ImageFont.truetype(FONT_BOLD, 20)
-        f_name = ImageFont.truetype(FONT_BOLD, 23)
+        # Active speaker label with crisp vector LIVE dot (no Unicode tofu box)
+        f_spk = ImageFont.truetype(FONT_BOLD, 21)
         call_in_badge = spec.get("podcast_call_in_badge")
+        dot_col = (255, 71, 87) if maya_active else (56, 189, 248)
+        draw.ellipse([174, bar_mid_y - 7, 188, bar_mid_y + 7], fill=dot_col)
         if maya_active:
-            tag_txt = call_in_badge if call_in_badge else "MIC LIVE · HOST"
-            tag_w = max(218, int(draw.textbbox((0, 0), tag_txt, font=f_tag)[2]) + 56)
-            draw.rounded_rectangle([maya_x0 + 14, panel_y0 + 16, maya_x0 + 14 + tag_w, panel_y0 + 54], radius=12, fill=(18, 16, 12), outline=(255, 225, 77), width=2)
-            draw.ellipse([maya_x0 + 26, panel_y0 + 27, maya_x0 + 42, panel_y0 + 43], fill=(255, 71, 87))
-            draw.text((maya_x0 + 14 + (tag_w + 22) // 2, panel_y0 + 35), tag_txt, fill=(255, 225, 77), font=f_tag, anchor="mm")
+            spk_txt = f"MAYA · {call_in_badge}" if call_in_badge else "MAYA · LATE NIGHT HOST"
+            spk_col = (255, 225, 77)
         else:
-            draw.rounded_rectangle([julian_x0 + 16, panel_y0 + 16, julian_x0 + 252, panel_y0 + 54], radius=12, fill=(10, 20, 32), outline=(56, 189, 248), width=2)
-            draw.ellipse([julian_x0 + 28, panel_y0 + 27, julian_x0 + 44, panel_y0 + 43], fill=(56, 189, 248))
-            draw.text((julian_x0 + 146, panel_y0 + 35), "MIC LIVE · INSIDER", fill=(125, 211, 252), font=f_tag, anchor="mm")
+            spk_txt = "JULIAN · NUMEROLOGY & RELATIONSHIP EXPERT"
+            spk_col = (125, 211, 252)
+        draw.text((198, bar_mid_y), spk_txt, fill=spk_col, font=f_spk, anchor="lm")
 
-        # Bottom Nameplate Pills + Live Audio Waveform Bars inside each panel (Y = panel_y1 - 62 .. panel_y1 - 12)
-        np_y0 = panel_y1 - 60
-        np_y1 = panel_y1 - 12
-        draw.rounded_rectangle([maya_x0 + 14, np_y0, maya_x1 - 14, np_y1], radius=12, fill=(14, 15, 22), outline=maya_border_col, width=2)
-        maya_lbl = "MAYA · LATE NIGHT TRUTH" if maya_active else "MAYA · LIVE REACTION"
-        draw.text(((maya_x0 + maya_x1) // 2, (np_y0 + np_y1) // 2), maya_lbl, fill=(255, 230, 120) if maya_active else (255, 165, 178), font=f_name, anchor="mm")
-
-        draw.rounded_rectangle([julian_x0 + 14, np_y0, julian_x1 - 14, np_y1], radius=12, fill=(14, 15, 22), outline=julian_border_col, width=2)
-        julian_lbl = "JULIAN · MALE INSIDER"
-        draw.text(((julian_x0 + julian_x1) // 2, (np_y0 + np_y1) // 2), julian_lbl, fill=(210, 220, 238) if maya_active else (125, 211, 252), font=f_name, anchor="mm")
-
-        # Live 14-Bar Studio Equalizer Strip on Active Speaker Panel (just above nameplate)
-        act_x0, act_x1 = (maya_x0, maya_x1) if maya_active else (julian_x0, julian_x1)
+        # Live 10-Bar 30fps Studio Equalizer Waveform on right edge of pill (X = 875..1015)
         eq_col = (255, 225, 77) if maya_active else (56, 189, 248)
-        n_bars = 14
-        bar_w = 8
+        n_bars = 10
+        bar_w = 7
         bar_gap = 6
-        tot_eq_w = n_bars * bar_w + (n_bars - 1) * bar_gap
-        eq_start_x = (act_x0 + act_x1 - tot_eq_w) // 2
-        eq_base_y = np_y0 - 10
+        eq_start_x = 885
         for b_i in range(n_bars):
             wave_mod = 0.35 + 0.65 * abs(math.sin(t * 18.0 + b_i * 0.75))
-            bh = int(max(6.0, min(38.0, (8.0 + 32.0 * max(0.28, rms)) * wave_mod)))
+            bh = int(max(8.0, min(40.0, (10.0 + 30.0 * max(0.30, rms)) * wave_mod)))
             bx0 = eq_start_x + b_i * (bar_w + bar_gap)
-            draw.rounded_rectangle([bx0, eq_base_y - bh, bx0 + bar_w, eq_base_y], radius=3, fill=eq_col)
+            draw.rounded_rectangle([bx0, bar_mid_y - bh // 2, bx0 + bar_w, bar_mid_y + bh // 2], radius=3, fill=eq_col)
 
-        # 5. Guarantee Frame Luma >= 89.0 so mobile grid covers are vibrant and pass the >=85 gate
+        # 4. Guarantee Frame Luma >= 89.5 so mobile grid covers pass the >=85 gate
         arr_out = np.array(frame, dtype=np.float32)
         cur_luma = float(np.mean(arr_out))
         if cur_luma < 89.5:
@@ -3551,16 +3487,18 @@ class BrollStoryGenerator:
         if spec.get("visual_format"):
             self.verify_and_record_broll_registry(spec)
 
-        # Preload human B-roll readers (or podcast studio avatars for podcast_duet_giant)
+        # Preload human B-roll readers (and podcast studio avatars for podcast_duet_giant circular badges)
         broll_readers = {}
         podcast_avatars = {}
         if v_fmt == "podcast_duet_giant":
             podcast_avatars = self.load_podcast_avatars()
-        else:
-            for _, _, b_fname in spec["broll_clips"]:
-                b_path = os.path.join(BROLL_DIR, b_fname)
-                if b_fname not in broll_readers:
-                    broll_readers[b_fname] = VideoFrameReader(b_path, max_seconds=6.0)
+        for _, _, b_fname in spec["broll_clips"]:
+            clean_fname = b_fname.split("#")[0]
+            b_path = os.path.join(BROLL_DIR, clean_fname)
+            if not os.path.exists(b_path):
+                b_path = os.path.join(BASE_DIR, clean_fname)
+            if b_fname not in broll_readers and clean_fname.lower().endswith(".mp4"):
+                broll_readers[b_fname] = VideoFrameReader(b_path, max_seconds=6.0)
 
         calc_reader = None
         if not is_short:
@@ -3600,7 +3538,17 @@ class BrollStoryGenerator:
 
             # 1. Background visual selection
             if v_fmt == "podcast_duet_giant":
-                frame = self.draw_podcast_duet_studio_frame(t, f_idx, total_dur, broll_cutoff, spec, podcast_avatars)
+                active_broll = spec["broll_clips"][-1][2]
+                local_t = t if t < broll_cutoff else (t - broll_cutoff)
+                if t < broll_cutoff:
+                    for b_start, b_end, b_fname in spec["broll_clips"]:
+                        if b_start <= t < b_end:
+                            active_broll = b_fname
+                            local_t = t - b_start
+                            break
+                d_ratio = 1.00 if t < broll_cutoff else 0.95
+                base_broll_frame = broll_readers[active_broll].get_frame(local_t, darken_ratio=d_ratio)
+                frame = self.draw_podcast_duet_studio_frame(base_broll_frame, t, f_idx, total_dur, broll_cutoff, spec, podcast_avatars)
                 if t >= broll_cutoff:
                     frame = self.draw_imessage_match_reveal_card(frame, spec)
             elif t < broll_cutoff:

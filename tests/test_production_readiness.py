@@ -458,7 +458,7 @@ async def test_all():
         assert await page_mob.is_visible('#hero-live-imessage-preview') is True, "Expected #hero-live-imessage-preview visible at 0.0s on view1"
         assert await page_mob.is_visible('#hero-podcast-host-pill') is True, "Expected #hero-podcast-host-pill (Maya x Julian) visible inside #hero-live-imessage-preview on view1"
         host_pill_txt = await page_mob.locator('#hero-podcast-host-pill').inner_text()
-        assert "LATE NIGHT TRUTH (MAYA × JULIAN)" in host_pill_txt.upper(), f"Unexpected #hero-podcast-host-pill text: {host_pill_txt}"
+        assert "MAYA & JULIAN · NUMEROLOGY & RELATIONSHIP EXPERTS" in host_pill_txt.upper(), f"Unexpected #hero-podcast-host-pill text: {host_pill_txt}"
         qbox = await page_mob.locator('#quick-day-hero-box').bounding_box()
         assert qbox is not None and qbox["y"] < 140, f"Expected #quick-day-hero-box at very top of view1 (y < 140px), got y={qbox['y'] if qbox else None}"
         for sel in ('#quick-day-hero-box', '#quick-day-strip', '#hero-live-imessage-preview', '#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
@@ -679,6 +679,46 @@ async def test_all():
         adv_evs = [e for e in demo_events if e.get("event_type") == "advisor_affiliate_clicked"]
         assert len(adv_evs) >= 1, f"Expected advisor_affiliate_clicked telemetry event, got {[e.get('event_type') for e in demo_events]}"
         assert (adv_evs[-1].get("extra") or {}).get("d1") == 19 and (adv_evs[-1].get("extra") or {}).get("d2") == 23
+
+        # 10d) Mobile Input Focus/Blur Horizontal-Alignment E2E Audit (390x660):
+        # Tap/focus #partner-compat-email-input and #crush-last-text-input, then blur/click outside without typing.
+        await page_mob.focus('#partner-compat-email-input')
+        await page_mob.evaluate("document.querySelector('#partner-compat-email-input').blur()")
+        await page_mob.focus('#crush-last-text-input')
+        await page_mob.evaluate("document.querySelector('#crush-last-text-input').blur()")
+        await asyncio.sleep(0.15)
+        scroll_metrics = await page_mob.evaluate("() => ({ scrollWidth: document.documentElement.scrollWidth, scrollX: window.scrollX, bodyScrollLeft: document.body.scrollLeft })")
+        assert scroll_metrics["scrollWidth"] <= 390, f"Expected scrollWidth <= 390 on 390x660 mobile viewport, got {scroll_metrics}"
+        assert scroll_metrics["scrollX"] == 0 and scroll_metrics["bodyScrollLeft"] == 0, f"Expected scrollX === 0 after input focus/blur, got {scroll_metrics}"
+
+        # Assert every visible heading ('YOUR BIRTH CODE', 'READING ONE SYSTEM') has boundingBox().x >= 8 (never cut off on the left!)
+        h1_box = await page_mob.locator('#teaser-root h1').first.bounding_box()
+        assert h1_box is not None and h1_box["x"] >= 8, f"Expected #teaser-root h1 ('YOUR BIRTH CODE') x >= 8px, got {h1_box}"
+        prob_h3_box = await page_mob.locator('#teaser-root h3', has_text="Reading One System").first.bounding_box()
+        assert prob_h3_box is not None and prob_h3_box["x"] >= 8, f"Expected 'Reading One System' heading x >= 8px, got {prob_h3_box}"
+
+        # Assert Julian's badge reads 'Julian · Numerology & Relationship Expert' and his avatar is circular (44x44, borderRadius 50%)
+        julian_heading_txt = await page_mob.locator('#julian-insider-take-heading').inner_text()
+        assert "Julian · Numerology & Relationship Expert" in julian_heading_txt, f"Expected 'Julian · Numerology & Relationship Expert', got '{julian_heading_txt}'"
+        julian_img_style = await page_mob.evaluate("() => { const img = document.querySelector('#julian-insider-take-box img'); const cs = getComputedStyle(img); return { w: img.getBoundingClientRect().width, h: img.getBoundingClientRect().height, br: cs.borderRadius }; }")
+        assert 40 <= julian_img_style["w"] <= 48 and 40 <= julian_img_style["h"] <= 48 and ("50%" in julian_img_style["br"] or "22px" in julian_img_style["br"]), f"Expected circular 44x44 Julian avatar, got {julian_img_style}"
+
+        # Assert #tier-card-base says 'for You & Your Partner.' (never 'for Your.') when name is blank
+        tier_base_default_txt = await page_mob.locator('#tier-card-base').inner_text()
+        assert "for You & Your Partner." in tier_base_default_txt and "for Your." not in tier_base_default_txt, f"Unexpected #tier-card-base default name text: {tier_base_default_txt}"
+
+        # Submit email in #partner-compat-email-input and assert:
+        # 1) #btn-vip-fast-action-17 has display === 'block' (does NOT split into 3 flex columns)
+        # 2) Duplicate boxes (#partner-compat-email-box, #downsell-script-only-box, #downsell-fast-email-wrap) are hidden so only ONE clean $17 VIP CTA card (#vip-fast-action-offer) is visible
+        await page_mob.fill('#partner-compat-email-input', 'mobile.audit@gmail.com')
+        await page_mob.click('#btn-save-partner-email')
+        await asyncio.sleep(0.2)
+        vip_btn_display = await page_mob.evaluate("() => getComputedStyle(document.querySelector('#btn-vip-fast-action-17')).display")
+        assert vip_btn_display == "block", f"Expected #btn-vip-fast-action-17 display === 'block', got '{vip_btn_display}'"
+        assert await page_mob.is_visible('#vip-fast-action-offer') is True, "Expected #vip-fast-action-offer visible after email unlock"
+        assert await page_mob.is_visible('#partner-compat-email-box') is False, "Expected duplicate #partner-compat-email-box hidden after Part 1 unlock"
+        assert await page_mob.is_visible('#downsell-script-only-box') is False, "Expected duplicate #downsell-script-only-box hidden after Part 1 unlock"
+        assert await page_mob.is_visible('#downsell-fast-email-wrap') is False, "Expected duplicate #downsell-fast-email-wrap hidden after Part 1 unlock"
 
         await page_mob.close()
         print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill, $17 Impulse Tier & ?d1=19&d2=23 Viral Partner Share verified!")

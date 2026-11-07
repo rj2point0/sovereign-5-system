@@ -888,8 +888,9 @@ if (typeof window !== 'undefined') {
     const birthLabel = formatBirthDate(r.input.birthDate);
     const sections = state.lang === 'es' ? DOSSIER_SECTIONS_ES : DOSSIER_SECTIONS_EN;
 
+    const isDefaultName = ['Your Reading', 'Tu Lectura', 'You', 'Tu'].includes(r.input.fullName);
     const decodedSub = UI.decoded_sub
-      .replace('${fullName}', esc(r.input.fullName))
+      .replace('${fullName}', isDefaultName ? (state.lang === 'es' ? 'Tu Fecha de Nacimiento' : 'Your Birth Date') : esc(r.input.fullName))
       .replace('${birthLabel}', birthLabel)
       .replace('${totalSources}', r.overlap.totalSources);
 
@@ -923,7 +924,6 @@ if (typeof window !== 'undefined') {
       pQuickDayBtns += `<button type="button" class="quick-day-btn" data-action="partner-quick-day" data-day="${d}">${d}</button>`;
     }
 
-    const isDefaultName = ['Your Reading', 'Tu Lectura', 'You', 'Tu'].includes(r.input.fullName);
     const decodedTitleHtml = isDefaultName
       ? (isEs ? 'Tu Código Natal Ha Sido Descifrado.' : 'Your Birth Code Has Been Decoded.')
       : UI.decoded_title.replace('${first}', first);
@@ -1105,7 +1105,7 @@ if (typeof window !== 'undefined') {
       <div id="teaser-email-box" class="card-soft mt-5 p-4 sm:p-5 border border-gold/30 max-w-xl mx-auto text-center">
         <p class="text-xs sm:text-sm text-champagne font-medium">${state.lang === 'es' ? '✦ ¿Quieres recibir este resumen de tus 5 Sistemas y tu Alerta de Fricción en tu correo?' : '✦ Want a copy of your 5-System Summary & Friction Alert emailed to you?'}</p>
         <div class="mt-3 flex flex-col sm:flex-row gap-2">
-          <input id="teaser-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2.5 text-sm flex-1" placeholder="${state.lang === 'es' ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
+          <input id="teaser-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2.5 flex-1" placeholder="${state.lang === 'es' ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
           <button type="button" data-action="save-teaser-email" class="btn-gold !py-2.5 !px-5 sm:w-auto text-xs whitespace-nowrap">${state.lang === 'es' ? 'Enviar Mi Resumen Gratis' : 'Email My Free Summary'}</button>
         </div>
       </div>` : ''}
@@ -1202,7 +1202,7 @@ if (typeof window !== 'undefined') {
             </div>
             <div class="flex-1">
               <p class="font-semibold text-ivory text-[0.98rem] leading-snug">${isEs ? 'Plano Completo de Amor y Vida de 20 Páginas (5 Sistemas)' : 'Complete 20-Page 5-System Love &amp; Life Blueprint'}</p>
-              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo lo de la Mini-Lectura de $17 (incluido el Guion Exacto de Texto "Invertir la Persecución" para su Número Natal) MÁS los 5 sistemas ancestrales completos (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor y Vida de 12 Meses para ${first}.` : `Includes everything in the $17 Mini-Read (including The Exact "Flip The Chase" Text Script For Their Birth Number) PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Calendar for ${first}.`}</p>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo lo de la Mini-Lectura de $17 (incluido el Guion Exacto de Texto "Invertir la Persecución" para su Número Natal) MÁS los 5 sistemas ancestrales completos (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor y Vida de 12 Meses para ${isDefaultName ? 'Ti y Tu Pareja' : first}.` : `Includes everything in the $17 Mini-Read (including The Exact "Flip The Chase" Text Script For Their Birth Number) PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Calendar for ${isDefaultName ? 'You &amp; Your Partner' : first}.`}</p>
             </div>
             <div class="text-right shrink-0">
               <div class="text-xs text-zinc-500 line-through">${money(CONFIG.PRICE_ANCHOR)}</div>
@@ -1214,7 +1214,7 @@ if (typeof window !== 'undefined') {
         <!-- TIER 3 · $84 COMPLETE VIP SOVEREIGN BUNDLE ($37 + $47) -->
         <label id="bump-box" class="bump mt-4 flex gap-3 items-start cursor-pointer">
           <input id="bump" type="checkbox" />
-          <span class="text-sm leading-relaxed">
+          <span class="text-sm leading-relaxed flex-1">
             <span class="block font-bold text-gold uppercase tracking-wider text-[0.78rem] mb-1">${isEs ? `➜ Paquete Soberano VIP Completo ($${CONFIG.PRICE_BUNDLE}) · +$${CONFIG.PRICE_BUMP}` : `➜ Complete VIP Sovereign Bundle ($${CONFIG.PRICE_BUNDLE}) · +$${CONFIG.PRICE_BUMP}`}</span>
             <span class="text-ivory">${UI.bump_text}</span>
           </span>
@@ -1229,7 +1229,7 @@ if (typeof window !== 'undefined') {
           <span>${UI.unlock_cta}</span><span data-total>${money(CONFIG.PRICE_BASE)}</span>
         </button>
 
-        <div class="mt-4 grid grid-cols-3 gap-2 text-center text-[0.62rem] uppercase tracking-[0.12em] text-zinc-500">
+        <div class="mt-4 checkout-trust-grid">
           <div class="card-soft py-2.5">${UI.secure_badge}</div>
           <div class="card-soft py-2.5">${UI.instant_badge}</div>
           <div class="card-soft py-2.5">${CONFIG.GUARANTEE_DAYS ? UI.guarantee_badge : UI.pdf_badge}</div>
@@ -1555,10 +1555,16 @@ if (typeof window !== 'undefined') {
     if (stickyObs) stickyObs.disconnect();
     let checkoutVisible = false;
     stickyObs = new IntersectionObserver((ents) => { checkoutVisible = ents[0].isIntersecting; onScroll(); }, { threshold: 0.05 });
-    stickyObs.observe(co);
+    if (co) stickyObs.observe(co);
     function onScroll() {
       if (document.body.dataset.view !== 'teaser') { cta.classList.remove('show'); return; }
-      cta.classList.toggle('show', window.scrollY > 520 && !checkoutVisible);
+      const pRes = $('#partner-compat-result');
+      let pResInViewport = false;
+      if (pRes && !pRes.classList.contains('hidden')) {
+        const rect = pRes.getBoundingClientRect();
+        pResInViewport = rect.bottom > 60 && rect.top < (window.innerHeight - 40);
+      }
+      cta.classList.toggle('show', window.scrollY > 520 && !checkoutVisible && !pResInViewport);
     }
     window.removeEventListener('scroll', onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -2916,8 +2922,18 @@ if (typeof window !== 'undefined') {
   }
 
   function unlockPartnerScriptPart1OnScreen(emailVal) {
+    state.part1Unlocked = true;
+    if (state.partnerHesitationTimer) {
+      clearTimeout(state.partnerHesitationTimer);
+      state.partnerHesitationTimer = null;
+    }
     const badgeEl = $('#part1-unlocked-badge');
-    if (badgeEl) badgeEl.classList.remove('hidden');
+    if (badgeEl) {
+      badgeEl.classList.remove('hidden');
+      if (emailVal) {
+        badgeEl.innerHTML = `<span id="partner-compat-email-confirmed">✅ ${state.lang === 'es' ? '¡CORREO VERIFICADO (' + esc(emailVal) + ')! PARTE 1 DESBLOQUEADA EN PANTALLA' : 'EMAIL VERIFIED (' + esc(emailVal) + ') — PART 1 OF YOUR SCRIPT UNLOCKED'}</span>`;
+      }
+    }
     const p1El = $('#imessage-part1-text');
     if (p1El) {
       p1El.classList.remove('imessage-blurred');
@@ -2940,18 +2956,19 @@ if (typeof window !== 'undefined') {
       const btn = $(sel);
       if (btn && stripeUrl) btn.setAttribute('data-stripe-url', stripeUrl);
     });
+    const dsBox = $('#downsell-script-only-box');
+    if (dsBox) dsBox.classList.add('hidden');
     const dsEmailWrap = $('#downsell-fast-email-wrap');
     if (dsEmailWrap) dsEmailWrap.classList.add('hidden');
     startVipFastActionTimer();
 
     const pBox = $('#partner-compat-email-box');
-    if (pBox && emailVal) {
-      pBox.innerHTML = `<div id="partner-compat-email-confirmed" class="p-2.5 rounded-lg bg-emerald-950/60 border border-emerald-400/60 text-emerald-300 text-xs sm:text-sm font-semibold text-center">✓ ${state.lang === 'es' ? '¡Correo verificado (' + esc(emailVal) + ')! Parte 1 desbloqueada arriba en pantalla + copia enviada.' : 'Email Verified (' + esc(emailVal) + ') — Part 1 Unlocked On-Screen Above &amp; Backup Copy Sent!'}</div>`;
-    }
+    if (pBox) pBox.classList.add('hidden');
     const advCard = $('#live-advisor-upsell-card');
     if (advCard) advCard.classList.add('gold-pulse-highlight');
     const tBox = $('#teaser-email-box');
     if (tBox) tBox.classList.add('hidden');
+    window.dispatchEvent(new Event('scroll'));
   }
 
   function submitPartnerCompatEmail() {
@@ -3450,7 +3467,7 @@ if (typeof window !== 'undefined') {
             : `Or paste the exact text they sent you (or what you want to say) to decode a Day ${partnerBirthDay}'s hidden motive:`}
         </label>
         <div class="flex flex-col sm:flex-row gap-2">
-          <input id="crush-last-text-input" type="text" maxlength="220" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Ej: &quot;Perdón, he estado súper ocupado esta semana...&quot;' : 'e.g. &quot;sorry been super busy this week&quot; or &quot;idk what I want right now&quot;'}" />
+          <input id="crush-last-text-input" type="text" maxlength="220" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Ej: &quot;Perdón, he estado súper ocupado esta semana...&quot;' : 'e.g. &quot;sorry been super busy this week&quot; or &quot;idk what I want right now&quot;'}" />
           <button type="button" id="btn-decode-crush-text" data-action="decode-crush-text" class="btn-ghost !py-2 !px-3.5 text-xs font-extrabold text-gold border-gold/60 bg-gold/15 hover:bg-gold/25 whitespace-nowrap rounded-xl">
             🔍 ${isEs ? 'Descifrar Su Texto' : 'Decode Their Text'}
           </button>
@@ -3458,12 +3475,12 @@ if (typeof window !== 'undefined') {
         <div id="crush-text-decoded-output" class="hidden mt-2.5 p-2.5 rounded-lg bg-indigo-950/75 border border-indigo-400/55 text-xs text-ivory leading-snug"></div>
       </div>
 
-      <!-- JULIAN'S MALE-INSIDER TAKE ON THIS BIRTH DAY (#julian-insider-take-box) -->
-      <div id="julian-insider-take-box" class="mt-3 p-3 rounded-xl bg-[#0c1220] border border-sky-400/45 text-left flex items-start gap-2.5 shadow-md">
-        <img src="julian_avatar_128.webp" alt="Julian — Male Insider Host" width="42" height="42" class="w-10 h-10 rounded-full border-2 border-gold object-cover shrink-0 mt-0.5" />
-        <div class="text-xs leading-snug">
+      <!-- JULIAN'S NUMEROLOGY & RELATIONSHIP EXPERT TAKE ON THIS BIRTH DAY (#julian-insider-take-box) -->
+      <div id="julian-insider-take-box" class="mt-3 p-3 rounded-xl bg-[#0c1220] border border-sky-400/45 text-left flex items-center gap-3 shadow-md">
+        <img src="julian_avatar_128.webp" alt="Julian — Numerology &amp; Relationship Expert" width="44" height="44" style="width:44px;height:44px;min-width:44px;max-width:44px;border-radius:50%;object-fit:cover;border:2px solid #D4AF37;flex-shrink:0;display:block;" class="w-11 h-11 rounded-full border-2 border-gold object-cover shrink-0" />
+        <div class="text-xs leading-snug flex-1 min-w-0">
           <div id="julian-insider-take-heading" class="font-extrabold text-gold tracking-wide">
-            🎙️ ${isEs ? `La Verdad Masculina de Julian sobre un Día ${partnerBirthDay}:` : `Julian's Male-Insider Take on a Day ${partnerBirthDay}:`}
+            🎙️ ${isEs ? `Julian · Experto en Numerología y Relaciones (Día ${partnerBirthDay}):` : `Julian · Numerology &amp; Relationship Expert (Day ${partnerBirthDay}):`}
           </div>
           <p id="julian-insider-take-text" class="text-zinc-200 mt-1 leading-relaxed">${esc(getJulianInsiderTake(rep.pMoolank, rep.pRuler, partnerBirthDay, activeSit, state.lang))}</p>
         </div>
@@ -3497,7 +3514,7 @@ if (typeof window !== 'undefined') {
             ? 'BLOQUEADO EN LA PARTE 2: El resto de este mensaje + qué te responderá + los 3 mejores días para escribirle este mes'
             : 'LOCKED IN PART 2: The rest of this text + what they will reply + the 3 best days to text them this month'}
         </div>
-        <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
+        <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
           🔒 ${isEs
             ? 'Desbloquear el guion de texto completo + los mejores y peores días para escribirle ($17) →'
             : 'Unlock the full text script + the best & worst days to text them ($17) →'}
@@ -3517,10 +3534,10 @@ if (typeof window !== 'undefined') {
             ? `Parte 1 desbloqueada arriba. Desbloquea ahora la Parte 2 de tu guion [Día ${userBirthDay} × Día ${partnerBirthDay}] + qué te responderá + los mejores días para escribirle:`
             : `Part 1 is unlocked above! Lock in Part 2 of your [Day ${userBirthDay} × Day ${partnerBirthDay}] Script + what they'll reply + the best & worst days to text them right now:`}
         </p>
-        <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
-          ⚡ ${isEs
-            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer>14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($17) →'
-            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer>14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($17) →'}
+        <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
+          <span class="block text-center leading-snug">⚡ ${isEs
+            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer class="inline font-mono underline">14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($17) →'
+            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer class="inline font-mono underline">14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($17) →'}</span>
         </button>
         <div class="mt-2.5 text-center">
           <button type="button" id="btn-show-downsell-box" data-action="show-downsell-box" class="text-[0.7rem] sm:text-xs text-amber-300 underline font-semibold hover:text-ivory cursor-pointer">
@@ -3544,14 +3561,14 @@ if (typeof window !== 'undefined') {
             ? `No necesitas leer un reporte largo hoy. Desbloquea al instante el resto de tu mensaje palabra por palabra para [Día ${userBirthDay} × Día ${partnerBirthDay}] + su respuesta exacta:`
             : `Skip the long reading—get the exact word-for-word [Day ${userBirthDay} × Day ${partnerBirthDay}] "Flip The Chase" text message unblurred on your screen in 1 tap:`}
         </p>
-        <div id="downsell-fast-email-wrap" class="${(state.profile && state.profile.email) ? 'hidden' : ''} mt-2.5 flex flex-col sm:flex-row gap-2">
-          <input id="downsell-fast-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Tu correo para desbloquear Parte 1 gratis...' : 'Enter email to unblur Part 1 free right now...'}" />
+        <div id="downsell-fast-email-wrap" class="hidden mt-2.5 flex flex-col sm:flex-row gap-2">
+          <input id="downsell-fast-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Tu correo para desbloquear Parte 1 gratis...' : 'Enter email to unblur Part 1 free right now...'}" />
           <button type="button" id="btn-downsell-fast-email" data-action="save-downsell-email" class="btn-ghost !py-2 !px-3 text-xs font-extrabold text-amber-200 border-amber-300/70 bg-amber-400/15 whitespace-nowrap">
             ${isEs ? 'Desbloquear Parte 1 Gratis →' : 'Unblur Part 1 Free →'}
           </button>
         </div>
         <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
-          <button type="button" id="btn-downsell-fast-checkout" data-action="checkout-mini" data-trigger="downsell_fast_checkout_script" class="btn-gold !py-3 !px-4 flex-1 text-xs sm:text-sm font-extrabold tracking-wide">
+          <button type="button" id="btn-downsell-fast-checkout" data-action="checkout-mini" data-trigger="downsell_fast_checkout_script" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 flex-1 text-xs sm:text-sm font-extrabold tracking-wide">
             ⚡ ${isEs
               ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($17) →'
               : '1-Tap Express Unlock: Unblur Full Text Message Now ($17) →'}
@@ -3574,7 +3591,7 @@ if (typeof window !== 'undefined') {
             📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver las 3 fechas este mes en que se acerca más gratis?' : 'Want to save this Partner Compatibility score &amp; see the 3 dates this month they pull closer for free?'}
           </p>
           <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
-            <input id="partner-compat-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 text-xs sm:text-sm flex-1" placeholder="${isEs ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
+            <input id="partner-compat-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Ingresa tu correo electrónico...' : 'Enter your email address...'}" />
             <button type="button" id="btn-save-partner-email" data-action="save-partner-email" class="btn-gold !py-2 !px-4 sm:w-auto text-xs font-bold whitespace-nowrap">
               ${isEs ? 'Desbloquear Parte 1 + Enviar Reporte →' : 'Email Our Match Report →'}
             </button>
@@ -3623,6 +3640,7 @@ if (typeof window !== 'undefined') {
       </div>` : ''}
     `;
 
+    state.part1Unlocked = false;
     if (state.profile && state.profile.email) {
       unlockPartnerScriptPart1OnScreen(state.profile.email);
     }
@@ -3634,7 +3652,7 @@ if (typeof window !== 'undefined') {
     }
     const hesitationDelayMs = Number(window.__S5_HESITATION_MS) > 0 ? Number(window.__S5_HESITATION_MS) : 10000;
     state.partnerHesitationTimer = setTimeout(() => {
-      if (state.hasClickedMiniUnlock) return;
+      if (state.hasClickedMiniUnlock || state.part1Unlocked) return;
       revealDownsellBox('hesitation_timer');
       if (state.profile && state.profile.email) return;
       const calloutEl = $('#partner-hesitation-callout');
@@ -3644,16 +3662,20 @@ if (typeof window !== 'undefined') {
         emailBoxEl.classList.add('gold-pulse-highlight');
       }
     }, hesitationDelayMs);
+    window.dispatchEvent(new Event('scroll'));
   }
 
   function revealDownsellBox(reason) {
+    if (state.part1Unlocked && reason === 'hesitation_timer') return;
     const dsBox = $('#downsell-script-only-box');
     if (!dsBox) return;
     const wasHidden = dsBox.classList.contains('hidden');
     dsBox.classList.remove('hidden');
     const wrap = $('#downsell-fast-email-wrap');
+    const pBox = $('#partner-compat-email-box');
+    const pBoxVis = Boolean(pBox && !pBox.classList.contains('hidden'));
     if (wrap) {
-      wrap.classList.toggle('hidden', Boolean(state.profile && state.profile.email));
+      wrap.classList.toggle('hidden', Boolean(state.part1Unlocked || pBoxVis || (state.profile && state.profile.email)));
     }
     const stripeUrl = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
     const dsBtn = $('#btn-downsell-fast-checkout');
@@ -3777,6 +3799,26 @@ if (typeof window !== 'undefined') {
   function init() {
     $('#year').textContent = new Date().getFullYear();
     utm();
+
+    // Lock horizontal viewport centering so mobile input focus/blur can never pan the page off-center
+    const resetHorizontalScroll = () => {
+      if (window.scrollX !== 0 || document.documentElement.scrollLeft !== 0 || document.body.scrollLeft !== 0) {
+        try {
+          window.scrollTo({ left: 0, behavior: 'instant' });
+        } catch (e) {
+          window.scrollTo(0, window.scrollY || 0);
+        }
+        document.documentElement.scrollLeft = 0;
+        document.body.scrollLeft = 0;
+      }
+    };
+    document.addEventListener('focusout', () => {
+      resetHorizontalScroll();
+      setTimeout(resetHorizontalScroll, 60);
+      setTimeout(resetHorizontalScroll, 220);
+    });
+    window.addEventListener('scroll', resetHorizontalScroll, { passive: true });
+    window.addEventListener('resize', resetHorizontalScroll, { passive: true });
 
     // Check VIP Founder access (?vip=adam)
     const q = new URLSearchParams(location.search);
