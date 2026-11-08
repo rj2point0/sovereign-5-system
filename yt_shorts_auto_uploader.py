@@ -68,6 +68,30 @@ SAMPLE_MATCH_REPLY = (
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
     {
+        "id": "short_46",
+        "filename": "tiktok_short_46_angel_shadow_test_you.mp4",
+        "title": "How He Secretly Tests Your Loyalty (Angel vs. Shadow) 🎙️🔥 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_47",
+        "filename": "tiktok_short_47_angel_shadow_late_night.mp4",
+        "title": "Only Texts You After 10 PM? Do This Now 🎙️📱 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_48",
+        "filename": "tiktok_short_48_angel_shadow_never_chase.mp4",
+        "title": "Birth Days You Must Never Chase First 🎙️💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
         "id": "short_43",
         "filename": "tiktok_short_43_podcast_bare_minimum.mp4",
         "title": "Birth Days That Give Bare Minimum Effort 🎙️💔 #Shorts",

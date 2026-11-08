@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_48",
+        "video_id": None,
+        "title_match": "Which birth days lose respect the exact second a woman chases them",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '7 & 16') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_47",
+        "video_id": None,
+        "title_match": "Why he only texts you after 10 PM and acts busy all day",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_46",
+        "video_id": None,
+        "title_match": "Why he pulls back right after a perfect weekend together",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 26') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_45",
         "video_id": None,
         "title_match": "How to tell if he actually wants a future with you or is just keeping you on the hook",

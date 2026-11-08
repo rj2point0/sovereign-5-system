@@ -33,6 +33,36 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_48",
+        "video_id": None,
+        "title_match": "Which birth days lose respect the exact second a woman chases them",
+    },
+    {
+        "id": "short_47",
+        "video_id": None,
+        "title_match": "Why he only texts you after 10 PM and acts busy all day",
+    },
+    {
+        "id": "short_46",
+        "video_id": "7705830517458947341",
+        "title_match": "Why he pulls back right after a perfect weekend together",
+    },
+    {
+        "id": "short_45",
+        "video_id": None,
+        "title_match": "How to tell if he actually wants a future with you or is just keeping you on the hook",
+    },
+    {
+        "id": "short_44",
+        "video_id": None,
+        "title_match": "Why he is obsessed with you on Monday and freezing cold by Thursday",
+    },
+    {
+        "id": "short_43",
+        "video_id": None,
+        "title_match": "Why a guy gives you bare minimum effort right after chasing you so hard",
+    },
+    {
         "id": "short_42",
         "video_id": None,
         "title_match": "What to do when a guy starts sending dry 1-word text replies",
@@ -150,6 +180,9 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_48", "shortcode": "DffIvEAO4Bo"},
+    {"id": "short_47", "shortcode": "DffIm7WODuS"},
+    {"id": "short_46", "shortcode": "DffIeuuOiy5"},
     {"id": "short_45", "shortcode": "DfdbjxxO-mT"},
     {"id": "short_44", "shortcode": "DfdbcN3ubMj"},
     {"id": "short_43", "shortcode": "DfdbUjSOcBe"},

@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-07T16:06:38.751555",
+  "updated_at": "2026-11-08T08:00:08.985827",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -455,6 +455,33 @@
       "schedule_time": "2026-11-13 18:30",
       "uploaded_at": "2026-11-07T16:06:38.751555",
       "caption_preview": "How to tell if he actually wants a future with you or is just keeping you on the hook 🎙️💔 (Born 1st, 6th, 9th, 10th, 15t"
+    },
+    "tiktok_short_46_angel_shadow_test_you.mp4": {
+      "filename": "tiktok_short_46_angel_shadow_test_you.mp4",
+      "ad_id": "short_46",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-08T07:58:32.663432",
+      "caption_preview": "Why he pulls back right after a perfect weekend together (Angel vs. Shadow Insider decoded by birth day) 👼😈💔 (Born 1st, "
+    },
+    "tiktok_short_47_angel_shadow_late_night.mp4": {
+      "filename": "tiktok_short_47_angel_shadow_late_night.mp4",
+      "ad_id": "short_47",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-14 11:00",
+      "uploaded_at": "2026-11-08T07:59:33.216338",
+      "caption_preview": "Why he only texts you after 10 PM and acts busy all day (Angel vs. Shadow Insider decoded by birth day) 👼😈📱 (Born 3rd, 5"
+    },
+    "tiktok_short_48_angel_shadow_never_chase.mp4": {
+      "filename": "tiktok_short_48_angel_shadow_never_chase.mp4",
+      "ad_id": "short_48",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-14 18:30",
+      "uploaded_at": "2026-11-08T08:00:08.985827",
+      "caption_preview": "Which birth days lose respect the exact second a woman chases them (Angel vs. Shadow Insider) 👼😈💔 (Born 4th, 7th, 9th, 1"
     }
   }
 }

@@ -48,6 +48,9 @@ YT_VIDEOS = [
 ]
 
 IG_VIDEOS = [
+    ("short_48", "DffIvEAO4Bo", "Batch #13 · Birth Days You Must Never Chase First (Angel vs. Shadow)"),
+    ("short_47", "DffIm7WODuS", "Batch #13 · Only Texts You After 10 PM? Do This Now (Angel vs. Shadow)"),
+    ("short_46", "DffIeuuOiy5", "Batch #13 · How He Secretly Tests Your Loyalty (Angel vs. Shadow)"),
     ("short_45", "DfdbjxxO-mT", "Batch #12 · Keeps You Hooked Without Committing (Real-Human Podcast)"),
     ("short_44", "DfdbcN3ubMj", "Batch #12 · Hot One Day Cold The Next (Real-Human Podcast)"),
     ("short_43", "DfdbUjSOcBe", "Batch #12 · Bare Minimum Effort (Real-Human Podcast)"),

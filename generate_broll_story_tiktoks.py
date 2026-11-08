@@ -2230,6 +2230,184 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
         ],
     },
+    # =========================================================================
+    # BATCH #13 (short_46, short_47, short_48):
+    # Concept B Launch Batch — "The Angel vs. Shadow-Insider Podcast Duo"
+    # =========================================================================
+    {
+        "id": "short_46",
+        "cohort": "Cohort C · Batch 13 (Angel vs. Shadow-Insider Duo)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "ANGEL VS. SHADOW · SECRET TEST",
+        "giant_lines": [
+            ("HOW HE SECRETLY", "white"),
+            ("TESTS YOUR", "gold"),
+            ("LOYALTY", "coral"),
+        ],
+        "giant_sub_pill": "HIM BORN 1st · 8th · 10th · 17th · 19th · 26th · 28th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_46_angel_shadow_test_you.mp4",
+        "yt_title": "How He Secretly Tests Your Loyalty (By Birth Day) 👼😈 #Shorts",
+        "grid_headline": "HOW HE SECRETLY\nTESTS YOUR\nLOYALTY",
+        "grid_sub": "ANGEL VS. SHADOW · SECRET TEST",
+        "hook_box_text": "Why does a guy pull back right after a perfect weekend together?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why does a guy pull back right after a perfect weekend together?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "His birth number is testing if you panic or chase him. Send the calm nine word text in our bio and watch him fold.",
+        "reveal_match_pair": "Born 19th × Born 26th",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Loved this weekend—taking a quiet week on my end, so...",
+        "spoken_script": (
+            "Why does a guy pull back right after a perfect weekend together? "
+            "His birth number is testing if you panic or chase him. "
+            "Send the calm nine word text in our bio and watch him fold."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_09_couple_forgiveness_hug.mp4#podcast46"),
+            (2.3, 4.6, "emo_06_sofa_back_to_back.mp4#podcast46"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why he pulls back right after a perfect weekend together (Angel vs. Shadow Insider decoded by birth day) 👼😈💔 "
+            "(Born 1st, 8th, 10th, 17th, 19th, 26th, or 28th? Tap our bio for the 9-word text) "
+            "#datingpodcast #hepulledaway #mixedsignals #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 26') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#hepulledaway", "#mixedsignals", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_47",
+        "cohort": "Cohort C · Batch 13 (Angel vs. Shadow-Insider Duo)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "ANGEL VS. SHADOW · LATE NIGHT TEXT",
+        "giant_lines": [
+            ("ONLY TEXTS YOU", "white"),
+            ("AFTER 10 PM?", "coral"),
+            ("DO THIS NOW", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 3rd · 5th · 12th · 14th · 21st · 23rd · 30th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_47_angel_shadow_late_night.mp4",
+        "yt_title": "He Only Texts You After 10 PM? Do This Now 👼😈 #Shorts",
+        "grid_headline": "ONLY TEXTS YOU\nAFTER 10 PM?\nDO THIS NOW",
+        "grid_sub": "ANGEL VS. SHADOW · 10 PM TEXTS",
+        "hook_box_text": "He only texts me late at night, and then acts busy all day. Does he care at all?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "He only texts me late at night, and then acts busy all day. Does he care at all?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "He thinks you're always on standby for his birth day. Reply with the morning flip script in our bio to earn his full respect.",
+        "reveal_match_pair": "Born 14th × Born 23rd",
+        "reveal_match_score": "95% TWIN-SPARK LOCK",
+        "reveal_sms_lead": "“Just saw this—I crash early now, so let's...",
+        "spoken_script": (
+            "He only texts me late at night, and then acts busy all day. Does he care at all? "
+            "He thinks you're always on standby for his birth day. "
+            "Reply with the morning flip script in our bio to earn his full respect."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_01_woman_phone_night.mp4#podcast47"),
+            (2.3, 4.6, "emo_11_worried_sad_woman_closeup.mp4#podcast47"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why he only texts you after 10 PM and acts busy all day (Angel vs. Shadow Insider decoded by birth day) 👼😈📱 "
+            "(Born 3rd, 5th, 12th, 14th, 21st, 23rd, or 30th? Tap our bio for the morning flip script) "
+            "#datingpodcast #latenighttexts #breadcrumbing #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#latenighttexts", "#breadcrumbing", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_48",
+        "cohort": "Cohort C · Batch 13 (Angel vs. Shadow-Insider Duo)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "ANGEL VS. SHADOW · NEVER CHASE",
+        "giant_lines": [
+            ("BIRTH DAYS YOU", "white"),
+            ("MUST NEVER", "coral"),
+            ("CHASE FIRST", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 4th · 7th · 9th · 13th · 16th · 18th · 22nd · 25th · 27th · 31st",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_48_angel_shadow_never_chase.mp4",
+        "yt_title": "Birth Days You Must Never Chase First 👼😈 #Shorts",
+        "grid_headline": "BIRTH DAYS YOU\nMUST NEVER\nCHASE FIRST",
+        "grid_sub": "ANGEL VS. SHADOW · NEVER CHASE",
+        "hook_box_text": "Which birth days lose respect the exact second a girl chases them?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Which birth days lose respect the exact second a girl chases them?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "But chasing makes his birth number run away fast. Test both birth days in our bio to unlock the exact text that makes him chase you.",
+        "reveal_match_pair": "Born 7th × Born 16th",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Haha I'll let you get back to your week—I'm...",
+        "spoken_script": (
+            "Which birth days lose respect the exact second a girl chases them? "
+            "But chasing makes his birth number run away fast. "
+            "Test both birth days in our bio to unlock the exact text that makes him chase you."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_03_couple_silence_apart.mp4#podcast48"),
+            (2.3, 4.6, "emo_12_upset_couple_closeup.mp4#podcast48"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Which birth days lose respect the exact second a woman chases them (Angel vs. Shadow Insider) 👼😈💔 "
+            "(Born 4th, 7th, 9th, 13th, 16th, 18th, 22nd, 25th, 27th, or 31st? Tap our bio to test both birth days) "
+            "#datingpodcast #neverchase #fliphtechase #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '7 & 16') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#neverchase", "#flipthechase", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -2351,15 +2529,26 @@ class BrollStoryGenerator:
         self, script_text: str, voice: str, rate: str, out_voice_path: str
     ) -> List[Dict[str, Any]]:
         print(f"   [TTS] Synthesizing story voiceover ({voice}, rate={rate})...", flush=True)
-        comm = edge_tts.Communicate(script_text, voice, rate=rate)
         audio_chunks = bytearray()
         s_boundaries = []
-
-        async for chunk in comm.stream():
-            if chunk["type"] == "audio":
-                audio_chunks.extend(chunk["data"])
-            elif chunk["type"] == "SentenceBoundary":
-                s_boundaries.append(chunk)
+        last_err = None
+        for attempt in range(4):
+            try:
+                audio_chunks = bytearray()
+                s_boundaries = []
+                comm = edge_tts.Communicate(script_text, voice, rate=rate)
+                async for chunk in comm.stream():
+                    if chunk["type"] == "audio":
+                        audio_chunks.extend(chunk["data"])
+                    elif chunk["type"] == "SentenceBoundary":
+                        s_boundaries.append(chunk)
+                if audio_chunks:
+                    break
+            except Exception as e:
+                last_err = e
+                await asyncio.sleep(1.5 * (attempt + 1))
+        if not audio_chunks and last_err:
+            raise last_err
 
         with open(out_voice_path, "wb") as f:
             f.write(audio_chunks)
@@ -2899,147 +3088,175 @@ class BrollStoryGenerator:
         avatars: Dict[str, Image.Image],
     ) -> Image.Image:
         """
-        Renders the Real-Human-Motion + Dual-Voice Podcast Audio format ('podcast_duet_giant'):
-        - Full-screen 30fps Real Emotional Human Couple Video Footage ('emo_01'..'emo_12') with warm high-luma color grade
-        - Top Giant 120px Headline (Y = 120..445) + Birth-Day Sub-Pill (Y = 482)
-        - Compact Active-Speaker Podcast Studio Waveform Pill (Y = 524..588) with circular Maya & Julian avatars,
-          'MAYA · LATE NIGHT HOST' / 'JULIAN · NUMEROLOGY & RELATIONSHIP EXPERT' badge, and live 30fps audio equalizer bars
-          (leaving Y = 595..1280 100% unobstructed for the real human couple's faces and motion!).
+        Renders Concept B — "The Angel vs. Shadow-Insider Podcast Duo" ('podcast_duet_giant'):
+        - Top Split-Screen Studio Duet Header (Y = 0..840): Guardian Angel Maya (Left) vs. Obsidian-Gold
+          Kintsugi Shadow Insider Julian (Right) with smooth 30fps cinema camera motion and dynamic
+          active-speaker spotlighting + live 30fps audio equalizer waveform bar.
+        - Bottom Real 30fps Emotional Couple Video Footage (Y = 840..1920): Warm high-luma color grade
+          with Giant 96px 3-Line Stacked Headline (Y = 1290..1715 during 0.0s..broll_cutoff) and
+          Lower-Third Match + Blurred iMessage Reveal Dock (Y = 1138..1538 during broll_cutoff..end).
         """
         import math
 
         switch_sec = float(spec.get("_switch_sec", 2.30))
         env = spec.get("_rms_envelope_30fps") or []
         rms = float(env[min(f_idx, len(env) - 1)]) if env else 0.55
-
-        # 1. Warm, vibrant color grade on real 30fps human emotional couple footage
-        sat_boost = 1.20 if t <= 1.5 else 1.12
-        frame = ImageEnhance.Color(base_frame).enhance(sat_boost)
-        arr_w = np.array(frame, dtype=np.float32)
-        arr_w[:, :, 0] = np.clip(arr_w[:, :, 0] * 1.05 + 4.0, 0, 255)
-        arr_w[:, :, 1] = np.clip(arr_w[:, :, 1] * 1.02 + 2.0, 0, 255)
-        arr_w[:, :, 2] = np.clip(arr_w[:, :, 2] * 0.96, 0, 255)
-        if float(np.mean(arr_w)) < 89.5:
-            lift = 90.5 / max(20.0, float(np.mean(arr_w)))
-            arr_w = np.clip(arr_w * lift, 0, 255)
-
-        # Soft top vignette strictly behind Y = 0..535 for Giant 120px Headline contrast
-        ramp = np.ones((1920, 1, 1), dtype=np.float32)
-        ramp[:440, 0, 0] = 0.56
-        ramp[440:545, 0, 0] = np.linspace(0.56, 1.0, 105, dtype=np.float32)
-        arr_w = np.clip(arr_w * ramp, 0, 255).astype(np.uint8)
-        frame = Image.fromarray(arr_w)
-        draw = ImageDraw.Draw(frame)
-
-        # 2. Top Giant 120px Stacked Headline (Y = 120..445) + Birth-Day Sub-Pill (Y = 480)
-        heavy_font_path = r"C:\Windows\Fonts\ariblk.ttf"
-        if not os.path.exists(heavy_font_path):
-            heavy_font_path = r"C:\Windows\Fonts\impact.ttf"
-        if not os.path.exists(heavy_font_path):
-            heavy_font_path = FONT_BOLD
-
-        color_map = {
-            "white": (255, 255, 255),
-            "gold": (255, 225, 77),
-            "coral": (255, 71, 87),
-        }
-        giant_lines = spec.get("giant_lines") or [
-            ("WHY MEN GO", "white"),
-            ("DEAD SILENT", "coral"),
-            ("BY BIRTH DAY", "gold"),
-        ]
-        cx = 540
-        curr_y = 120
-        line_step = 112
-        size_candidates = (122, 116, 110, 104, 98, 92, 86, 80)
-        for line_txt, col_key in giant_lines:
-            txt_up = line_txt.strip().upper()
-            fill_rgb = color_map.get(col_key, (255, 255, 255))
-            font_line = ImageFont.truetype(heavy_font_path, size_candidates[-1])
-            for f_sz in size_candidates:
-                cand = ImageFont.truetype(heavy_font_path, f_sz)
-                bbox = draw.textbbox((0, 0), txt_up, font=cand, stroke_width=8)
-                if (bbox[2] - bbox[0]) <= 975:
-                    font_line = cand
-                    break
-            draw.text((cx + 5, curr_y + 7), txt_up, fill=(0, 0, 0), font=font_line, anchor="mm", stroke_width=10, stroke_fill=(0, 0, 0))
-            draw.text((cx, curr_y), txt_up, fill=fill_rgb, font=font_line, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
-            curr_y += line_step
-
-        sub_pill = spec.get("giant_sub_pill")
-        if sub_pill:
-            f_pill = ImageFont.truetype(FONT_BOLD, 25)
-            pill_y = 478
-            draw.rounded_rectangle([42, pill_y - 26, 1038, pill_y + 26], radius=16, fill=(14, 16, 24), outline=(255, 225, 77), width=3)
-            draw.text((cx, pill_y), sub_pill, fill=(255, 225, 77), font=f_pill, anchor="mm")
-
-        # 3. Sleek Active-Speaker Podcast Studio Waveform Pill (Y = 516..580)
-        # Uses crisp circular studio headshots (maya_avatar_128.png & julian_avatar_128.png) + live 30fps equalizer waveform
-        if not hasattr(self, "_cached_circular_badges"):
-            self._cached_circular_badges = {}
-            for key, fn, border_rgb in [
-                ("maya", "maya_avatar_128.png", (255, 225, 77)),
-                ("julian", "julian_avatar_128.png", (56, 189, 248)),
-            ]:
-                p_av = os.path.join(BASE_DIR, fn)
-                if os.path.exists(p_av):
-                    av_img = Image.open(p_av).convert("RGBA").resize((48, 48), Image.Resampling.LANCZOS)
-                else:
-                    av_img = avatars["maya_idle" if key == "maya" else "julian_idle"].convert("RGBA").resize((48, 48), Image.Resampling.LANCZOS)
-                mask = Image.new("L", (48, 48), 0)
-                ImageDraw.Draw(mask).ellipse((0, 0, 47, 47), fill=255)
-                circ = Image.new("RGBA", (48, 48), (0, 0, 0, 0))
-                circ.paste(av_img, (0, 0), mask)
-                ImageDraw.Draw(circ).ellipse((0, 0, 47, 47), outline=border_rgb + (255,), width=3)
-                self._cached_circular_badges[key] = circ
-
         maya_active = t < switch_sec
-        bar_y0, bar_y1 = 516, 580
-        bar_mid_y = (bar_y0 + bar_y1) // 2
-        active_border = (255, 225, 77) if maya_active else (56, 189, 248)
-        draw.rounded_rectangle([42, bar_y0, 1038, bar_y1], radius=32, fill=(11, 14, 22), outline=active_border, width=3)
 
-        # Paste circular Maya & Julian studio avatars on the left of the pill
-        frame_rgba = frame.convert("RGBA")
-        frame_rgba.alpha_composite(self._cached_circular_badges["maya"], (58, bar_y0 + 8))
-        frame_rgba.alpha_composite(self._cached_circular_badges["julian"], (112, bar_y0 + 8))
-        frame = frame_rgba.convert("RGB")
-        draw = ImageDraw.Draw(frame)
+        # 1. Load & cache Concept B split panels (Guardian Angel Maya & Shadow Insider Julian)
+        if not hasattr(self, "_cached_concept_b_panels"):
+            cb_path = os.path.join(BASE_DIR, "podcast_avatars", "viral_concepts", "concept_b_angel_vs_shadow.png")
+            if os.path.exists(cb_path):
+                cb_im = Image.open(cb_path).convert("RGB")
+                cw, ch = cb_im.size
+                hw = cw // 2
+                # Crop upper 80% of each half so head + halo/horns + headphones + Shure SM7B mic fill the studio header
+                m_src = cb_im.crop((0, 0, hw - 4, int(ch * 0.80)))
+                j_src = cb_im.crop((hw + 4, 0, cw, int(ch * 0.80)))
+            else:
+                m_src = avatars["maya_idle"]
+                j_src = avatars["julian_idle"]
+            self._cached_concept_b_panels = {
+                "maya": m_src.resize((620, 960), Image.Resampling.LANCZOS),
+                "julian": j_src.resize((620, 960), Image.Resampling.LANCZOS),
+            }
 
-        # Active speaker label with crisp vector LIVE dot (no Unicode tofu box)
-        f_spk = ImageFont.truetype(FONT_BOLD, 21)
-        call_in_badge = spec.get("podcast_call_in_badge")
-        dot_col = (255, 71, 87) if maya_active else (56, 189, 248)
-        draw.ellipse([174, bar_mid_y - 7, 188, bar_mid_y + 7], fill=dot_col)
+        W, H = 1080, 1920
+        header_h = 840
+        panel_w = 538
+
+        def crop_studio_half(src_im: Image.Image, is_speaking: bool, phase_offset: float) -> Image.Image:
+            sw, sh = src_im.size
+            zoom = (1.03 + 0.035 * math.sin(t * 2.2 + phase_offset)) if is_speaking else (1.01 + 0.012 * math.sin(t * 1.1 + phase_offset))
+            cw = int(panel_w / zoom)
+            ch = int(header_h / zoom)
+            ox = int((sw - cw) * (0.50 + 0.08 * math.sin(t * 1.6 + phase_offset)))
+            oy = int((sh - ch) * (0.38 + 0.05 * math.cos(t * 1.3 + phase_offset)))
+            ox = max(0, min(sw - cw, ox))
+            oy = max(0, min(sh - ch, oy))
+            crop = src_im.crop((ox, oy, ox + cw, oy + ch)).resize((panel_w, header_h), Image.Resampling.BILINEAR)
+            b_mult = (1.06 + 0.03 * max(0.2, rms)) if is_speaking else 0.88
+            return ImageEnhance.Brightness(crop).enhance(b_mult)
+
+        maya_crop = crop_studio_half(self._cached_concept_b_panels["maya"], maya_active, 0.0)
+        julian_crop = crop_studio_half(self._cached_concept_b_panels["julian"], not maya_active, 1.5)
+
+        # 2. Prepare bottom real 30fps human couple B-roll (Y = 840..1920)
+        sat_boost = 1.20 if t <= 1.5 else 1.12
+        broll_rgb = ImageEnhance.Color(base_frame).enhance(sat_boost)
+        bw, bh = broll_rgb.size
+        # Crop center-upper section of 1080x1920 couple clip into 1080x1080 (Y = 840..1920)
+        broll_sub = broll_rgb.crop((0, int(bh * 0.10), bw, int(bh * 0.82))).resize((W, H - header_h), Image.Resampling.BILINEAR)
+        arr_b = np.array(broll_sub, dtype=np.float32)
+        arr_b[:, :, 0] = np.clip(arr_b[:, :, 0] * 1.05 + 4.0, 0, 255)
+        arr_b[:, :, 1] = np.clip(arr_b[:, :, 1] * 1.02 + 2.0, 0, 255)
+        arr_b[:, :, 2] = np.clip(arr_b[:, :, 2] * 0.96, 0, 255)
+        if float(np.mean(arr_b)) < 90.0:
+            lift = 91.0 / max(20.0, float(np.mean(arr_b)))
+            arr_b = np.clip(arr_b * lift, 0, 255)
+        broll_sub = Image.fromarray(arr_b.astype(np.uint8))
+
+        canvas = Image.new("RGB", (W, H), (12, 12, 18))
+        canvas.paste(maya_crop, (0, 0))
+        canvas.paste(julian_crop, (542, 0))
+        canvas.paste(broll_sub, (0, header_h))
+
+        draw = ImageDraw.Draw(canvas, "RGBA")
+        # Center vertical studio divider & horizontal gold divider at Y = 840
+        draw.rectangle([538, 0, 542, header_h], fill=(255, 225, 77, 255))
+        draw.rectangle([0, header_h - 4, W, header_h + 4], fill=(255, 225, 77, 255))
+
+        # Active speaker glowing frame border
         if maya_active:
-            spk_txt = f"MAYA · {call_in_badge}" if call_in_badge else "MAYA · LATE NIGHT HOST"
-            spk_col = (255, 225, 77)
+            draw.rectangle([2, 2, 536, header_h - 4], outline=(255, 225, 77, 255), width=4)
         else:
-            spk_txt = "JULIAN · NUMEROLOGY & RELATIONSHIP EXPERT"
-            spk_col = (125, 211, 252)
-        draw.text((198, bar_mid_y), spk_txt, fill=spk_col, font=f_spk, anchor="lm")
+            draw.rectangle([544, 2, 1078, header_h - 4], outline=(245, 158, 11, 255), width=4)
 
-        # Live 10-Bar 30fps Studio Equalizer Waveform on right edge of pill (X = 875..1015)
-        eq_col = (255, 225, 77) if maya_active else (56, 189, 248)
-        n_bars = 10
-        bar_w = 7
-        bar_gap = 6
-        eq_start_x = 885
-        for b_i in range(n_bars):
+        # 3. Top Studio Waveform Pill (Y = 52..120)
+        bar_y0, bar_y1 = 52, 120
+        bar_mid_y = (bar_y0 + bar_y1) // 2
+        active_border = (255, 225, 77, 255) if maya_active else (245, 158, 11, 255)
+        draw.rounded_rectangle([54, bar_y0, 1026, bar_y1], radius=34, fill=(14, 14, 24, 236), outline=active_border, width=3)
+
+        f_spk = ImageFont.truetype(FONT_BOLD, 24)
+        call_in_badge = spec.get("podcast_call_in_badge") or "ANGEL VS. SHADOW PODCAST"
+        dot_col = (255, 71, 87, 255) if maya_active else (245, 158, 11, 255)
+        draw.ellipse([82, bar_mid_y - 10, 102, bar_mid_y + 10], fill=dot_col, outline=(255, 225, 77, 255), width=2)
+        if maya_active:
+            spk_txt = f"MAYA · {call_in_badge}"
+            spk_col = (255, 225, 77, 255)
+        else:
+            spk_txt = "JULIAN · SHADOW INSIDER DECODER"
+            spk_col = (253, 186, 116, 255)
+        draw.text((118, bar_mid_y), spk_txt, fill=spk_col, font=f_spk, anchor="lm")
+
+        # Live 10-Bar 30fps Studio Equalizer Waveform on right edge of pill (X = 855..1000)
+        eq_col = (255, 225, 77, 255) if maya_active else (52, 211, 153, 255)
+        for b_i in range(10):
             wave_mod = 0.35 + 0.65 * abs(math.sin(t * 18.0 + b_i * 0.75))
-            bh = int(max(8.0, min(40.0, (10.0 + 30.0 * max(0.30, rms)) * wave_mod)))
-            bx0 = eq_start_x + b_i * (bar_w + bar_gap)
-            draw.rounded_rectangle([bx0, bar_mid_y - bh // 2, bx0 + bar_w, bar_mid_y + bh // 2], radius=3, fill=eq_col)
+            bh_bar = int(max(8.0, min(42.0, (10.0 + 30.0 * max(0.30, rms)) * wave_mod)))
+            bx0 = 860 + b_i * 14
+            draw.rounded_rectangle([bx0, bar_mid_y - bh_bar // 2, bx0 + 8, bar_mid_y + bh_bar // 2], radius=3, fill=eq_col)
 
-        # 4. Guarantee Frame Luma >= 89.5 so mobile grid covers pass the >=85 gate
-        arr_out = np.array(frame, dtype=np.float32)
+        # Speaker Name Tags at bottom of studio panels (Y = 768..824)
+        f_tag = ImageFont.truetype(FONT_BOLD, 23)
+        m_bd = (255, 225, 77, 255) if maya_active else (120, 120, 140, 200)
+        j_bd = (245, 158, 11, 255) if not maya_active else (120, 120, 140, 200)
+        draw.rounded_rectangle([28, 768, 340, 824], radius=16, fill=(14, 14, 22, 228), outline=m_bd, width=3 if maya_active else 2)
+        draw.text((184, 796), "MAYA · GUARDIAN ANGEL", fill=(255, 225, 77, 255) if maya_active else (200, 200, 215, 255), font=f_tag, anchor="mm")
+        draw.rounded_rectangle([720, 768, 1052, 824], radius=16, fill=(14, 14, 22, 228), outline=j_bd, width=3 if not maya_active else 2)
+        draw.text((886, 796), "JULIAN · SHADOW INSIDER", fill=(253, 186, 116, 255) if not maya_active else (200, 200, 215, 255), font=f_tag, anchor="mm")
+
+        # 4. Giant 96px 3-Line Stacked Headline + Birth-Day Sub-Pill (during 0.0s..broll_cutoff)
+        if t < broll_cutoff:
+            heavy_font_path = r"C:\Windows\Fonts\ariblk.ttf"
+            if not os.path.exists(heavy_font_path):
+                heavy_font_path = FONT_BOLD
+            color_map = {
+                "white": (255, 255, 255, 255),
+                "gold": (255, 225, 77, 255),
+                "coral": (255, 71, 87, 255),
+            }
+            giant_lines = spec.get("giant_lines") or [
+                ("WHY MEN GO", "white"),
+                ("DEAD SILENT", "coral"),
+                ("BY BIRTH DAY", "gold"),
+            ]
+            draw.rounded_rectangle([32, 1285, 1048, 1775], radius=28, fill=(10, 10, 16, 162))
+            cx = 540
+            curr_y = 1355
+            line_step = 114
+            size_candidates = (100, 96, 90, 84, 78)
+            for line_txt, col_key in giant_lines:
+                txt_up = line_txt.strip().upper()
+                fill_rgb = color_map.get(col_key, (255, 255, 255, 255))
+                font_line = ImageFont.truetype(heavy_font_path, size_candidates[-1])
+                for f_sz in size_candidates:
+                    cand = ImageFont.truetype(heavy_font_path, f_sz)
+                    bbox = draw.textbbox((0, 0), txt_up, font=cand, stroke_width=8)
+                    if (bbox[2] - bbox[0]) <= 975:
+                        font_line = cand
+                        break
+                draw.text((cx + 5, curr_y + 7), txt_up, fill=(0, 0, 0, 240), font=font_line, anchor="mm", stroke_width=10, stroke_fill=(0, 0, 0, 240))
+                draw.text((cx, curr_y), txt_up, fill=fill_rgb, font=font_line, anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0, 255))
+                curr_y += line_step
+
+            sub_pill = spec.get("giant_sub_pill")
+            if sub_pill:
+                f_pill = ImageFont.truetype(FONT_BOLD, 24)
+                pill_y = 1722
+                draw.rounded_rectangle([44, pill_y - 25, 1036, pill_y + 25], radius=16, fill=(14, 16, 24, 245), outline=(255, 225, 77, 255), width=3)
+                draw.text((cx, pill_y), sub_pill, fill=(255, 225, 77, 255), font=f_pill, anchor="mm")
+
+        # 5. Guarantee Frame Luma >= 90.0 so mobile grid covers pass the >=85 gate
+        arr_out = np.array(canvas, dtype=np.float32)
         cur_luma = float(np.mean(arr_out))
-        if cur_luma < 89.5:
-            delta = (90.5 - cur_luma) * 1.18
-            arr_out = np.clip(arr_out * 1.04 + delta, 0, 255)
-            frame = Image.fromarray(arr_out.astype(np.uint8))
+        if cur_luma < 90.0:
+            delta = (91.0 - cur_luma) * 1.15
+            arr_out = np.clip(arr_out * 1.03 + delta, 0, 255)
+            canvas = Image.fromarray(arr_out.astype(np.uint8))
 
-        return frame
+        return canvas
 
     def draw_native_tiktok_hook_box(
         self,
