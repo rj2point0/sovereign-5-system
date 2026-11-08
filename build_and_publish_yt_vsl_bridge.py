@@ -510,10 +510,18 @@ async def upload_vsl_and_link_related_shorts(vsl_mp4_path: str, existing_vsl_id:
         try:
             studio_home = f"https://studio.youtube.com/channel/{YT_CHANNEL_ID}"
             print(f"  [YT Auth] Navigating to {studio_home} ...", flush=True)
-            await page.goto(studio_home, wait_until="domcontentloaded", timeout=25000)
-            await asyncio.sleep(3.5)
+            await page.goto(studio_home, wait_until="domcontentloaded", timeout=15000)
+            await asyncio.sleep(2.5)
+            if "accounts.google.com" in page.url and "accountchooser" in page.url.lower():
+                acct_item = page.locator('[data-identifier="imcodingdad@gmail.com"], div:has-text("imcodingdad@gmail.com")').first
+                if await acct_item.count() > 0:
+                    try:
+                        await acct_item.click(timeout=3000)
+                        await asyncio.sleep(2.5)
+                    except Exception:
+                        pass
             if "accounts.google.com" in page.url or "signin" in page.url.lower():
-                print(f"  ✗ Not logged into YouTube Studio ({page.url}). Exiting fast.", flush=True)
+                print(f"  ✗ Not logged into YouTube Studio ({page.url}). Exiting fast (<10s).", flush=True)
                 return
             print(f"  ✓ [YT Auth] Authenticated in YouTube Studio: {page.url}", flush=True)
 
