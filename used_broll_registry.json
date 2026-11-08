@@ -87,44 +87,65 @@
     {
       "id": "short_37",
       "visual_format": "podcast_duet_giant",
-      "primary_clip": "podcast_avatars/maya_speaking_open.png",
-      "mean_luma": 86.8,
-      "updated_at": "2026-11-06T17:06:18"
+      "primary_clip": "emo_01_woman_phone_night.mp4#podcast37",
+      "mean_luma": 96.4,
+      "updated_at": "2026-11-07T05:55:31"
     },
     {
       "id": "short_38",
       "visual_format": "podcast_duet_giant",
-      "primary_clip": "podcast_avatars/maya_speaking_mid.png",
-      "mean_luma": 86.4,
-      "updated_at": "2026-11-06T17:06:52"
+      "primary_clip": "emo_02_couple_bed_backs.mp4#podcast38",
+      "mean_luma": 112.0,
+      "updated_at": "2026-11-07T05:56:16"
     },
     {
       "id": "short_39",
       "visual_format": "podcast_duet_giant",
-      "primary_clip": "podcast_avatars/maya_shocked_reaction.png",
-      "mean_luma": 87.7,
-      "updated_at": "2026-11-06T17:07:27"
+      "primary_clip": "emo_04_guy_apologizing_upset_gf.mp4#podcast39",
+      "mean_luma": 122.2,
+      "updated_at": "2026-11-07T05:56:57"
     },
     {
       "id": "short_40",
       "visual_format": "podcast_duet_giant",
-      "primary_clip": "podcast_avatars/maya_speaking_open.png#ep40",
-      "mean_luma": 86.8,
-      "updated_at": "2026-11-06T18:12:01"
+      "primary_clip": "emo_06_sofa_back_to_back.mp4#podcast40",
+      "mean_luma": 86.2,
+      "updated_at": "2026-11-07T05:57:44"
     },
     {
       "id": "short_41",
       "visual_format": "podcast_duet_giant",
-      "primary_clip": "podcast_avatars/maya_speaking_mid.png#ep41",
-      "mean_luma": 86.4,
-      "updated_at": "2026-11-06T18:12:53"
+      "primary_clip": "emo_03_couple_silence_apart.mp4#podcast41",
+      "mean_luma": 101.6,
+      "updated_at": "2026-11-07T05:58:31"
     },
     {
       "id": "short_42",
       "visual_format": "podcast_duet_giant",
-      "primary_clip": "podcast_avatars/maya_shocked_reaction.png#ep42",
-      "mean_luma": 87.7,
-      "updated_at": "2026-11-06T18:13:40"
+      "primary_clip": "emo_07_upset_after_argument.mp4#podcast42",
+      "mean_luma": 109.1,
+      "updated_at": "2026-11-07T05:59:18"
+    },
+    {
+      "id": "short_43",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "emo_05_couple_upset_disappointed.mp4#podcast43",
+      "mean_luma": 123.3,
+      "updated_at": "2026-11-07T15:57:40"
+    },
+    {
+      "id": "short_44",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "emo_02_couple_bed_backs.mp4#podcast44",
+      "mean_luma": 112.0,
+      "updated_at": "2026-11-07T15:59:13"
+    },
+    {
+      "id": "short_45",
+      "visual_format": "podcast_duet_giant",
+      "primary_clip": "emo_04_guy_apologizing_upset_gf.mp4#podcast45",
+      "mean_luma": 122.2,
+      "updated_at": "2026-11-07T16:00:07"
     }
   ]
 }

@@ -2752,21 +2752,11 @@ if (typeof window !== 'undefined') {
       if (wrap) wrap.classList.add('hidden');
     }
     else if (a === 'copy-part1-script') {
-      const lEl = $('#imessage-leadin-text');
-      const p1El = $('#imessage-part1-text');
-      const txt = ((lEl ? lEl.textContent : '') + (p1El ? p1El.textContent : '')).trim();
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(txt).catch(() => {});
-        }
-      } catch (err) { /* ignore */ }
-      sendWebhook('downsell_part1_copied', { partner_dob: state.partnerDob || '' });
-      toast(
-        state.lang === 'es'
-          ? '✅ ¡Parte 1 de tu mensaje copiada al portapapeles!'
-          : '✅ Part 1 Opening Line Copied! Paste in iMessage or unlock Part 2 below.',
-        4500
-      );
+      sendWebhook('copy_cta_checkout_clicked', {
+        partner_dob: state.partnerDob || '',
+        trigger: 'copy_text_cta_17',
+      });
+      checkoutMini('copy_text_cta_17');
     }
     else if (a === 'scroll-partner-compat') {
       const pBox = $('#partner-compat-box');
@@ -2952,7 +2942,7 @@ if (typeof window !== 'undefined') {
     if (vipOfferEl) vipOfferEl.classList.remove('hidden');
 
     const stripeUrl = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
-    ['#btn-vip-fast-action-17', '#btn-unlock-text-script', '#btn-partner-mini-cta', '#btn-checkout-mini', '#btn-downsell-fast-checkout'].forEach((sel) => {
+    ['#btn-vip-fast-action-17', '#btn-unlock-text-script', '#btn-partner-mini-cta', '#btn-checkout-mini', '#btn-downsell-fast-checkout', '#btn-copy-part1-script'].forEach((sel) => {
       const btn = $(sel);
       if (btn && stripeUrl) btn.setAttribute('data-stripe-url', stripeUrl);
     });
@@ -2998,127 +2988,130 @@ if (typeof window !== 'undefined') {
   function getPartnerSituationScript(pMoolank, situationKey, lang) {
     const isEs = lang === 'es';
     const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
+    const lockTagEn = ' 🔒 [6-WORD TRIGGER PHRASE LOCKED — UNBLUR FULL TEXT TO COPY] ';
+    const lockTagEs = ' 🔒 [FRASE DETONANTE DE 6 PALABRAS BLOQUEADA — DESBLOQUEA EL TEXTO COMPLETO PARA COPIAR] ';
     const baseEn = {
       1: {
-        leadIn: 'Hey, I loved hanging out, but I noticed ',
-        part1: 'our pace works best when neither of us forces it. ',
-        part2: 'Let\'s catch up next week when your schedule clears and we can do something real.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'only invest where the effort feels effortless on both sides. Let\'s catch up when your schedule clears.',
         secretFear: 'Being micromanaged or losing their autonomy once they let someone close.',
       },
       2: {
-        leadIn: 'Hey, I really value our connection, so I\'m ',
-        part1: 'giving us both breathing room this week instead of overthinking mixed signals. ',
-        part2: 'Talk to you in a few days when things feel grounded.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'would rather give us breathing room than overthink mixed signals. Talk in a few days when things feel grounded.',
         secretFear: 'Saying the wrong thing during conflict and being emotionally abandoned.',
       },
       3: {
-        leadIn: 'Loved our energy the other night, and I\'m ',
-        part1: 'heads-down on my own plans this week. ',
-        part2: 'Hit me when your schedule opens up and you\'re ready to lock in a real plan.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'am heads-down on my own plans this week—hit me when you\'re ready to lock in a real plan.',
         secretFear: 'Feeling trapped in heavy emotional routine where the spark dies out.',
       },
       4: {
-        leadIn: 'I\'m taking a step back this week because ',
-        part1: 'I only invest in consistency that matches mine. ',
-        part2: 'Reach out when you\'re free to actually lock in a plan without the guesswork.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'only match consistency that matches mine. Reach out when you\'re free to lock in a real plan.',
         secretFear: 'Opening up emotionally before they are 100% certain the foundation is stable.',
       },
       5: {
-        leadIn: 'Hey, had fun catching up, but I noticed ',
-        part1: 'we\'re on totally different wavelengths this week. ',
-        part2: 'Going offline for a few days—let\'s talk when things settle down on your end.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'can tell we\'re on different wavelengths this week—going offline for a few days, let\'s talk when things settle.',
         secretFear: 'Feeling suffocated by clinginess or pressured into labels too fast.',
       },
       6: {
-        leadIn: 'You know I care about us, so I\'m ',
-        part1: 'stepping back from the back-and-forth this week instead of forcing a talk. ',
-        part2: 'Let me know when you want to sit down together.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'am stepping back from the back-and-forth this week instead of forcing a talk. Let me know when you want to sit down.',
         secretFear: 'Pouring their whole heart in and discovering their devotion isn\'t reciprocated.',
       },
       7: {
-        leadIn: 'I\'m taking a step back this week because ',
-        part1: 'I know you need space to process and I value my peace too. ',
-        part2: 'Text me when you\'re ready to show up fully.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'know you need space to process and I value my peace too. Text me when you\'re ready to show up fully.',
         secretFear: 'Having their quiet need for solitude misread as not caring.',
       },
       8: {
-        leadIn: 'Hey, I loved hanging out, but I noticed ',
-        part1: 'you\'ve got a lot on your plate right now. ',
-        part2: 'Taking space on my end this week—reach out when your head is clear.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'can see you\'ve got a lot on your plate—taking space on my end this week, reach out when your head is clear.',
         secretFear: 'Showing vulnerability when their work or personal life feels out of control.',
       },
       9: {
-        leadIn: 'I felt a real spark with you, so ',
-        part1: 'I\'m stepping back instead of chasing mixed signals this week. ',
-        part2: 'Call me when you\'re ready to match my energy 100%.',
+        leadIn: 'Hey, noticed we\'ve both been in our own worlds lately—',
+        part1: 'honestly I...' + lockTagEn,
+        part2: 'am stepping back instead of chasing mixed signals this week. Call me when you\'re ready to match my energy 100%.',
         secretFear: 'Getting pulled into emotional drama that drains their fire and mission.',
       },
     };
     const baseEs = {
       1: {
-        leadIn: 'Oye, me encantó verte, pero noté que ',
-        part1: 'nuestro ritmo fluye mejor cuando ninguno lo fuerza. ',
-        part2: 'Hablemos la próxima semana cuando tengas tiempo real.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'prefiero que nuestro ritmo fluya sin forzarlo. Hablemos la próxima semana cuando tengas tiempo real.',
         secretFear: 'Sentirse controlado o perder su independencia al enamorarse.',
       },
       2: {
-        leadIn: 'Valoro mucho nuestra conexión, así que voy a ',
-        part1: 'darnos espacio esta semana para no sobrepensar las cosas. ',
-        part2: 'Hablamos en unos días con calma.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'prefiero darnos espacio esta semana para no sobrepensar. Hablamos en unos días con calma.',
         secretFear: 'Equivocarse en una discusión y ser rechazado emocionalmente.',
       },
       3: {
-        leadIn: 'Me encantó nuestra energía la otra noche, y ',
-        part1: 'esta semana estaré enfocado en mis planes. ',
-        part2: 'Escríbeme cuando estés listo para armar un plan real.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'estaré enfocado en mis planes esta semana. Escríbeme cuando estés listo para armar un plan real.',
         secretFear: 'Caer en una rutina pesada donde se apague la chispa.',
       },
       4: {
-        leadIn: 'Voy a tomar distancia esta semana porque yo ',
-        part1: 'solo invierto donde hay constancia mutua. ',
-        part2: 'Avísame cuando tengas claro qué quieres construir.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'solo invierto donde hay constancia mutua. Avísame cuando tengas claro qué quieres construir.',
         secretFear: 'Entregarse antes de estar 100% seguro de que hay estabilidad.',
       },
       5: {
-        leadIn: 'Oye, la pasé genial contigo, pero noté que ',
-        part1: 'estamos en sintonías distintas esta semana. ',
-        part2: 'Me desconecto unos días; hablamos cuando todo se calme.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'noto que estamos en sintonías distintas esta semana. Me desconecto unos días; hablamos cuando todo se calme.',
         secretFear: 'Sentirse asfixiado por reclamos o presionado antes de tiempo.',
       },
       6: {
-        leadIn: 'Sabes que me importas mucho, así que prefiero ',
-        part1: 'dar un paso atrás esta semana en vez de forzar conversaciones. ',
-        part2: 'Avísame cuando quieras hablar bien.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'prefiero dar un paso atrás esta semana en vez de forzar conversaciones. Avísame cuando quieras hablar bien.',
         secretFear: 'Dar todo su corazón y sentir que no lo valoran igual.',
       },
       7: {
-        leadIn: 'Voy a tomar un respiro esta semana porque ',
-        part1: 'sé que necesitas tu espacio para procesar y yo también valoro mi paz. ',
-        part2: 'Escríbeme cuando estés presente.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'sé que necesitas tu espacio para procesar y yo también valoro mi paz. Escríbeme cuando estés presente.',
         secretFear: 'Que su necesidad de silencio se malinterprete como falta de amor.',
       },
       8: {
-        leadIn: 'Oye, me encantó salir contigo, pero noté que ',
-        part1: 'tienes mil cosas en la cabeza ahora mismo. ',
-        part2: 'Tomo distancia de mi lado; búscame cuando estés libre.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'veo que tienes mil cosas en la cabeza. Tomo distancia de mi lado; búscame cuando estés libre.',
         secretFear: 'Mostrarse vulnerable cuando siente presión en su vida o trabajo.',
       },
       9: {
-        leadIn: 'Sentí una chispa real contigo, así que prefiero ',
-        part1: 'dar un paso atrás en lugar de perseguir señales confusas. ',
-        part2: 'Llámame cuando quieras igualar mi energía.',
+        leadIn: 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—',
+        part1: 'sinceramente yo...' + lockTagEs,
+        part2: 'prefiero dar un paso atrás en lugar de perseguir señales confusas. Llámame cuando quieras igualar mi energía.',
         secretFear: 'Entrar en dramas emocionales que desgasten su energía.',
       },
     };
     const item = (isEs ? baseEs : baseEn)[pMoolank] || (isEs ? baseEs[7] : baseEn[7]);
+    const lockTag = isEs ? lockTagEs : lockTagEn;
     if (sit === 'cold') {
       return {
         leadIn: isEs
-          ? `Noté que tu energía cambió de golpe, así que para un #${pMoolank} prefiero `
-          : `I can feel your energy shifted this week, so instead of chasing a #${pMoolank} I'm `,
+          ? `Noté que tu energía cambió de golpe, así que para un #${pMoolank}—`
+          : `I can feel your energy shifted this week, so instead of chasing a #${pMoolank}—`,
         part1: isEs
-          ? 'enfocarme en mi propia paz y dejar que baje la tensión sin reclamos. '
-          : 'giving you space to reset while I focus on my own week without pressure. ',
+          ? 'sinceramente yo...' + lockTag
+          : 'honestly I...' + lockTag,
         part2: item.part2,
         secretFear: item.secretFear,
       };
@@ -3126,11 +3119,11 @@ if (typeof window !== 'undefined') {
     if (sit === 'pulled_away') {
       return {
         leadIn: isEs
-          ? `Lo pasamos increíble hace unos días, pero como te alejaste de repente voy a `
-          : `We got super close the other night, so instead of over-texting while you pull back I'm `,
+          ? `Lo pasamos increíble hace unos días, pero como te alejaste de repente—`
+          : `We got super close the other night, so instead of over-texting while you pull back—`,
         part1: isEs
-          ? 'tomar mi propio espacio esta semana para que ninguno sienta presión. '
-          : 'stepping back to let our pace breathe naturally without forcing a label. ',
+          ? 'sinceramente yo...' + lockTag
+          : 'honestly I...' + lockTag,
         part2: item.part2,
         secretFear: item.secretFear,
       };
@@ -3138,11 +3131,11 @@ if (typeof window !== 'undefined') {
     if (sit === 'silence') {
       return {
         leadIn: isEs
-          ? `No me gustan las guerras de orgullo ni el silencio, así que te dejo `
-          : `I don't do stubborn silent standoffs with someone I care about, so I'm `,
+          ? `No me gustan las guerras de orgullo ni el silencio, así que—`
+          : `I don't do stubborn silent standoffs with someone I care about, so—`,
         part1: isEs
-          ? 'espacio total esta semana para que proceses sin que yo te insista. '
-          : 'dropping the tug-of-war on my end and taking space to protect my peace. ',
+          ? 'sinceramente yo...' + lockTag
+          : 'honestly I...' + lockTag,
         part2: item.part2,
         secretFear: item.secretFear,
       };
@@ -3195,17 +3188,20 @@ if (typeof window !== 'undefined') {
     };
     const trait = (isEs ? driverTraitsEs : driverTraitsEn)[pMoolank] || (isEs ? driverTraitsEs[7] : driverTraitsEn[7]);
 
+    const lockTagEn = ' 🔒 [6-WORD TRIGGER PHRASE LOCKED — UNBLUR FULL TEXT TO COPY] ';
+    const lockTagEs = ' 🔒 [FRASE DETONANTE DE 6 PALABRAS BLOQUEADA — DESBLOQUEA EL TEXTO COMPLETO PARA COPIAR] ';
+    const lockTag = isEs ? lockTagEs : lockTagEn;
     if (category === 'excuse_busy') {
       return {
         translation: isEs
           ? `🧠 <b>Por qué un ${dLabelEs} envió esto:</b> Un #${pMoolank} (${pRuler}) ${trait}. Cuando dice que está "ocupado/a", en realidad está midiendo si le reclamas o si tienes tu propia vida emocionante.`
           : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. When they use the "busy/swamped" excuse, their nervous system is testing whether you'll react with needy pressure or calm high-value independence.`,
         leadIn: isEs
-          ? 'Totalmente, sé que tu semana está a mil, así que '
-          : 'Totally get it—sounds like a packed week, so I\'m ',
+          ? 'Totalmente, sé que tu semana está a mil—'
+          : 'Totally get it—sounds like a packed week, and ',
         part1: isEs
-          ? 'enfócate en lo tuyo y yo aprovecho para avanzar en mis propios planes esta semana. '
-          : 'letting you handle your schedule while I dive into my own plans this week. ',
+          ? 'sinceramente yo...' + lockTag
+          : 'honestly I...' + lockTag,
         part2: isEs
           ? 'Escríbeme cuando estés libre de verdad y armamos algo sin prisa.'
           : 'Hit me when your head is clear and you\'re ready to lock in real time together.',
@@ -3217,11 +3213,11 @@ if (typeof window !== 'undefined') {
           ? `🧠 <b>Por qué un ${dLabelEs} envió esto:</b> Un #${pMoolank} (${pRuler}) ${trait}. Este mensaje corto/seco es un reflejo de bajo esfuerzo porque siente que ya tiene tu atención asegurada.`
           : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. This short, dry reply happens when they feel 100% certain you'll keep carrying the conversation for both of you.`,
         leadIn: isEs
-          ? 'Jaja te dejo seguir con tu día, yo me desconecto porque '
-          : 'Haha I\'ll let you get back to your day—I\'m unplugging because ',
+          ? 'Jaja te dejo seguir con tu día—'
+          : 'Haha I\'ll let you get back to your day—',
         part1: isEs
-          ? 'prefiero hablar cuando ambos tengamos tiempo y ganas de conversar bien. '
-          : 'I only like texting when we both have the energy for a real conversation. ',
+          ? 'sinceramente yo...' + lockTag
+          : 'honestly I...' + lockTag,
         part2: isEs
           ? 'Hablamos en unos días cuando tengas algo bueno que contarme.'
           : 'Catch up with me later this week when you\'re ready to actually talk.',
@@ -3233,11 +3229,11 @@ if (typeof window !== 'undefined') {
           ? `🧠 <b>Por qué un ${dLabelEs} actúa así:</b> Un #${pMoolank} (${pRuler}) ${trait}. Su silencio no es olvido; necesita sentir tu ausencia para que se active su miedo a perderte.`
           : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. Their silence is a decompression shield—they need to feel your absence before their fear of losing you kicks in.`,
         leadIn: isEs
-          ? 'Oye, noté que ambos hemos estado en nuestro mundo, así que '
-          : 'Hey, noticed we\'ve both been in our own worlds lately, so I\'m ',
+          ? 'Oye, noté que ambos hemos estado en nuestro propio mundo últimamente—'
+          : 'Hey, noticed we\'ve both been in our own worlds lately—',
         part1: isEs
-          ? 'te doy espacio total esta semana sin presionar nada entre nosotros. '
-          : 'taking a step back from texting this week so neither of us feels pressured. ',
+          ? 'sinceramente yo...' + lockTag
+          : 'honestly I...' + lockTag,
         part2: isEs
           ? 'Avísame cuando extrañes nuestra energía y quieras vernos.'
           : 'Reach out when you\'re ready to pick things back up in person.',
@@ -3248,11 +3244,11 @@ if (typeof window !== 'undefined') {
         ? `🧠 <b>Por qué un ${dLabelEs} envió esto:</b> Un #${pMoolank} (${pRuler}) ${trait}. Esas señales mixtas significan que la atracción existe, pero teme perder el control si se entrega demasiado rápido.`
         : `🧠 <b>Why a ${dLabel} sent this:</b> A #${pMoolank} (${pRuler}) ${trait}. These mixed signals mean the attraction is real, but they are testing whether you'll chase their uncertainty or lean back with confidence.`,
       leadIn: isEs
-        ? 'Me encanta cuando fluimos bien, pero ante la duda prefiero '
-        : 'I love our vibe when it\'s clear, so instead of guessing mixed signals I\'m ',
+        ? 'Me encanta cuando fluimos bien, pero ante la duda—'
+        : 'I love our vibe when it\'s clear, so instead of guessing mixed signals—',
       part1: isEs
-        ? 'dar un paso atrás esta semana para que todo se acomode sin forzarlo. '
-        : 'stepping back this week and letting things breathe naturally on both sides. ',
+        ? 'sinceramente yo...' + lockTag
+        : 'honestly I...' + lockTag,
       part2: isEs
         ? 'Búscame cuando tengas claro qué quieres que hagamos.'
         : 'Text me when you know what you want and we\'ll take it from there.',
@@ -3565,8 +3561,8 @@ if (typeof window !== 'undefined') {
         </div>
         <div id="imessage-part2-locked-callout" class="hidden mt-2 p-2.5 rounded-lg bg-black/55 border border-gold/55 text-[0.7rem] sm:text-xs text-gold font-semibold leading-snug">
           🔒 ${isEs
-            ? 'BLOQUEADO EN LA PARTE 2: El resto de este mensaje + qué te responderá + los 3 mejores días para escribirle este mes'
-            : 'LOCKED IN PART 2: The rest of this text + what they will reply + the 3 best days to text them this month'}
+            ? '[FRASE DETONANTE DE 6 PALABRAS BLOQUEADA — DESBLOQUEA EL TEXTO COMPLETO PARA COPIAR] · El resto de este mensaje + qué te responderá + los 3 mejores días para escribirle este mes'
+            : '[6-WORD TRIGGER PHRASE LOCKED — UNBLUR FULL TEXT TO COPY] · The rest of this text + what they will reply + the 3 best days to text them this month'}
         </div>
         <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
           🔒 ${isEs
@@ -3627,8 +3623,8 @@ if (typeof window !== 'undefined') {
               ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($17) →'
               : '1-Tap Express Unlock: Unblur Full Text Message Now ($17) →'}
           </button>
-          <button type="button" id="btn-copy-part1-script" data-action="copy-part1-script" class="btn-ghost !py-2.5 !px-3 text-xs font-bold text-champagne border-gold/45 hover:border-gold whitespace-nowrap">
-            📋 ${isEs ? 'Copiar Parte 1 Gratis' : 'Copy Free Opening Line'}
+          <button type="button" id="btn-copy-part1-script" data-action="copy-part1-script" style="display:block;text-align:center;" class="btn-ghost !py-2.5 !px-3 flex-1 text-xs font-bold text-champagne border-gold/45 hover:border-gold">
+            📋 ${isEs ? 'Copiar Mensaje de Texto Completo Sin Difuminar ($17 Desbloqueo Instantáneo) →' : 'Copy Full Unblurred Text Message To Clipboard ($17 Instant Unlock) →'}
           </button>
         </div>
       </div>

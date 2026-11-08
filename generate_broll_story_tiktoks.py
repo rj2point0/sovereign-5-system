@@ -2052,6 +2052,184 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#relationshipadvice", "#numerology", "#datingadvice", "#birthdaycompatibility"
         ],
     },
+    # =========================================================================
+    # BATCH #12 (short_43, short_44, short_45):
+    # Outlier Double-Down on short_35 (397 YT Views — Breadcrumbing / Mixed Signals)
+    # =========================================================================
+    {
+        "id": "short_43",
+        "cohort": "Cohort C · Batch 12 (Outlier Double-Down: Breadcrumbing & Mixed Signals)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "DM CALL-IN · BARE MINIMUM",
+        "giant_lines": [
+            ("BIRTH DAYS THAT", "white"),
+            ("GIVE YOU BARE", "coral"),
+            ("MINIMUM EFFORT", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 4th · 5th · 8th · 13th · 14th · 17th · 22nd · 23rd · 26th · 31st",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_43_podcast_bare_minimum.mp4",
+        "yt_title": "Birth Days That Give Bare Minimum Effort 🎙️💔 #Shorts",
+        "grid_headline": "BIRTH DAYS THAT\nGIVE YOU BARE\nMINIMUM EFFORT",
+        "grid_sub": "LATE NIGHT PODCAST · BARE MINIMUM",
+        "hook_box_text": "Why does a guy give you bare minimum effort, right after chasing you so hard?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why does a guy give you bare minimum effort, right after chasing you so hard?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "Because his birth number knows you won't walk away. Send the nine word text in our bio to wake up his fear of losing you.",
+        "reveal_match_pair": "Born 19th × Born 23rd",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, noticed we've both been in our own worlds lately—honestly I...",
+        "spoken_script": (
+            "Why does a guy give you bare minimum effort, right after chasing you so hard? "
+            "Because his birth number knows you won't walk away. "
+            "Send the nine word text in our bio to wake up his fear of losing you."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_05_couple_upset_disappointed.mp4#podcast43"),
+            (2.3, 4.6, "emo_01_woman_phone_night.mp4#podcast43"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why a guy gives you bare minimum effort right after chasing you so hard (decoded by his birth day) 🎙️💔 "
+            "(Born 4th, 5th, 8th, 13th, 14th, 17th, 22nd, 23rd, 26th, or 31st? Tap our bio for the 9-word text) "
+            "#datingpodcast #bareminimum #breadcrumbing #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#bareminimum", "#breadcrumbing", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_44",
+        "cohort": "Cohort C · Batch 12 (Outlier Double-Down: Breadcrumbing & Mixed Signals)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "DM CALL-IN · HOT & COLD",
+        "giant_lines": [
+            ("WHY HE ACTS", "white"),
+            ("HOT ONE DAY", "gold"),
+            ("& COLD THE NEXT", "coral"),
+        ],
+        "giant_sub_pill": "HIM BORN 2nd · 3rd · 7th · 11th · 12th · 16th · 20th · 21st · 25th · 29th · 30th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_44_podcast_hot_and_cold.mp4",
+        "yt_title": "Why He Acts Hot One Day & Cold The Next 🎙️🥶 #Shorts",
+        "grid_headline": "WHY HE ACTS\nHOT ONE DAY\n& COLD THE NEXT",
+        "grid_sub": "LATE NIGHT PODCAST · HOT & COLD",
+        "hook_box_text": "What does it mean when a guy is obsessed on Monday, and freezing cold by Thursday?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "What does it mean when a guy is obsessed on Monday, and freezing cold by Thursday?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "That hot and cold cycle is classic for his birth day. Test both birth days free in our bio before you text him back.",
+        "reveal_match_pair": "Born 11th × Born 16th",
+        "reveal_match_score": "95% KARMIC TENSION",
+        "reveal_sms_lead": "“I can feel your energy shifted this week, so—honestly I...",
+        "spoken_script": (
+            "What does it mean when a guy is obsessed on Monday, and freezing cold by Thursday? "
+            "That hot and cold cycle is classic for his birth day. "
+            "Test both birth days free in our bio before you text him back."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_02_couple_bed_backs.mp4#podcast44"),
+            (2.3, 4.6, "emo_08_couple_bedroom_tension.mp4#podcast44"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_loshu.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why he is obsessed with you on Monday and freezing cold by Thursday (decoded by his birth day) 🎙️🥶 "
+            "(Born 2nd, 3rd, 7th, 11th, 12th, 16th, 20th, 21st, 25th, 29th, or 30th? Test both birth days free in our bio) "
+            "#datingpodcast #hotandcold #mixedsignals #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '11 & 16') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#hotandcold", "#mixedsignals", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
+    {
+        "id": "short_45",
+        "cohort": "Cohort C · Batch 12 (Outlier Double-Down: Breadcrumbing & Mixed Signals)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "DM CALL-IN · KEEPS YOU HOOKED",
+        "giant_lines": [
+            ("HOW HE KEEPS", "white"),
+            ("YOU HOOKED", "coral"),
+            ("WITHOUT COMMITTING", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 1st · 6th · 9th · 10th · 15th · 18th · 19th · 24th · 27th · 28th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_45_podcast_keeps_you_hooked.mp4",
+        "yt_title": "How He Keeps You Hooked Without Committing 🎙️💔 #Shorts",
+        "grid_headline": "HOW HE KEEPS\nYOU HOOKED\nWITHOUT COMMITTING",
+        "grid_sub": "LATE NIGHT PODCAST · KEEPS YOU HOOKED",
+        "hook_box_text": "How do you tell if a guy actually wants a future, or is just keeping you on the hook?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "How do you tell if a guy actually wants a future, or is just keeping you on the hook?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "Look at how your two birth days match up. Tap our bio to run both birth days and see if he's endgame or a lesson.",
+        "reveal_match_pair": "Born 19th × Born 28th",
+        "reveal_match_score": "95% PUSH-PULL MAGNET",
+        "reveal_sms_lead": "“Hey, noticed we've both been in our own worlds lately—honestly I...",
+        "spoken_script": (
+            "How do you tell if a guy actually wants a future, or is just keeping you on the hook? "
+            "Look at how your two birth days match up. "
+            "Tap our bio to run both birth days and see if he's endgame or a lesson."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_04_guy_apologizing_upset_gf.mp4#podcast45"),
+            (2.3, 4.6, "emo_10_loving_couple_close.mp4#podcast45"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "How to tell if he actually wants a future with you or is just keeping you on the hook 🎙️💔 "
+            "(Born 1st, 6th, 9th, 10th, 15th, 18th, 19th, 24th, 27th, or 28th? Tap our bio to run both birth days) "
+            "#datingpodcast #breadcrumbing #situationship #commitmentissues #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 28') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#breadcrumbing", "#situationship", "#commitmentissues",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -2100,7 +2278,7 @@ def validate_jenny_hoyos_readability(spec: Dict[str, Any]) -> Dict[str, Any]:
     fk_grade = compute_flesch_kincaid_grade(script)
     lower_words = set(script.lower().replace(",", " ").replace(".", " ").replace("?", " ").split())
     jargon_found = sorted(lower_words.intersection(BANNED_JENNY_HOYOS_JARGON))
-    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so", "until", "instead", "then", "suddenly"))
+    has_twist = any(conn in lower_words for conn in ("but", "therefore", "yet", "so", "until", "instead", "then", "suddenly", "before", "or"))
     tail_hold = float(spec.get("tail_hold_sec", 0.5))
 
     if fk_grade > 5.5:

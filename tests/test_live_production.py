@@ -192,6 +192,10 @@ async def verify_live_pages():
         await page_clean.click("#btn-show-downsell-box")
         await asyncio.sleep(0.15)
         assert await page_clean.is_visible("#downsell-script-only-box") is True
+        live_copy_btn_txt = await page_clean.locator("#btn-copy-part1-script").inner_text()
+        assert "copy full unblurred text message to clipboard ($17 instant unlock)" in live_copy_btn_txt.lower(), f"Unexpected live #btn-copy-part1-script text: {live_copy_btn_txt}"
+        live_p1_txt = await page_clean.locator("#imessage-part1-text").inner_text()
+        assert "honestly i..." in live_p1_txt.lower() and "[6-word trigger phrase locked — unblur full text to copy]" in live_p1_txt.lower(), f"Unexpected live #imessage-part1-text cliffhanger: {live_p1_txt}"
         assert await page_clean.is_visible("#julian-insider-take-box") is True
         live_julian_hdr = await page_clean.locator("#julian-insider-take-heading").inner_text()
         assert "Julian · Numerology & Relationship Expert" in live_julian_hdr, f"Expected 'Julian · Numerology & Relationship Expert' on live site, got '{live_julian_hdr}'"

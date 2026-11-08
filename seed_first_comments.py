@@ -54,6 +54,24 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_45",
+        "video_id": None,
+        "title_match": "How to tell if he actually wants a future with you or is just keeping you on the hook",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 28') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_44",
+        "video_id": None,
+        "title_match": "Why he is obsessed with you on Monday and freezing cold by Thursday",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '11 & 16') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_43",
+        "video_id": None,
+        "title_match": "Why a guy gives you bare minimum effort right after chasing you so hard",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_42",
         "video_id": None,
         "title_match": "What to do when a guy starts sending dry 1-word text replies",

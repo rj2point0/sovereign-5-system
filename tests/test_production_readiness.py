@@ -321,6 +321,9 @@ async def test_all():
         assert await page_prod.is_visible('#imessage-part2-locked-callout') is True, "Expected #imessage-part2-locked-callout to appear on email submit!"
         p2_callout_txt = await page_prod.locator('#imessage-part2-locked-callout').inner_text()
         assert "3 best days to text them this month" in p2_callout_txt.lower(), f"Unexpected #imessage-part2-locked-callout text: {p2_callout_txt}"
+        assert "[6-word trigger phrase locked — unblur full text to copy]" in p2_callout_txt.lower(), f"Expected 6-word trigger lock badge in #imessage-part2-locked-callout, got: {p2_callout_txt}"
+        p1_txt = await page_prod.locator('#imessage-part1-text').inner_text()
+        assert "honestly i..." in p1_txt.lower() and "[6-word trigger phrase locked — unblur full text to copy]" in p1_txt.lower(), f"Expected mid-sentence cliffhanger in #imessage-part1-text, got: {p1_txt}"
         p1_filter = await page_prod.evaluate("() => getComputedStyle(document.querySelector('#imessage-part1-text')).filter")
         assert p1_filter == "none", f"Expected #imessage-part1-text filter to be 'none' after email submit, got '{p1_filter}'"
         assert await page_prod.is_visible('#vip-fast-action-offer') is True, "Expected #vip-fast-action-offer to appear immediately on email submit!"
@@ -372,24 +375,24 @@ async def test_all():
         for f_req in ("og-preview.png", "favicon.svg", "llms.txt", "robots.txt", "sitemap.xml"):
             assert os.path.exists(os.path.join(base_dir, f_req)), f"Missing {f_req}"
 
-        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_42
+        # Verify Jenny Hoyos 5th-Grade Readability Gate on short_10 through short_45
         import sys as _sys
         if base_dir not in _sys.path:
             _sys.path.insert(0, base_dir)
         from generate_broll_story_tiktoks import COHORT_C_SPECS, validate_jenny_hoyos_readability
-        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42")]
-        assert len(jh_specs) == 33, f"Expected 33 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
+        jh_specs = [s for s in COHORT_C_SPECS if s["id"] in ("short_10", "short_11", "short_12", "short_13", "short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42", "short_43", "short_44", "short_45")]
+        assert len(jh_specs) == 36, f"Expected 36 Jenny Hoyos / Outlier specs, found {len(jh_specs)}"
         for s in jh_specs:
             gate_res = validate_jenny_hoyos_readability(s)
             assert gate_res["fk_grade"] <= 5.5, f"Expected FK Grade <= 5.5 for {s['id']}, got {gate_res['fk_grade']}"
-            if s["id"] in ("short_13", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42"):
+            if s["id"] in ("short_13", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42", "short_43", "short_44", "short_45"):
                 assert gate_res["fk_grade"] <= 4.5, f"Expected FK Grade <= 4.5 for {s['id']}, got {gate_res['fk_grade']}"
             elif s["id"] in ("short_14", "short_15", "short_16", "short_17", "short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30"):
                 assert gate_res["fk_grade"] <= 5.0, f"Expected FK Grade <= 5.0 for {s['id']}, got {gate_res['fk_grade']}"
         from seed_first_comments import TARGET_FIRST_COMMENTS, is_automod_safe_first_comment
         for tfc in TARGET_FIRST_COMMENTS:
             assert is_automod_safe_first_comment(tfc["comment"]), f"First comment for {tfc['id']} failed automod-safe check: {tfc['comment']}"
-            if tfc["id"] in ("short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42"):
+            if tfc["id"] in ("short_18", "short_19", "short_20", "short_21", "short_22", "short_23", "short_24", "short_25", "short_26", "short_27", "short_28", "short_29", "short_30", "short_31", "short_32", "short_33", "short_34", "short_35", "short_36", "short_37", "short_38", "short_39", "short_40", "short_41", "short_42", "short_43", "short_44", "short_45"):
                 assert "Compatibility % score" in tfc["comment"] and len(tfc["comment"]) <= 145, f"Expected 2-Birthday Match % Bait on {tfc['id']}, got {tfc['comment']}"
         from lead_capture_worker import build_cart_recovery_email, collect_lead_partner_checks_and_intent, calculate_5_systems
         geet_intent = collect_lead_partner_checks_and_intent("geet08190@gmail.com", "1986-02-19", "1988-08-19")
@@ -730,6 +733,31 @@ async def test_all():
         assert await page_mob.is_visible('#partner-compat-email-box') is False, "Expected duplicate #partner-compat-email-box hidden after Part 1 unlock"
         assert await page_mob.is_visible('#downsell-script-only-box') is False, "Expected duplicate #downsell-script-only-box hidden after Part 1 unlock"
         assert await page_mob.is_visible('#downsell-fast-email-wrap') is False, "Expected duplicate #downsell-fast-email-wrap hidden after Part 1 unlock"
+
+        # Reveal #downsell-script-only-box via #btn-show-downsell-box and verify #btn-copy-part1-script is now a $17 Instant Unlock checkout trigger
+        await page_mob.click('#btn-show-downsell-box')
+        await asyncio.sleep(0.15)
+        assert await page_mob.is_visible('#downsell-script-only-box') is True, "Expected #downsell-script-only-box visible after clicking #btn-show-downsell-box"
+        copy_btn_txt = await page_mob.locator('#btn-copy-part1-script').inner_text()
+        assert "copy full unblurred text message to clipboard ($17 instant unlock)" in copy_btn_txt.lower(), f"Unexpected #btn-copy-part1-script text: {copy_btn_txt}"
+        copy_stripe_urls = []
+        async def mock_copy_stripe_route(route):
+            copy_stripe_urls.append(route.request.url)
+            await route.fulfill(status=200, body="stripe_mock_copy")
+        await page_mob.route("https://buy.stripe.com/**", mock_copy_stripe_route)
+        await page_mob.click('#btn-copy-part1-script')
+        await asyncio.sleep(0.25)
+        copy_evs = [e for e in demo_events if e.get("event_type") == "copy_cta_checkout_clicked"]
+        assert len(copy_evs) >= 1, f"Expected copy_cta_checkout_clicked telemetry event on #btn-copy-part1-script click, got {[e.get('event_type') for e in demo_events]}"
+        copy_co_evs = [
+            e for e in demo_events
+            if e.get("event_type") == "checkout_clicked"
+            and (e.get("extra") or {}).get("tier") == "love_mini"
+            and (e.get("extra") or {}).get("trigger") == "copy_text_cta_17"
+        ]
+        assert len(copy_co_evs) >= 1, f"Expected checkout_clicked with trigger='copy_text_cta_17', got {demo_events}"
+        assert any("dRm8wP7VL0Md1gA0zd38404" in u and "prefilled_email=mobile.audit%40gmail.com" in u for u in copy_stripe_urls), f"Expected $17 Stripe URL with prefilled_email on #btn-copy-part1-script click, got {copy_stripe_urls}"
+        await page_mob.unroute("https://buy.stripe.com/**")
 
         await page_mob.close()
         print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill, $17 Impulse Tier & ?d1=19&d2=23 Viral Partner Share verified!")
