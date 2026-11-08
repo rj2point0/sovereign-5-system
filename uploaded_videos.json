@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-07T06:15:46.891856",
+  "updated_at": "2026-11-07T16:06:38.751555",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -428,6 +428,33 @@
       "schedule_time": "2026-11-12 11:00",
       "uploaded_at": "2026-11-07T06:15:46.891856",
       "caption_preview": "What to do when a guy starts sending dry 1-word text replies (never ask if he's mad!) 🎙️📱 (Born 2nd, 6th, 9th, 11th, 15t"
+    },
+    "tiktok_short_43_podcast_bare_minimum.mp4": {
+      "filename": "tiktok_short_43_podcast_bare_minimum.mp4",
+      "ad_id": "short_43",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-12 18:30",
+      "uploaded_at": "2026-11-07T16:05:24.220208",
+      "caption_preview": "Why a guy gives you bare minimum effort right after chasing you so hard (decoded by his birth day) 🎙️💔 (Born 4th, 5th, 8"
+    },
+    "tiktok_short_44_podcast_hot_and_cold.mp4": {
+      "filename": "tiktok_short_44_podcast_hot_and_cold.mp4",
+      "ad_id": "short_44",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-13 11:00",
+      "uploaded_at": "2026-11-07T16:06:00.656020",
+      "caption_preview": "Why he is obsessed with you on Monday and freezing cold by Thursday (decoded by his birth day) 🎙️🥶 (Born 2nd, 3rd, 7th, "
+    },
+    "tiktok_short_45_podcast_keeps_you_hooked.mp4": {
+      "filename": "tiktok_short_45_podcast_keeps_you_hooked.mp4",
+      "ad_id": "short_45",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-13 18:30",
+      "uploaded_at": "2026-11-07T16:06:38.751555",
+      "caption_preview": "How to tell if he actually wants a future with you or is just keeping you on the hook 🎙️💔 (Born 1st, 6th, 9th, 10th, 15t"
     }
   }
 }

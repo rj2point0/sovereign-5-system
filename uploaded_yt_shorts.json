@@ -235,7 +235,46 @@
       "prompt_seeded": true,
       "sample_seeded": true,
       "pinned": true
+    },
+    "short_43": {
+      "id": "short_43",
+      "filename": "tiktok_short_43_podcast_bare_minimum.mp4",
+      "title": "Birth Days That Give Bare Minimum Effort 🎙️💔 #Shorts",
+      "video_id": "XbNVIjb4eBo",
+      "url": "https://www.youtube.com/shorts/XbNVIjb4eBo",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-07T16:04:14.869327",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_44": {
+      "id": "short_44",
+      "filename": "tiktok_short_44_podcast_hot_and_cold.mp4",
+      "title": "Why He Acts Hot One Day & Cold The Next 🎙️🥶 #Shorts",
+      "video_id": "XYtxS5vllUE",
+      "url": "https://www.youtube.com/shorts/XYtxS5vllUE",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-07T16:05:03.227485",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
+    },
+    "short_45": {
+      "id": "short_45",
+      "filename": "tiktok_short_45_podcast_keeps_you_hooked.mp4",
+      "title": "How He Keeps You Hooked Without Committing 🎙️💔 #Shorts",
+      "video_id": "A1QCTI8JKYg",
+      "url": "https://www.youtube.com/shorts/A1QCTI8JKYg",
+      "status": "published",
+      "schedule": "LIVE",
+      "uploaded_at": "2026-11-07T16:05:51.681750",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
     }
   },
-  "updated_at": "2026-11-07T06:13:55.904914"
+  "updated_at": "2026-11-07T16:06:14.487613"
 }

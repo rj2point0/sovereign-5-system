@@ -68,6 +68,30 @@ SAMPLE_MATCH_REPLY = (
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
     {
+        "id": "short_43",
+        "filename": "tiktok_short_43_podcast_bare_minimum.mp4",
+        "title": "Birth Days That Give Bare Minimum Effort 🎙️💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_44",
+        "filename": "tiktok_short_44_podcast_hot_and_cold.mp4",
+        "title": "Why He Acts Hot One Day & Cold The Next 🎙️🥶 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_45",
+        "filename": "tiktok_short_45_podcast_keeps_you_hooked.mp4",
+        "title": "How He Keeps You Hooked Without Committing 🎙️💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
         "id": "short_40",
         "filename": "tiktok_short_40_podcast_watches_stories.mp4",
         "title": "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts",
@@ -898,8 +922,6 @@ async def run_pipeline(do_rebrand: bool = True, do_upload: bool = True):
                 save_tracker(tracker)
 
         if do_upload:
-            old_puppet_ids = ["NMNeglNvzJo", "LVGf3qKgyXs", "L_MDz5EMc0k", "MeCHD1iMk2Y", "e4GQk6903_c", "BqWALaHQXB0"]
-            await delete_old_short_uploads(page, old_puppet_ids)
             for k in list(tracker.get("videos", {}).keys()):
                 if tracker["videos"][k].get("ReplaceOld"):
                     del tracker["videos"][k]
