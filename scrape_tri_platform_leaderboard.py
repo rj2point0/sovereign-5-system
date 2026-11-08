@@ -24,6 +24,9 @@ IG_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\ig_browser_profile"
 TT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\tiktok_browser_profile"
 
 YT_VIDEOS = [
+    ("short_45", "A1QCTI8JKYg", "How He Keeps You Hooked Without Committing 🎙️💔 #Shorts"),
+    ("short_44", "XYtxS5vllUE", "Why He Acts Hot One Day & Cold The Next 🎙️🥶 #Shorts"),
+    ("short_43", "XbNVIjb4eBo", "Birth Days That Give Bare Minimum Effort 🎙️💔 #Shorts"),
     ("short_42", "4UBDJO2bgRk", "When He Sends Dry 1-Word Text Replies 🎙️📱 #Shorts"),
     ("short_41", "-gTPXdJw2t0", "Why Men Switch Up At The 6-Week Mark 🎙️💔 #Shorts"),
     ("short_40", "bHEFsoDtSlY", "He Watches Your Stories But Won't Text Back? 🎙️👀 #Shorts"),
@@ -45,6 +48,9 @@ YT_VIDEOS = [
 ]
 
 IG_VIDEOS = [
+    ("short_45", "DfdbjxxO-mT", "Batch #12 · Keeps You Hooked Without Committing (Real-Human Podcast)"),
+    ("short_44", "DfdbcN3ubMj", "Batch #12 · Hot One Day Cold The Next (Real-Human Podcast)"),
+    ("short_43", "DfdbUjSOcBe", "Batch #12 · Bare Minimum Effort (Real-Human Podcast)"),
     ("short_42", "DfcX9v4uTny", "Batch #11 · Dry 1-Word Text Replies (Real-Human Podcast)"),
     ("short_41", "DfcX2Kcu8-g", "Batch #11 · 6-Week Mark Switch Up (Real-Human Podcast)"),
     ("short_40", "DfcXuEju4Sm", "Batch #11 · Watches Stories Won't Text (Real-Human Podcast)"),
@@ -91,6 +97,9 @@ TT_VIDEOS = [
     ("short_40", "SCHEDULED", "Scheduled (Nov 11 11:00)", "Why he watches every story but won't text back"),
     ("short_41", "SCHEDULED", "Scheduled (Nov 11 18:30)", "Why men act obsessed for 6 weeks then switch up"),
     ("short_42", "SCHEDULED", "Scheduled (Nov 12 11:00)", "What to do when he sends dry 1-word replies"),
+    ("short_43", "SCHEDULED", "Scheduled (Nov 12 18:30)", "Birth days that give bare minimum effort"),
+    ("short_44", "SCHEDULED", "Scheduled (Nov 13 11:00)", "Why he acts hot one day and cold the next"),
+    ("short_45", "SCHEDULED", "Scheduled (Nov 13 18:30)", "How he keeps you hooked without committing"),
 ]
 
 
@@ -287,9 +296,21 @@ def dump_telemetry():
 
 async def main():
     async with async_playwright() as p:
-        yt_res = await scrape_youtube(p)
-        ig_res = await scrape_instagram(p)
-        tt_res = await scrape_tiktok(p)
+        yt_res, ig_res, tt_res = await asyncio.gather(
+            asyncio.wait_for(scrape_youtube(p), timeout=18.0),
+            asyncio.wait_for(scrape_instagram(p), timeout=18.0),
+            asyncio.wait_for(scrape_tiktok(p), timeout=18.0),
+            return_exceptions=True,
+        )
+        if isinstance(yt_res, Exception):
+            print("YT timeout/err:", yt_res)
+            yt_res = []
+        if isinstance(ig_res, Exception):
+            print("IG timeout/err:", ig_res)
+            ig_res = []
+        if isinstance(tt_res, Exception):
+            print("TT timeout/err:", tt_res)
+            tt_res = []
 
     print("\n=== YOUTUBE SHORTS (@sacrednumberblueprint) ===")
     for r in yt_res:
