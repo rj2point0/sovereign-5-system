@@ -312,6 +312,19 @@ async def test_all():
         assert await page_prod.is_visible('#partner-compat-email-box') is True, "Expected #partner-compat-email-box to be visible inside #partner-compat-result when !state.profile.email"
         p_email_txt = await page_prod.locator('#partner-compat-email-box').inner_text()
         assert "want to save this partner compatibility score" in p_email_txt.lower() and "3 dates this month they pull closer" in p_email_txt.lower() and "email our match report" in p_email_txt.lower(), f"Unexpected #partner-compat-email-box text: {p_email_txt}"
+
+        # Simulate hardware/browser Back button (popstate) on view2 before email/checkout -> verify #priority-unlock-modal + #priority-modal-email-box
+        await page_prod.evaluate("() => window.dispatchEvent(new PopStateEvent('popstate'))")
+        await asyncio.sleep(0.2)
+        assert await page_prod.is_visible('#priority-unlock-modal') is True, "Expected #priority-unlock-modal to open on popstate back-button guard!"
+        assert await page_prod.is_visible('#priority-modal-email-box') is True, "Expected #priority-modal-email-box inside #priority-unlock-modal when email is not yet submitted!"
+        pm_txt = await page_prod.locator('#priority-modal-email-box').inner_text()
+        assert "wait! before you leave" in pm_txt.lower() and "unlock part 1 of your text script free" in pm_txt.lower(), f"Unexpected #priority-modal-email-box text: {pm_txt}"
+        exit_guard_evs = [p for p in ntfy_payloads if p.get("event_type") == "exit_guard_modal_shown"]
+        assert len(exit_guard_evs) >= 1, f"Expected exit_guard_modal_shown telemetry event, got {[p.get('event_type') for p in ntfy_payloads]}"
+        await page_prod.click('#btn-close-priority-modal')
+        await asyncio.sleep(0.1)
+
         await page_prod.fill('#partner-compat-email-input', 'sarah.compat@gmail.com')
         await page_prod.click('#btn-save-partner-email')
         await asyncio.sleep(0.2)

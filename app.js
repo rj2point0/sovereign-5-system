@@ -2751,6 +2751,21 @@ if (typeof window !== 'undefined') {
       const wrap = $('#downsell-fast-email-wrap');
       if (wrap) wrap.classList.add('hidden');
     }
+    else if (a === 'save-priority-modal-email') {
+      const emInput = $('#priority-modal-email-input');
+      const emVal = emInput ? emInput.value.trim() : '';
+      if (!emVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emVal)) {
+        toast(state.lang === 'es' ? 'Ingresa un correo electrónico válido.' : 'Please enter a valid email address.');
+        return;
+      }
+      const pInput = $('#partner-compat-email-input');
+      if (pInput) pInput.value = emVal;
+      submitPartnerCompatEmail();
+      const modal = $('#priority-unlock-modal');
+      if (modal) modal.classList.add('hidden');
+      const bubble = $('#flip-chase-preview-bubble');
+      if (bubble) bubble.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     else if (a === 'copy-part1-script') {
       sendWebhook('copy_cta_checkout_clicked', {
         partner_dob: state.partnerDob || '',
@@ -3285,7 +3300,9 @@ if (typeof window !== 'undefined') {
     });
   }
 
-  function openPriorityUnlockModal(d1, d2, url17, url37) {
+  function openPriorityUnlockModal(d1, d2, url17, url37, opts) {
+    const options = opts || {};
+    const isExitGuard = Boolean(options.isExitGuard);
     let modal = $('#priority-unlock-modal');
     if (!modal) {
       modal = document.createElement('div');
@@ -3294,28 +3311,47 @@ if (typeof window !== 'undefined') {
       document.body.appendChild(modal);
     }
     const isEs = state.lang === 'es';
+    const needsEmail = !(state.profile && state.profile.email) && !state.part1Unlocked;
+    const final17 = url17 || buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini') || CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE;
+    const final37 = url37 || buildStripeUrl(CONFIG.STRIPE_LINK_BASE, 'base') || CONFIG.STRIPE_LINK_BASE;
     modal.classList.remove('hidden');
     modal.innerHTML = `
       <div class="card max-w-md w-full p-5 sm:p-6 border-2 border-gold shadow-2xl relative text-left" style="background:linear-gradient(180deg,#181424,#0d0b14)">
         <button type="button" id="btn-close-priority-modal" class="absolute top-3 right-3 text-zinc-400 hover:text-ivory text-lg font-bold px-2 py-0.5 rounded-lg bg-white/5">✕</button>
-        <span class="badge-gold !text-[0.62rem]">⚡ ${isEs ? 'DESBLOQUEO PRIORITARIO 1-A-1' : 'PRIORITY 1-ON-1 UNLOCK'}</span>
+        <span class="badge-gold !text-[0.62rem]">⚡ ${isExitGuard
+          ? (isEs ? '¡ESPERA! ANTES DE IRTE' : 'WAIT! BEFORE YOU LEAVE')
+          : (isEs ? 'DESBLOQUEO PRIORITARIO 1-A-1' : 'PRIORITY 1-ON-1 UNLOCK')}</span>
         <h3 class="font-display text-lg sm:text-xl text-ivory mt-2 leading-snug">
           ${isEs
             ? `Análisis Completo Día ${d1} × Día ${d2} y Guion de Texto`
             : `Day ${d1} × Day ${d2} Compatibility & Text Analysis Unlock`}
         </h3>
-        <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">
+        ${needsEmail ? `
+        <div id="priority-modal-email-box" class="mt-3 p-3 rounded-xl bg-amber-950/55 border border-gold/65">
+          <p class="text-xs font-extrabold text-champagne leading-snug">
+            📩 ${isEs
+              ? `¡Espera! Antes de irte — ingresa tu correo para guardar tu Compatibilidad [Día ${d1} × Día ${d2}] y desbloquear la Parte 1 de tu guion de texto gratis:`
+              : `Wait! Before you leave—enter your email to save your [Day ${d1} × Day ${d2}] Match Score & unlock Part 1 of your text script free:`}
+          </p>
+          <div class="mt-2 flex flex-col sm:flex-row gap-2">
+            <input id="priority-modal-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Tu correo electrónico...' : 'Enter your email address...'}" />
+            <button type="button" id="btn-priority-modal-email" data-action="save-priority-modal-email" class="btn-gold !py-2 !px-3.5 sm:w-auto text-xs font-extrabold whitespace-nowrap">
+              ${isEs ? 'Desbloquear Parte 1 Gratis →' : 'Save & Unblur Part 1 Free →'}
+            </button>
+          </div>
+        </div>` : ''}
+        <p class="text-xs text-zinc-300 mt-3 leading-relaxed">
           ${isEs
-            ? 'Selecciona tu nivel de acceso instantáneo (se desbloquea en tu pantalla inmediatamente después del pago en Stripe):'
-            : 'Select your instant access tier below (unlocks immediately on your screen the second Stripe checkout completes):'}
+            ? 'O desbloquea el mensaje de texto completo sin difuminar en tu pantalla ahora mismo:'
+            : 'Or unlock the full unblurred text message on your screen right now:'}
         </p>
-        <div class="mt-4 space-y-2.5">
-          <a id="btn-priority-modal-17" href="${esc(url17)}" data-action="checkout-mini" data-trigger="priority_modal_17" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide rounded-xl">
+        <div class="mt-3 space-y-2.5">
+          <a id="btn-priority-modal-17" href="${esc(final17)}" data-action="checkout-mini" data-trigger="priority_modal_17" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide rounded-xl">
             ⚡ ${isEs
               ? `Opción Express ($17): Guion de Texto Completo [Día ${d1} × Día ${d2}] + 3 Mejores Días Para Escribirle →`
               : `Express Unlock ($17): Full [Day ${d1} × Day ${d2}] Text Script + 3 Best Days To Text →`}
           </a>
-          <a id="btn-priority-modal-37" href="${esc(url37)}" data-action="partner-checkout" style="display:block;text-align:center;" class="btn-ghost !py-3 !px-4 w-full text-xs sm:text-sm font-bold text-champagne border-gold/60 bg-gold/10 hover:bg-gold/20 rounded-xl">
+          <a id="btn-priority-modal-37" href="${esc(final37)}" data-action="partner-checkout" style="display:block;text-align:center;" class="btn-ghost !py-3 !px-4 w-full text-xs sm:text-sm font-bold text-champagne border-gold/60 bg-gold/10 hover:bg-gold/20 rounded-xl">
             👑 ${isEs
               ? `Dossier Completo de 20 Páginas ($37): Los 5 Sistemas + Sinastría de Pareja + Calendario de 12 Meses →`
               : `Full 20-Page Dossier ($37): All 5 Systems + Partner Synastry + 12-Month Timing Calendar →`}
@@ -3696,6 +3732,12 @@ if (typeof window !== 'undefined') {
     }
 
     state.hasClickedMiniUnlock = false;
+    if (!state.backGuardPushed && !state.backGuardTriggered) {
+      try {
+        history.pushState({ view: 'teaser_guard', d1: userBirthDay, d2: partnerBirthDay }, '');
+        state.backGuardPushed = true;
+      } catch (e) { /* ignore */ }
+    }
     if (state.partnerHesitationTimer) {
       clearTimeout(state.partnerHesitationTimer);
       state.partnerHesitationTimer = null;
@@ -4041,6 +4083,25 @@ if (typeof window !== 'undefined') {
     };
     window.addEventListener('focus', onReturnFromCheckoutHesitation);
     document.addEventListener('visibilitychange', onReturnFromCheckoutHesitation);
+
+    // Back-button / popstate Exit-Intent Guard on view2: intercept once per session before they bounce back to social app
+    window.addEventListener('popstate', () => {
+      if (document.body.dataset.view !== 'teaser') return;
+      if (state.backGuardTriggered || state.hasClickedMiniUnlock || (state.profile && state.profile.tier)) return;
+      state.backGuardTriggered = true;
+      const d1 = (state.result && state.result.input && state.result.input.birth && state.result.input.birth.d) || state.heroMyDay || 19;
+      const d2 = state.lastPartnerBirthDay || 23;
+      const url17 = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
+      const url37 = buildStripeUrl(CONFIG.STRIPE_LINK_BASE, 'base');
+      openPriorityUnlockModal(d1, d2, url17, url37, { isExitGuard: true });
+      revealDownsellBox('back_button_guard');
+      sendWebhook('exit_guard_modal_shown', {
+        trigger: 'popstate_back',
+        d1,
+        d2,
+        has_email: Boolean(state.profile && state.profile.email),
+      });
+    });
 
     // Determine target tier from URL (?tier=love_mini&unlocked=true, ?tier=base&unlocked=true, ?tier=full&unlocked=true)
     const isUnlockedParam = q.get('unlocked') === 'true';

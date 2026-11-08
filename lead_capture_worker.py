@@ -1702,6 +1702,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "downsell_box_shown": "downsell_box_shown",
         "downsell_part1_copied": "downsell_part1_copied",
         "copy_cta_checkout_clicked": "copy_cta_checkout_clicked",
+        "exit_guard_modal_shown": "exit_guard_modal_shown",
         "lead_capture": "lead_submitted",
         "lead_submitted": "lead_submitted",
         "checkout_click": "checkout_clicked",
@@ -1775,6 +1776,7 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "downsell_box_shown",
         "downsell_part1_copied",
         "copy_cta_checkout_clicked",
+        "exit_guard_modal_shown",
     ):
         dedup_key = f"{session_id}::{event_type}"
     elif event_type == "calc_preview":
@@ -1937,6 +1939,7 @@ def update_obsidian_dashboard():
                 "downsell_box_shown": "🛑 `downsell_box_shown`",
                 "downsell_part1_copied": "📋 `downsell_part1_copied`",
                 "copy_cta_checkout_clicked": "📋💳 `copy_cta_checkout_clicked`",
+                "exit_guard_modal_shown": "🛑 `exit_guard_modal_shown`",
                 "lead_submitted": "📩 `lead_submitted`",
                 "checkout_clicked": "💳 `checkout_clicked`",
                 "purchase_return": "🏆 `purchase_return`",

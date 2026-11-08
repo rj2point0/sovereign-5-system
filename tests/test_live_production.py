@@ -169,6 +169,15 @@ async def verify_live_pages():
         assert "19 × Day 23" in live_sp_txt or "Partner Compatibility" in live_sp_txt
         assert await page_clean.is_visible("#partner-compat-result") is True
         assert await page_clean.is_visible("#flip-chase-preview-bubble") is True
+
+        # Verify Back-button / popstate Exit-Intent Guard on view2 opens #priority-unlock-modal with #priority-modal-email-box
+        await page_clean.evaluate("() => window.dispatchEvent(new PopStateEvent('popstate'))")
+        await asyncio.sleep(0.2)
+        assert await page_clean.is_visible("#priority-unlock-modal") is True, "Expected #priority-unlock-modal on popstate back-button guard on live site!"
+        assert await page_clean.is_visible("#priority-modal-email-box") is True, "Expected #priority-modal-email-box inside #priority-unlock-modal on live site!"
+        live_pm_txt = await page_clean.locator("#priority-modal-email-box").inner_text()
+        assert "wait! before you leave" in live_pm_txt.lower()
+        await page_clean.click("#btn-close-priority-modal")
         assert await page_clean.is_visible("#situation-chip-strip") is True
         live_init_leadin = await page_clean.locator("#imessage-leadin-text").inner_text()
         await page_clean.click('#situation-chip-strip .situation-chip[data-situation="cold"]')
