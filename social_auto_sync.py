@@ -60,6 +60,10 @@ def main():
         [PYTHON_EXE, os.path.join(BASE_DIR, "seed_sample_reading_replies.py"), "--platform", "all"],
     )
     run_step(
+        "1c. YouTube Shorts Newly-Live Scheduled Seeder & Pinner",
+        [PYTHON_EXE, os.path.join(BASE_DIR, "yt_shorts_auto_uploader.py"), "--seed-newly-live"],
+    )
+    run_step(
         "2. TikTok Comment Auto-Responder",
         [PYTHON_EXE, os.path.join(BASE_DIR, "tiktok_comment_responder.py"), "--live", "--limit", "15"],
     )

@@ -674,9 +674,19 @@ async def upload_vsl_and_link_related_shorts(vsl_mp4_path: str, existing_vsl_id:
                     except Exception as e:
                         print(f"    [YT VSL Pin Notice] {e}", flush=True)
 
-            print(f"\n  [YT Studio Related Video] Wiring Related Video ({vsl_vid}) across {len(TARGET_SHORTS_FOR_RELATED_LINK)} Shorts...", flush=True)
+            # Dynamically include short_50..short_56 from tracker alongside top shorts
+            dynamic_targets = []
+            for sk in ("short_50", "short_51", "short_52", "short_53", "short_54", "short_55", "short_56"):
+                v_entry = tracker.get("videos", {}).get(sk, {})
+                if v_entry.get("video_id"):
+                    dynamic_targets.append((sk, v_entry["video_id"]))
+            for sk, sv in TARGET_SHORTS_FOR_RELATED_LINK:
+                if (sk, sv) not in dynamic_targets:
+                    dynamic_targets.append((sk, sv))
+
+            print(f"\n  [YT Studio Related Video] Wiring Related Video ({vsl_vid}) across {len(dynamic_targets)} Shorts...", flush=True)
             linked_shorts = tracker.setdefault("related_video_linked", {})
-            for short_key, short_vid in TARGET_SHORTS_FOR_RELATED_LINK:
+            for short_key, short_vid in dynamic_targets:
                 if linked_shorts.get(short_key) == vsl_vid:
                     print(f"    ✓ [{short_key}] ({short_vid}) already linked to {vsl_vid}, skipping.", flush=True)
                     continue

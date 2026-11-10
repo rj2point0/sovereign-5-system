@@ -33,6 +33,56 @@ SAMPLE_MATCH_COMMENT = (
 
 TIKTOK_TARGETS = [
     {
+        "id": "short_59",
+        "video_id": None,
+        "title_match": "Why he texts you all week long yet never actually asks to see you in person",
+    },
+    {
+        "id": "short_58",
+        "video_id": None,
+        "title_match": "When a guy ignores you all afternoon and texts",
+    },
+    {
+        "id": "short_57",
+        "video_id": None,
+        "title_match": "Why he acts completely in love all weekend and then goes distant on Monday",
+    },
+    {
+        "id": "short_56",
+        "video_id": None,
+        "title_match": "What is the exact moment a guy actually regrets pulling away from a good woman",
+    },
+    {
+        "id": "short_55",
+        "video_id": None,
+        "title_match": "When a guy starts replying with dry one-word texts",
+    },
+    {
+        "id": "short_54",
+        "video_id": None,
+        "title_match": "Why he is always the very first guy watching your story",
+    },
+    {
+        "id": "short_53",
+        "video_id": None,
+        "title_match": "Why men text you every morning for 6 weeks straight and then vanish",
+    },
+    {
+        "id": "short_52",
+        "video_id": None,
+        "title_match": "Why he acts obsessed on Monday and freezing cold by Thursday",
+    },
+    {
+        "id": "short_51",
+        "video_id": "7706584636230520077",
+        "title_match": "Why he gives you just enough attention to keep you hooked but never commits",
+    },
+    {
+        "id": "short_50",
+        "video_id": "7706521591961685261",
+        "title_match": "Why a guy acts obsessed with you and then goes cold overnight",
+    },
+    {
         "id": "short_48",
         "video_id": None,
         "title_match": "Which birth days lose respect the exact second a woman chases them",

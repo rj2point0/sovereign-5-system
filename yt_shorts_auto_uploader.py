@@ -92,6 +92,30 @@ YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
         "schedule_time": "11:00 AM",
     },
     {
+        "id": "short_54",
+        "filename": "Short_054_Veo31_WatchesStories.mp4",
+        "title": "Watches Your Stories In 30s But Won't Text? 🎙️💔 #Shorts",
+        "mode": "schedule",
+        "schedule_date": "Nov 11, 2026",
+        "schedule_time": "6:30 PM",
+    },
+    {
+        "id": "short_55",
+        "filename": "Short_055_Veo31_DryReplies.mp4",
+        "title": "What His Dry 1-Word Replies Actually Mean 🎙️💔 #Shorts",
+        "mode": "schedule",
+        "schedule_date": "Nov 12, 2026",
+        "schedule_time": "11:00 AM",
+    },
+    {
+        "id": "short_56",
+        "filename": "Short_056_Veo31_RegretsLosingYou.mp4",
+        "title": "Exact Moment A Man Regrets Pulling Away 🎙️💔 #Shorts",
+        "mode": "schedule",
+        "schedule_date": "Nov 12, 2026",
+        "schedule_time": "6:30 PM",
+    },
+    {
         "id": "short_50",
         "filename": "Short_050_Veo31_ColdOvernight.mp4",
         "title": "Why He Goes Cold Overnight (By Birth Day) 🎙️💔 #Shorts",
@@ -999,11 +1023,76 @@ async def run_pipeline(do_rebrand: bool = True, do_upload: bool = True):
             chrome_proc.terminate()
 
 
+async def seed_newly_live_scheduled_shorts(page: Page):
+    """Checks all scheduled Shorts in uploaded_yt_shorts.json; if any are now Public on @sacrednumberblueprint/shorts, seeds & pins our 2-birthday prompt comment + Sample Match reply."""
+    tracker = load_tracker()
+    vids = tracker.get("videos", {})
+    pending = [
+        (sid, info)
+        for sid, info in vids.items()
+        if info.get("video_id") and not info.get("prompt_seeded")
+    ]
+    if not pending:
+        print("  ✓ [YT Seed Newly Live] All tracked Shorts already have seeded comments.", flush=True)
+        return
+
+    await page.goto("https://www.youtube.com/@sacrednumberblueprint/shorts", wait_until="domcontentloaded", timeout=25000)
+    await asyncio.sleep(3.5)
+    html = await page.content()
+    for sid, info in pending:
+        vid = info["video_id"]
+        if f"/shorts/{vid}" in html or f"watch?v={vid}" in html:
+            print(f"  [YT Seed Newly Live] Detected {sid} ({vid}) is now Public! Seeding & pinning comments...", flush=True)
+            seed_res = await seed_and_pin_comments_on_short(page, vid)
+            info.update(seed_res)
+            if seed_res.get("prompt_seeded"):
+                info["status"] = "published"
+            save_tracker(tracker)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--rebrand-only", action="store_true")
     parser.add_argument("--upload-only", action="store_true")
+    parser.add_argument("--seed-newly-live", action="store_true")
     args = parser.parse_args()
+    if args.seed_newly_live:
+        async def _run_seed():
+            import subprocess
+            cdp_userdata = prepare_cloned_profile6_userdata()
+            chrome_exe = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+            chrome_proc = None
+            async with async_playwright() as p:
+                browser = None
+                try:
+                    browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222", timeout=4000)
+                except Exception:
+                    if os.path.exists(chrome_exe):
+                        chrome_proc = subprocess.Popen(
+                            [
+                                chrome_exe,
+                                "--remote-debugging-port=9222",
+                                f"--user-data-dir={cdp_userdata}",
+                                "--profile-directory=Profile 6",
+                                "--no-first-run",
+                                "--no-default-browser-check",
+                                "--window-size=1366,900",
+                                "https://www.youtube.com/@sacrednumberblueprint/shorts",
+                            ],
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                        )
+                        await asyncio.sleep(3.5)
+                        browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222", timeout=8000)
+                if browser:
+                    ctx = browser.contexts[0] if browser.contexts else await browser.new_context()
+                    page = ctx.pages[0] if ctx.pages else await ctx.new_page()
+                    await seed_newly_live_scheduled_shorts(page)
+                    await browser.close()
+                if chrome_proc:
+                    chrome_proc.terminate()
+        asyncio.run(_run_seed())
+        return
     do_rebrand = not args.upload_only
     do_upload = not args.rebrand_only
     asyncio.run(run_pipeline(do_rebrand=do_rebrand, do_upload=do_upload))

@@ -759,25 +759,38 @@ class InstagramReelsUploader:
             return 0
 
         async with async_playwright() as p:
-            ctx = await p.chromium.launch_persistent_context(
-                user_data_dir=self.profile_dir,
-                headless=headless,
-                viewport={"width": 1366, "height": 920},
-                args=[
-                    "--disable-blink-features=AutomationControlled",
-                    "--start-maximized",
-                ],
-            )
+            browser = None
+            ctx = None
+            try:
+                browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9225", timeout=3000)
+                ctx = browser.contexts[0] if browser.contexts else await browser.new_context(viewport={"width": 1366, "height": 920})
+                print("  ✓ [IG CDP] Attached directly to Instagram Chrome session on port 9225", flush=True)
+            except Exception:
+                ctx = await p.chromium.launch_persistent_context(
+                    user_data_dir=self.profile_dir,
+                    headless=headless,
+                    viewport={"width": 1366, "height": 920},
+                    args=[
+                        "--disable-blink-features=AutomationControlled",
+                        "--start-maximized",
+                    ],
+                )
             page = ctx.pages[0] if ctx.pages else await ctx.new_page()
             try:
                 authed = await self.ensure_authenticated(page, wait_seconds=wait_login_seconds)
                 if not authed:
-                    await ctx.close()
+                    if browser:
+                        await browser.close()
+                    else:
+                        await ctx.close()
                     return 2
 
                 if auth_only:
                     print("✓ [IG Auth] Persistent session verified and cached.", flush=True)
-                    await ctx.close()
+                    if browser:
+                        await browser.close()
+                    else:
+                        await ctx.close()
                     return 0
 
                 for idx, item in enumerate(items_to_upload):
@@ -792,7 +805,10 @@ class InstagramReelsUploader:
                 await page.screenshot(path="ig_profile_reels_verified.png")
                 print("✓ Saved final Instagram Reels grid screenshot: ig_profile_reels_verified.png", flush=True)
             finally:
-                await ctx.close()
+                if browser:
+                    await browser.close()
+                else:
+                    await ctx.close()
         return 0
 
 

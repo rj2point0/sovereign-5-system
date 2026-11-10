@@ -54,6 +54,66 @@ BANNED_FIRST_COMMENT_PATTERNS = [
 
 TARGET_FIRST_COMMENTS = [
     {
+        "id": "short_59",
+        "video_id": None,
+        "title_match": "Why he texts you all week long yet never actually asks to see you in person",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '11 & 22') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_58",
+        "video_id": None,
+        "title_match": "When a guy ignores you all afternoon and texts",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '14 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_57",
+        "video_id": None,
+        "title_match": "Why he acts completely in love all weekend and then goes distant on Monday",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '7 & 19') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_56",
+        "video_id": None,
+        "title_match": "What is the exact moment a guy actually regrets pulling away from a good woman",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_55",
+        "video_id": None,
+        "title_match": "When a guy starts replying with dry one-word texts",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '8 & 17') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_54",
+        "video_id": None,
+        "title_match": "Why he is always the very first guy watching your story",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '12 & 27') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_53",
+        "video_id": None,
+        "title_match": "Why men text you every morning for 6 weeks straight and then vanish",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '9 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_52",
+        "video_id": None,
+        "title_match": "Why he acts obsessed on Monday and freezing cold by Thursday",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 25') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_51",
+        "video_id": "7706584636230520077",
+        "title_match": "Why he gives you just enough attention to keep you hooked but never commits",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '14 & 22') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
+        "id": "short_50",
+        "video_id": "7706521591961685261",
+        "title_match": "Why a guy acts obsessed with you and then goes cold overnight",
+        "comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 23') and I'll reply with your Compatibility % score! 👇",
+    },
+    {
         "id": "short_48",
         "video_id": None,
         "title_match": "Which birth days lose respect the exact second a woman chases them",

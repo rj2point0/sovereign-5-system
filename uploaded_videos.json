@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-10T04:40:34.876264",
+  "updated_at": "2026-11-10T09:30:05.199936",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -491,6 +491,63 @@
       "schedule_time": null,
       "uploaded_at": "2026-11-10T04:40:34.876264",
       "caption_preview": "Why he acts obsessed with you and then goes completely cold overnight (Maya & Julian break down birth days 7th, 16th & 2"
+    },
+    "Short_051_Veo31_Breadcrumbing.mp4": {
+      "filename": "Short_051_Veo31_Breadcrumbing.mp4",
+      "ad_id": "short_51",
+      "status": "uploaded",
+      "mode": "post_now",
+      "schedule_time": null,
+      "uploaded_at": "2026-11-10T08:45:13.032310",
+      "caption_preview": "Why he gives you just enough attention to keep you hooked but never commits (Maya & Julian break down birth days 4th, 13",
+      "video_id": "7706584636230520077",
+      "url": "https://www.tiktok.com/@sacrednumberblueprint/video/7706584636230520077",
+      "first_comment_seeded": true
+    },
+    "Short_052_Veo31_HotAndCold.mp4": {
+      "filename": "Short_052_Veo31_HotAndCold.mp4",
+      "ad_id": "short_52",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-10 18:30",
+      "uploaded_at": "2026-11-10T08:46:16.010033",
+      "caption_preview": "Why he acts obsessed on Monday and freezing cold by Thursday (Maya & Julian break down birth days 2nd, 7th, 11th, 16th, "
+    },
+    "Short_053_Veo31_Vanished6Weeks.mp4": {
+      "filename": "Short_053_Veo31_Vanished6Weeks.mp4",
+      "ad_id": "short_53",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-11 11:00",
+      "uploaded_at": "2026-11-10T08:46:52.680280",
+      "caption_preview": "Why men text you every morning for 6 weeks straight and then vanish out of nowhere (Maya & Julian break down birth days "
+    },
+    "Short_054_Veo31_WatchesStories.mp4": {
+      "filename": "Short_054_Veo31_WatchesStories.mp4",
+      "ad_id": "short_54",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-11 18:30",
+      "uploaded_at": "2026-11-10T09:28:53.153478",
+      "caption_preview": "Why he is always the very first guy watching your story when he hasn't texted you in days (Maya & Julian break down his "
+    },
+    "Short_055_Veo31_DryReplies.mp4": {
+      "filename": "Short_055_Veo31_DryReplies.mp4",
+      "ad_id": "short_55",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-12 11:00",
+      "uploaded_at": "2026-11-10T09:29:29.571160",
+      "caption_preview": "When a guy starts replying with dry one-word texts, is he seeing someone else? (Maya & Julian decode his birth number) 🎙"
+    },
+    "Short_056_Veo31_RegretsLosingYou.mp4": {
+      "filename": "Short_056_Veo31_RegretsLosingYou.mp4",
+      "ad_id": "short_56",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-12 18:30",
+      "uploaded_at": "2026-11-10T09:30:05.199936",
+      "caption_preview": "What is the exact moment a guy actually regrets pulling away from a good woman? (Maya & Julian explain how silence break"
     }
   }
 }
