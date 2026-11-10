@@ -68,8 +68,32 @@ SAMPLE_MATCH_REPLY = (
 
 YT_SHORTS_QUEUE: List[Dict[str, Any]] = [
     {
+        "id": "short_51",
+        "filename": "Short_051_Veo31_Breadcrumbing.mp4",
+        "title": "Birth Days That Breadcrumb You For Months 🎙️💔 #Shorts",
+        "mode": "post_now",
+        "schedule_date": None,
+        "schedule_time": None,
+    },
+    {
+        "id": "short_52",
+        "filename": "Short_052_Veo31_HotAndCold.mp4",
+        "title": "Why He Acts Hot One Day & Cold The Next 🎙️💔 #Shorts",
+        "mode": "schedule",
+        "schedule_date": "Nov 10, 2026",
+        "schedule_time": "6:30 PM",
+    },
+    {
+        "id": "short_53",
+        "filename": "Short_053_Veo31_Vanished6Weeks.mp4",
+        "title": "Texted Daily For 6 Weeks Then Vanished? 🎙️💔 #Shorts",
+        "mode": "schedule",
+        "schedule_date": "Nov 11, 2026",
+        "schedule_time": "11:00 AM",
+    },
+    {
         "id": "short_50",
-        "filename": "tiktok_short_50_maya_julian_veo31.mp4",
+        "filename": "Short_050_Veo31_ColdOvernight.mp4",
         "title": "Why He Goes Cold Overnight (By Birth Day) 🎙️💔 #Shorts",
         "mode": "post_now",
         "schedule_date": None,
@@ -503,7 +527,7 @@ async def delete_old_short_uploads(page: Page, old_ids: List[str]):
             row_html = await row.inner_html()
         except Exception:
             continue
-        if "Private" in row_txt:
+        if "Private" in row_txt or "Scheduled" in row_txt:
             continue
         lines = [ln.strip() for ln in row_txt.splitlines() if len(ln.strip()) > 12]
         title_key = lines[0] if lines else f"row_{idx}"
