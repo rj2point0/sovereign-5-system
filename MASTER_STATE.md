@@ -1,6 +1,16 @@
 # 🔮 SACRED NUMBER BLUEPRINT (`5numsystem`) — MASTER PRODUCTION STATE
 
-> **Anti-Context-Rot Checkpoint (Updated: 2026-11-04)**  
+## 🚨 MANDATORY LOGIN PROTOCOL (NO VISIBLE CHROMIUM WINDOWS)
+> **CRITICAL PERMANENT RULE**: The user **CANNOT** see any Chromium/Playwright/Chrome browser windows launched from agent shell sessions (such as port `9222` `yt_chrome_cdp_userdata` or port `9224` `veo_ultra_cdp_userdata`).
+> - Whenever any account (`adam.vegaui@gmail.com` on `veo_ultra_cdp_userdata` or `imcodingdad@gmail.com` on `yt_chrome_cdp_userdata`) needs password entry, Sign-In, or 2FA, **NEVER** ask the user to look for a Chromium window on their desktop!
+> - **ALWAYS** spin up the **Interactive Local Web Login Relay Bridge (`http://localhost:8767` via [`remote_auth_relay.py`](file:///c:/Users/User/5numsystem/remote_auth_relay.py) or `http://localhost:8766`)** so the user can open `http://localhost:8767` in their normal browser, see the live screenshot of the login screen, type their password into the relay input box, click directly on the screenshot, and click Submit!
+
+## 📱 MANDATORY MOBILE REVIEW PROTOCOL (ALWAYS STAGE TO GOOGLE DRIVE)
+> **CRITICAL PERMANENT RULE**: The user reviews all outputs from their **phone** and **CANNOT** open local `file:///c:/Users/...` paths in Media Player!
+> - Whenever you generate ANY video, image, screenshot, proof strip, or markdown comparison for review, you **MUST** copy all of those files directly into **`G:\My Drive\00_Mobile_Review\`** (inside a clean batch subfolder or prefixed with the date/batch so the newest files appear right at the top of the Google Drive mobile app).
+> - **NEVER** ask the user to open a local `C:\` file without staging it in `G:\My Drive\00_Mobile_Review\` first!
+
+> **Anti-Context-Rot Checkpoint (Updated: 2026-11-08)**  
 > Read this file first at the start of any session in `c:\Users\User\5numsystem` to load the complete production architecture, live URLs, Stripe Payment Links, background daemons, and social video pipeline state in 5 seconds.
 >
 > **Workspace Isolation Rule**: This workspace (`c:\Users\User\5numsystem`) is strictly dedicated to **Project 1: Sacred Number Blueprint (`@sacrednumberblueprint`)**. Project 2 (**KC Chocolatier / Brad Yater**) lives in its own isolated workspace at `c:\Users\User\kc_chocolatier`.
