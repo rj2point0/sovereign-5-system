@@ -3561,12 +3561,12 @@ if (typeof window !== 'undefined') {
         <div id="crush-text-decoded-output" class="hidden mt-2.5 p-2.5 rounded-lg bg-indigo-950/75 border border-indigo-400/55 text-xs text-ivory leading-snug"></div>
       </div>
 
-      <!-- JULIAN'S NUMEROLOGY & RELATIONSHIP EXPERT TAKE ON THIS BIRTH DAY (#julian-insider-take-box) -->
+      <!-- JULIAN'S TAKE ON THIS BIRTH DAY (#julian-insider-take-box) -->
       <div id="julian-insider-take-box" class="mt-3 p-3 rounded-xl bg-[#0c1220] border border-sky-400/45 text-left flex items-center gap-3 shadow-md">
-        <img src="julian_avatar_128.webp" alt="Julian — Numerology &amp; Relationship Expert" width="44" height="44" style="width:44px;height:44px;min-width:44px;max-width:44px;border-radius:50%;object-fit:cover;border:2px solid #D4AF37;flex-shrink:0;display:block;" class="w-11 h-11 rounded-full border-2 border-gold object-cover shrink-0" />
+        <img src="julian_avatar_128.webp" alt="Julian" width="44" height="44" style="width:44px;height:44px;min-width:44px;max-width:44px;border-radius:50%;object-fit:cover;border:2px solid #D4AF37;flex-shrink:0;display:block;" class="w-11 h-11 rounded-full border-2 border-gold object-cover shrink-0" />
         <div class="text-xs leading-snug flex-1 min-w-0">
           <div id="julian-insider-take-heading" class="font-extrabold text-gold tracking-wide">
-            🎙️ ${isEs ? `Julian · Experto en Numerología y Relaciones (Día ${partnerBirthDay}):` : `Julian · Numerology &amp; Relationship Expert (Day ${partnerBirthDay}):`}
+            🎙️ ${isEs ? `Julian (Día ${partnerBirthDay}):` : `Julian (Day ${partnerBirthDay}):`}
           </div>
           <p id="julian-insider-take-text" class="text-zinc-200 mt-1 leading-relaxed">${esc(getJulianInsiderTake(rep.pMoolank, rep.pRuler, partnerBirthDay, activeSit, state.lang))}</p>
         </div>

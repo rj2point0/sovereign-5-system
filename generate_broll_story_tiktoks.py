@@ -2408,6 +2408,123 @@ COHORT_C_SPECS: List[Dict[str, Any]] = [
             "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
         ],
     },
+    {
+        "id": "short_49",
+        "cohort": "Cohort C · Batch 14 (Angel vs. Shadow-Insider True Multi-Viseme Lip-Sync)",
+        "format_type": "cohort_c_short",
+        "visual_format": "podcast_duet_giant",
+        "podcast_call_in_badge": "ANGEL VS. SHADOW · PULLING AWAY",
+        "giant_lines": [
+            ("WHY HE ACTS", "white"),
+            ("DISTANT AFTER", "coral"),
+            ("GETTING CLOSE", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 2nd · 6th · 11th · 15th · 20th · 24th · 29th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_49_angel_devil_true_lipsync.mp4",
+        "yt_title": "Why He Acts Distant Right After Getting Close 👼😈 #Shorts",
+        "grid_headline": "WHY HE ACTS\nDISTANT AFTER\nGETTING CLOSE",
+        "grid_sub": "ANGEL VS. SHADOW · PULLING AWAY",
+        "hook_box_text": "Why do certain guys act super close one night, and then go distant the next day?",
+        "hook_end_sec": 4.6,
+        "cta_tail_sec": 2.8,
+        "broll_cutoff": 4.6,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 7.29,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why do certain guys act super close one night, and then go distant the next day?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "Intimacy triggers his birth number's fear of losing control. Send the nine word space script in our bio so he comes running back.",
+        "reveal_match_pair": "Born 11th × Born 24th",
+        "reveal_match_score": "97% SOULMATE LOCK",
+        "reveal_sms_lead": "“Last night was the best—taking a busy day here, so...",
+        "spoken_script": (
+            "Why do certain guys act super close one night, and then go distant the next day? "
+            "Intimacy triggers his birth number's fear of losing control. "
+            "Send the nine word space script in our bio so he comes running back."
+        ),
+        "broll_clips": [
+            (0.0, 2.3, "emo_10_loving_couple_close.mp4#podcast49"),
+            (2.3, 4.6, "emo_08_couple_bedroom_tension.mp4#podcast49"),
+        ],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why he acts super close one night and then goes distant the next day (Maya & Julian decoded by birth day) 🎙️💔 "
+            "(Born 2nd, 6th, 11th, 15th, 20th, 24th, or 29th? Tap our bio for the 9-word space script) "
+            "#datingpodcast #hepulledaway #mixedsignals #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '11 & 24') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#hepulledaway", "#mixedsignals", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
+    # =========================================================================
+    # BATCH #15 (short_50):
+    # Permanent Production Format — Full-Screen Veo 3.1 - Quality (I2V + Native Spoken Audio)
+    # Hosts: Maya & Julian (Clean First-Name Podcast Hosts — No Titles)
+    # =========================================================================
+    {
+        "id": "short_50",
+        "cohort": "Cohort C · Batch 15 (Full-Screen Veo 3.1 Native Audio — Maya & Julian)",
+        "format_type": "cohort_c_short",
+        "visual_format": "veo31_fullscreen_native",
+        "giant_lines": [
+            ("WHY HE GOES", "white"),
+            ("COLD OVERNIGHT", "coral"),
+            ("BY BIRTH DAY", "gold"),
+        ],
+        "giant_sub_pill": "HIM BORN 7th · 16th · 25th",
+        "jenny_hoyos_gate": True,
+        "filename": "tiktok_short_50_maya_julian_veo31.mp4",
+        "yt_title": "Why He Goes Cold Overnight (By Birth Day) 🎙️💔 #Shorts",
+        "grid_headline": "WHY HE GOES\nCOLD OVERNIGHT\nBY BIRTH DAY",
+        "grid_sub": "HIM BORN 7th · 16th · 25th",
+        "hook_box_text": "Why does a guy act obsessed with you, and then go completely cold overnight?",
+        "hook_end_sec": 5.7,
+        "cta_tail_sec": 3.2,
+        "broll_cutoff": 9.35,
+        "tail_hold_sec": 0.25,
+        "target_voice_sec": 12.55,
+        "voice": "en-US-AvaMultilingualNeural",
+        "rate": "+12%",
+        "podcast_maya_voice": "en-US-AvaMultilingualNeural",
+        "podcast_maya_rate": "+12%",
+        "podcast_maya_text": "Why does a guy act obsessed with you, and then go completely cold overnight?",
+        "podcast_julian_voice": "en-US-AndrewMultilingualNeural",
+        "podcast_julian_rate": "+12%",
+        "podcast_julian_text": "If he was born on the seventh, sixteenth, or twenty-fifth, his guard just kicked in. Send the nine word reset text in our bio instead.",
+        "reveal_match_pair": "Born 19th × Born 25th",
+        "reveal_match_score": "96% SOULMATE LOCK",
+        "reveal_sms_lead": "“Hey, I loved hanging out, but I noticed...",
+        "spoken_script": (
+            "Why does a guy act obsessed with you, and then go completely cold overnight? "
+            "If he was born on the seventh, sixteenth, or twenty-fifth, his guard just kicked in. "
+            "Send the nine word reset text in our bio instead."
+        ),
+        "broll_clips": [],
+        "product_scenes": [
+            ("image", "scenes_cache/scene_relationships.png", 1.5),
+            ("image", "scenes_cache/scene_mandala.png", 99.0),
+        ],
+        "tiktok_caption": (
+            "Why he acts obsessed with you and then goes completely cold overnight (Maya & Julian break down birth days 7th, 16th & 25th) 🎙️💔 "
+            "(Tap our bio for the 9-word reset text + test both birth days free) "
+            "#datingpodcast #hepulledaway #mixedsignals #situationship #relationshipadvice #textingadvice #numerology #birthdaycompatibility"
+        ),
+        "first_comment": "Drop YOUR birth day (1-31) + HIS birth day (1-31) below (like '19 & 25') and I'll reply with your Compatibility % score! 👇",
+        "hashtags": [
+            "#datingpodcast", "#hepulledaway", "#mixedsignals", "#situationship",
+            "#relationshipadvice", "#textingadvice", "#numerology", "#birthdaycompatibility"
+        ],
+    },
 ]
 
 
@@ -2927,6 +3044,29 @@ class BrollStoryGenerator:
 
         if spec is not None and spec.get("visual_format") == "podcast_duet_giant":
             spec["_rms_envelope_30fps"] = self.compute_rms_envelope_30fps(out_mixed_path, dur, fps=30)
+            try:
+                from neural_wav2lip_gan_engine import Wav2LipGANNeuralSynthesizer, compute_wav2lip_mel_chunks
+                clean_v_wav = voice_path + "_clean_16k.wav"
+                cmd_clean = [
+                    FFMPEG_EXE, "-y",
+                    "-i", voice_path,
+                    "-af", f"{atempo_filter}apad=pad_dur={tail_hold_sec:.2f}",
+                    "-ac", "1", "-ar", "16000",
+                    clean_v_wav,
+                ]
+                subprocess.run(cmd_clean, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                mel_chunks, feats = compute_wav2lip_mel_chunks(clean_v_wav, fps=30.0)
+                spec["_wav2lip_mel_chunks_30fps"] = mel_chunks
+                spec["_viseme_envelope_30fps"] = feats
+                if not hasattr(self, "_wav2lip_gan_synth"):
+                    self._wav2lip_gan_synth = Wav2LipGANNeuralSynthesizer(panel_size=(620, 960))
+                self._wav2lip_gan_synth.export_temporal_studio_plates(
+                    clean_v_wav, switch_sec=float(spec.get("_switch_sec", 2.80))
+                )
+                if os.path.exists(clean_v_wav):
+                    os.remove(clean_v_wav)
+            except Exception as exc:
+                print(f"   [WARN] Wav2Lip-GAN extraction fallback: {exc}", flush=True)
         return dur
 
     def draw_giant_emotional_headline(
@@ -3103,23 +3243,29 @@ class BrollStoryGenerator:
         rms = float(env[min(f_idx, len(env) - 1)]) if env else 0.55
         maya_active = t < switch_sec
 
-        # 1. Load & cache Concept B split panels (Guardian Angel Maya & Shadow Insider Julian)
-        if not hasattr(self, "_cached_concept_b_panels"):
-            cb_path = os.path.join(BASE_DIR, "podcast_avatars", "viral_concepts", "concept_b_angel_vs_shadow.png")
-            if os.path.exists(cb_path):
-                cb_im = Image.open(cb_path).convert("RGB")
-                cw, ch = cb_im.size
-                hw = cw // 2
-                # Crop upper 80% of each half so head + halo/horns + headphones + Shure SM7B mic fill the studio header
-                m_src = cb_im.crop((0, 0, hw - 4, int(ch * 0.80)))
-                j_src = cb_im.crop((hw + 4, 0, cw, int(ch * 0.80)))
-            else:
-                m_src = avatars["maya_idle"]
-                j_src = avatars["julian_idle"]
-            self._cached_concept_b_panels = {
-                "maya": m_src.resize((620, 960), Image.Resampling.LANCZOS),
-                "julian": j_src.resize((620, 960), Image.Resampling.LANCZOS),
-            }
+        # 1. Render 30fps Pretrained Wav2Lip-GAN Neural Lip-Sync + 3D Temporal Studio Panels
+        if not hasattr(self, "_wav2lip_gan_synth"):
+            from neural_wav2lip_gan_engine import Wav2LipGANNeuralSynthesizer
+            self._wav2lip_gan_synth = Wav2LipGANNeuralSynthesizer(panel_size=(620, 960))
+
+        viseme_env = spec.get("_viseme_envelope_30fps") or []
+        mel_chunks = spec.get("_wav2lip_mel_chunks_30fps") or []
+        if viseme_env:
+            open_amt, width_mod, brow_lift = viseme_env[min(f_idx, len(viseme_env) - 1)]
+        else:
+            open_amt, width_mod, brow_lift = (min(1.0, rms * 1.15), 0.15 * math.sin(t * 9.0), min(1.0, rms))
+
+        if mel_chunks:
+            mel_chunk = mel_chunks[min(f_idx, len(mel_chunks) - 1)]
+        else:
+            mel_chunk = np.full((1, 1, 80, 16), -4.0, dtype=np.float32)
+
+        maya_panel = self._wav2lip_gan_synth.render_maya_frame(
+            t, mel_chunk, open_amt, width_mod, brow_lift, is_speaking=maya_active
+        )
+        julian_panel = self._wav2lip_gan_synth.render_julian_frame(
+            t, mel_chunk, open_amt, width_mod, brow_lift, is_speaking=(not maya_active)
+        )
 
         W, H = 1080, 1920
         header_h = 840
@@ -3127,19 +3273,17 @@ class BrollStoryGenerator:
 
         def crop_studio_half(src_im: Image.Image, is_speaking: bool, phase_offset: float) -> Image.Image:
             sw, sh = src_im.size
-            zoom = (1.03 + 0.035 * math.sin(t * 2.2 + phase_offset)) if is_speaking else (1.01 + 0.012 * math.sin(t * 1.1 + phase_offset))
+            zoom = 1.035 if is_speaking else 1.015
             cw = int(panel_w / zoom)
             ch = int(header_h / zoom)
-            ox = int((sw - cw) * (0.50 + 0.08 * math.sin(t * 1.6 + phase_offset)))
-            oy = int((sh - ch) * (0.38 + 0.05 * math.cos(t * 1.3 + phase_offset)))
-            ox = max(0, min(sw - cw, ox))
-            oy = max(0, min(sh - ch, oy))
+            ox = max(0, min(sw - cw, int((sw - cw) * 0.50)))
+            oy = max(0, min(sh - ch, int((sh - ch) * 0.36)))
             crop = src_im.crop((ox, oy, ox + cw, oy + ch)).resize((panel_w, header_h), Image.Resampling.BILINEAR)
             b_mult = (1.06 + 0.03 * max(0.2, rms)) if is_speaking else 0.88
             return ImageEnhance.Brightness(crop).enhance(b_mult)
 
-        maya_crop = crop_studio_half(self._cached_concept_b_panels["maya"], maya_active, 0.0)
-        julian_crop = crop_studio_half(self._cached_concept_b_panels["julian"], not maya_active, 1.5)
+        maya_crop = crop_studio_half(maya_panel, maya_active, 0.0)
+        julian_crop = crop_studio_half(julian_panel, not maya_active, 1.5)
 
         # 2. Prepare bottom real 30fps human couple B-roll (Y = 840..1920)
         sat_boost = 1.20 if t <= 1.5 else 1.12
@@ -3183,10 +3327,10 @@ class BrollStoryGenerator:
         dot_col = (255, 71, 87, 255) if maya_active else (245, 158, 11, 255)
         draw.ellipse([82, bar_mid_y - 10, 102, bar_mid_y + 10], fill=dot_col, outline=(255, 225, 77, 255), width=2)
         if maya_active:
-            spk_txt = f"MAYA · {call_in_badge}"
+            spk_txt = "MAYA"
             spk_col = (255, 225, 77, 255)
         else:
-            spk_txt = "JULIAN · SHADOW INSIDER DECODER"
+            spk_txt = "JULIAN"
             spk_col = (253, 186, 116, 255)
         draw.text((118, bar_mid_y), spk_txt, fill=spk_col, font=f_spk, anchor="lm")
 
@@ -3198,14 +3342,14 @@ class BrollStoryGenerator:
             bx0 = 860 + b_i * 14
             draw.rounded_rectangle([bx0, bar_mid_y - bh_bar // 2, bx0 + 8, bar_mid_y + bh_bar // 2], radius=3, fill=eq_col)
 
-        # Speaker Name Tags at bottom of studio panels (Y = 768..824)
+        # Speaker Name Tags at bottom of studio panels (Y = 768..824) — Clean first names only (no titles!)
         f_tag = ImageFont.truetype(FONT_BOLD, 23)
         m_bd = (255, 225, 77, 255) if maya_active else (120, 120, 140, 200)
         j_bd = (245, 158, 11, 255) if not maya_active else (120, 120, 140, 200)
-        draw.rounded_rectangle([28, 768, 340, 824], radius=16, fill=(14, 14, 22, 228), outline=m_bd, width=3 if maya_active else 2)
-        draw.text((184, 796), "MAYA · GUARDIAN ANGEL", fill=(255, 225, 77, 255) if maya_active else (200, 200, 215, 255), font=f_tag, anchor="mm")
-        draw.rounded_rectangle([720, 768, 1052, 824], radius=16, fill=(14, 14, 22, 228), outline=j_bd, width=3 if not maya_active else 2)
-        draw.text((886, 796), "JULIAN · SHADOW INSIDER", fill=(253, 186, 116, 255) if not maya_active else (200, 200, 215, 255), font=f_tag, anchor="mm")
+        draw.rounded_rectangle([28, 768, 220, 824], radius=16, fill=(14, 14, 22, 228), outline=m_bd, width=3 if maya_active else 2)
+        draw.text((124, 796), "MAYA", fill=(255, 225, 77, 255) if maya_active else (200, 200, 215, 255), font=f_tag, anchor="mm")
+        draw.rounded_rectangle([860, 768, 1052, 824], radius=16, fill=(14, 14, 22, 228), outline=j_bd, width=3 if not maya_active else 2)
+        draw.text((956, 796), "JULIAN", fill=(253, 186, 116, 255) if not maya_active else (200, 200, 215, 255), font=f_tag, anchor="mm")
 
         # 4. Giant 96px 3-Line Stacked Headline + Birth-Day Sub-Pill (during 0.0s..broll_cutoff)
         if t < broll_cutoff:
@@ -4051,8 +4195,8 @@ class BrollStoryGenerator:
                 active_cue_text = cues[cue_idx]["text"]
 
             if active_cue_text:
-                if v_fmt == "podcast_duet_giant" and t >= broll_cutoff:
-                    cap_cy = 1084
+                if v_fmt == "podcast_duet_giant":
+                    cap_cy = 1084 if t >= broll_cutoff else 1215
                 elif v_fmt == "emotional_face_giant" and t >= broll_cutoff:
                     cap_cy = 1072
                 else:
