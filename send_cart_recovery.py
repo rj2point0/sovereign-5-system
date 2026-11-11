@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 =============================================================================
-SOVEREIGN 5-SYSTEM · INSTANT $17 VIP CART RECOVERY DISPATCHER
+SOVEREIGN 5-SYSTEM · INSTANT $2.99 / $14 VIP CART RECOVERY DISPATCHER
 send_cart_recovery.py
 -----------------------------------------------------------------------------
-Dispatches the personalized $17 Partner Synastry & 90-Day Love Timing VIP
+Dispatches the personalized $2.99 Express Text Script & $14 Full Dossier VIP
 Recovery Email via lead_capture_worker.py for high-intent leads who clicked
 checkout or ran 3+ Partner Compatibility checks without completing payment.
 =============================================================================

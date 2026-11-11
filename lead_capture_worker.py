@@ -67,19 +67,19 @@ SMTP_USER = "adamvega@megavegaventures.com"
 SMTP_PASS = "msct rkqt xcwb inma"
 SENDER_DISPLAY = "Sacred Number Blueprint <adamvega@megavegaventures.com>"
 
-STRIPE_MINI_URL = "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404"
-STRIPE_BASE_URL = "https://buy.stripe.com/6oU7sLek90MdbVechV38401"
-STRIPE_BUMP_URL = "https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402"
+STRIPE_MINI_URL = "https://buy.stripe.com/00w4gz0tj66x0cw5Tx38405"
+STRIPE_BASE_URL = "https://buy.stripe.com/fZu4gzek99iJe3mdlZ38406"
+STRIPE_BUMP_URL = "https://buy.stripe.com/eVqeVd3FvamNe3ma9N38407"
 BASE_FUNNEL_URL = "https://blueprint.megavegaventures.com/"
 APP_BASE_URL = BASE_FUNNEL_URL
 
 AFFILIATE_OFFER_CONFIG = {
     "ENABLED": True,
     "PROVIDER_NAME": "Sacred Number Blueprint · Priority 1-on-1 Compatibility & Text Analysis",
-    "AFFILIATE_URL": "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404?utm_source=email_advisor_ps&utm_medium=affiliate_slot",
+    "AFFILIATE_URL": "https://buy.stripe.com/00w4gz0tj66x0cw5Tx38405?utm_source=email_advisor_ps&utm_medium=affiliate_slot",
     "HEADLINE": "Want the Complete Word-for-Word Text Script & 3 Best Days To Text Tonight?",
-    "SUBTEXT": "Unlock your complete 'Flip The Chase' Text Script, their exact reply prediction, and the 3 dates this month they pull closer ($17 Express Unlock).",
-    "CTA": "⚡ Priority Unlock: Full Text Script & Best Days To Text ($17) →",
+    "SUBTEXT": "Unlock your complete 'Flip The Chase' Text Script, their exact reply prediction, and the 3 dates this month they pull closer ($2.99 Instant Unlock · or $14 Full 20-Page Relationship Dossier).",
+    "CTA": "⚡ Priority Unlock: Full Text Script & Best Days To Text ($2.99 Instant Unlock) →",
 }
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -573,7 +573,7 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
         f"• System III (Kabbalistic Tree of Life & Sephirot): 🔒 Locked in Full 20-Page Dossier\n"
         f"• System V (Chinese Lo Shu Grid & Missing Numbers): 🔒 Locked in Full 20-Page Dossier\n"
         f"• Active 52-Day Rosicrucian Planetary Cycle: 🔒 Locked in Full 20-Page Dossier\n\n"
-        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37) OR $17 PARTNER SYNASTRY MINI-READ:\n"
+        f"UNLOCK YOUR FULL 20-PAGE RELATIONSHIP DOSSIER ($14) OR $2.99 INSTANT TEXT SCRIPT:\n"
         f"{stripe_url}\n\n"
         f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER & WATCH VIDEO BRIEFING:\n"
         f"{teaser_url}\n\n"
@@ -782,11 +782,11 @@ def build_luxury_followup_email(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <tr>
             <td align="center" style="padding:4px 24px 28px;">
               <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:10px;box-shadow:0 8px 25px rgba(212,175,55,0.3);">
-                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
+                ✦ UNLOCK MY FULL 20-PAGE RELATIONSHIP DOSSIER ($14)
               </a>
               <br>
               <a href="{stripe_mini_url}" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.45);border-radius:8px;margin-bottom:10px;">
-                ⚡ Or Unlock the Full Text Script &amp; Best Days To Text ($17) →
+                ⚡ Or Unlock the Full Text Script &amp; Best Days To Text ($2.99 Instant Unlock) →
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
@@ -861,7 +861,7 @@ def build_followup_email_2_loshu(lead: Dict[str, Any]) -> Tuple[str, str, str]:
         f"monetize your #{a2['number']} ({a2['archetype']}) Wealth Engine.\n\n"
         f"Pages 14 and 16 of your 20-Page Sovereign Dossier map your exact 3x3 Lo Shu Grid, reveal which numbers your "
         f"Chaldean birth name bridges, and give you the exact elemental remedies.\n\n"
-        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37):\n{stripe_url}\n\n"
+        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($14):\n{stripe_url}\n\n"
         f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER:\n{teaser_url}\n"
     )
 
@@ -916,7 +916,7 @@ def build_followup_email_2_loshu(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <tr>
             <td align="center" style="padding:6px 24px 28px;">
               <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:12px;">
-                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
+                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($14)
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
@@ -986,7 +986,7 @@ def build_followup_email_3_cycles(lead: Dict[str, Any]) -> Tuple[str, str, str]:
         f"window—is the #1 cause of burnout and stalled momentum.\n\n"
         f"Pages 15–20 of your 20-Page Sovereign Dossier map out all 7 of your 52-day cycles for the next 365 days, "
         f"complete with your Somatic Nervous System Reset protocol.\n\n"
-        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($37):\n{stripe_url}\n\n"
+        f"UNLOCK YOUR FULL 20-PAGE SOVEREIGN DOSSIER ($14):\n{stripe_url}\n\n"
         f"RETURN TO YOUR INTERACTIVE 5-SYSTEM TEASER:\n{teaser_url}\n"
     )
 
@@ -1041,7 +1041,7 @@ def build_followup_email_3_cycles(lead: Dict[str, Any]) -> Tuple[str, str, str]:
           <tr>
             <td align="center" style="padding:6px 24px 28px;">
               <a href="{stripe_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 30px;border-radius:12px;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:12px;">
-                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($37)
+                ✦ UNLOCK MY FULL 20-PAGE SOVEREIGN DOSSIER ($14)
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:8px 16px;">
@@ -1165,7 +1165,7 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
 
     preheader = (
         f"Born on the {birth_day_ord} ({birth_day_title}): we saved the partner birthdays you tested — "
-        f"unlock your complete Partner Synastry & 'Flip The Chase' Text Script for just $17..."
+        f"unlock your complete 'Flip The Chase' Text Script for just $2.99 (or Full 20-Page Relationship Dossier for $14)..."
     )
 
     if is_geet or any(p.get("short_date") == "Dec 23" for p in partner_checks):
@@ -1249,18 +1249,18 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
         f"Saved for {first_name} (Born {dob_formatted} — {birth_day_ord}: {birth_day_title})\n"
         f"============================================================\n\n"
         f"{first_name}, we noticed you tested your Partner Compatibility on Sacred Number Blueprint and clicked to view "
-        f"your full Synastry breakdown right before we unlocked our new $17 Impulse Mini-Read tier!\n\n"
+        f"your full Synastry breakdown right before we unlocked our new $2.99 Instant Text Script Unlock!\n\n"
         f"Because you were born on the {birth_day_ord} ({birth_day_title} · Ruled by {calc['vedic_moolank']} with Master Overlap "
         f"#{a1['number']} {a1['archetype']}), you pour fierce loyalty into the person you want—yet nothing drains your nervous "
         f"system faster than a partner who acts hot one week and distant the next.\n\n"
         f"HERE IS THE SNAPSHOT OF THE PARTNER BIRTHDAYS YOU TESTED:\n"
         f"{match_breakdown_plain}\n\n"
-        f"UNLOCK YOUR FULL TEXT SCRIPT & THE BEST & WORST DAYS TO TEXT THEM FOR JUST $17 (Instead of $37):\n"
+        f"UNLOCK YOUR FULL TEXT SCRIPT & THE BEST & WORST DAYS TO TEXT THEM FOR JUST $2.99 (Instant Unlock):\n"
         f"• Full 5-System Synastry Breakdown for Dec 23 (96%), Aug 19 (85%), and Aug 08 (94%)\n"
         f"• The Exact 'Flip The Chase' Text Script For Their Birth Number (word-for-word what to text a #1/19th vs. a #5/23rd or #8 when they pull away)\n"
         f"• The Best & Worst Days To Text Them + 3 Dates This Month They Pull Closer\n\n"
-        f"👉 1-CLICK $17 VIP UNLOCK:\n{stripe_mini_url}\n\n"
-        f"Or unlock your complete 20-Page All-5-Systems Sovereign Dossier ($37):\n{stripe_base_url}\n\n"
+        f"👉 1-TAP $2.99 INSTANT TEXT SCRIPT UNLOCK (Apple Pay / Google Pay):\n{stripe_mini_url}\n\n"
+        f"Or unlock your complete 20-Page All-5-Systems Relationship Dossier ($14):\n{stripe_base_url}\n\n"
         f"Return to your saved interactive Partner Check:\n{teaser_url}\n"
     )
 
@@ -1278,7 +1278,7 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
           <tr>
             <td align="center" style="padding:26px 24px 18px;border-bottom:1px solid rgba(212,175,55,0.2);background:radial-gradient(circle at 50% 0%,#281e12,#121318 75%);">
               <div style="font-family:'Arial',sans-serif;font-size:11px;letter-spacing:2.8px;text-transform:uppercase;color:#D4AF37;font-weight:700;">
-                💞 SAVED PARTNER COMPATIBILITY BRIEFING · $17 VIP UNLOCK 💞
+                💞 SAVED PARTNER COMPATIBILITY BRIEFING · $2.99 INSTANT UNLOCK 💞
               </div>
               <h1 style="margin:10px 0 6px;font-size:23px;line-height:1.3;color:#F5F5F7;font-weight:600;">
                 {html.escape(first_name)}, Your {html.escape(birth_day_ord)} Birth Code &amp; The Partner Matches You Tested
@@ -1291,7 +1291,7 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
           <tr>
             <td style="padding:22px 24px 16px;font-family:'Arial',sans-serif;font-size:14px;line-height:1.62;color:#E4E4E7;">
               <p style="margin:0 0 14px;">
-                We saw you test your Partner Compatibility scores and click the checkout button right before we released our new <strong>$17 Full Text Script &amp; Best Days To Text</strong> unlock—so we saved your exact partner matches for you below:
+                We saw you test your Partner Compatibility scores and click the checkout button right before we released our new <strong>$2.99 Instant Text Script Unlock</strong>—so we saved your exact partner matches for you below:
               </p>
               <p style="margin:0 0 16px;">
                 Because you were born on the <strong>{html.escape(birth_day_ord)} ({html.escape(birth_day_title)} · Ruled by {html.escape(calc['vedic_moolank'])})</strong> with a <strong>#{a1['number']} ({html.escape(a1['archetype'])})</strong> 5-System Overlap, you carry rare loyalty and emotional depth—yet you hate feeling like you are the only one over-investing when someone goes cold.
@@ -1299,7 +1299,7 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
               {match_breakdown_html}
               <div style="background:linear-gradient(145deg,#1d1810 0%,#101116 100%);border:1px solid rgba(212,175,55,0.5);border-radius:12px;padding:16px;margin-bottom:18px;">
                 <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#F3E5AB;font-weight:700;margin-bottom:8px;">
-                  ⚡ UNLOCK FOR JUST $17 (INSTEAD OF $37) — INSTANT ACCESS:
+                  ⚡ UNLOCK FOR JUST $2.99 (APPLE PAY / GOOGLE PAY 1-TAP):
                 </div>
                 <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.65;color:#E4E4E7;">
                   <li><strong>Side-by-Side 5-System Partner Synastry:</strong> Why <strong>Dec 23 (96%)</strong> feels effortless while <strong>Aug 19 (85%)</strong> triggers silent ego standoffs.</li>
@@ -1312,11 +1312,11 @@ def build_cart_recovery_email(lead: Dict[str, Any], intent_info: Optional[Dict[s
           <tr>
             <td align="center" style="padding:2px 24px 28px;">
               <a href="{stripe_mini_url}" style="display:inline-block;background:linear-gradient(135deg,#F3E5AB 0%,#D4AF37 50%,#AA820A 100%);color:#141108;font-family:'Arial',sans-serif;font-size:14px;font-weight:800;text-decoration:none;padding:16px 28px;border-radius:12px;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:12px;box-shadow:0 8px 25px rgba(212,175,55,0.32);">
-                ⚡ UNLOCK MY PARTNER SYNASTRY &amp; TEXT SCRIPT ($17) →
+                ⚡ UNLOCK MY FULL TEXT SCRIPT ($2.99 INSTANT UNLOCK) →
               </a>
               <br>
               <a href="{stripe_base_url}" style="display:inline-block;color:#D4AF37;font-family:'Arial',sans-serif;font-size:12px;font-weight:700;text-decoration:none;padding:6px 14px;border:1px solid rgba(212,175,55,0.4);border-radius:8px;margin-bottom:10px;">
-                ✦ Or Unlock the Complete 20-Page All-5-Systems Sovereign Dossier ($37)
+                👑 Or Unlock the Full 20-Page Relationship Dossier ($14)
               </a>
               <br>
               <a href="{teaser_url}" style="display:inline-block;color:#F3E5AB;font-family:'Arial',sans-serif;font-size:12px;font-weight:600;text-decoration:underline;padding:6px 14px;">
@@ -1754,9 +1754,9 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     if event_type == "checkout_clicked":
         raw_tier = str(extra.get("tier") or "").strip().lower()
         if raw_tier == "love_mini" and not tier_label:
-            tier_label = "$17 Full Text Script & Best Days To Text"
+            tier_label = "$2.99 Full Text Script & Best Days To Text"
         elif not tier_label:
-            total_p = extra.get("total") or (84 if extra.get("bump") else 37)
+            total_p = extra.get("total") or (29 if extra.get("bump") else 14)
             tier_label = f"${total_p} ({'Bundle' if extra.get('bump') else 'Base'})"
 
     raw_partner_dob = str(extra.get("partner_dob") or payload.get("partner_dob") or prof.get("partner_dob") or prof.get("partnerDob") or "").strip()
@@ -1911,7 +1911,7 @@ def update_obsidian_dashboard():
                 f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
                 f"| **3b. Partner Compatibility Checks** | `partner_check_run` | **{len(partner_checks)}** | Visitors who tested a Partner / Crush birthday on the Teaser view |",
                 f"| **4. Full Email Leads Captured** | `lead_submitted` | **{total_leads_count}** | Enrolled in automated 3-part luxury HTML email sequence |",
-                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$17` Mini-Read, `$37` Base, or `$84` Bundle |",
+                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$2.99` Text Unlock, `$14` Dossier, or `$29` Bundle |",
                 "",
                 "---",
                 "",

@@ -791,7 +791,7 @@
     peak_recovery_protocol: 'Peak Vitality & Recovery Protocol',
     vitality_feature_title: 'Vitality & Somatic Architecture',
     vitality_feature_desc: 'Ayurvedic dosha alignment, Wu Xing organ balance & 52-day bio-rhythm protocols',
-    copy_full_text_cta: '📋 Copy Full Unblurred Text Message To Clipboard ($17 Instant Unlock) →',
+    copy_full_text_cta: '📋 Copy Full Unblurred Text Message To Clipboard ($2.99 Instant Unlock) →',
     trigger_phrase_locked_badge: '🔒 [6-WORD TRIGGER PHRASE LOCKED — UNBLUR FULL TEXT TO COPY]',
   };
 
@@ -896,7 +896,7 @@
     peak_recovery_protocol: 'Protocolo de Rendimiento y Recuperación',
     vitality_feature_title: 'Vitalidad y Arquitectura Somática',
     vitality_feature_desc: 'Alineación de dosha ayurvédico, balance orgánico Wu Xing y biorritmos de 52 días',
-    copy_full_text_cta: '📋 Copiar Mensaje de Texto Completo Sin Difuminar ($17 Desbloqueo Instantáneo) →',
+    copy_full_text_cta: '📋 Copiar Mensaje de Texto Completo Sin Difuminar ($2.99 Desbloqueo Instantáneo) →',
     trigger_phrase_locked_badge: '🔒 [FRASE DETONANTE DE 6 PALABRAS BLOQUEADA — DESBLOQUEA EL TEXTO COMPLETO PARA COPIAR]',
   };
 

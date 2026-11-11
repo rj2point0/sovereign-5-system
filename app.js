@@ -3,15 +3,15 @@
    Bilingual Edition: English (EN) & Spanish (ES)
    ===================================================================== */
 const CONFIG = {
-  STRIPE_LINK_MINI: 'https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404',
-  STRIPE_LINK_BASE: 'https://buy.stripe.com/6oU7sLek90MdbVechV38401',
-  STRIPE_LINK_BUMP: 'https://buy.stripe.com/eVq28r2Br9iJe3mbdR38402',
-  STRIPE_LINK_UPGRADE: 'https://buy.stripe.com/28E6oHb7X3Yp2kEgyb38403',
+  STRIPE_LINK_MINI: 'https://buy.stripe.com/00w4gz0tj66x0cw5Tx38405',
+  STRIPE_LINK_BASE: 'https://buy.stripe.com/fZu4gzek99iJe3mdlZ38406',
+  STRIPE_LINK_BUMP: 'https://buy.stripe.com/eVqeVd3FvamNe3ma9N38407',
+  STRIPE_LINK_UPGRADE: 'https://buy.stripe.com/cNi5kDek99iJ7EY5Tx38408',
 
-  PRICE_MINI: 17,
-  PRICE_BASE: 37,
-  PRICE_BUMP: 47,
-  PRICE_BUNDLE: 84,
+  PRICE_MINI: 2.99,
+  PRICE_BASE: 14,
+  PRICE_BUMP: 15,
+  PRICE_BUNDLE: 29,
   PRICE_ANCHOR: 197,           // struck-through "value" price
   GUARANTEE_DAYS: 30,          // set 0 to hide the guarantee badge
 
@@ -38,16 +38,16 @@ const AFFILIATE_OFFER_CONFIG = {
   BADGE_TEXT_ES: '⚡ DESBLOQUEO PRIORITARIO 1-A-1 DE TEXTO Y SINASTRÍA',
   HEADLINE_EN: 'Want the complete Day {d1} × Day {d2} word-for-word gameplan right now?',
   HEADLINE_ES: '¿Quieres el plan palabra por palabra completo para Día {d1} × Día {d2} ahora mismo?',
-  SUBTEXT_EN: 'Choose your instant Priority Unlock below—get the unblurred [Day {d1} × Day {d2}] (#{pMoolank} {pRuler}) "Flip The Chase" Text Script ($17 Express) or the full 20-Page 5-System Synastry Dossier ($37):',
-  SUBTEXT_ES: 'Elige tu Desbloqueo Prioritario al instante: obtén el Guion de Texto [Día {d1} × Día {d2}] (#{pMoolank} {pRuler}) sin censura ($17 Express) o el Dossier Completo de 20 Páginas ($37):',
-  BODY_EN: 'Instant Priority 1-on-1 Compatibility & Text Analysis Unlock ($17 Express Text Script / $37 Full 20-Page Dossier):',
-  BODY_ES: 'Desbloqueo Prioritario Instantáneo de Compatibilidad y Análisis de Texto ($17 Express / $37 Dossier Completo):',
-  CTA_EN: '✨ Priority 1-on-1 Compatibility & Text Analysis Unlock ($17 Express / $37 Full) →',
-  CTA_ES: '✨ Desbloqueo Prioritario de Compatibilidad y Texto ($17 Express / $37 Completo) →',
-  CTA_TEXT_EN: '✨ Priority 1-on-1 Compatibility & Text Analysis Unlock ($17 Express / $37 Full) →',
-  CTA_TEXT_ES: '✨ Desbloqueo Prioritario de Compatibilidad y Texto ($17 Express / $37 Completo) →',
-  // Routes directly to our $17 Express Stripe Checkout (with prefilled_email) + opens the Priority $17 / $37 Modal:
-  AFFILIATE_URL: 'https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404',
+  SUBTEXT_EN: 'Choose your instant Priority Unlock below—get the unblurred [Day {d1} × Day {d2}] (#{pMoolank} {pRuler}) "Flip The Chase" Text Script ($2.99 Instant Unlock) or the full 20-Page Relationship & 5-System Dossier ($14):',
+  SUBTEXT_ES: 'Elige tu Desbloqueo Prioritario al instante: obtén el Guion de Texto [Día {d1} × Día {d2}] (#{pMoolank} {pRuler}) sin censura ($2.99 Express) o el Dossier Completo de Relación de 20 Páginas ($14):',
+  BODY_EN: 'Instant Priority 1-on-1 Compatibility & Text Analysis Unlock ($2.99 Instant Text Script / $14 Full Relationship Dossier):',
+  BODY_ES: 'Desbloqueo Prioritario Instantáneo de Compatibilidad y Análisis de Texto ($2.99 Express / $14 Dossier Completo):',
+  CTA_EN: '✨ Priority 1-on-1 Compatibility & Text Analysis Unlock ($2.99 Express / $14 Full) →',
+  CTA_ES: '✨ Desbloqueo Prioritario de Compatibilidad y Texto ($2.99 Express / $14 Completo) →',
+  CTA_TEXT_EN: '✨ Priority 1-on-1 Compatibility & Text Analysis Unlock ($2.99 Express / $14 Full) →',
+  CTA_TEXT_ES: '✨ Desbloqueo Prioritario de Compatibilidad y Texto ($2.99 Express / $14 Completo) →',
+  // Routes directly to our $2.99 Express Stripe Checkout (with prefilled_email) + opens the Priority $2.99 / $14 Modal:
+  AFFILIATE_URL: 'https://buy.stripe.com/00w4gz0tj66x0cw5Tx38405',
 };
 if (typeof window !== 'undefined') {
   window.AFFILIATE_OFFER_CONFIG = AFFILIATE_OFFER_CONFIG;
@@ -62,7 +62,7 @@ if (typeof window !== 'undefined') {
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const money = (n) => '$' + n;
+  const money = (n) => '$' + (Number.isInteger(Number(n)) ? Number(n) : Number(n).toFixed(2));
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const KEYS = { profile: 's5_profile', leads: 's5_leads', pending: 's5_pending_tier', lang: 's5_lang', vip: 's5_vip' };
   const store = {
@@ -1169,13 +1169,13 @@ if (typeof window !== 'undefined') {
         <p class="eyebrow text-center">${UI.checkout_eyebrow}</p>
         <h3 class="font-display text-2xl sm:text-3xl text-center mt-2">${UI.checkout_title}</h3>
 
-        <!-- TIER 1 · $17 IMPULSE TIER (tier="love_mini") -->
+        <!-- TIER 1 · $2.99 IMPULSE TIER (tier="love_mini") -->
         <div id="tier-card-mini" class="mt-6 p-4 rounded-xl card-soft border border-white/15 hover:border-gold/40 transition-all">
           <div class="flex items-start justify-between gap-3">
             <div>
-              <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Opción Rápida · Acceso Instantáneo' : 'Quick-Start Impulse Option'}</span>
-              <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Guion de Texto Completo y Mejores Días Para Escribir ($17)' : 'Full Text Script &amp; Best Days To Text ($17)'}</h4>
-              <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Descifra tu puntaje de compatibilidad con tu pareja, qué escribirle hoy mismo y las 3 fechas de este mes en que se acercará más a ti.' : 'Decodes your Partner/Crush Birthday Compatibility score, what to text them right now, and the 3 dates this month they pull closer.'}</p>
+              <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Desbloqueo Instantáneo · Apple Pay / Google Pay' : '1-Tap Impulse Unlock · Apple Pay / Google Pay'}</span>
+              <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Guion de Texto Completo y Mejores Días Para Escribir ($2.99 Desbloqueo Instantáneo)' : 'Express Text Script &amp; Best Days To Text ($2.99 Instant Unlock)'}</h4>
+              <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Desbloquea al instante el mensaje completo en tu pantalla, qué te responderá y las 3 fechas de este mes en que se acercará más a ti.' : 'Instantly unblurs your exact word-for-word text script, what they will reply, and the 3 dates this month they pull closer.'}</p>
               <ul class="mt-2.5 space-y-1 text-xs text-champagne">
                 <li>✓ <b>${isEs ? 'El Guion Exacto de Texto para "Invertir la Persecución" Según Su Número Natal' : 'The Exact "Flip The Chase" Text Script For Their Birth Number'}</b> ${isEs ? '(qué escribir palabra por palabra cuando se aleja o te deja en visto)' : '(word-for-word what to text when they pull away or leave you on read)'}</li>
                 <li>✓ ${isEs ? 'Los Mejores y Peores Días Para Escribirle + 3 Fechas Este Mes En Que Se Acerca Más' : 'The Best &amp; Worst Days To Text Them + 3 Dates This Month They Pull Closer'}</li>
@@ -1186,23 +1186,23 @@ if (typeof window !== 'undefined') {
             </div>
           </div>
           <button type="button" id="btn-checkout-mini" data-action="checkout-mini" data-trigger="checkout_tier_17" class="btn-ghost mt-3.5 w-full !py-2.5 !px-4 border-gold/45 hover:border-gold hover:bg-gold/15 text-champagne text-xs sm:text-sm font-semibold">
-            ⚡ ${isEs ? 'Desbloquear Guion de Texto Completo y Mejores Días Para Escribir ($17) →' : 'Unlock Full Text Script &amp; Best Days To Text ($17) →'}
+            ⚡ ${isEs ? 'Desbloquear Guion de Texto Completo Ahora ($2.99 Desbloqueo Instantáneo) →' : 'Unlock Full Text Script &amp; Best Days To Text ($2.99 Instant Unlock) →'}
           </button>
         </div>
 
-        <!-- TIER 2 · $37 FLAGSHIP TIER (MOST POPULAR — Only $20 More!) -->
+        <!-- TIER 2 · $14 FULL RELATIONSHIP DOSSIER (MOST POPULAR — Only $11 More!) -->
         <div id="tier-card-base" class="mt-4 p-4 sm:p-5 rounded-xl card-soft border-2 border-gold/70 relative" style="background:linear-gradient(180deg,rgba(212,175,55,0.10),rgba(14,15,20,0.95))">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <span class="badge-gold !text-[0.62rem] !py-0.5">${isEs ? '★ MÁS POPULAR — ¡SOLO $20 MÁS!' : '★ MOST POPULAR — ONLY $20 MORE!'}</span>
-            <span class="text-[0.65rem] text-emerald-300 font-semibold uppercase tracking-wider">${isEs ? 'Ahorras $160 Hoy' : 'Save $160 Today'}</span>
+            <span class="badge-gold !text-[0.62rem] !py-0.5">${isEs ? '★ MEJOR VALOR — ¡SOLO $11 MÁS!' : '★ BEST VALUE — ONLY $11 MORE!'}</span>
+            <span class="text-[0.65rem] text-emerald-300 font-semibold uppercase tracking-wider">${isEs ? 'Ahorras $183 Hoy' : 'Save $183 Today'}</span>
           </div>
           <div class="flex gap-4 items-start">
             <div class="shrink-0 w-14 h-18 sm:w-16 sm:h-20 rounded-md grid place-items-center" style="background:linear-gradient(160deg,#1c1a12,#0b0b0d);border:1px solid rgba(212,175,55,.5)">
               <span class="font-display text-gold text-xl">${a.number}</span>
             </div>
             <div class="flex-1">
-              <p class="font-semibold text-ivory text-[0.98rem] leading-snug">${isEs ? 'Plano Completo de Amor y Vida de 20 Páginas (5 Sistemas)' : 'Complete 20-Page 5-System Love &amp; Life Blueprint'}</p>
-              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo lo de la Mini-Lectura de $17 (incluido el Guion Exacto de Texto "Invertir la Persecución" para su Número Natal) MÁS los 5 sistemas ancestrales completos (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor y Vida de 12 Meses para ${isDefaultName ? 'Ti y Tu Pareja' : first}.` : `Includes everything in the $17 Mini-Read (including The Exact "Flip The Chase" Text Script For Their Birth Number) PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Calendar for ${isDefaultName ? 'You &amp; Your Partner' : first}.`}</p>
+              <p class="font-semibold text-ivory text-[0.98rem] leading-snug">${isEs ? 'Dossier Completo de Relación y Vida de 20 Páginas (5 Sistemas · $14)' : 'Full 20-Page Relationship &amp; 5-System Love Blueprint ($14)'}</p>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? `Incluye todo el desbloqueo de texto de $2.99 (incluido el Guion Exacto "Invertir la Persecución") MÁS tu Dossier Completo de Relación de 20 Páginas en los 5 sistemas ancestrales (Occidental, Lo Shu Chino, Védico, Caldeo y Cábala) y tu Calendario de Amor de 12 Meses para ${isDefaultName ? 'Ti y Tu Pareja' : first}.` : `Includes everything in the $2.99 Text Script Unlock (including The Exact "Flip The Chase" Text Script For Their Birth Number) PLUS all 5 ancient systems (Western, Chinese Lo Shu Grid, Vedic, Chaldean Name Vibration &amp; Kabbalah) and your full 12-Month Relationship &amp; Life Timing Dossier for ${isDefaultName ? 'You &amp; Your Partner' : first}.`}</p>
             </div>
             <div class="text-right shrink-0">
               <div class="text-xs text-zinc-500 line-through">${money(CONFIG.PRICE_ANCHOR)}</div>
@@ -1211,7 +1211,7 @@ if (typeof window !== 'undefined') {
           </div>
         </div>
 
-        <!-- TIER 3 · $84 COMPLETE VIP SOVEREIGN BUNDLE ($37 + $47) -->
+        <!-- TIER 3 · $29 COMPLETE VIP SOVEREIGN BUNDLE ($14 + $15) -->
         <label id="bump-box" class="bump mt-4 flex gap-3 items-start cursor-pointer">
           <input id="bump" type="checkbox" />
           <span class="text-sm leading-relaxed flex-1">
@@ -1581,12 +1581,12 @@ if (typeof window !== 'undefined') {
       ? [
           '🔒 Sarah (Día 19 × Día 23) acaba de desbloquear el Guion de Alma Gemela 96% · hace 2m',
           '💬 Chloe (Día 7 × Día 14) verificó su Compatibilidad de Pareja · hace 4m',
-          '🔒 Jessica (Día 25 × Día 8) desbloqueó el Guion de Texto Completo y Mejores Días Para Escribir ($17) · hace 6m',
+          '🔒 Jessica (Día 25 × Día 8) desbloqueó el Guion de Texto Completo al instante ($2.99) · hace 6m',
         ]
       : [
           '🔒 Sarah (Day 19 × Day 23) just unlocked the 96% Soulmate Text Script · 2m ago',
           '💬 Chloe (Day 7 × Day 14) ran a Partner Compatibility Check · 4m ago',
-          '🔒 Jessica (Day 25 × Day 8) unlocked the Full Text Script & Best Days To Text ($17) · 6m ago',
+          '🔒 Jessica (Day 25 × Day 8) unlocked the Full Text Script ($2.99 Instant Unlock) · 6m ago',
         ];
     if (typeof state.socialProofShownCount !== 'number') {
       state.socialProofShownCount = 0;
@@ -2618,6 +2618,21 @@ if (typeof window !== 'undefined') {
             </div>
           </div>
         </div>
+        ${tier === 'love_mini' ? `
+        <div id="love-mini-dossier-upsell" class="mt-5 p-4 sm:p-5 rounded-xl border-2 border-gold bg-amber-950/35 text-left no-print">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="badge-gold !text-[0.62rem]">👑 ${isEs ? 'MEJORA VIP · DOSSIER COMPLETO DE 20 PÁGINAS ($14)' : 'VIP UPSELL · FULL 20-PAGE RELATIONSHIP DOSSIER ($14)'}</span>
+            <span class="text-[0.68rem] font-bold text-emerald-300">${isEs ? '⚡ Apple Pay · Google Pay · 1 Toque' : '⚡ Apple Pay · Google Pay · 1-Tap Unlock'}</span>
+          </div>
+          <p class="text-xs sm:text-sm text-ivory font-semibold mt-2 leading-relaxed">
+            ${isEs
+              ? '¿Quieres ver más allá de un solo mensaje? Desbloquea tu Dossier Completo de Relación de 20 Páginas (los 5 sistemas ancestrales, Sinastría profunda de pareja, números kármicos vs. alma gemela y tu Calendario de Amor de 12 Meses) por solo $14:'
+              : 'Want the complete roadmap beyond tonight\'s text? Unlock your Full 20-Page Relationship & 5-System Synastry Dossier (Western, Chinese Lo Shu, Vedic, Chaldean & Kabbalah + 12-Month Love Timing Calendar) for just $14:'}
+          </p>
+          <button type="button" id="btn-love-mini-upgrade-14" data-action="checkout-base-direct" data-trigger="post_mini_upsell_14" class="btn-gold mt-3 !py-3 !px-5 w-full text-xs sm:text-sm font-extrabold tracking-wide">
+            👑 ${isEs ? 'Desbloquear Dossier Completo de Relación de 20 Páginas ($14) →' : 'Unlock Full 20-Page Relationship Dossier ($14) →'}
+          </button>
+        </div>` : ''}
       </section>`;
   }
 
@@ -2807,7 +2822,26 @@ if (typeof window !== 'undefined') {
     }
     else if (a === 'checkout') checkout();
     else if (a === 'checkout-mini') {
+      if (t.tagName === 'A') e.preventDefault();
       checkoutMini(t.dataset.trigger || 'checkout_mini');
+    }
+    else if (a === 'checkout-base-direct') {
+      if (t.tagName === 'A') e.preventDefault();
+      const pDob = state.partnerDob || (state.profile && (state.profile.partner_dob || state.profile.partnerDob)) || '';
+      if (state.profile && pDob) {
+        state.profile.partner_dob = pDob;
+        state.profile.partnerDob = pDob;
+        if (!state.profile.isSample) saveProfile(state.profile);
+      }
+      sendWebhook('checkout_clicked', {
+        bump: false,
+        total: CONFIG.PRICE_BASE,
+        tier: 'base',
+        tier_label: `$${CONFIG.PRICE_BASE} Full 20-Page Relationship Dossier`,
+        trigger: t.dataset.trigger || 'checkout_base_direct',
+        partner_dob: pDob,
+      });
+      goToStripe(CONFIG.STRIPE_LINK_BASE, 'base');
     }
     else if (a === 'checkout-bundle') {
       const bumpEl = $('#bump');
@@ -2957,9 +2991,14 @@ if (typeof window !== 'undefined') {
     if (vipOfferEl) vipOfferEl.classList.remove('hidden');
 
     const stripeUrl = buildStripeUrl(CONFIG.STRIPE_LINK_MINI || CONFIG.STRIPE_LINK_BASE, 'love_mini');
+    const stripeBaseUrl = buildStripeUrl(CONFIG.STRIPE_LINK_BASE, 'base');
     ['#btn-vip-fast-action-17', '#btn-unlock-text-script', '#btn-partner-mini-cta', '#btn-checkout-mini', '#btn-downsell-fast-checkout', '#btn-copy-part1-script'].forEach((sel) => {
       const btn = $(sel);
       if (btn && stripeUrl) btn.setAttribute('data-stripe-url', stripeUrl);
+    });
+    ['#btn-unlock-full-dossier-14', '#btn-vip-full-dossier-14'].forEach((sel) => {
+      const btn = $(sel);
+      if (btn && stripeBaseUrl) btn.setAttribute('data-stripe-url', stripeBaseUrl);
     });
     const dsBox = $('#downsell-script-only-box');
     if (dsBox) dsBox.classList.add('hidden');
@@ -3348,14 +3387,17 @@ if (typeof window !== 'undefined') {
         <div class="mt-3 space-y-2.5">
           <a id="btn-priority-modal-17" href="${esc(final17)}" data-action="checkout-mini" data-trigger="priority_modal_17" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide rounded-xl">
             ⚡ ${isEs
-              ? `Opción Express ($17): Guion de Texto Completo [Día ${d1} × Día ${d2}] + 3 Mejores Días Para Escribirle →`
-              : `Express Unlock ($17): Full [Day ${d1} × Day ${d2}] Text Script + 3 Best Days To Text →`}
+              ? `Desbloqueo Instantáneo ($2.99): Guion de Texto Completo [Día ${d1} × Día ${d2}] + 3 Mejores Días Para Escribirle →`
+              : `$2.99 Instant Unlock: Full [Day ${d1} × Day ${d2}] Text Script + 3 Best Days To Text →`}
           </a>
-          <a id="btn-priority-modal-37" href="${esc(final37)}" data-action="partner-checkout" style="display:block;text-align:center;" class="btn-ghost !py-3 !px-4 w-full text-xs sm:text-sm font-bold text-champagne border-gold/60 bg-gold/10 hover:bg-gold/20 rounded-xl">
+          <a id="btn-priority-modal-37" href="${esc(final37)}" data-action="checkout-base-direct" data-trigger="priority_modal_14" style="display:block;text-align:center;" class="btn-ghost !py-3 !px-4 w-full text-xs sm:text-sm font-bold text-champagne border-gold/60 bg-gold/10 hover:bg-gold/20 rounded-xl">
             👑 ${isEs
-              ? `Dossier Completo de 20 Páginas ($37): Los 5 Sistemas + Sinastría de Pareja + Calendario de 12 Meses →`
-              : `Full 20-Page Dossier ($37): All 5 Systems + Partner Synastry + 12-Month Timing Calendar →`}
+              ? `Dossier Completo de Relación de 20 Páginas ($14): Los 5 Sistemas + Sinastría + Calendario de 12 Meses →`
+              : `$14 Full Relationship Dossier: All 20 Pages + 5-System Synastry + 12-Month Timing Calendar →`}
           </a>
+          <p class="text-[0.65rem] text-emerald-300 text-center font-semibold pt-0.5">
+            ⚡ ${isEs ? 'Apple Pay · Google Pay · Link 1-Toque · Desbloqueo Instantáneo en Pantalla' : 'Apple Pay · Google Pay · Link 1-Tap · Instant On-Screen Unlock'}
+          </p>
         </div>
       </div>
     `;
@@ -3602,12 +3644,20 @@ if (typeof window !== 'undefined') {
         </div>
         <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
           🔒 ${isEs
-            ? 'Desbloquear el guion de texto completo + los mejores y peores días para escribirle ($17) →'
-            : 'Unlock the full text script + the best & worst days to text them ($17) →'}
+            ? 'Desbloquear el guion de texto completo + los mejores y peores días para escribirle ($2.99 Desbloqueo Instantáneo) →'
+            : 'Unlock the full text script + the best & worst days to text them ($2.99 Instant Unlock) →'}
         </button>
+        <button type="button" id="btn-unlock-full-dossier-14" data-action="checkout-base-direct" data-trigger="unlock_full_dossier_14" style="display:block;text-align:center;" class="btn-ghost mt-2 !py-2.5 !px-4 w-full text-xs font-bold text-champagne border-gold/55 bg-gold/10 hover:bg-gold/20 rounded-xl">
+          👑 ${isEs
+            ? 'O Desbloquea el Dossier Completo de Relación de 20 Páginas ($14) →'
+            : 'Or Unlock Full 20-Page Relationship Dossier ($14) →'}
+        </button>
+        <p class="mt-1.5 text-[0.65rem] text-emerald-300 text-center font-semibold">
+          ⚡ ${isEs ? 'Apple Pay · Google Pay · Link 1-Toque · Acceso Instantáneo' : 'Apple Pay · Google Pay · Link 1-Tap Instant Unlock'}
+        </p>
       </div>
 
-      <!-- INLINE 15-MINUTE FAST-ACTION $17 VIP OFFER (REVEALED INSTANTLY ON EMAIL SUBMIT) -->
+      <!-- INLINE 15-MINUTE FAST-ACTION $2.99 VIP OFFER (REVEALED INSTANTLY ON EMAIL SUBMIT) -->
       <div id="vip-fast-action-offer" class="vip-fast-action-card hidden mt-3.5 p-4 text-left">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
           <span class="badge-gold !text-[0.62rem] !py-0.5">⚡ ${isEs ? 'DESBLOQUEO RÁPIDO VIP' : 'VIP FAST-ACTION UNLOCK'}</span>
@@ -3622,12 +3672,17 @@ if (typeof window !== 'undefined') {
         </p>
         <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
           <span class="block text-center leading-snug">⚡ ${isEs
-            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer class="inline font-mono underline">14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($17) →'
-            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer class="inline font-mono underline">14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($17) →'}</span>
+            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer class="inline font-mono underline">14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($2.99 Desbloqueo Instantáneo) →'
+            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer class="inline font-mono underline">14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($2.99 Instant Unlock) →'}</span>
+        </button>
+        <button type="button" id="btn-vip-full-dossier-14" data-action="checkout-base-direct" data-trigger="post_email_vip_14" data-stripe-url="" style="display:block;text-align:center;" class="btn-ghost mt-2 !py-2.5 !px-4 w-full text-xs font-bold text-champagne border-gold/55 bg-gold/10 hover:bg-gold/20 rounded-xl">
+          👑 ${isEs
+            ? 'O Desbloquea el Dossier Completo de Relación de 20 Páginas ($14) →'
+            : 'Or Unlock Full 20-Page Relationship Dossier ($14) →'}
         </button>
         <div class="mt-2.5 text-center">
           <button type="button" id="btn-show-downsell-box" data-action="show-downsell-box" class="text-[0.7rem] sm:text-xs text-amber-300 underline font-semibold hover:text-ivory cursor-pointer">
-            ${isEs ? '¿Solo quieres el mensaje de texto desbloqueado ahora mismo? Haz clic aquí ↓' : 'Wait — Just want the unblurred text message right now? Tap here ↓'}
+            ${isEs ? '¿Solo quieres el mensaje de texto desbloqueado por $2.99 ahora mismo? Haz clic aquí ↓' : 'Wait — Just want the unblurred text message for $2.99 right now? Tap here ↓'}
           </button>
         </div>
       </div>
@@ -3636,16 +3691,16 @@ if (typeof window !== 'undefined') {
       <div id="downsell-script-only-box" class="hidden mt-3.5 p-3.5 sm:p-4 rounded-xl bg-amber-950/55 border-2 border-amber-400/75 text-left shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
           <span class="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/60 text-[0.62rem] font-extrabold uppercase tracking-wider text-amber-200">
-            ⚡ ${isEs ? 'OPCIÓN RÁPIDA · SOLO EL GUION DE TEXTO' : 'WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE?'}
+            ⚡ ${isEs ? 'OPCIÓN RÁPIDA · SOLO EL GUION DE TEXTO ($2.99)' : 'WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE? ($2.99)'}
           </span>
           <span class="text-[0.65rem] font-bold text-emerald-300">
-            ${isEs ? 'Acceso Instantáneo en 1 Toque' : '1-Tap Express Unlock'}
+            ${isEs ? 'Apple Pay / Google Pay · 1 Toque' : 'Apple Pay / Google Pay · 1-Tap'}
           </span>
         </div>
         <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
           ${isEs
-            ? `No necesitas leer un reporte largo hoy. Desbloquea al instante el resto de tu mensaje palabra por palabra para [Día ${userBirthDay} × Día ${partnerBirthDay}] + su respuesta exacta:`
-            : `Skip the long reading—get the exact word-for-word [Day ${userBirthDay} × Day ${partnerBirthDay}] "Flip The Chase" text message unblurred on your screen in 1 tap:`}
+            ? `No necesitas leer un reporte largo hoy. Desbloquea al instante el resto de tu mensaje palabra por palabra para [Día ${userBirthDay} × Día ${partnerBirthDay}] + su respuesta exacta por solo $2.99:`
+            : `Skip the long reading—get the exact word-for-word [Day ${userBirthDay} × Día ${partnerBirthDay}]`.replace('Día', 'Day') + ` "Flip The Chase" text message unblurred on your screen in 1 tap for $2.99:`}
         </p>
         <div id="downsell-fast-email-wrap" class="hidden mt-2.5 flex flex-col sm:flex-row gap-2">
           <input id="downsell-fast-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Tu correo para desbloquear Parte 1 gratis...' : 'Enter email to unblur Part 1 free right now...'}" />
@@ -3656,11 +3711,11 @@ if (typeof window !== 'undefined') {
         <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
           <button type="button" id="btn-downsell-fast-checkout" data-action="checkout-mini" data-trigger="downsell_fast_checkout_script" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 flex-1 text-xs sm:text-sm font-extrabold tracking-wide">
             ⚡ ${isEs
-              ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($17) →'
-              : '1-Tap Express Unlock: Unblur Full Text Message Now ($17) →'}
+              ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($2.99) →'
+              : '1-Tap Express Unlock: Unblur Full Text Message Now ($2.99) →'}
           </button>
           <button type="button" id="btn-copy-part1-script" data-action="copy-part1-script" style="display:block;text-align:center;" class="btn-ghost !py-2.5 !px-3 flex-1 text-xs font-bold text-champagne border-gold/45 hover:border-gold">
-            📋 ${isEs ? 'Copiar Mensaje de Texto Completo Sin Difuminar ($17 Desbloqueo Instantáneo) →' : 'Copy Full Unblurred Text Message To Clipboard ($17 Instant Unlock) →'}
+            📋 ${isEs ? 'Copiar Mensaje de Texto Completo Sin Difuminar ($2.99 Desbloqueo Instantáneo) →' : 'Copy Full Unblurred Text Message To Clipboard ($2.99 Instant Unlock) →'}
           </button>
         </div>
       </div>
@@ -3670,8 +3725,8 @@ if (typeof window !== 'undefined') {
         <div id="partner-compat-email-box" class="mb-3.5 p-3 sm:p-3.5 rounded-xl bg-black/40 border border-gold/35 text-left transition-all">
           <div id="partner-hesitation-callout" class="hidden mb-2.5 p-2.5 rounded-lg bg-gold/15 border border-gold text-xs text-ivory font-semibold leading-snug">
             ⚡ ${isEs
-              ? `¿Aún no estás listo para el desbloqueo completo de $17? Ingresa tu correo abajo y te enviaremos gratis tu Desglose de Compatibilidad [Día ${userBirthDay} × Día ${partnerBirthDay}] + Primera Línea de Texto:`
-              : `Not ready for the full $17 unlock yet? Enter your email below and we'll send your [Day ${userBirthDay} × Day ${partnerBirthDay}] Compatibility Breakdown + Opening Reset Line to your inbox free:`}
+              ? `¿Aún no estás listo para desbloquear hoy? Ingresa tu correo abajo y te enviaremos gratis tu Desglose de Compatibilidad [Día ${userBirthDay} × Día ${partnerBirthDay}] + Primera Línea de Texto:`
+              : `Not ready for the $2.99 unlock yet? Enter your email below and we'll send your [Day ${userBirthDay} × Day ${partnerBirthDay}] Compatibility Breakdown + Opening Reset Line to your inbox free:`}
           </div>
           <p class="text-xs text-champagne font-medium leading-snug">
             📩 ${isEs ? '¿Quieres guardar este puntaje de Compatibilidad de Pareja y ver las 3 fechas este mes en que se acerca más gratis?' : 'Want to save this Partner Compatibility score &amp; see the 3 dates this month they pull closer for free?'}
@@ -3684,14 +3739,14 @@ if (typeof window !== 'undefined') {
           </div>
         </div>` : ''}
         <p class="text-xs sm:text-sm text-champagne text-left leading-relaxed">
-          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa y Dossier de 20 Páginas:' : 'Locked Inside Your Partner Synastry &amp; Full Dossier:'}</b>
+          🔒 <b>${isEs ? 'Desbloquea Su Sinastría Completa y Dossier de 20 Páginas ($14):' : 'Locked Inside Your Full Relationship Dossier ($14):'}</b>
           ${isEs ? 'Incluye <b>El Guion Exacto de Texto para "Invertir la Persecución"</b> para una pareja #' + rep.pMoolank + ' (' + rep.pRuler + ') sin activar su escudo defensivo, más los mejores y peores días para escribirle.' : 'Includes <b>The Exact "Flip The Chase" Text Script For Their #' + rep.pMoolank + ' (' + rep.pRuler + ') Birth Number</b> so neither of you pulls away—plus the best &amp; worst days to text them.'}
         </p>
         <button type="button" id="btn-partner-checkout-cta" data-action="partner-checkout" class="btn-gold mt-3.5 !py-3.5 !px-5 w-full text-xs sm:text-sm font-bold tracking-wide">
-          ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report →'}
+          ${isEs ? 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report ($14) →' : 'Unlock Full 5-System Partner Compatibility & Soulmate Timing Report ($14) →'}
         </button>
         <button type="button" id="btn-partner-mini-cta" data-action="checkout-mini" data-trigger="partner_compat_mini_17" class="btn-ghost mt-2.5 !py-2.5 !px-4 w-full text-xs text-champagne border-gold/40 hover:border-gold">
-          ⚡ ${isEs ? 'O desbloquea el Guion de Texto Completo y Mejores Días Para Escribir ($17) →' : 'Or unlock the Full Text Script &amp; Best Days To Text ($17) →'}
+          ⚡ ${isEs ? 'O desbloquea solo el Guion de Texto Completo ahora ($2.99 Desbloqueo Instantáneo) →' : 'Or unlock the Full Text Script &amp; Best Days To Text ($2.99 Instant Unlock) →'}
         </button>
       </div>
 

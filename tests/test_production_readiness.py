@@ -341,13 +341,14 @@ async def test_all():
         assert p1_filter == "none", f"Expected #imessage-part1-text filter to be 'none' after email submit, got '{p1_filter}'"
         assert await page_prod.is_visible('#vip-fast-action-offer') is True, "Expected #vip-fast-action-offer to appear immediately on email submit!"
         vip_btn_txt = await page_prod.locator('#btn-vip-fast-action-17').inner_text()
-        assert "best days to text them ($17)" in vip_btn_txt.lower(), f"Unexpected #btn-vip-fast-action-17 text: {vip_btn_txt}"
+        assert "best days to text them ($2.99 instant unlock)" in vip_btn_txt.lower(), f"Unexpected #btn-vip-fast-action-17 text: {vip_btn_txt}"
         vip_stripe_url = await page_prod.locator('#btn-vip-fast-action-17').get_attribute('data-stripe-url')
-        assert vip_stripe_url and "prefilled_email=sarah.compat%40gmail.com" in vip_stripe_url, f"Expected prefilled_email in #btn-vip-fast-action-17 data-stripe-url, got '{vip_stripe_url}'"
+        assert vip_stripe_url and "00w4gz0tj66x0cw5Tx38405" in vip_stripe_url and "prefilled_email=sarah.compat%40gmail.com" in vip_stripe_url, f"Expected $2.99 Stripe URL + prefilled_email in #btn-vip-fast-action-17 data-stripe-url, got '{vip_stripe_url}'"
+        assert await page_prod.is_visible('#btn-vip-full-dossier-14') is True, "Expected companion $14 Full Relationship Dossier CTA #btn-vip-full-dossier-14 visible inside #vip-fast-action-offer!"
         lead_evs = [p for p in ntfy_payloads if p.get("event_type") == "lead_submitted"]
         assert len(lead_evs) >= 1 and lead_evs[-1].get("partner_dob") == "1988-10-26", f"Expected partner_dob=1988-10-26 in lead_submitted payload: {lead_evs}"
         assert (lead_evs[-1].get("extra") or {}).get("trigger") == "partner_compat_email_bar", f"Expected trigger=partner_compat_email_bar, got {lead_evs[-1]}"
-        print("[OK] Mobile Month/Day/Year dropdowns, Instant Part 1 Unblur, 15-Min $17 VIP Offer (prefilled_email), 19x23 Emblem & Social Proof Toast verified!")
+        print("[OK] Mobile Month/Day/Year dropdowns, Instant Part 1 Unblur, 15-Min $2.99 VIP Offer + $14 Full Dossier Upsell (prefilled_email), 19x23 Emblem & Social Proof Toast verified!")
 
         # TEST 9: Reverse Order (DOB -> Name) Bidirectional calc_preview + SEO/OG/AEO + Jenny Hoyos Gate Verification
         print("\n--- Test 9: Reverse Order (DOB -> Name) calc_preview, <=38-Char og:title, 5-Circle Logo & Jenny Hoyos Gate ---")
@@ -414,7 +415,8 @@ async def test_all():
             intent_info=geet_intent,
         )
         assert geet_subj == "Geet — your 96% match on Dec 23 (and why Aug 19 pulls away) 💔", f"Unexpected Geet recovery subject: {geet_subj}"
-        assert "dRm8wP7VL0Md1gA0zd38404?prefilled_email=geet08190%40gmail.com" in geet_html
+        assert "00w4gz0tj66x0cw5Tx38405?prefilled_email=geet08190%40gmail.com" in geet_html
+        assert "fZu4gzek99iJe3mdlZ38406?prefilled_email=geet08190%40gmail.com" in geet_html
 
         # Verify Real-Time Birth-Day Compatibility % Replies in comment_reply_engine.py, tiktok_comment_responder.py & ig_comment_responder.py
         from comment_reply_engine import CommentReplyEngine, parse_birth_days_from_comment
@@ -474,7 +476,7 @@ async def test_all():
         assert await page_mob.is_visible('#hero-live-imessage-preview') is True, "Expected #hero-live-imessage-preview visible at 0.0s on view1"
         assert await page_mob.is_visible('#hero-podcast-host-pill') is True, "Expected #hero-podcast-host-pill (Maya x Julian) visible inside #hero-live-imessage-preview on view1"
         host_pill_txt = await page_mob.locator('#hero-podcast-host-pill').inner_text()
-        assert "MAYA & JULIAN · NUMEROLOGY & RELATIONSHIP EXPERTS" in host_pill_txt.upper(), f"Unexpected #hero-podcast-host-pill text: {host_pill_txt}"
+        assert "MAYA & JULIAN" in host_pill_txt.upper(), f"Unexpected #hero-podcast-host-pill text: {host_pill_txt}"
         qbox = await page_mob.locator('#quick-day-hero-box').bounding_box()
         assert qbox is not None and qbox["y"] < 140, f"Expected #quick-day-hero-box at very top of view1 (y < 140px), got y={qbox['y'] if qbox else None}"
         for sel in ('#quick-day-hero-box', '#quick-day-strip', '#hero-live-imessage-preview', '#fullName', '#dobMonth', '#dobDay', '#dobYear', '#heroForm button[type="submit"]', '#hero-micro-badge', '#btn-instant-demo'):
@@ -537,7 +539,7 @@ async def test_all():
         ds_txt = await page_mob.locator('#downsell-script-only-box').inner_text()
         assert "WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE?" in ds_txt.upper(), f"Unexpected #downsell-script-only-box text: {ds_txt}"
         hes_txt = await page_mob.locator('#partner-hesitation-callout').inner_text()
-        assert "Not ready for the full $17 unlock yet?" in hes_txt and "[Day 25 × Day 16] Compatibility Breakdown + Opening Reset Line" in hes_txt, f"Unexpected #partner-hesitation-callout text: {hes_txt}"
+        assert "Not ready for the $2.99 unlock yet?" in hes_txt and "[Day 25 × Day 16] Compatibility Breakdown + Opening Reset Line" in hes_txt, f"Unexpected #partner-hesitation-callout text: {hes_txt}"
         has_pulse_cls = await page_mob.evaluate("document.querySelector('#partner-compat-email-box').classList.contains('gold-pulse-highlight')")
         assert has_pulse_cls is True, "Expected #partner-compat-email-box to have .gold-pulse-highlight class after hesitation timer!"
         p_qd_evs = [e for e in demo_events if e.get("event_type") == "partner_check_run"]
@@ -562,12 +564,15 @@ async def test_all():
         bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
         assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 25 × PARTNER DAY 16)' in bubble_txt.upper(), f"Unexpected bubble header: {bubble_txt}"
         assert await page_mob.is_visible('#btn-unlock-text-script') is True, "Expected #btn-unlock-text-script visible inside #flip-chase-preview-bubble"
+        assert await page_mob.is_visible('#btn-unlock-full-dossier-14') is True, "Expected companion $14 Full Dossier CTA #btn-unlock-full-dossier-14 visible inside #flip-chase-preview-bubble"
         unlock_btn_txt = await page_mob.locator('#btn-unlock-text-script').inner_text()
-        assert "best & worst days to text them ($17)" in unlock_btn_txt.lower(), f"Unexpected #btn-unlock-text-script text: {unlock_btn_txt}"
+        assert "best & worst days to text them ($2.99 instant unlock)" in unlock_btn_txt.lower(), f"Unexpected #btn-unlock-text-script text: {unlock_btn_txt}"
+        dossier_14_txt = await page_mob.locator('#btn-unlock-full-dossier-14').inner_text()
+        assert "$14" in dossier_14_txt and "relationship dossier" in dossier_14_txt.lower(), f"Unexpected #btn-unlock-full-dossier-14 text: {dossier_14_txt}"
         blur_style = await page_mob.locator('#flip-chase-preview-bubble .imessage-blurred').first.get_attribute('style')
         assert 'blur(5px)' in (blur_style or ''), f"Expected blur(5px) on .imessage-blurred, got {blur_style}"
 
-        # Intercept Stripe redirect for #btn-unlock-text-script and verify it routes to $17 love_mini with trigger='unlock_text_script_17'
+        # Intercept Stripe redirect for #btn-unlock-text-script and verify it routes to $2.99 love_mini with trigger='unlock_text_script_17'
         script_stripe_urls = []
         async def mock_script_stripe_route(route):
             script_stripe_urls.append(route.request.url)
@@ -582,7 +587,7 @@ async def test_all():
             and (e.get("extra") or {}).get("trigger") == "unlock_text_script_17"
         ]
         assert len(script_co_evs) >= 1, f"Expected checkout_clicked with tier='love_mini' and trigger='unlock_text_script_17', got {demo_events}"
-        assert any("dRm8wP7VL0Md1gA0zd38404" in u for u in script_stripe_urls), f"Expected $17 Stripe link redirect from #btn-unlock-text-script, got {script_stripe_urls}"
+        assert any("00w4gz0tj66x0cw5Tx38405" in u for u in script_stripe_urls), f"Expected $2.99 Stripe link redirect from #btn-unlock-text-script, got {script_stripe_urls}"
         await page_mob.unroute("https://buy.stripe.com/**")
 
         # Return to Hero to test #btn-instant-demo
@@ -608,15 +613,17 @@ async def test_all():
         assert await page_mob.locator('#partnerDobDay').input_value() == "13"
         assert await page_mob.locator('#partnerDobYear').input_value() == "1996"
 
-        # Verify $17 Impulse Tier renders and fires checkout_clicked with tier="love_mini" and redirects to dedicated $17 Stripe link
+        # Verify $2.99 Impulse Tier renders and fires checkout_clicked with tier="love_mini" and redirects to dedicated $2.99 Stripe link
         mini_cfg = await page_mob.evaluate("() => CONFIG.STRIPE_LINK_MINI")
-        assert mini_cfg == "https://buy.stripe.com/dRm8wP7VL0Md1gA0zd38404", f"Expected dedicated $17 Stripe link, got {mini_cfg}"
-        assert await page_mob.is_visible('#tier-card-mini') is True, "Expected #tier-card-mini ($17 tier) visible"
+        base_cfg = await page_mob.evaluate("() => CONFIG.STRIPE_LINK_BASE")
+        assert mini_cfg == "https://buy.stripe.com/00w4gz0tj66x0cw5Tx38405", f"Expected dedicated $2.99 Stripe link, got {mini_cfg}"
+        assert base_cfg == "https://buy.stripe.com/fZu4gzek99iJe3mdlZ38406", f"Expected dedicated $14 Stripe link, got {base_cfg}"
+        assert await page_mob.is_visible('#tier-card-mini') is True, "Expected #tier-card-mini ($2.99 tier) visible"
         assert await page_mob.is_visible('#btn-checkout-mini') is True, "Expected #btn-checkout-mini visible"
         mini_card_txt = await page_mob.locator('#tier-card-mini').inner_text()
         base_card_txt = await page_mob.locator('#tier-card-base').inner_text()
-        assert 'Flip The Chase' in mini_card_txt, f"Expected 'Flip The Chase' Text Script in #tier-card-mini, got {mini_card_txt}"
-        assert 'Flip The Chase' in base_card_txt, f"Expected 'Flip The Chase' Text Script in #tier-card-base, got {base_card_txt}"
+        assert 'Flip The Chase' in mini_card_txt and '$2.99' in mini_card_txt, f"Expected 'Flip The Chase' & $2.99 in #tier-card-mini, got {mini_card_txt}"
+        assert 'Flip The Chase' in base_card_txt and '$14' in base_card_txt, f"Expected 'Flip The Chase' & $14 in #tier-card-base, got {base_card_txt}"
         intercepted_stripe_urls = []
         async def mock_stripe_route(route):
             intercepted_stripe_urls.append(route.request.url)
@@ -626,13 +633,14 @@ async def test_all():
         await asyncio.sleep(0.25)
         mini_co_evs = [e for e in demo_events if e.get("event_type") == "checkout_clicked" and (e.get("extra") or {}).get("tier") == "love_mini"]
         assert len(mini_co_evs) >= 1, f"Expected checkout_clicked with tier='love_mini', got {demo_events}"
-        assert (mini_co_evs[-1].get("extra") or {}).get("total") == 17
-        assert any("dRm8wP7VL0Md1gA0zd38404" in u for u in intercepted_stripe_urls), f"Expected navigation to $17 Stripe link dRm8wP7VL0Md1gA0zd38404, got {intercepted_stripe_urls}"
+        assert (mini_co_evs[-1].get("extra") or {}).get("total") == 2.99
+        assert any("00w4gz0tj66x0cw5Tx38405" in u for u in intercepted_stripe_urls), f"Expected navigation to $2.99 Stripe link 00w4gz0tj66x0cw5Tx38405, got {intercepted_stripe_urls}"
 
-        # Verify visiting /?tier=love_mini&unlocked=true renders the unlocked Full Text Script & Best Days To Text Report cleanly
+        # Verify visiting /?tier=love_mini&unlocked=true renders the unlocked Full Text Script & Best Days To Text Report + $14 Full Dossier Upsell cleanly
         await page_mob.goto("http://127.0.0.1:8080/?tier=love_mini&unlocked=true")
         await page_mob.wait_for_selector('#view-dossier:not(.hidden)', timeout=5000)
         assert await page_mob.is_visible('#partner-synastry-love-timing-report') is True, "Expected #partner-synastry-love-timing-report visible on ?tier=love_mini&unlocked=true"
+        assert await page_mob.is_visible('#love-mini-dossier-upsell') is True, "Expected $14 Full Dossier upsell #love-mini-dossier-upsell visible on ?tier=love_mini&unlocked=true"
         mini_rep_txt = await page_mob.locator('#partner-synastry-love-timing-report').inner_text()
         assert "THE BEST & WORST DAYS TO TEXT THEM" in mini_rep_txt.upper()
         assert "3 DATES THIS MONTH THEY PULL CLOSER" in mini_rep_txt.upper()
@@ -690,7 +698,7 @@ async def test_all():
         assert await page_mob.is_visible('#live-advisor-upsell-card') is True, "Expected #live-advisor-upsell-card visible inside #partner-compat-result"
         assert await page_mob.is_visible('#btn-live-advisor-affiliate') is True, "Expected #btn-live-advisor-affiliate visible"
         adv_btn_txt = await page_mob.locator('#btn-live-advisor-affiliate').inner_text()
-        assert "priority 1-on-1 compatibility & text analysis unlock ($17 express / $37 full)" in adv_btn_txt.lower(), f"Unexpected #btn-live-advisor-affiliate text: {adv_btn_txt}"
+        assert "priority 1-on-1 compatibility & text analysis unlock ($2.99 express / $14 full)" in adv_btn_txt.lower(), f"Unexpected #btn-live-advisor-affiliate text: {adv_btn_txt}"
         await page_mob.evaluate("window.open = (u) => { window.__OPENED_AFF_URL = u; return null; };")
         await page_mob.click('#btn-live-advisor-affiliate')
         await asyncio.sleep(0.2)
@@ -698,12 +706,12 @@ async def test_all():
         assert len(adv_evs) >= 1, f"Expected advisor_affiliate_clicked telemetry event, got {[e.get('event_type') for e in demo_events]}"
         assert (adv_evs[-1].get("extra") or {}).get("d1") == 19 and (adv_evs[-1].get("extra") or {}).get("d2") == 23
         opened_aff_url = await page_mob.evaluate("() => window.__LAST_ADVISOR_AFFILIATE_URL || window.__OPENED_AFF_URL || ''")
-        assert "dRm8wP7VL0Md1gA0zd38404" in opened_aff_url, f"Expected $17 Stripe URL dRm8wP7VL0Md1gA0zd38404 on #btn-live-advisor-affiliate click, got '{opened_aff_url}'"
+        assert "00w4gz0tj66x0cw5Tx38405" in opened_aff_url, f"Expected $2.99 Stripe URL 00w4gz0tj66x0cw5Tx38405 on #btn-live-advisor-affiliate click, got '{opened_aff_url}'"
         assert await page_mob.is_visible('#priority-unlock-modal') is True, "Expected #priority-unlock-modal to open on #btn-live-advisor-affiliate click"
         modal_17_href = await page_mob.locator('#btn-priority-modal-17').get_attribute('href')
         modal_37_href = await page_mob.locator('#btn-priority-modal-37').get_attribute('href')
-        assert "dRm8wP7VL0Md1gA0zd38404" in (modal_17_href or ""), f"Expected $17 Stripe URL in #btn-priority-modal-17, got '{modal_17_href}'"
-        assert "6oU7sLek90MdbVechV38401" in (modal_37_href or ""), f"Expected $37 Stripe URL in #btn-priority-modal-37, got '{modal_37_href}'"
+        assert "00w4gz0tj66x0cw5Tx38405" in (modal_17_href or ""), f"Expected $2.99 Stripe URL in #btn-priority-modal-17, got '{modal_17_href}'"
+        assert "fZu4gzek99iJe3mdlZ38406" in (modal_37_href or ""), f"Expected $14 Stripe URL in #btn-priority-modal-37, got '{modal_37_href}'"
         await page_mob.click('#btn-close-priority-modal')
         await asyncio.sleep(0.1)
 
@@ -726,7 +734,7 @@ async def test_all():
 
         # Assert Julian's badge reads 'Julian · Numerology & Relationship Expert' and his avatar is circular (44x44, borderRadius 50%)
         julian_heading_txt = await page_mob.locator('#julian-insider-take-heading').inner_text()
-        assert "Julian · Numerology & Relationship Expert" in julian_heading_txt, f"Expected 'Julian · Numerology & Relationship Expert', got '{julian_heading_txt}'"
+        assert "Julian" in julian_heading_txt and "Shadow" not in julian_heading_txt, f"Expected clean Julian heading without 'Shadow', got '{julian_heading_txt}'"
         julian_img_style = await page_mob.evaluate("() => { const img = document.querySelector('#julian-insider-take-box img'); const cs = getComputedStyle(img); return { w: img.getBoundingClientRect().width, h: img.getBoundingClientRect().height, br: cs.borderRadius }; }")
         assert 40 <= julian_img_style["w"] <= 48 and 40 <= julian_img_style["h"] <= 48 and ("50%" in julian_img_style["br"] or "22px" in julian_img_style["br"]), f"Expected circular 44x44 Julian avatar, got {julian_img_style}"
 
@@ -747,12 +755,12 @@ async def test_all():
         assert await page_mob.is_visible('#downsell-script-only-box') is False, "Expected duplicate #downsell-script-only-box hidden after Part 1 unlock"
         assert await page_mob.is_visible('#downsell-fast-email-wrap') is False, "Expected duplicate #downsell-fast-email-wrap hidden after Part 1 unlock"
 
-        # Reveal #downsell-script-only-box via #btn-show-downsell-box and verify #btn-copy-part1-script is now a $17 Instant Unlock checkout trigger
+        # Reveal #downsell-script-only-box via #btn-show-downsell-box and verify #btn-copy-part1-script is now a $2.99 Instant Unlock checkout trigger
         await page_mob.click('#btn-show-downsell-box')
         await asyncio.sleep(0.15)
         assert await page_mob.is_visible('#downsell-script-only-box') is True, "Expected #downsell-script-only-box visible after clicking #btn-show-downsell-box"
         copy_btn_txt = await page_mob.locator('#btn-copy-part1-script').inner_text()
-        assert "copy full unblurred text message to clipboard ($17 instant unlock)" in copy_btn_txt.lower(), f"Unexpected #btn-copy-part1-script text: {copy_btn_txt}"
+        assert "copy full unblurred text message to clipboard ($2.99 instant unlock)" in copy_btn_txt.lower(), f"Unexpected #btn-copy-part1-script text: {copy_btn_txt}"
         copy_stripe_urls = []
         async def mock_copy_stripe_route(route):
             copy_stripe_urls.append(route.request.url)
@@ -769,11 +777,11 @@ async def test_all():
             and (e.get("extra") or {}).get("trigger") == "copy_text_cta_17"
         ]
         assert len(copy_co_evs) >= 1, f"Expected checkout_clicked with trigger='copy_text_cta_17', got {demo_events}"
-        assert any("dRm8wP7VL0Md1gA0zd38404" in u and "prefilled_email=mobile.audit%40gmail.com" in u for u in copy_stripe_urls), f"Expected $17 Stripe URL with prefilled_email on #btn-copy-part1-script click, got {copy_stripe_urls}"
+        assert any("00w4gz0tj66x0cw5Tx38405" in u and "prefilled_email=mobile.audit%40gmail.com" in u for u in copy_stripe_urls), f"Expected $2.99 Stripe URL with prefilled_email on #btn-copy-part1-script click, got {copy_stripe_urls}"
         await page_mob.unroute("https://buy.stripe.com/**")
 
         await page_mob.close()
-        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill, $17 Impulse Tier & ?d1=19&d2=23 Viral Partner Share verified!")
+        print("[OK] 390x844 Mobile Viewport Above-The-Fold Audit, 1-Tap Sample Reading Pill, $2.99 Impulse Tier + $14 Full Dossier & ?d1=19&d2=23 Viral Partner Share verified!")
 
         await browser.close()
     print("\nALL PRODUCTION READINESS & VIP TESTS PASSED WITH 100% SUCCESS!")

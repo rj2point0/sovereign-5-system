@@ -181,8 +181,13 @@ class DualAccountRelayServer:
                         self.auth_status["ig"] = is_ig_authed
                         if is_ig_authed and not self.ig_auto_upload_triggered:
                             self.ig_auto_upload_triggered = True
+                            ig_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ig_reels_auto_uploader.py")
                             subprocess.Popen(
-                                [sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "ig_reels_auto_uploader.py"), "--video", "Short_051_Veo31_Breadcrumbing.mp4", "--wait-login", "15"],
+                                [
+                                    sys.executable,
+                                    "-c",
+                                    f"import subprocess, sys; [subprocess.run([sys.executable, {ig_script!r}, '--video', v, '--wait-login', '15']) for v in ('Short_051_Veo31_Breadcrumbing.mp4', 'Short_052_Veo31_HotAndCold.mp4', 'Short_053_Veo31_Vanished6Weeks.mp4')]",
+                                ],
                                 stdout=subprocess.DEVNULL,
                                 stderr=subprocess.DEVNULL,
                             )

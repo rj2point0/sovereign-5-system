@@ -674,9 +674,9 @@ async def upload_vsl_and_link_related_shorts(vsl_mp4_path: str, existing_vsl_id:
                     except Exception as e:
                         print(f"    [YT VSL Pin Notice] {e}", flush=True)
 
-            # Dynamically include short_50..short_56 from tracker alongside top shorts
+            # Dynamically include short_50..short_59 from tracker alongside top shorts
             dynamic_targets = []
-            for sk in ("short_50", "short_51", "short_52", "short_53", "short_54", "short_55", "short_56"):
+            for sk in ("short_50", "short_51", "short_52", "short_53", "short_54", "short_55", "short_56", "short_57", "short_58", "short_59"):
                 v_entry = tracker.get("videos", {}).get(sk, {})
                 if v_entry.get("video_id"):
                     dynamic_targets.append((sk, v_entry["video_id"]))
@@ -687,8 +687,8 @@ async def upload_vsl_and_link_related_shorts(vsl_mp4_path: str, existing_vsl_id:
             print(f"\n  [YT Studio Related Video] Wiring Related Video ({vsl_vid}) across {len(dynamic_targets)} Shorts...", flush=True)
             linked_shorts = tracker.setdefault("related_video_linked", {})
             for short_key, short_vid in dynamic_targets:
-                if linked_shorts.get(short_key) == vsl_vid:
-                    print(f"    ✓ [{short_key}] ({short_vid}) already linked to {vsl_vid}, skipping.", flush=True)
+                if short_key in linked_shorts:
+                    print(f"    ✓ [{short_key}] ({short_vid}) already linked ({linked_shorts.get(short_key) or 'title-matched'}), skipping.", flush=True)
                     continue
                 edit_url = f"https://studio.youtube.com/video/{short_vid}/edit"
                 await page.goto(edit_url, wait_until="domcontentloaded", timeout=45000)

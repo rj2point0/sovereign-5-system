@@ -350,9 +350,39 @@
       "status": "scheduled",
       "schedule": "Nov 12, 2026 6:30 PM",
       "uploaded_at": "2026-11-10T09:29:52.184547"
+    },
+    "short_57": {
+      "id": "short_57",
+      "filename": "Short_057_Veo31_PullsAwayAfterCloseness.mp4",
+      "title": "Gets Super Close Then Pulls Away Monday? 🎙️💔 #Shorts",
+      "video_id": "dL5vpmtyGGM",
+      "url": "https://www.youtube.com/shorts/dL5vpmtyGGM",
+      "status": "scheduled",
+      "schedule": "Nov 13, 2026 11:00 AM",
+      "uploaded_at": "2026-11-11T14:12:14.183593"
+    },
+    "short_58": {
+      "id": "short_58",
+      "filename": "Short_058_Veo31_LateNightWyd.mp4",
+      "title": "Why He Only Texts \"U Up?\" After 11 PM 🎙️📱 #Shorts",
+      "video_id": "U03tc8Utw6s",
+      "url": "https://www.youtube.com/shorts/U03tc8Utw6s",
+      "status": "scheduled",
+      "schedule": "Nov 13, 2026 6:30 PM",
+      "uploaded_at": "2026-11-11T14:12:41.365056"
+    },
+    "short_59": {
+      "id": "short_59",
+      "filename": "Short_059_Veo31_NeverInitiatesPlans.mp4",
+      "title": "Texts All Day But Never Makes Real Plans? 🎙️💔 #Shorts",
+      "video_id": "YzubDLHP_YQ",
+      "url": "https://www.youtube.com/shorts/YzubDLHP_YQ",
+      "status": "scheduled",
+      "schedule": "Nov 14, 2026 11:00 AM",
+      "uploaded_at": "2026-11-11T14:13:08.782703"
     }
   },
-  "updated_at": "2026-11-10T09:33:59.882821",
+  "updated_at": "2026-11-11T14:14:16.171014",
   "vsl_bridge_video_id": "",
   "vsl_bridge_url": "https://www.youtube.com/watch?v=",
   "related_video_linked": {
@@ -370,6 +400,9 @@
     "short_24": "",
     "short_31": "",
     "short_32": "",
-    "short_37": ""
+    "short_37": "",
+    "short_57": "EXISTING_VSL",
+    "short_58": "EXISTING_VSL",
+    "short_59": "EXISTING_VSL"
   }
 }

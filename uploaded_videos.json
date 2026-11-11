@@ -1,6 +1,6 @@
 {
   "account": "@sacrednumberblueprint",
-  "updated_at": "2026-11-10T09:30:05.199936",
+  "updated_at": "2026-11-11T14:12:32.536417",
   "uploaded": {
     "tiktok_promo_1.mp4": {
       "filename": "tiktok_promo_1.mp4",
@@ -548,6 +548,33 @@
       "schedule_time": "2026-11-12 18:30",
       "uploaded_at": "2026-11-10T09:30:05.199936",
       "caption_preview": "What is the exact moment a guy actually regrets pulling away from a good woman? (Maya & Julian explain how silence break"
+    },
+    "Short_057_Veo31_PullsAwayAfterCloseness.mp4": {
+      "filename": "Short_057_Veo31_PullsAwayAfterCloseness.mp4",
+      "ad_id": "short_57",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-13 11:00",
+      "uploaded_at": "2026-11-11T14:11:17.135452",
+      "caption_preview": "Why he acts completely in love all weekend and then goes distant on Monday morning (Maya & Julian break down the fear re"
+    },
+    "Short_058_Veo31_LateNightWyd.mp4": {
+      "filename": "Short_058_Veo31_LateNightWyd.mp4",
+      "ad_id": "short_58",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-13 18:30",
+      "uploaded_at": "2026-11-11T14:11:54.778567",
+      "caption_preview": "When a guy ignores you all afternoon and texts 'u up?' at midnight, can you fix that? (Maya & Julian explain how to stop"
+    },
+    "Short_059_Veo31_NeverInitiatesPlans.mp4": {
+      "filename": "Short_059_Veo31_NeverInitiatesPlans.mp4",
+      "ad_id": "short_59",
+      "status": "scheduled",
+      "mode": "schedule",
+      "schedule_time": "2026-11-14 11:00",
+      "uploaded_at": "2026-11-11T14:12:32.536417",
+      "caption_preview": "Why he texts you all week long yet never actually asks to see you in person (Maya & Julian break down birth days that cr"
     }
   }
 }
