@@ -1083,7 +1083,6 @@ def main():
     if args.seed_newly_live:
         async def _run_seed():
             import subprocess
-            cdp_userdata = prepare_cloned_profile6_userdata()
             chrome_exe = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
             chrome_proc = None
             async with async_playwright() as p:
@@ -1091,6 +1090,7 @@ def main():
                 try:
                     browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222", timeout=4000)
                 except Exception:
+                    cdp_userdata = prepare_cloned_profile6_userdata()
                     if os.path.exists(chrome_exe):
                         chrome_proc = subprocess.Popen(
                             [
@@ -1110,9 +1110,14 @@ def main():
                         browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9222", timeout=8000)
                 if browser:
                     ctx = browser.contexts[0] if browser.contexts else await browser.new_context()
-                    page = ctx.pages[0] if ctx.pages else await ctx.new_page()
-                    await seed_newly_live_scheduled_shorts(page)
-                    await browser.close()
+                    page = await ctx.new_page()
+                    try:
+                        await seed_newly_live_scheduled_shorts(page)
+                    finally:
+                        try:
+                            await page.close()
+                        except Exception:
+                            pass
                 if chrome_proc:
                     chrome_proc.terminate()
         asyncio.run(_run_seed())

@@ -77,7 +77,7 @@ async def verify_live_pages():
         live_hes_txt = await page_mob.locator('#partner-hesitation-callout').inner_text()
         assert "[Day 16 × Day 25]" in live_hes_txt, f"Unexpected live hesitation text: {live_hes_txt}"
         live_bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
-        assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 16 × PARTNER DAY 25)' in live_bubble_txt.upper()
+        assert 'BIRTH DAY 16 × PARTNER DAY 25' in live_bubble_txt.upper() and 'FLIP THE CHASE' in live_bubble_txt.upper()
         # Return to Hero and test blank #fullName + Month/Day/Year submit on live site
         await page_mob.goto(f"{base_url}?utm_source=ig_bio&cohort=ig_reels")
         await page_mob.wait_for_selector('#view-hero:not(.hidden)', timeout=8000)

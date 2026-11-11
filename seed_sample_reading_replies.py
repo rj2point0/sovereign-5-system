@@ -230,6 +230,8 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_53", "shortcode": "DfnhqZruFKC"},
+    {"id": "short_52", "shortcode": "DfnhhnnuWyu"},
     {"id": "short_51", "shortcode": "Dfk8thJu0oB"},
     {"id": "short_50", "shortcode": "Dfj7e4LuWVr"},
     {"id": "short_48", "shortcode": "DffIvEAO4Bo"},
@@ -447,13 +449,14 @@ async def seed_ig_sample_replies():
         if cdp_open:
             browser = await p.chromium.connect_over_cdp("http://127.0.0.1:9225")
             ctx = browser.contexts[0] if browser.contexts else await browser.new_context(viewport={"width": 1280, "height": 900})
+            page = await ctx.new_page()
         else:
             ctx = await p.chromium.launch_persistent_context(
                 user_data_dir=IG_PROFILE_DIR,
                 headless=False,
                 viewport={"width": 1280, "height": 900},
             )
-        page = ctx.pages[0] if ctx.pages else await ctx.new_page()
+            page = ctx.pages[0] if ctx.pages else await ctx.new_page()
         await page.goto("https://www.instagram.com/sacrednumberblueprint/reels/", wait_until="domcontentloaded", timeout=45000)
         await asyncio.sleep(5.0)
         try:
@@ -512,7 +515,9 @@ async def seed_ig_sample_replies():
                 await page.keyboard.press("Escape")
             await asyncio.sleep(1.2)
 
-        if not cdp_open:
+        if cdp_open:
+            await page.close()
+        else:
             await ctx.close()
 
 

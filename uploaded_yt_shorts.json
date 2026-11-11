@@ -307,9 +307,12 @@
       "title": "Why He Acts Hot One Day & Cold The Next 🎙️💔 #Shorts",
       "video_id": "FVsvGAML1i8",
       "url": "https://www.youtube.com/shorts/FVsvGAML1i8",
-      "status": "scheduled",
+      "status": "published",
       "schedule": "Nov 10, 2026 6:30 PM",
-      "uploaded_at": "2026-11-10T08:50:10.164102"
+      "uploaded_at": "2026-11-10T08:50:10.164102",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
     },
     "short_53": {
       "id": "short_53",
@@ -317,9 +320,12 @@
       "title": "Texted Daily For 6 Weeks Then Vanished? 🎙️💔 #Shorts",
       "video_id": "-NNV3p0oLC4",
       "url": "https://www.youtube.com/shorts/-NNV3p0oLC4",
-      "status": "scheduled",
+      "status": "published",
       "schedule": "Nov 11, 2026 11:00 AM",
-      "uploaded_at": "2026-11-10T08:50:38.183521"
+      "uploaded_at": "2026-11-10T08:50:38.183521",
+      "prompt_seeded": true,
+      "sample_seeded": true,
+      "pinned": true
     },
     "short_54": {
       "id": "short_54",
@@ -382,7 +388,7 @@
       "uploaded_at": "2026-11-11T14:13:08.782703"
     }
   },
-  "updated_at": "2026-11-11T14:14:16.171014",
+  "updated_at": "2026-11-11T15:32:07.065830",
   "vsl_bridge_video_id": "",
   "vsl_bridge_url": "https://www.youtube.com/watch?v=",
   "related_video_linked": {
