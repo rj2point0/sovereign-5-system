@@ -148,8 +148,8 @@ async def verify_live_pages():
         assert share_btn is True, "Dossier Share button should be visible"
         print("Live Dossier Share button verified!")
 
-        # Test 5: Cross-browser email teaser link restoration (clean browser context, zero localStorage)
-        ctx_clean = await browser.new_context()
+        # Test 5: Cross-browser email teaser link restoration + 390x844 mobile viewport layout & But/Therefore hierarchy check
+        ctx_clean = await browser.new_context(viewport={"width": 390, "height": 844})
         page_clean = await ctx_clean.new_page()
         await page_clean.goto(f"{base_url}?view=teaser&name=Cowen+Airo+Celestin+Vega&dob=2017-07-07&email=getshoes7%40gmail.com")
         await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=8000)
@@ -157,14 +157,32 @@ async def verify_live_pages():
         assert vsl_live is True, "Live VSL video player should be visible on Teaser deep-link!"
         print("Cross-browser email Teaser deep-link and VSL video verified on live site!")
 
-        # Test 6: 2-Tap Hero Match Calculator (Your Day x Their Day), Viral Partner Share deep-link (/?d1=19&d2=23), #situation-chip-strip, Instant Part 1 Unblur, $17 VIP Offer & #downsell-script-only-box on live site
+        # Test 6: 2-Tap Hero Match Calculator (Your Day x Their Day), 390x844 Mobile Visual Hierarchy (Zero Overflow + Immediate $2.99 Visibility), & But/Therefore Jagged Voice-Note Copy
         await page_clean.goto(f"{base_url}?utm_source=yt_shorts")
         await page_clean.wait_for_selector("#view-hero:not(.hidden)", timeout=8000)
+        hero_scroll_w = await page_clean.evaluate("() => document.documentElement.scrollWidth")
+        assert hero_scroll_w <= 390, f"Expected zero horizontal overflow on 390x844 view1, got scrollWidth={hero_scroll_w}"
         assert await page_clean.is_visible("#hero-partner-day-strip") is False
         await page_clean.click('#quick-day-strip button[data-action="quick-day"][data-day="19"]')
         await page_clean.wait_for_selector("#hero-partner-day-strip:not(.hidden)", timeout=4000)
         await page_clean.click('#hero-partner-day-strip button[data-action="hero-partner-day"][data-day="23"]')
         await page_clean.wait_for_selector("#view-teaser:not(.hidden)", timeout=6000)
+        await page_clean.evaluate("() => document.querySelector('#partner-compat-result').scrollIntoView({ behavior: 'instant', block: 'start' })")
+        await asyncio.sleep(0.15)
+        teaser_scroll_w = await page_clean.evaluate("() => document.documentElement.scrollWidth")
+        assert teaser_scroll_w <= 390, f"Expected zero horizontal overflow on 390x844 view2, got scrollWidth={teaser_scroll_w}"
+        btn_299_box = await page_clean.locator("#btn-unlock-text-script").bounding_box()
+        assert btn_299_box is not None and btn_299_box["y"] + btn_299_box["height"] <= 844, (
+            f"Expected #btn-unlock-text-script ($2.99 Instant Unlock) immediately visible on 390x844 mobile without scrolling past text wall, got {btn_299_box}"
+        )
+        live_julian_copy = await page_clean.locator("#julian-insider-take-text").inner_text()
+        assert (
+            "Not once." in live_julian_copy
+            and "Day 23" in live_julian_copy
+            and "ego defense reflex" in live_julian_copy
+            and "Therefore," in live_julian_copy
+            and "9-word pattern-interrupt script" in live_julian_copy
+        ), f"Expected 4-beat But/Therefore jagged voice-note copy on live site, got: {live_julian_copy}"
         assert await page_clean.is_visible("#partner-compat-result") is True
         assert await page_clean.is_visible("#flip-chase-preview-bubble") is True
 
@@ -178,11 +196,14 @@ async def verify_live_pages():
         assert await page_clean.is_visible("#partner-compat-result") is True
         assert await page_clean.is_visible("#flip-chase-preview-bubble") is True
 
-        # Verify Back-button / popstate Exit-Intent Guard on view2 opens #priority-unlock-modal with #priority-modal-email-box
+        # Verify Back-button / popstate Exit-Intent Guard on view2 opens #priority-unlock-modal with #priority-modal-email-box & #priority-modal-conflict-copy
         await page_clean.evaluate("() => window.dispatchEvent(new PopStateEvent('popstate'))")
         await asyncio.sleep(0.2)
         assert await page_clean.is_visible("#priority-unlock-modal") is True, "Expected #priority-unlock-modal on popstate back-button guard on live site!"
         assert await page_clean.is_visible("#priority-modal-email-box") is True, "Expected #priority-modal-email-box inside #priority-unlock-modal on live site!"
+        assert await page_clean.is_visible("#priority-modal-conflict-copy") is True, "Expected #priority-modal-conflict-copy inside #priority-unlock-modal on live site!"
+        live_pm_conflict = await page_clean.locator("#priority-modal-conflict-copy").inner_text()
+        assert "Not once." in live_pm_conflict and "Day 23" in live_pm_conflict and "Therefore," in live_pm_conflict, f"Unexpected modal conflict copy: {live_pm_conflict}"
         live_pm_txt = await page_clean.locator("#priority-modal-email-box").inner_text()
         assert "wait! before you leave" in live_pm_txt.lower()
         live_pm17_href = await page_clean.locator("#btn-priority-modal-17").get_attribute("href")
@@ -259,6 +280,19 @@ async def verify_live_pages():
             "Expected Apple Pay, Google Pay, and Link wallet support enabled in live $2.99 Stripe Checkout!"
         )
         print(f"Live $2.99 Stripe Checkout ({live_vip_url}) loaded in {stripe_commit_sec:.3f}s (<2.0s) with $2.99 price + Apple Pay / Google Pay / Link 1-Tap wallets active!")
+
+        # Also benchmark live $14 Full Dossier Stripe Checkout (<2.0s + HTTP 200 + Apple Pay / Google Pay / Link)
+        stripe_init_payloads.clear()
+        t14 = time.perf_counter()
+        stripe_14_resp = await page_stripe.goto(live_pm37_href, wait_until="commit")
+        stripe_14_sec = time.perf_counter() - t14
+        assert stripe_14_resp is not None and stripe_14_resp.status == 200, f"Expected HTTP 200 from live $14 Stripe Checkout, got {stripe_14_resp.status if stripe_14_resp else None}"
+        assert stripe_14_sec < 2.0, f"Expected live $14 Stripe Checkout initial load < 2.0s, got {stripe_14_sec:.3f}s"
+        await page_stripe.wait_for_function("() => document.body && document.body.innerText.includes('$14.00')", timeout=10000)
+        await asyncio.sleep(0.8)
+        stripe_14_blob = " ".join(stripe_init_payloads) + " " + (await page_stripe.content()).lower()
+        assert ("apple" in stripe_14_blob) and ("google" in stripe_14_blob) and ("link" in stripe_14_blob), "Expected Apple Pay, Google Pay, and Link active on $14 Stripe Checkout!"
+        print(f"Live $14 Dossier Stripe Checkout ({live_pm37_href}) loaded in {stripe_14_sec:.3f}s (<2.0s) with $14.00 + Apple Pay / Google Pay / Link active!")
         await ctx_clean.close()
 
         print("\n=== ALL LIVE PRODUCTION VERIFICATIONS PASSED ===")

@@ -552,17 +552,24 @@ async def test_all():
         assert sit_chip_count == 4, f"Expected 4 situation chips, got {sit_chip_count}"
         initial_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
         initial_julian_take = await page_mob.locator('#julian-insider-take-text').inner_text()
-        assert "Day 16" in initial_julian_take and "leaves you on read" in initial_julian_take, f"Unexpected initial #julian-insider-take-text: {initial_julian_take}"
+        assert (
+            "Day 16" in initial_julian_take
+            and "leaves you on read" in initial_julian_take
+            and "Not once." in initial_julian_take
+            and "ego defense reflex" in initial_julian_take
+            and "Therefore," in initial_julian_take
+            and "9-word pattern-interrupt script" in initial_julian_take
+        ), f"Unexpected initial #julian-insider-take-text: {initial_julian_take}"
         await page_mob.click('#situation-chip-strip .situation-chip[data-situation="cold"]')
         await asyncio.sleep(0.15)
         cold_leadin = await page_mob.locator('#imessage-leadin-text').inner_text()
         cold_julian_take = await page_mob.locator('#julian-insider-take-text').inner_text()
         assert cold_leadin != initial_leadin and "energy shifted" in cold_leadin.lower(), f"Expected #imessage-leadin-text to update on situation chip click, got '{cold_leadin}'"
-        assert cold_julian_take != initial_julian_take and "acts cold" in cold_julian_take, f"Expected #julian-insider-take-text to update on situation chip click, got '{cold_julian_take}'"
+        assert cold_julian_take != initial_julian_take and "acts cold" in cold_julian_take and "Therefore," in cold_julian_take, f"Expected #julian-insider-take-text to update on situation chip click, got '{cold_julian_take}'"
         sit_evs = [e for e in demo_events if e.get("event_type") == "situation_chip_clicked"]
         assert len(sit_evs) >= 1 and (sit_evs[-1].get("extra") or {}).get("situation") == "cold", f"Expected situation_chip_clicked telemetry for 'cold', got {sit_evs}"
         bubble_txt = await page_mob.locator('#flip-chase-preview-bubble').inner_text()
-        assert 'YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (BIRTH DAY 25 × PARTNER DAY 16)' in bubble_txt.upper(), f"Unexpected bubble header: {bubble_txt}"
+        assert 'BIRTH DAY 25 × PARTNER DAY 16' in bubble_txt.upper() and 'FLIP THE CHASE' in bubble_txt.upper(), f"Unexpected bubble header: {bubble_txt}"
         assert await page_mob.is_visible('#btn-unlock-text-script') is True, "Expected #btn-unlock-text-script visible inside #flip-chase-preview-bubble"
         assert await page_mob.is_visible('#btn-unlock-full-dossier-14') is True, "Expected companion $14 Full Dossier CTA #btn-unlock-full-dossier-14 visible inside #flip-chase-preview-bubble"
         unlock_btn_txt = await page_mob.locator('#btn-unlock-text-script').inner_text()

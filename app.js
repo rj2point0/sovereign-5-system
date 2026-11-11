@@ -874,8 +874,8 @@ if (typeof window !== 'undefined') {
       bridgedCount: bridgedNums.length,
       pStyle: pInfo.style,
       summary: isEs
-        ? `Tu conductor íntimo <b>#${uMoolank} (${uRuler})</b> y su conductor natal <b>#${pMoolank} (${pRuler} — ${pInfo.style})</b> generan un <b>${magnetismScore}% de magnetismo inicial</b>. Tu pareja llena <b>${bridgedNums.length}</b> de tus números faltantes en el Lo Shu Chino, pero comparten <b>${sharedMissing.length} vacíos emocionales idénticos</b> que provocan malentendidos cuando hay estrés.`
-        : `Your intimate Birth-Day Driver <b>#${uMoolank} (${uRuler})</b> and their Birth-Day Driver <b>#${pMoolank} (${pRuler} — ${pInfo.style})</b> generate an immediate <b>${magnetismScore}% chemistry &amp; magnetism pull</b>. Their birth chart bridges <b>${bridgedNums.length}</b> of your missing Chinese Lo Shu numbers, but you share <b>${sharedMissing.length} identical emotional blindspots</b> that trigger push-pull silence under stress.`,
+        ? `La química es real: <b>${magnetismScore}% de magnetismo inmediato</b> entre tu #${uMoolank} (${uRuler}) y su #${pMoolank} (${pRuler}). <b>Pero</b> comparten <b>${sharedMissing.length} puntos ciegos idénticos</b> en el Lo Shu Chino. <b>Por lo tanto,</b> cuando hay tensión ambos activan su reflejo defensivo al mismo tiempo—<b>pero</b> alinear el mensaje y las fechas exactas desarma ese muro por completo.`
+        : `The pull isn't in your head: your <b>#${uMoolank} (${uRuler})</b> and their <b>#${pMoolank} (${pRuler})</b> spark an immediate <b>${magnetismScore}% magnetism lock</b>. <b>But</b> while they fill <b>${bridgedNums.length}</b> of your missing Lo Shu numbers, you share <b>${sharedMissing.length} identical emotional blindspots</b>. <b>Therefore,</b> normal reassurance texts under stress trigger mutual pull-back—<b>but</b> timing your reset script to their #${pMoolank} rhythm flips the dynamic fast.`,
     };
   }
 
@@ -1175,7 +1175,7 @@ if (typeof window !== 'undefined') {
             <div>
               <span class="inline-block px-2 py-0.5 rounded text-[0.6rem] uppercase tracking-wider bg-white/10 text-champagne font-semibold">${isEs ? 'Desbloqueo Instantáneo · Apple Pay / Google Pay' : '1-Tap Impulse Unlock · Apple Pay / Google Pay'}</span>
               <h4 class="font-semibold text-ivory text-[0.95rem] mt-1.5 leading-snug">${isEs ? 'Guion de Texto Completo y Mejores Días Para Escribir ($2.99 Desbloqueo Instantáneo)' : 'Express Text Script &amp; Best Days To Text ($2.99 Instant Unlock)'}</h4>
-              <p class="text-xs text-zinc-400 mt-1 leading-relaxed">${isEs ? 'Desbloquea al instante el mensaje completo en tu pantalla, qué te responderá y las 3 fechas de este mes en que se acercará más a ti.' : 'Instantly unblurs your exact word-for-word text script, what they will reply, and the 3 dates this month they pull closer.'}</p>
+              <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${isEs ? 'No es falta de interés. <b>Pero</b> su número natal levanta su guardia si siente que lo persigues. <b>Por lo tanto,</b> escribir "hola" solo lo enfría más—<b>pero</b> este guion exacto de 9 palabras invierte la persecución hoy mismo.' : 'He didn\'t lose interest. Not once. <b>But</b> his birth number raises a wall the second he senses you chasing. <b>Therefore,</b> sending a normal text pushes him twice as far—<b>but</b> this exact 9-word pattern-interrupt script makes chasing you feel 100% like his idea.'}</p>
               <ul class="mt-2.5 space-y-1 text-xs text-champagne">
                 <li>✓ <b>${isEs ? 'El Guion Exacto de Texto para "Invertir la Persecución" Según Su Número Natal' : 'The Exact "Flip The Chase" Text Script For Their Birth Number'}</b> ${isEs ? '(qué escribir palabra por palabra cuando se aleja o te deja en visto)' : '(word-for-word what to text when they pull away or leave you on read)'}</li>
                 <li>✓ ${isEs ? 'Los Mejores y Peores Días Para Escribirle + 3 Fechas Este Mes En Que Se Acerca Más' : 'The Best &amp; Worst Days To Text Them + 3 Dates This Month They Pull Closer'}</li>
@@ -1465,7 +1465,7 @@ if (typeof window !== 'undefined') {
     runPartnerCompatibilityCheck({ viaQuickDay: true, partnerBirthDay: dNum });
     const resBox = $('#partner-compat-result');
     if (resBox) {
-      resBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      resBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -3379,11 +3379,19 @@ if (typeof window !== 'undefined') {
             </button>
           </div>
         </div>` : ''}
-        <p class="text-xs text-zinc-300 mt-3 leading-relaxed">
-          ${isEs
-            ? 'O desbloquea el mensaje de texto completo sin difuminar en tu pantalla ahora mismo:'
-            : 'Or unlock the full unblurred text message on your screen right now:'}
-        </p>
+        <div id="priority-modal-conflict-copy" class="mt-3 p-2.5 rounded-xl bg-[#0b101b] border border-sky-400/35 text-xs text-zinc-200 leading-snug space-y-1">
+          ${isEs ? `
+            <p class="font-bold text-ivory">No se olvidó de responderte. Ni una sola vez.</p>
+            <p><b class="text-rose-300">Pero</b> los nacidos el Día ${d2} activan un reflejo de defensa del ego en el segundo exacto en que sienten que pierden el control.</p>
+            <p><b class="text-amber-300">Por lo tanto,</b> escribir un "hola" normal o preguntar qué pasa confirma que aún es dueño de tu atención y lo enfría el doble.</p>
+            <p><b class="text-emerald-300">Pero</b> este guion exacto de 9 palabras salta su guardia por completo—y hace que buscarte esta noche se sienta 100% como su propia idea:</p>
+          ` : `
+            <p class="font-bold text-ivory">He didn't forget to reply. Not once.</p>
+            <p><b class="text-rose-300">But</b> men born on Day ${d2} hit an ego defense reflex the exact second they sense they're losing control.</p>
+            <p><b class="text-amber-300">Therefore,</b> sending a normal 'hey' or asking where things stand confirms he still owns your attention, making him pull back twice as cold.</p>
+            <p><b class="text-emerald-300">But</b> this exact 9-word pattern-interrupt script bypasses his guard completely—and makes chasing you tonight feel 100% like his idea:</p>
+          `}
+        </div>
         <div class="mt-3 space-y-2.5">
           <a id="btn-priority-modal-17" href="${esc(final17)}" data-action="checkout-mini" data-trigger="priority_modal_17" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide rounded-xl">
             ⚡ ${isEs
@@ -3444,25 +3452,57 @@ if (typeof window !== 'undefined') {
     }
   }
 
-  function getJulianInsiderTake(pMoolank, pRuler, partnerBirthDay, situationKey, lang) {
+  function getJulianInsiderTakeHtml(pMoolank, pRuler, partnerBirthDay, situationKey, lang) {
     const isEs = lang === 'es';
     const sit = ['read', 'cold', 'pulled_away', 'silence'].includes(situationKey) ? situationKey : 'read';
     const dNum = partnerBirthDay || 23;
     const mNum = pMoolank || 5;
-    const ruler = pRuler || 'Mercury';
-    const sitNotesEn = {
-      read: `When a Day ${dNum} (#${mNum} ${ruler}) leaves you on read, he's testing if you'll double-text and feed his ego—sending the 9-word reset line below removes his leverage and forces him to chase you.`,
-      cold: `When a Day ${dNum} (#${mNum} ${ruler}) suddenly acts cold, his attachment alarm just went off—sending the 9-word reset line below drops the pressure so his fear of losing you kicks in immediately.`,
-      pulled_away: `When a Day ${dNum} (#${mNum} ${ruler}) pulls away right after getting close, he's scared of losing control—sending the 9-word reset line below flips the script so he has to work for your attention.`,
-      silence: `When a Day ${dNum} (#${mNum} ${ruler}) locks into stubborn silence, he expects you to break first—sending the 9-word reset line below shatters his pride standoff and makes him reach out.`,
+    const ruler = esc(pRuler || 'Mercury');
+    const driverReflexEn = {
+      1: 'pride-shield',
+      2: 'emotional-shutdown',
+      3: 'escape-hatch',
+      4: 'control-wall',
+      5: 'freedom-panic',
+      6: 'guarded-heart',
+      7: 'silent-vault',
+      8: 'power-armor',
+      9: 'pride-standoff',
     };
-    const sitNotesEs = {
-      read: `Cuando un Día ${dNum} (#${mNum} ${ruler}) te deja en visto, está probando si vas a insistirle; enviar la línea de 9 palabras de abajo le quita el control y hace que él te busque.`,
-      cold: `Cuando un Día ${dNum} (#${mNum} ${ruler}) actúa frío de golpe, su alarma de apego se activó; enviar la línea de 9 palabras de abajo desactiva la presión y despierta su miedo a perderte.`,
-      pulled_away: `Cuando un Día ${dNum} (#${mNum} ${ruler}) se aleja justo después de acercarse, teme perder el control; enviar la línea de 9 palabras de abajo invierte los roles al instante.`,
-      silence: `Cuando un Día ${dNum} (#${mNum} ${ruler}) entra en silencio orgulloso, espera que tú cedas primero; enviar la línea de 9 palabras de abajo rompe su orgullo y lo hace escribirte.`,
+    const driverReflexEs = {
+      1: 'escudo de orgullo',
+      2: 'bloqueo emocional',
+      3: 'vía de escape',
+      4: 'muro de control',
+      5: 'pánico de libertad',
+      6: 'corazón blindado',
+      7: 'bóveda de silencio',
+      8: 'armadura de poder',
+      9: 'pulso de orgullo',
     };
-    return (isEs ? sitNotesEs : sitNotesEn)[sit] || (isEs ? sitNotesEs.read : sitNotesEn.read);
+    const reflexTag = (isEs ? driverReflexEs : driverReflexEn)[mNum] || (isEs ? driverReflexEs[7] : driverReflexEn[7]);
+    if (isEs) {
+      const beat1Es = {
+        read: `<span class="font-bold text-ivory">No se olvidó de responder cuando te deja en visto. Ni una vez.</span>`,
+        cold: `<span class="font-bold text-ivory">Cuando actúa frío de la noche a la mañana, no es casualidad. Ni una vez.</span>`,
+        pulled_away: `<span class="font-bold text-ivory">No se alejó porque la chispa fuera falsa. Todo lo contrario.</span>`,
+        silence: `<span class="font-bold text-ivory">Este silencio terco no es paz. Es una prueba de poder.</span>`,
+      }[sit];
+      return `${beat1Es} `
+        + `Ahora mismo sientes química real—<b class="text-rose-300">pero</b> los hombres nacidos el Día ${dNum} (#${mNum} ${ruler}) activan un reflejo de defensa del ego (${reflexTag}) en el segundo exacto en que sienten que pierden el control. `
+        + `<b class="text-amber-300">Por lo tanto,</b> enviar un "hola" normal o preguntar qué pasa confirma que aún es dueño de tu atención y lo enfría el doble. `
+        + `<b class="text-emerald-300">Pero</b> este guion exacto de 9 palabras salta su guardia por completo—y hace que buscarte esta noche se sienta 100% como su idea.`;
+    }
+    const beat1En = {
+      read: `<span class="font-bold text-ivory">He didn't forget to reply when he leaves you on read. Not once.</span>`,
+      cold: `<span class="font-bold text-ivory">When he acts cold overnight, it isn't random. Not once.</span>`,
+      pulled_away: `<span class="font-bold text-ivory">He didn't pull away because the spark was fake. Not at all.</span>`,
+      silence: `<span class="font-bold text-ivory">This stubborn silence isn't peace. It's a power test.</span>`,
+    }[sit];
+    return `${beat1En} `
+      + `Right now you're feeling real chemistry—<b class="text-rose-300">but</b> men born on Day ${dNum} (#${mNum} ${ruler}) hit an ego defense reflex (${reflexTag}) the exact second they sense they're losing control. `
+      + `<b class="text-amber-300">Therefore,</b> sending a normal 'hey' or asking where things stand confirms he still owns your attention, making him pull back twice as cold. `
+      + `<b class="text-emerald-300">But</b> this exact 9-word pattern-interrupt script bypasses his guard completely—and makes chasing you tonight feel 100% like his idea.`;
   }
 
   function selectPartnerSituation(situationKey) {
@@ -3484,7 +3524,7 @@ if (typeof window !== 'undefined') {
     if (p2El) p2El.textContent = sms.part2;
     const julianTakeEl = $('#julian-insider-take-text');
     if (julianTakeEl) {
-      julianTakeEl.textContent = getJulianInsiderTake(pMoolank, pRuler, partnerBirthDay, sit, state.lang);
+      julianTakeEl.innerHTML = getJulianInsiderTakeHtml(pMoolank, pRuler, partnerBirthDay, sit, state.lang);
     }
     sendWebhook('situation_chip_clicked', {
       situation: sit,
@@ -3540,36 +3580,29 @@ if (typeof window !== 'undefined') {
     }
     resBox.classList.remove('hidden');
     resBox.innerHTML = `
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-        <div class="card-soft p-3.5 border border-gold/40">
-          <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Química y Magnetismo' : 'Chemistry & Magnetism'}</div>
-          <div class="font-display text-2xl sm:text-3xl text-gold mt-1">${rep.magnetismScore}%</div>
-          <div class="text-[0.65rem] text-emerald-300 mt-0.5">${rep.matchLabel || (isEs ? 'Atracción Inmediata' : 'High Initial Pull')}</div>
+      <!-- COMPACT 3-COL MATCH STRIP (FITS 1 SINGLE ROW ON 390px MOBILE) -->
+      <div class="grid grid-cols-3 gap-1.5 sm:gap-3 text-center">
+        <div class="card-soft p-2 sm:p-3.5 border border-gold/40">
+          <div class="text-[0.52rem] sm:text-[0.6rem] uppercase tracking-[0.1em] sm:tracking-[0.16em] text-zinc-400">${isEs ? 'Magnetismo' : 'Magnetism'}</div>
+          <div class="font-display text-lg sm:text-3xl text-gold mt-0.5 leading-tight">${rep.magnetismScore}%</div>
+          <div class="text-[0.55rem] sm:text-[0.65rem] text-emerald-300 leading-tight">${rep.matchLabel || (isEs ? 'Atracción Real' : 'Soulmate Pull')}</div>
         </div>
-        <div class="card-soft p-3.5 border border-white/10">
-          <div class="text-[0.6rem] uppercase tracking-[0.16em] text-zinc-400">${isEs ? 'Conductor Natal de Tu Pareja' : 'Their Birth-Day Driver'}</div>
-          <div class="font-display text-xl text-champagne mt-1">#${rep.pMoolank} · ${rep.pRuler}</div>
-          <div class="text-[0.65rem] text-zinc-400 mt-0.5">${isEs ? 'Sendero Occidental' : 'Western Life Path'} #${rep.pLife}</div>
+        <div class="card-soft p-2 sm:p-3.5 border border-white/10">
+          <div class="text-[0.52rem] sm:text-[0.6rem] uppercase tracking-[0.1em] sm:tracking-[0.16em] text-zinc-400">${isEs ? `Día ${partnerBirthDay}` : `Day ${partnerBirthDay} Code`}</div>
+          <div class="font-display text-sm sm:text-xl text-champagne mt-0.5 leading-tight">#${rep.pMoolank} · ${rep.pRuler}</div>
+          <div class="text-[0.55rem] sm:text-[0.65rem] text-zinc-400 leading-tight">${isEs ? 'Sendero' : 'Life Path'} #${rep.pLife}</div>
         </div>
-        <div class="card-soft p-3.5 border border-rose-400/35 bg-rose-950/20">
-          <div class="text-[0.6rem] uppercase tracking-[0.16em] text-rose-300">${isEs ? 'Riesgo de Fricción Oculta' : 'Unresolved Friction Risk'}</div>
-          <div class="font-display text-sm sm:text-base text-rose-200 mt-1.5">${rep.frictionLevel}</div>
-          <div class="text-[0.65rem] text-zinc-300 mt-0.5">${rep.sharedMissingCount} ${isEs ? 'Vacíos Lo Shu Compartidos' : 'Shared Lo Shu Blindspots'}</div>
+        <div class="card-soft p-2 sm:p-3.5 border border-rose-400/35 bg-rose-950/20">
+          <div class="text-[0.52rem] sm:text-[0.6rem] uppercase tracking-[0.1em] sm:tracking-[0.16em] text-rose-300">${isEs ? 'Fricción' : 'Ego Trigger'}</div>
+          <div class="font-display text-xs sm:text-base text-rose-200 mt-1 leading-tight">${rep.frictionLevel}</div>
+          <div class="text-[0.55rem] sm:text-[0.65rem] text-zinc-300 leading-tight">${rep.sharedMissingCount} ${isEs ? 'Vacíos' : 'Blindspots'}</div>
         </div>
       </div>
-      <div class="mt-3 flex justify-center">
-        <button type="button" id="btn-share-partner-match" data-action="share-partner-match" data-d1="${userBirthDay}" data-d2="${partnerBirthDay}" data-score="${rep.magnetismScore}" data-label="${esc(rep.matchLabel || 'Soulmate Lock')}" class="btn-ghost !py-2 !px-4 w-full sm:w-auto text-xs font-bold text-gold border-gold/50 hover:border-gold bg-gold/10 rounded-xl transition-all">
-          📲 ${isEs
-            ? `Enviar Este ${rep.magnetismScore}% de Compatibilidad (Día ${userBirthDay} × Día ${partnerBirthDay}) a Tu Pareja / Amiga`
-            : `Send This ${rep.magnetismScore}% Match To Them / A Friend`}
-        </button>
-      </div>
-      <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-3.5">${rep.summary}</p>
 
       <!-- 1-TAP "WHAT DID THEY JUST DO?" SITUATION SELECTOR (#situation-chip-strip) -->
-      <div id="situation-chip-strip" class="mt-4 p-2.5 sm:p-3 rounded-xl bg-black/45 border border-gold/40 text-left">
-        <p class="text-[0.68rem] sm:text-xs font-extrabold uppercase tracking-wider text-champagne mb-2">
-          👇 ${isEs ? '¿Qué acaba de hacer? Toca para adaptar tu guion de texto:' : 'What did they just do? Tap to tailor your text script:'}
+      <div id="situation-chip-strip" class="mt-2 p-2 sm:p-3 rounded-xl bg-black/45 border border-gold/40 text-left">
+        <p class="text-[0.64rem] sm:text-xs font-extrabold uppercase tracking-wider text-champagne mb-1.5">
+          👇 ${isEs ? '¿Qué acaba de hacer? Toca para adaptar tu guion:' : 'What did they just do? Tap to tailor your script:'}
         </p>
         <div class="situation-chip-grid" role="group" aria-label="Select Current Relationship Situation">
           <button type="button" class="situation-chip ${activeSit === 'read' ? 'active' : ''}" data-action="select-situation" data-situation="read">
@@ -3583,6 +3616,128 @@ if (typeof window !== 'undefined') {
           </button>
           <button type="button" class="situation-chip ${activeSit === 'silence' ? 'active' : ''}" data-action="select-situation" data-situation="silence">
             ${isEs ? '😤 Silencio orgulloso' : '😤 Stubborn silence'}
+          </button>
+        </div>
+      </div>
+
+      <!-- JULIAN'S 1-ON-1 JAGGED VOICE NOTE (#julian-insider-take-box) -->
+      <div id="julian-insider-take-box" class="mt-2 p-2.5 sm:p-3 rounded-xl bg-[#0c1220] border border-sky-400/45 text-left flex items-start gap-2.5 shadow-md">
+        <img src="julian_avatar_128.webp" alt="Julian" width="38" height="38" style="width:38px;height:38px;min-width:38px;max-width:38px;border-radius:50%;object-fit:cover;border:2px solid #D4AF37;flex-shrink:0;display:block;" class="w-9.5 h-9.5 rounded-full border-2 border-gold object-cover shrink-0 mt-0.5" />
+        <div class="text-[0.7rem] sm:text-xs leading-snug flex-1 min-w-0">
+          <div id="julian-insider-take-heading" class="font-extrabold text-gold tracking-wide">
+            🎙️ ${isEs ? `Nota de Voz de Julian (Día ${partnerBirthDay}):` : `Julian's Voice Note (Day ${partnerBirthDay}):`}
+          </div>
+          <p id="julian-insider-take-text" class="text-zinc-200 mt-1 leading-snug">${getJulianInsiderTakeHtml(rep.pMoolank, rep.pRuler, partnerBirthDay, activeSit, state.lang)}</p>
+        </div>
+      </div>
+
+      <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW + $2.99 APPLE PAY / GOOGLE PAY CTA -->
+      <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-2 !p-2.5 sm:!p-3.5 text-left">
+        <div id="part1-unlocked-badge" class="hidden mb-2 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-400/60 text-[0.68rem] sm:text-xs font-extrabold text-emerald-300 tracking-wide">
+          ✅ ${isEs
+            ? `CORREO VERIFICADO — PARTE 1 DE TU GUION [Día ${userBirthDay} × Día ${partnerBirthDay}] DESBLOQUEADA`
+            : `EMAIL VERIFIED — PART 1 OF YOUR [Day ${userBirthDay} × Day ${partnerBirthDay}] SCRIPT UNLOCKED`}
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+          <span class="text-[0.64rem] sm:text-xs font-extrabold uppercase tracking-wider text-gold">
+            ${isEs
+              ? `💬 TU GUION DE 9 PALABRAS "INVERTIR LA PERSECUCIÓN" (Día Natal ${userBirthDay} × Día de Pareja ${partnerBirthDay}):`
+              : `💬 YOUR 9-WORD "FLIP THE CHASE" SCRIPT (Birth Day ${userBirthDay} × Partner Day ${partnerBirthDay}):`}
+          </span>
+          <span class="text-[0.58rem] uppercase tracking-widest text-sky-300 bg-sky-950/60 border border-sky-400/30 px-2 py-0.5 rounded-full">
+            iMessage · #${rep.pMoolank} ${rep.pRuler}
+          </span>
+        </div>
+        <p class="text-[0.68rem] sm:text-xs text-champagne/95 mb-1.5 leading-snug">
+          ${isEs
+            ? `Un texto normal alimenta su orgullo—<b>pero</b> envía esto palabra por palabra y responderá él primero:`
+            : `A normal text feeds his ego—<b>but</b> copy &amp; send this exact line tonight so chasing you feels like his idea:`}
+        </p>
+        <div class="imessage-bubble !py-2 !px-3">
+          <span id="imessage-leadin-text" class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span id="imessage-part1-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part1}</span><span id="imessage-part2-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part2}</span>
+        </div>
+        <div id="partner-secret-fear-unlocked" class="hidden mt-2 p-2 rounded-lg bg-amber-950/40 border border-gold/45 text-xs text-champagne leading-snug">
+          🧠 <b>${isEs ? `Su Miedo Secreto #1 (#${rep.pMoolank} · ${rep.pRuler}):` : `Their #${rep.pMoolank} (${rep.pRuler}) #1 Secret Fear:`}</b> ${smsPreview.secretFear}
+        </div>
+        <div id="imessage-part2-locked-callout" class="hidden mt-2 p-2 rounded-lg bg-black/55 border border-gold/55 text-[0.7rem] sm:text-xs text-gold font-semibold leading-snug">
+          🔒 ${isEs
+            ? '[FRASE DETONANTE DE 6 PALABRAS BLOQUEADA — DESBLOQUEA EL TEXTO COMPLETO PARA COPIAR] · El resto de este mensaje + qué te responderá + los 3 mejores días para escribirle este mes'
+            : '[6-WORD TRIGGER PHRASE LOCKED — UNBLUR FULL TEXT TO COPY] · The rest of this text + what they will reply + the 3 best days to text them this month'}
+        </div>
+        <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" style="display:block;text-align:center;" class="btn-gold mt-2.5 !py-2.5 sm:!py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
+          🔒 ${isEs
+            ? 'Desbloquear el guion de texto completo + los mejores y peores días para escribirle ($2.99 Desbloqueo Instantáneo) →'
+            : 'Unlock the full text script + the best & worst days to text them ($2.99 Instant Unlock) →'}
+        </button>
+        <button type="button" id="btn-unlock-full-dossier-14" data-action="checkout-base-direct" data-trigger="unlock_full_dossier_14" style="display:block;text-align:center;" class="btn-ghost mt-1.5 !py-2 !px-4 w-full text-xs font-bold text-champagne border-gold/55 bg-gold/10 hover:bg-gold/20 rounded-xl">
+          👑 ${isEs
+            ? 'O Desbloquea el Dossier Completo de Relación de 20 Páginas ($14) →'
+            : 'Or Unlock Full 20-Page Relationship Dossier ($14) →'}
+        </button>
+        <p class="mt-1 text-[0.63rem] text-emerald-300 text-center font-semibold">
+          ⚡ ${isEs ? 'Apple Pay · Google Pay · Link 1-Toque · Acceso Instantáneo' : 'Apple Pay · Google Pay · Link 1-Tap Instant Unlock'}
+        </p>
+      </div>
+
+      <!-- INLINE 15-MINUTE FAST-ACTION $2.99 VIP OFFER (REVEALED INSTANTLY ON EMAIL SUBMIT) -->
+      <div id="vip-fast-action-offer" class="vip-fast-action-card hidden mt-3 p-3.5 sm:p-4 text-left">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <span class="badge-gold !text-[0.62rem] !py-0.5">⚡ ${isEs ? 'DESBLOQUEO RÁPIDO VIP' : 'VIP FAST-ACTION UNLOCK'}</span>
+          <span class="text-xs font-mono font-extrabold text-rose-300 bg-rose-950/75 border border-rose-400/45 px-2.5 py-0.5 rounded-full">
+            ${isEs ? 'EXPIRA EN' : 'EXPIRES IN'} <span id="vip-countdown-timer">14:59</span>
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
+          ${isEs
+            ? `Parte 1 desbloqueada arriba—pero enviar el mensaje a medias arruina el efecto. Por lo tanto, desbloquea ahora la Parte 2 de tu guion [Día ${userBirthDay} × Día ${partnerBirthDay}] + su respuesta exacta:`
+            : `Part 1 is unlocked above—but sending half the line breaks the pattern interrupt. Therefore, lock in Part 2 of your [Day ${userBirthDay} × Day ${partnerBirthDay}] Script + what he'll reply right now:`}
+        </p>
+        <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
+          <span class="block text-center leading-snug">⚡ ${isEs
+            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer class="inline font-mono underline">14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($2.99 Desbloqueo Instantáneo) →'
+            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer class="inline font-mono underline">14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($2.99 Instant Unlock) →'}</span>
+        </button>
+        <button type="button" id="btn-vip-full-dossier-14" data-action="checkout-base-direct" data-trigger="post_email_vip_14" data-stripe-url="" style="display:block;text-align:center;" class="btn-ghost mt-2 !py-2.5 !px-4 w-full text-xs font-bold text-champagne border-gold/55 bg-gold/10 hover:bg-gold/20 rounded-xl">
+          👑 ${isEs
+            ? 'O Desbloquea el Dossier Completo de Relación de 20 Páginas ($14) →'
+            : 'Or Unlock Full 20-Page Relationship Dossier ($14) →'}
+        </button>
+        <div class="mt-2.5 text-center">
+          <button type="button" id="btn-show-downsell-box" data-action="show-downsell-box" class="text-[0.7rem] sm:text-xs text-amber-300 underline font-semibold hover:text-ivory cursor-pointer">
+            ${isEs ? '¿Solo quieres el mensaje de texto desbloqueado por $2.99 ahora mismo? Haz clic aquí ↓' : 'Wait — Just want the unblurred text message for $2.99 right now? Tap here ↓'}
+          </button>
+        </div>
+      </div>
+
+      <!-- INSTANT HESITATION / TAB-RETURN DOWNSELL & FAST-CHECKOUT BOX (#downsell-script-only-box) -->
+      <div id="downsell-script-only-box" class="hidden mt-3 p-3.5 sm:p-4 rounded-xl bg-amber-950/55 border-2 border-amber-400/75 text-left shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+          <span class="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/60 text-[0.62rem] font-extrabold uppercase tracking-wider text-amber-200">
+            ⚡ ${isEs ? 'OPCIÓN RÁPIDA · SOLO EL GUION DE TEXTO ($2.99)' : 'WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE? ($2.99)'}
+          </span>
+          <span class="text-[0.65rem] font-bold text-emerald-300">
+            ${isEs ? 'Apple Pay / Google Pay · 1 Toque' : 'Apple Pay / Google Pay · 1-Tap'}
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
+          ${isEs
+            ? `No adivines qué escribirle esta noche. Adivinar activa el escudo de un Día ${partnerBirthDay}—pero por $2.99 desbloqueas tu mensaje palabra por palabra [Día ${userBirthDay} × Día ${partnerBirthDay}] en 1 toque:`
+            : `Don't wing tonight's text. Guessing triggers a Day ${partnerBirthDay}'s pull-back reflex—therefore, skip the long reading and unblur your exact [Day ${userBirthDay} × Day ${partnerBirthDay}] script in 1 tap for $2.99:`}
+        </p>
+        <div id="downsell-fast-email-wrap" class="hidden mt-2.5 flex flex-col sm:flex-row gap-2">
+          <input id="downsell-fast-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Tu correo para desbloquear Parte 1 gratis...' : 'Enter email to unblur Part 1 free right now...'}" />
+          <button type="button" id="btn-downsell-fast-email" data-action="save-downsell-email" class="btn-ghost !py-2 !px-3 text-xs font-extrabold text-amber-200 border-amber-300/70 bg-amber-400/15 whitespace-nowrap">
+            ${isEs ? 'Desbloquear Parte 1 Gratis →' : 'Unblur Part 1 Free →'}
+          </button>
+        </div>
+        <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
+          <button type="button" id="btn-downsell-fast-checkout" data-action="checkout-mini" data-trigger="downsell_fast_checkout_script" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 flex-1 text-xs sm:text-sm font-extrabold tracking-wide">
+            ⚡ ${isEs
+              ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($2.99) →'
+              : '1-Tap Express Unlock: Unblur Full Text Message Now ($2.99) →'}
+          </button>
+          <button type="button" id="btn-copy-part1-script" data-action="copy-part1-script" style="display:block;text-align:center;" class="btn-ghost !py-2.5 !px-3 flex-1 text-xs font-bold text-champagne border-gold/45 hover:border-gold">
+            📋 ${isEs ? 'Copiar Mensaje de Texto Completo Sin Difuminar ($2.99 Desbloqueo Instantáneo) →' : 'Copy Full Unblurred Text Message To Clipboard ($2.99 Instant Unlock) →'}
           </button>
         </div>
       </div>
@@ -3603,122 +3758,14 @@ if (typeof window !== 'undefined') {
         <div id="crush-text-decoded-output" class="hidden mt-2.5 p-2.5 rounded-lg bg-indigo-950/75 border border-indigo-400/55 text-xs text-ivory leading-snug"></div>
       </div>
 
-      <!-- JULIAN'S TAKE ON THIS BIRTH DAY (#julian-insider-take-box) -->
-      <div id="julian-insider-take-box" class="mt-3 p-3 rounded-xl bg-[#0c1220] border border-sky-400/45 text-left flex items-center gap-3 shadow-md">
-        <img src="julian_avatar_128.webp" alt="Julian" width="44" height="44" style="width:44px;height:44px;min-width:44px;max-width:44px;border-radius:50%;object-fit:cover;border:2px solid #D4AF37;flex-shrink:0;display:block;" class="w-11 h-11 rounded-full border-2 border-gold object-cover shrink-0" />
-        <div class="text-xs leading-snug flex-1 min-w-0">
-          <div id="julian-insider-take-heading" class="font-extrabold text-gold tracking-wide">
-            🎙️ ${isEs ? `Julian (Día ${partnerBirthDay}):` : `Julian (Day ${partnerBirthDay}):`}
-          </div>
-          <p id="julian-insider-take-text" class="text-zinc-200 mt-1 leading-relaxed">${esc(getJulianInsiderTake(rep.pMoolank, rep.pRuler, partnerBirthDay, activeSit, state.lang))}</p>
-        </div>
-      </div>
-
-      <!-- iMESSAGE-STYLE BLURRED "FLIP THE CHASE" TEXT SCRIPT PREVIEW -->
-      <div id="flip-chase-preview-bubble" class="imessage-preview-card mt-3 text-left">
-        <div id="part1-unlocked-badge" class="hidden mb-2 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-400/60 text-[0.68rem] sm:text-xs font-extrabold text-emerald-300 tracking-wide">
-          ✅ ${isEs
-            ? `CORREO VERIFICADO — PARTE 1 DE TU GUION [Día ${userBirthDay} × Día ${partnerBirthDay}] DESBLOQUEADA`
-            : `EMAIL VERIFIED — PART 1 OF YOUR [Day ${userBirthDay} × Day ${partnerBirthDay}] SCRIPT UNLOCKED`}
-        </div>
-        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
-          <span class="text-[0.68rem] sm:text-xs font-extrabold uppercase tracking-wider text-gold">
-            ${isEs
-              ? `💬 TU GUION DE TEXTO "INVERTIR LA PERSECUCIÓN" (Día Natal ${userBirthDay} × Día de Pareja ${partnerBirthDay}):`
-              : `💬 YOUR CUSTOM "FLIP THE CHASE" TEXT SCRIPT (Birth Day ${userBirthDay} × Partner Day ${partnerBirthDay}):`}
-          </span>
-          <span class="text-[0.6rem] uppercase tracking-widest text-sky-300 bg-sky-950/60 border border-sky-400/30 px-2 py-0.5 rounded-full">
-            iMessage · #${rep.pMoolank} ${rep.pRuler}
-          </span>
-        </div>
-        <div class="imessage-bubble">
-          <span id="imessage-leadin-text" class="imessage-unblurred font-medium text-white">${smsPreview.leadIn}</span><span id="imessage-part1-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part1}</span><span id="imessage-part2-text" class="imessage-blurred" style="filter: blur(5px); -webkit-filter: blur(5px); user-select: none; pointer-events: none;" aria-hidden="true">${smsPreview.part2}</span>
-        </div>
-        <div id="partner-secret-fear-unlocked" class="hidden mt-2.5 p-2.5 rounded-lg bg-amber-950/40 border border-gold/45 text-xs text-champagne leading-snug">
-          🧠 <b>${isEs ? `Su Miedo Secreto #1 (#${rep.pMoolank} · ${rep.pRuler}):` : `Their #${rep.pMoolank} (${rep.pRuler}) #1 Secret Fear:`}</b> ${smsPreview.secretFear}
-        </div>
-        <div id="imessage-part2-locked-callout" class="hidden mt-2 p-2.5 rounded-lg bg-black/55 border border-gold/55 text-[0.7rem] sm:text-xs text-gold font-semibold leading-snug">
-          🔒 ${isEs
-            ? '[FRASE DETONANTE DE 6 PALABRAS BLOQUEADA — DESBLOQUEA EL TEXTO COMPLETO PARA COPIAR] · El resto de este mensaje + qué te responderá + los 3 mejores días para escribirle este mes'
-            : '[6-WORD TRIGGER PHRASE LOCKED — UNBLUR FULL TEXT TO COPY] · The rest of this text + what they will reply + the 3 best days to text them this month'}
-        </div>
-        <button type="button" id="btn-unlock-text-script" data-action="checkout-mini" data-trigger="unlock_text_script_17" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-lg">
-          🔒 ${isEs
-            ? 'Desbloquear el guion de texto completo + los mejores y peores días para escribirle ($2.99 Desbloqueo Instantáneo) →'
-            : 'Unlock the full text script + the best & worst days to text them ($2.99 Instant Unlock) →'}
+      <div class="mt-3 flex justify-center">
+        <button type="button" id="btn-share-partner-match" data-action="share-partner-match" data-d1="${userBirthDay}" data-d2="${partnerBirthDay}" data-score="${rep.magnetismScore}" data-label="${esc(rep.matchLabel || 'Soulmate Lock')}" class="btn-ghost !py-2 !px-4 w-full sm:w-auto text-xs font-bold text-gold border-gold/50 hover:border-gold bg-gold/10 rounded-xl transition-all">
+          📲 ${isEs
+            ? `Enviar Este ${rep.magnetismScore}% de Compatibilidad (Día ${userBirthDay} × Día ${partnerBirthDay}) a Tu Pareja / Amiga`
+            : `Send This ${rep.magnetismScore}% Match To Them / A Friend`}
         </button>
-        <button type="button" id="btn-unlock-full-dossier-14" data-action="checkout-base-direct" data-trigger="unlock_full_dossier_14" style="display:block;text-align:center;" class="btn-ghost mt-2 !py-2.5 !px-4 w-full text-xs font-bold text-champagne border-gold/55 bg-gold/10 hover:bg-gold/20 rounded-xl">
-          👑 ${isEs
-            ? 'O Desbloquea el Dossier Completo de Relación de 20 Páginas ($14) →'
-            : 'Or Unlock Full 20-Page Relationship Dossier ($14) →'}
-        </button>
-        <p class="mt-1.5 text-[0.65rem] text-emerald-300 text-center font-semibold">
-          ⚡ ${isEs ? 'Apple Pay · Google Pay · Link 1-Toque · Acceso Instantáneo' : 'Apple Pay · Google Pay · Link 1-Tap Instant Unlock'}
-        </p>
       </div>
-
-      <!-- INLINE 15-MINUTE FAST-ACTION $2.99 VIP OFFER (REVEALED INSTANTLY ON EMAIL SUBMIT) -->
-      <div id="vip-fast-action-offer" class="vip-fast-action-card hidden mt-3.5 p-4 text-left">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-          <span class="badge-gold !text-[0.62rem] !py-0.5">⚡ ${isEs ? 'DESBLOQUEO RÁPIDO VIP' : 'VIP FAST-ACTION UNLOCK'}</span>
-          <span class="text-xs font-mono font-extrabold text-rose-300 bg-rose-950/75 border border-rose-400/45 px-2.5 py-0.5 rounded-full">
-            ${isEs ? 'EXPIRA EN' : 'EXPIRES IN'} <span id="vip-countdown-timer">14:59</span>
-          </span>
-        </div>
-        <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
-          ${isEs
-            ? `Parte 1 desbloqueada arriba. Desbloquea ahora la Parte 2 de tu guion [Día ${userBirthDay} × Día ${partnerBirthDay}] + qué te responderá + los mejores días para escribirle:`
-            : `Part 1 is unlocked above! Lock in Part 2 of your [Day ${userBirthDay} × Day ${partnerBirthDay}] Script + what they'll reply + the best & worst days to text them right now:`}
-        </p>
-        <button type="button" id="btn-vip-fast-action-17" data-action="checkout-mini" data-trigger="post_email_vip_17" data-stripe-url="" style="display:block;text-align:center;" class="btn-gold mt-3 !py-3.5 !px-4 w-full text-xs sm:text-sm font-extrabold tracking-wide shadow-xl">
-          <span class="block text-center leading-snug">⚡ ${isEs
-            ? 'DESBLOQUEAR PARTE 2 AHORA (EXPIRA EN <span data-vip-timer class="inline font-mono underline">14:59</span>): Mira el resto de tu mensaje + qué te responderá + los mejores días para escribirle ($2.99 Desbloqueo Instantáneo) →'
-            : 'UNLOCK PART 2 NOW (EXPIRES IN <span data-vip-timer class="inline font-mono underline">14:59</span>): See the rest of your text + what they\'ll reply + the best days to text them ($2.99 Instant Unlock) →'}</span>
-        </button>
-        <button type="button" id="btn-vip-full-dossier-14" data-action="checkout-base-direct" data-trigger="post_email_vip_14" data-stripe-url="" style="display:block;text-align:center;" class="btn-ghost mt-2 !py-2.5 !px-4 w-full text-xs font-bold text-champagne border-gold/55 bg-gold/10 hover:bg-gold/20 rounded-xl">
-          👑 ${isEs
-            ? 'O Desbloquea el Dossier Completo de Relación de 20 Páginas ($14) →'
-            : 'Or Unlock Full 20-Page Relationship Dossier ($14) →'}
-        </button>
-        <div class="mt-2.5 text-center">
-          <button type="button" id="btn-show-downsell-box" data-action="show-downsell-box" class="text-[0.7rem] sm:text-xs text-amber-300 underline font-semibold hover:text-ivory cursor-pointer">
-            ${isEs ? '¿Solo quieres el mensaje de texto desbloqueado por $2.99 ahora mismo? Haz clic aquí ↓' : 'Wait — Just want the unblurred text message for $2.99 right now? Tap here ↓'}
-          </button>
-        </div>
-      </div>
-
-      <!-- INSTANT HESITATION / TAB-RETURN DOWNSELL & FAST-CHECKOUT BOX (#downsell-script-only-box) -->
-      <div id="downsell-script-only-box" class="hidden mt-3.5 p-3.5 sm:p-4 rounded-xl bg-amber-950/55 border-2 border-amber-400/75 text-left shadow-xl">
-        <div class="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
-          <span class="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/60 text-[0.62rem] font-extrabold uppercase tracking-wider text-amber-200">
-            ⚡ ${isEs ? 'OPCIÓN RÁPIDA · SOLO EL GUION DE TEXTO ($2.99)' : 'WAIT — JUST WANT THE UNBLURRED TEXT MESSAGE? ($2.99)'}
-          </span>
-          <span class="text-[0.65rem] font-bold text-emerald-300">
-            ${isEs ? 'Apple Pay / Google Pay · 1 Toque' : 'Apple Pay / Google Pay · 1-Tap'}
-          </span>
-        </div>
-        <p class="text-xs sm:text-sm text-ivory font-semibold leading-snug">
-          ${isEs
-            ? `No necesitas leer un reporte largo hoy. Desbloquea al instante el resto de tu mensaje palabra por palabra para [Día ${userBirthDay} × Día ${partnerBirthDay}] + su respuesta exacta por solo $2.99:`
-            : `Skip the long reading—get the exact word-for-word [Day ${userBirthDay} × Día ${partnerBirthDay}]`.replace('Día', 'Day') + ` "Flip The Chase" text message unblurred on your screen in 1 tap for $2.99:`}
-        </p>
-        <div id="downsell-fast-email-wrap" class="hidden mt-2.5 flex flex-col sm:flex-row gap-2">
-          <input id="downsell-fast-email-input" type="email" inputmode="email" autocomplete="email" class="field !py-2 !px-3 flex-1" placeholder="${isEs ? 'Tu correo para desbloquear Parte 1 gratis...' : 'Enter email to unblur Part 1 free right now...'}" />
-          <button type="button" id="btn-downsell-fast-email" data-action="save-downsell-email" class="btn-ghost !py-2 !px-3 text-xs font-extrabold text-amber-200 border-amber-300/70 bg-amber-400/15 whitespace-nowrap">
-            ${isEs ? 'Desbloquear Parte 1 Gratis →' : 'Unblur Part 1 Free →'}
-          </button>
-        </div>
-        <div class="mt-2.5 flex flex-col sm:flex-row gap-2">
-          <button type="button" id="btn-downsell-fast-checkout" data-action="checkout-mini" data-trigger="downsell_fast_checkout_script" style="display:block;text-align:center;" class="btn-gold !py-3 !px-4 flex-1 text-xs sm:text-sm font-extrabold tracking-wide">
-            ⚡ ${isEs
-              ? 'Desbloqueo Rápido en 1 Toque: Ver Mensaje Completo Ahora ($2.99) →'
-              : '1-Tap Express Unlock: Unblur Full Text Message Now ($2.99) →'}
-          </button>
-          <button type="button" id="btn-copy-part1-script" data-action="copy-part1-script" style="display:block;text-align:center;" class="btn-ghost !py-2.5 !px-3 flex-1 text-xs font-bold text-champagne border-gold/45 hover:border-gold">
-            📋 ${isEs ? 'Copiar Mensaje de Texto Completo Sin Difuminar ($2.99 Desbloqueo Instantáneo) →' : 'Copy Full Unblurred Text Message To Clipboard ($2.99 Instant Unlock) →'}
-          </button>
-        </div>
-      </div>
+      <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed mt-3">${rep.summary}</p>
 
       <div class="mt-4 p-4 rounded-xl bg-gold/10 border border-gold/40">
         ${!(state.profile && state.profile.email) ? `

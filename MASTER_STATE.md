@@ -13,6 +13,13 @@
 > - **`04_Proof_Screenshots\`**: Store all grid verification PNGs and contact sheets here so screenshots NEVER clutter video folders.
 > - **`99_Legacy_Archive\`**: Store old `00_Mobile_Review\` leftovers and pre-`short_50` queue files here so `My Drive` stays 100% tidy.
 
+## 🎯 V2 VIRAL STORYTELLING & RETENTION SPEC (BATCH 18+ / SHORT_060+)
+> **MANDATORY PRODUCTION SPEC FOR SATURDAY'S `BATCH_18` (`Short_060+`) — VIDEO GENERATION STRICTLY FROZEN THROUGH `Short_059`**:
+> 1. **Frame-0 Visual Prop Hook (`0.0s–1.8s`)**: Eyes process visuals 10x faster than speech. Every video must flash a crisp, high-contrast iMessage thread prop (e.g., 3 sent blue bubbles -> cold `"k"` or `"Read 11:42 PM"`) right on Frame 0 alongside Maya so scrollers instantly see the stakes and get primed for the `$2.99` text-script unlock.
+> 2. **Zero Spoken Bio Pitch (Kill Ad Resistance)**: NEVER have Maya or Julian say *"link in bio"*, *"tap our bio"*, or *"check your score"* out loud—spoken CTAs trigger ad-skipping at second 9. Let the silent Lower-Third Blurred iMessage + `96% SOULMATE LOCK` card do 100% of the visual CTA work in the final 3 seconds.
+> 3. **"Last Dab" Seamless Replay Loop**: Write the final spoken line first so Julian's final syllable is a gut-punch cliffhanger that grammatically or emotionally sets up Maya's very first word when the Short auto-replays (pushing APV > 110%).
+> 4. **Jagged Rhythm + `But / Therefore` Conflict Chain**: Ban uniform 15-word AI sentences and flat Q&A. Write every script with jagged line lengths (2-word punch -> medium setup -> longer `but`/`therefore` twist) as if recording a midnight voice note to one close friend.
+
 > **Anti-Context-Rot Checkpoint (Updated: 2026-11-11 — Video Generation Frozen After `Short_059` to Focus 100% on Conversion)**  
 > Read this file first at the start of any session in `c:\Users\User\5numsystem` to load the complete production architecture, live URLs, Stripe Payment Links, background daemons, and social video pipeline state in 5 seconds.
 > - **HARD FREEZE ON NEW VIDEO GENERATION**: All 10 Maya & Julian `Veo 3.1` episodes (`Short_050`–`Short_059`) are archived in `G:\My Drive\Sacred_Number_Blueprint\01_Published_Videos\` (`02_Pending_Review\` is empty) and scheduled across TikTok Studio, YouTube Shorts, and Instagram Reels through **Sat Nov 14, 2026 @ 11:00 AM**. Do NOT generate new videos past `Short_059` unless explicitly requested by the user.

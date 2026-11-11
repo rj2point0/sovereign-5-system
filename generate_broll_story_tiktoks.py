@@ -11,6 +11,11 @@ Supports two high-converting formats:
   4.0–7.5s: Moving Human B-roll Clip B + Dynamic CapCut Center Captions
   7.5s–End: Fast Zoom Reveal of Dossier Mandala / Lo Shu Grid / 15-Point Ledger
             + Closing CTA Pill in the final 3.5 seconds (0.5s tail hold, <14.5s).
+- V2 Viral Storytelling & Retention Spec (Batch 18+ / Short_060+ — FROZEN through Short_059):
+  1) Frame-0 Visual Prop Hook (0.0s–1.8s): High-contrast iMessage thread prop (3 blue bubbles -> cold "k" / "Read 11:42 PM") on Frame 0 alongside Maya.
+  2) Zero Spoken Bio Pitch: Ban spoken "link in bio" / "tap our bio" / "check your score"; silent Lower-Third Blurred iMessage + 96% SOULMATE LOCK card handles 100% of CTA in final 3s.
+  3) "Last Dab" Seamless Replay Loop: Write Julian's final syllable first so it loops into Maya's first word (APV > 110%).
+  4) Jagged Rhythm + But/Therefore Conflict Chain: 2-word punch -> medium setup -> longer `but`/`therefore` twist (midnight voice-note cadence).
 =============================================================================
 """
 
