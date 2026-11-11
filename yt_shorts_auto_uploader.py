@@ -727,7 +727,7 @@ async def upload_single_short(page: Page, item: Dict[str, Any]) -> Optional[str]
             await asyncio.sleep(0.8)
     else:
         sched_container = page.locator(
-            '#second-container-expand-button, tp-yt-paper-radio-button[name="SCHEDULE"], div:has-text("Schedule")'
+            '#second-container-expand-button, tp-yt-paper-radio-button[name="SCHEDULE"], #schedule-radio-button'
         ).first
         if await sched_container.count() > 0:
             await sched_container.click(force=True)
