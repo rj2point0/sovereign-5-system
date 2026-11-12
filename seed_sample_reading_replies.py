@@ -230,6 +230,7 @@ TIKTOK_TARGETS = [
 ]
 
 IG_TARGETS = [
+    {"id": "short_54", "shortcode": "DfpUlv-OEJ3"},
     {"id": "short_53", "shortcode": "DfnhqZruFKC"},
     {"id": "short_52", "shortcode": "DfnhhnnuWyu"},
     {"id": "short_51", "shortcode": "Dfk8thJu0oB"},

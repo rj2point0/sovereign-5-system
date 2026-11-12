@@ -5,10 +5,11 @@ Scrape & Print Full 3-Platform View & Release Leaderboard for Short_050–Short_
 """
 
 import asyncio
+from datetime import datetime
 import json
 import os
-import re
 import sys
+import time
 from playwright.async_api import async_playwright
 
 if sys.platform == "win32":
@@ -23,21 +24,21 @@ TT_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\tiktok_browser_profile"
 IG_PROFILE_DIR = r"C:\Users\User\.gemini\antigravity\ig_browser_profile"
 
 VEO31_SHORTS = [
-    ("short_50", "gWQcUs-uGkk", "Dfj7e4LuWVr", "7706154728164201742", "LIVE", "Why He Goes Cold Overnight (7th, 16th, 25th)"),
+    ("short_50", "gWQcUs-uGkk", "Dfj7e4LuWVr", "7706521591961685261", "LIVE", "Why He Goes Cold Overnight (7th, 16th, 25th)"),
     ("short_51", "OqjNWBaDbh4", "Dfk8thJu0oB", "7706584636230520077", "LIVE", "Birth Days That Breadcrumb You For Months"),
     ("short_52", "FVsvGAML1i8", "DfnhhnnuWyu", "7706584942871989518", "LIVE", "Why He Acts Hot One Day & Cold The Next"),
-    ("short_53", "-NNV3p0oLC4", "DfnhqZruFKC", "7706585130466364686", "LIVE (Nov 11 11:00 AM)", "Texted Daily For 6 Weeks Then Vanished?"),
-    ("short_54", "8tsuaClbV9c", "QUEUED", "SCHEDULED", "Scheduled (Tonight Nov 11 @ 6:30 PM)", "Watches Your Stories In 30s But Won't Text?"),
-    ("short_55", "eM80I9Sp_ws", "QUEUED", "SCHEDULED", "Scheduled (Thu Nov 12 @ 11:00 AM)", "What His Dry 1-Word Replies Actually Mean"),
-    ("short_56", "k9shAAfRGTw", "QUEUED", "SCHEDULED", "Scheduled (Thu Nov 12 @ 6:30 PM)", "Exact Moment A Man Regrets Pulling Away"),
-    ("short_57", "dL5vpmtyGGM", "QUEUED", "SCHEDULED", "Scheduled (Fri Nov 13 @ 11:00 AM)", "Gets Super Close Then Pulls Away On Monday?"),
-    ("short_58", "U03tc8Utw6s", "QUEUED", "SCHEDULED", "Scheduled (Fri Nov 13 @ 6:30 PM)", "Why He Only Sends 'U Up?' After 11 PM"),
-    ("short_59", "YzubDLHP_YQ", "QUEUED", "SCHEDULED", "Scheduled (Sat Nov 14 @ 11:00 AM)", "Texts All Day But Never Makes Real Plans?"),
+    ("short_53", "-NNV3p0oLC4", "DfnhqZruFKC", "7706585130466364686", "LIVE", "Texted Daily For 6 Weeks Then Vanished?"),
+    ("short_54", "8tsuaClbV9c", "DfpUlv-OEJ3", "7706595930299960590", "LIVE", "Watches Your Stories In 30s But Won't Text?"),
+    ("short_55", "eM80I9Sp_ws", "QUEUED", "7706595957424622862", "Scheduled (Thu Nov 12 @ 11:00 AM)", "What His Dry 1-Word Replies Actually Mean"),
+    ("short_56", "k9shAAfRGTw", "QUEUED", "7706596196311108878", "Scheduled (Thu Nov 12 @ 6:30 PM)", "Exact Moment A Man Regrets Pulling Away"),
+    ("short_57", "dL5vpmtyGGM", "QUEUED", "7707039781108174093", "Scheduled (Fri Nov 13 @ 11:00 AM)", "Gets Super Close Then Pulls Away On Monday?"),
+    ("short_58", "U03tc8Utw6s", "QUEUED", "7707039999321034015", "Scheduled (Fri Nov 13 @ 6:30 PM)", "Why He Only Sends 'U Up?' After 11 PM"),
+    ("short_59", "YzubDLHP_YQ", "QUEUED", "7707040089796365598", "Scheduled (Sat Nov 14 @ 11:00 AM)", "Texts All Day But Never Makes Real Plans?"),
 ]
 
 
 async def scrape_youtube(p) -> dict:
-    out = {"public_shorts": {}, "studio_scheduled": {}}
+    out = {"public_shorts": {}}
     try:
         try:
             b = await p.chromium.connect_over_cdp("http://127.0.0.1:9222", timeout=3500)
@@ -55,7 +56,7 @@ async def scrape_youtube(p) -> dict:
                 wait_until="domcontentloaded",
                 timeout=12000,
             )
-            await asyncio.sleep(2.2)
+            await asyncio.sleep(2.4)
             out["public_shorts"] = await page.evaluate(
                 """() => {
                     const m = {};
@@ -67,7 +68,7 @@ async def scrape_youtube(p) -> dict:
                         if (!match) continue;
                         const txt = (el.innerText || '').trim();
                         const vw = txt.match(/(\\d[\\d.,KMB]*)\\s+views?/i) || txt.match(/No views/i);
-                        m[match[1]] = vw ? vw[0] : 'LIVE (0 views)';
+                        m[match[1]] = vw ? vw[0] : '0 views';
                     }
                     return m;
                 }"""
@@ -115,7 +116,7 @@ async def scrape_instagram(p) -> dict:
                         if (!m) continue;
                         const nums = (a.innerText || '').trim().split(/\\n+/).map(s => s.trim()).filter(Boolean);
                         res[m[1]] = {
-                            views: nums.length ? nums[nums.length - 1] : 'LIVE',
+                            views: nums.length ? (nums[nums.length - 1] + ' views') : '0 views',
                             raw: nums,
                         };
                     }
@@ -133,8 +134,10 @@ async def scrape_instagram(p) -> dict:
 
 
 async def scrape_tiktok(p) -> dict:
-    out = {"public": {}, "studio_count": 0}
+    """Extracts exact numeric play_count & schedule_time from TikTok Studio's creator/manage/item_list JSON API + DOM fallback."""
+    out = {"items": {}}
     ctx = None
+    now_ts = int(time.time())
     try:
         ctx = await p.chromium.launch_persistent_context(
             TT_PROFILE_DIR,
@@ -143,34 +146,62 @@ async def scrape_tiktok(p) -> dict:
             viewport={"width": 1280, "height": 900},
         )
         page = ctx.pages[0] if ctx.pages else await ctx.new_page()
+
+        async def on_response(resp):
+            if "creator/manage/item_list" in resp.url:
+                try:
+                    data = await resp.json()
+                    for it in data.get("item_list") or []:
+                        iid = str(it.get("item_id") or it.get("id") or "")
+                        if not iid:
+                            continue
+                        plays = int(it.get("play_count") or 0)
+                        likes = int(it.get("like_count") or 0)
+                        comments = int(it.get("comment_count") or 0)
+                        sched_ts = int(it.get("schedule_time") or 0)
+                        out["items"][iid] = {
+                            "plays": plays,
+                            "likes": likes,
+                            "comments": comments,
+                            "schedule_time": sched_ts,
+                            "is_scheduled": sched_ts > now_ts,
+                        }
+                except Exception:
+                    pass
+
+        page.on("response", on_response)
         await page.goto(
             "https://www.tiktok.com/tiktokstudio/content",
             wait_until="domcontentloaded",
-            timeout=13000,
+            timeout=14000,
         )
-        await asyncio.sleep(3.8)
-        out["public"] = await page.evaluate(
+        await asyncio.sleep(4.5)
+
+        # DOM fallback for any row not yet captured by item_list API
+        dom_map = await page.evaluate(
             """() => {
                 const res = {};
-                const rows = Array.from(document.querySelectorAll('[data-tt*="Post"], tr, [class*="PostItem"], [class*="video-row"], a[href*="/video/"]'));
-                const bodyTxt = document.body.innerText || '';
                 const links = Array.from(document.querySelectorAll('a[href*="/video/"]'));
                 for (const a of links) {
                     const m = a.href.match(/\\/video\\/(\\d+)/);
                     if (!m) continue;
                     let row = a;
-                    for (let i = 0; i < 6 && row.parentElement; i++) {
+                    for (let i = 0; i < 7 && row.parentElement; i++) {
                         row = row.parentElement;
-                        if ((row.innerText || '').includes('Published') || (row.innerText || '').includes('Scheduled')) break;
+                        if ((row.innerText || '').includes('Everyone')) break;
                     }
                     const lines = (row.innerText || '').split(/\\n+/).map(s => s.trim()).filter(Boolean);
-                    const nums = lines.filter(s => /^\\d[\\d.,KMB]*$/.test(s));
-                    res[m[1]] = nums.length ? (nums[0] + ' views') : 'LIVE';
+                    const evIdx = lines.findIndex(s => s === 'Everyone');
+                    if (evIdx >= 0 && evIdx + 1 < lines.length && /^\\d[\\d.,KMB]*$/.test(lines[evIdx + 1])) {
+                        res[m[1]] = lines[evIdx + 1];
+                    }
                 }
-                res['_scheduled_check_54'] = bodyTxt.includes('Watches Your Stories') || bodyTxt.includes('18:30') || bodyTxt.includes('6:30');
                 return res;
             }"""
         )
+        for vid, vstr in dom_map.items():
+            if vid not in out["items"]:
+                out["items"][vid] = {"plays": vstr, "likes": 0, "comments": 0, "schedule_time": 0, "is_scheduled": False}
     except Exception as e:
         print("TT scrape note:", e)
     finally:
@@ -196,13 +227,17 @@ def dump_telemetry():
         if e.get("event_type") == "checkout_clicked"
         and ("2.99" in json.dumps(e) or "love_mini" in json.dumps(e))
     ]
+    purchases = [
+        e for e in evs
+        if e.get("event_type") in ("purchase_completed", "dossier_unlocked", "payment_verified")
+    ]
     print(f"\n=== TELEMETRY: {len(pviews)} PAGE_VIEW SESSIONS / {len(evs)} TOTAL EVENTS ===")
     print(
         f"Breakdown: page_view={len(pviews)} | hero_engaged_3s={counts.get('hero_engaged_3s', 0)} | "
         f"hero_my_day={counts.get('hero_my_day_selected', 0)} | hero_pair_match={counts.get('hero_pair_match_selected', 0)} | "
         f"quick_day={counts.get('quick_day_selected', 0)} | partner_check_run={counts.get('partner_check_run', 0)} | "
         f"lead_submitted={counts.get('lead_submitted', 0)} | checkout_clicked={counts.get('checkout_clicked', 0)} "
-        f"(love_mini/$2.99={len(stripe_299_clicks)})"
+        f"(love_mini/$2.99={len(stripe_299_clicks)}) | purchases={len(purchases)}"
     )
     for pv in pviews[-5:]:
         ts = pv.get("timestamp", "")[:19]
@@ -215,7 +250,6 @@ async def main():
     seeded_first = json.load(open(os.path.join(BASE_DIR, "seeded_first_comments.json"), encoding="utf-8"))
     seeded_sample = json.load(open(os.path.join(BASE_DIR, "seeded_sample_replies.json"), encoding="utf-8"))
     yt_meta = json.load(open(os.path.join(BASE_DIR, "uploaded_yt_shorts.json"), encoding="utf-8")).get("videos", {})
-    tt_meta = json.load(open(os.path.join(BASE_DIR, "uploaded_videos.json"), encoding="utf-8")).get("videos", {})
 
     async with async_playwright() as p:
         yt_res, ig_res, tt_res = await asyncio.gather(
@@ -229,19 +263,28 @@ async def main():
         if isinstance(ig_res, Exception):
             ig_res = {}
         if isinstance(tt_res, Exception):
-            tt_res = {"public": {}}
+            tt_res = {"items": {}}
 
     print("=== VEO 3.1 TRI-PLATFORM LEADERBOARD (SHORT_050 – SHORT_059) ===")
-    if tt_res.get("public", {}).get("_scheduled_check_54"):
-        print("✓ TikTok Studio Content verified: Short_054 ('Watches Your Stories...') queued for Tonight Nov 11 @ 6:30 PM!")
+    tt_items = tt_res.get("items", {})
     for sid, yt_id, ig_code, tt_id, slot_status, title in VEO31_SHORTS:
         yt_info = yt_meta.get(sid, {})
         yt_views = yt_res.get("public_shorts", {}).get(yt_id) or (
-            f"Scheduled ({yt_info.get('schedule', slot_status)})" if "Scheduled" in slot_status else "LIVE"
+            f"Scheduled ({yt_info.get('schedule', slot_status)})" if "Scheduled" in slot_status else "0 views"
         )
         yt_c = "Pinned+Sample" if yt_info.get("prompt_seeded") else ("Queued" if "Scheduled" in slot_status else "LIVE")
-        ig_views = ig_res.get(ig_code, {}).get("views", "LIVE" if ig_code != "QUEUED" else "Queued")
-        tt_views = tt_res.get("public", {}).get(tt_id) or (slot_status if tt_id == "SCHEDULED" else "LIVE")
+        ig_views = ig_res.get(ig_code, {}).get("views", "0 views" if ig_code != "QUEUED" else "Queued")
+
+        tt_entry = tt_items.get(tt_id)
+        if tt_entry:
+            if tt_entry.get("is_scheduled"):
+                dt_str = datetime.fromtimestamp(tt_entry["schedule_time"]).strftime("%b %d @ %I:%M %p")
+                tt_views = f"Scheduled ({dt_str})"
+            else:
+                tt_views = f"{tt_entry['plays']} views"
+        else:
+            tt_views = slot_status
+
         tt_c = (
             "Prompt+Sample"
             if ((sid in seeded_first.get("seeded", {}) and sid in seeded_sample.get("tiktok", {})) or sid == "short_50")
