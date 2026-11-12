@@ -73,6 +73,23 @@ STRIPE_BUMP_URL = "https://buy.stripe.com/eVqeVd3FvamNe3ma9N38407"
 BASE_FUNNEL_URL = "https://blueprint.megavegaventures.com/"
 APP_BASE_URL = BASE_FUNNEL_URL
 
+INTERNAL_TEST_EMAILS = {
+    "getshoes7@gmail.com",
+    "adam.vegaui@gmail.com",
+    "imcodingdad@gmail.com",
+}
+
+
+def is_internal_test_email(email_addr: Any) -> bool:
+    em = str(email_addr or "").strip().lower()
+    if not em:
+        return False
+    return (
+        em in INTERNAL_TEST_EMAILS
+        or em in {"adamvega@megavegaventures.com", "sarah.live@gmail.com", "test@example.com"}
+        or em.endswith("@sovereign5.com")
+    )
+
 AFFILIATE_OFFER_CONFIG = {
     "ENABLED": True,
     "PROVIDER_NAME": "Sacred Number Blueprint · Priority 1-on-1 Compatibility & Text Analysis",
@@ -1835,12 +1852,78 @@ def record_telemetry_event(payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     return record
 
 
+def _parse_iso_ts(ts_str: Any) -> float:
+    s = str(ts_str or "").strip()
+    if not s:
+        return 0.0
+    try:
+        return datetime.fromisoformat(s.replace("Z", "+00:00")).timestamp()
+    except Exception:
+        return 0.0
+
+
+def filter_external_customer_events(events: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """
+    Separates TRUE external human funnel telemetry from:
+    - INTERNAL_TEST_EMAILS / test profiles
+    - Headless Playwright / multi-browser test bursts (>=2 page_views within 2s or >=3 within 15s)
+    - Sub-50ms synthetic Playwright click chains (e.g., quick_day_selected -> partner_check_run in 14ms)
+    - Platform link-validation crawlers (.048Z synthetic clock hits / _rw1fd crawler sessions)
+    Returns (external_events, excluded_internal_or_bot_events).
+    """
+    excluded_sessions = set()
+    pvs = sorted(
+        [e for e in events if e.get("event_type") == "page_view"],
+        key=lambda x: _parse_iso_ts(x.get("timestamp")),
+    )
+    for i, ev in enumerate(pvs):
+        sid = str(ev.get("session_id") or "")
+        ts_raw = str(ev.get("timestamp") or "")
+        t0 = _parse_iso_ts(ts_raw)
+        if ts_raw.endswith(".048Z") or sid.endswith("_rw1fd"):
+            excluded_sessions.add(sid)
+        # Detect automated multi-context Playwright test bursts
+        nearby_2s = [p for p in pvs if p.get("session_id") != sid and abs(_parse_iso_ts(p.get("timestamp")) - t0) <= 2.0]
+        nearby_15s = [p for p in pvs if abs(_parse_iso_ts(p.get("timestamp")) - t0) <= 15.0]
+        if nearby_2s or len(nearby_15s) >= 3:
+            excluded_sessions.add(sid)
+
+    # Detect sub-50ms synthetic click sequences & internal test emails per session
+    by_session: Dict[str, List[Dict[str, Any]]] = {}
+    for ev in events:
+        sid = str(ev.get("session_id") or "")
+        by_session.setdefault(sid, []).append(ev)
+        if is_internal_test_email(ev.get("email")):
+            excluded_sessions.add(sid)
+        br = str(ev.get("browser_label") or "") + " " + str(ev.get("referrer") or "")
+        if re.search(r"Headless|Playwright|PhantomJS|localhost|127\.0\.0\.1", br, re.IGNORECASE):
+            excluded_sessions.add(sid)
+
+    for sid, sevents in by_session.items():
+        qd_times = [_parse_iso_ts(x.get("timestamp")) for x in sevents if x.get("event_type") == "quick_day_selected"]
+        pc_times = [_parse_iso_ts(x.get("timestamp")) for x in sevents if x.get("event_type") == "partner_check_run"]
+        for qt in qd_times:
+            for pt in pc_times:
+                if qt > 0 and pt > 0 and abs(pt - qt) < 0.05:
+                    excluded_sessions.add(sid)
+
+    ext_events: List[Dict[str, Any]] = []
+    bot_events: List[Dict[str, Any]] = []
+    for ev in events:
+        sid = str(ev.get("session_id") or "")
+        if sid in excluded_sessions or is_internal_test_email(ev.get("email")):
+            bot_events.append(ev)
+        else:
+            ext_events.append(ev)
+    return ext_events, bot_events
+
+
 def update_obsidian_dashboard():
     """
     Regenerates G:\\My Drive\\MVV_Memory_Vault\\03-Projects\\Leads_Captured_Dashboard.md with:
-    1. Live Funnel Conversion Telemetry Summary table (page_view, calc_started, calc_preview, lead_submitted, checkout_clicked)
-    2. Recent Visitor Activity & Name/DOB Preview Log table
-    3. Captured Email Leads & 3-Part Drip Sequence Log table
+    1. Live Funnel Conversion Telemetry Summary table (TRUE external customer sessions only)
+    2. Recent External Visitor Activity & Name/DOB Preview Log table
+    3. Captured Email Leads & 3-Part Drip Sequence Log table (labeling INTERNAL_TEST_EMAILS as [INTERNAL TEST])
     """
     try:
         rows = []
@@ -1849,11 +1932,17 @@ def update_obsidian_dashboard():
                 reader = csv.DictReader(f)
                 rows = list(reader)
 
-        events = load_telemetry_events()
+        real_lead_rows = [r for r in rows if not is_internal_test_email(r.get("email"))]
+        internal_test_rows = [r for r in rows if is_internal_test_email(r.get("email"))]
+
+        raw_events = load_telemetry_events()
+        events, excluded_events = filter_external_customer_events(raw_events)
+        excluded_pvs = [e for e in excluded_events if e.get("event_type") == "page_view"]
+
         page_views = [e for e in events if e.get("event_type") == "page_view"]
-        tt_views = [e for e in page_views if e.get("is_tiktok_inapp")]
-        ig_views = [e for e in page_views if e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", ""))]
-        other_views = [e for e in page_views if not e.get("is_tiktok_inapp") and not (e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")))]
+        tt_views = [e for e in page_views if e.get("is_tiktok_inapp") or (e.get("utm") or {}).get("utm_source") == "tiktok"]
+        ig_views = [e for e in page_views if e.get("is_instagram_inapp") or "Instagram In-App" in str(e.get("browser_label", "")) or (e.get("utm") or {}).get("utm_source") == "ig_bio"]
+        other_views = [e for e in page_views if e not in tt_views and e not in ig_views]
         hero_engaged = [e for e in events if e.get("event_type") == "hero_engaged_3s"]
         hero_my_day = [e for e in events if e.get("event_type") == "hero_my_day_selected"]
         hero_pair_match = [e for e in events if e.get("event_type") == "hero_pair_match_selected"]
@@ -1865,7 +1954,7 @@ def update_obsidian_dashboard():
         lead_submits = [e for e in events if e.get("event_type") == "lead_submitted"]
         checkout_clicks = [e for e in events if e.get("event_type") == "checkout_clicked"]
 
-        total_leads_count = max(len(rows), len(lead_submits))
+        total_leads_count = max(len(real_lead_rows), len(lead_submits))
 
         if os.path.exists(os.path.dirname(OBSIDIAN_DASHBOARD_PATH)):
             md_lines = [
@@ -1873,9 +1962,10 @@ def update_obsidian_dashboard():
                 "title: Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "project: Sacred Number Blueprint (@sacrednumberblueprint)",
                 f"date_updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-                f"total_page_views: {len(page_views)}",
-                f"tiktok_inapp_views: {len(tt_views)}",
-                f"instagram_inapp_views: {len(ig_views)}",
+                f"external_page_views: {len(page_views)}",
+                f"filtered_bot_or_test_page_views: {len(excluded_pvs)}",
+                f"tiktok_views: {len(tt_views)}",
+                f"instagram_views: {len(ig_views)}",
                 f"hero_engaged_3s: {len(hero_engaged)}",
                 f"hero_my_day_selected: {len(hero_my_day)}",
                 f"hero_pair_match_selected: {len(hero_pair_match)}",
@@ -1883,7 +1973,8 @@ def update_obsidian_dashboard():
                 f"demo_previews: {len(demo_previews)}",
                 f"calc_previews: {len(calc_previews)}",
                 f"partner_checks: {len(partner_checks)}",
-                f"total_leads: {len(rows)}",
+                f"real_customer_leads: {total_leads_count}",
+                f"internal_test_leads: {len(internal_test_rows)}",
                 f"checkout_clicks: {len(checkout_clicks)}",
                 "tags:",
                 "  - leads",
@@ -1894,14 +1985,14 @@ def update_obsidian_dashboard():
                 "",
                 "# 📊 Sacred Number Blueprint — Live Funnel Telemetry & Captured Leads Dashboard",
                 "",
-                "> [!INFO] Real-Time Top-to-Bottom Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
-                "> Tracks every real visitor session from the moment they tap the TikTok, YouTube Shorts, or Instagram bio link (`page_view`), stay/engage for 3s (`hero_engaged_3s`), tap Step 1 (`hero_my_day_selected`) & Step 2 (`hero_pair_match_selected`), run a Partner Compatibility Check (`partner_check_run`), submit their Email (`lead_submitted`), or click a Stripe checkout tier (`checkout_clicked`: `$17` Love Mini-Read, `$37` Full 20-Page Blueprint, or `$84` VIP Bundle). Headless Playwright/localhost test runs are automatically filtered out.",
+                "> [!INFO] True External Customer Funnel Telemetry (`https://blueprint.megavegaventures.com/`)",
+                f"> Displays **100% real external visitor telemetry** (`{len(excluded_pvs)}` Playwright/link-crawler sessions and `{len(internal_test_rows)}` internal test accounts in `INTERNAL_TEST_EMAILS` filtered out of customer counts).",
                 "",
-                "## 1. Live Funnel Conversion Telemetry Summary",
+                "## 1. True External Customer Funnel Summary",
                 "",
-                "| Funnel Stage | Event Key | Total Count | Breakdown / Conversion Notes |",
+                "| Funnel Stage | Event Key | External Count | Breakdown / Conversion Notes |",
                 "| :--- | :--- | :---: | :--- |",
-                f"| **1. Real Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok In-App:** `{len(tt_views)}` · **Instagram In-App:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` |",
+                f"| **1. Real External Visitor Sessions** | `page_view` | **{len(page_views)}** | **TikTok:** `{len(tt_views)}` · **Instagram:** `{len(ig_views)}` · **Web/Other:** `{len(other_views)}` *(+{len(excluded_pvs)} bot/test filtered)* |",
                 f"| **1a. Engaged On Hero (>= 3s / Touch)** | `hero_engaged_3s` | **{len(hero_engaged)}** | Visitors who dwelled >= 3s or scrolled/touched on `view1` |",
                 f"| **1b. Step 1: Your Birth Day Selected** | `hero_my_day_selected` | **{len(hero_my_day)}** | Visitors who selected their Birth Day (`1–31`) on `view1` |",
                 f"| **1c. Step 2: Partner Pair Match Selected** | `hero_pair_match_selected` | **{len(hero_pair_match)}** | Visitors who completed the 2-Tap Pair Match on `view1` |",
@@ -1909,13 +2000,13 @@ def update_obsidian_dashboard():
                 f"| **2a. 1-Tap Birth Day Quick-Select** | `quick_day_selected` | **{len(quick_days)}** | Visitors who tapped their Birth Day (`1–31`) on the Hero quick-strip |",
                 f"| **2b. 1-Tap Sample Previews** | `demo_preview_clicked` | **{len(demo_previews)}** | Cold scrollers who tapped the 1-Tap Sample Reading (`7th × 4th`) |",
                 f"| **3. Instant Name + DOB Previews** | `calc_preview` | **{len(calc_previews)}** | Visitors who tested a Name & Birthday (captured even without Email) |",
-                f"| **3b. Partner Compatibility Checks** | `partner_check_run` | **{len(partner_checks)}** | Visitors who tested a Partner / Crush birthday on the Teaser view |",
-                f"| **4. Full Email Leads Captured** | `lead_submitted` | **{total_leads_count}** | Enrolled in automated 3-part luxury HTML email sequence |",
-                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Visitors who clicked `$2.99` Text Unlock, `$14` Dossier, or `$29` Bundle |",
+                f"| **3b. Partner Compatibility Checks** | `partner_check_run` | **{len(partner_checks)}** | Real external Partner / Crush birthday checks on Teaser view |",
+                f"| **4. Real Customer Email Leads** | `lead_submitted` | **{total_leads_count}** | Real external leads *(excludes `{len(internal_test_rows)}` `[INTERNAL TEST]` accounts)* |",
+                f"| **5. Stripe Checkout Clicks** | `checkout_clicked` | **{len(checkout_clicks)}** | Real external clicks on `$2.99` Text Unlock, `$14` Dossier, or prior CTA |",
                 "",
                 "---",
                 "",
-                "## 2. Recent Visitor Activity & Name/DOB Preview Log",
+                "## 2. Recent External Visitor Activity & Name/DOB Preview Log",
                 "",
                 "| Timestamp (UTC) | Funnel Event | Device & Browser | Source / Cohort | Tested Name | Tested DOB | Big 3 Overlap / Life Path | Checkout Tier Clicked |",
                 "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
@@ -1971,18 +2062,22 @@ def update_obsidian_dashboard():
                 "",
                 "---",
                 "",
-                "## 3. Captured Email Leads & 3-Part Drip Sequence Log",
+                f"## 3. Captured Email Leads (`{len(real_lead_rows)}` Real Customer · `{len(internal_test_rows)}` Internal Test)",
                 "",
-                "| Timestamp (UTC) | Full Birth Name | DOB | Email | Source / Cohort | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email #1 (Instant) | Email #2 (24h) | Email #3 (48h) |",
-                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+                "| Timestamp (UTC) | Type | Full Birth Name | DOB | Email | Source / Cohort | Lang | Big 3 Overlap Anchors | Life Path | Vedic Moolank | Chaldean Name | Email #1 | Email #2 | Email #3 |",
+                "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
             ])
             for r in reversed(rows):
+                is_test = is_internal_test_email(r.get("email"))
+                lead_badge = "`[INTERNAL TEST]`" if is_test else "✅ **CUSTOMER**"
                 e1 = "✅" if r.get("email_1_sent_at") or r.get("email_sent") == "YES" else "⏳"
                 e2 = "✅" if r.get("email_2_sent_at") else "⏳"
                 e3 = "✅" if r.get("email_3_sent_at") else "⏳"
                 src_label = r.get("source_attribution") or format_attribution_source(r)
+                if is_test:
+                    src_label = f"[INTERNAL TEST] {src_label}"
                 md_lines.append(
-                    f"| `{r.get('timestamp', '')[:19]}` | **{r.get('name', '')}** | `{r.get('dob', '')}` | `{r.get('email', '')}` | **{src_label}** | `{r.get('lang', 'en')}` | **{r.get('top_3_overlap_numbers', '')}** | `{r.get('life_path', '')}` | `{r.get('vedic_moolank', '')}` | `{r.get('chaldean_name', '')}` | {e1} | {e2} | {e3} |"
+                    f"| `{r.get('timestamp', '')[:19]}` | {lead_badge} | **{r.get('name', '')}** | `{r.get('dob', '')}` | `{r.get('email', '')}` | **{src_label}** | `{r.get('lang', 'en')}` | **{r.get('top_3_overlap_numbers', '')}** | `{r.get('life_path', '')}` | `{r.get('vedic_moolank', '')}` | `{r.get('chaldean_name', '')}` | {e1} | {e2} | {e3} |"
                 )
             md_lines.append("")
             with open(OBSIDIAN_DASHBOARD_PATH, "w", encoding="utf-8") as f:

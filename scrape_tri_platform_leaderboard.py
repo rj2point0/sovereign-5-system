@@ -214,36 +214,57 @@ async def scrape_tiktok(p) -> dict:
 
 
 def dump_telemetry():
+    from lead_capture_worker import (
+        INTERNAL_TEST_EMAILS,
+        LOCAL_CSV_PATH,
+        filter_external_customer_events,
+        is_internal_test_email,
+    )
+    import csv
+
     tpath = os.path.join(BASE_DIR, "telemetry_events.json")
     with open(tpath, "r", encoding="utf-8") as f:
-        evs = json.load(f)
-    pviews = [e for e in evs if e.get("event_type") == "page_view"]
+        raw_evs = json.load(f)
+
+    ext_evs, bot_evs = filter_external_customer_events(raw_evs)
+    pviews = [e for e in ext_evs if e.get("event_type") == "page_view"]
+    bot_pviews = [e for e in bot_evs if e.get("event_type") == "page_view"]
+
     counts = {}
-    for e in evs:
+    for e in ext_evs:
         et = e.get("event_type", "unknown")
         counts[et] = counts.get(et, 0) + 1
+
+    csv_rows = list(csv.DictReader(open(LOCAL_CSV_PATH, encoding="utf-8"))) if os.path.exists(LOCAL_CSV_PATH) else []
+    real_leads = [r for r in csv_rows if not is_internal_test_email(r.get("email"))]
+    test_leads = [r for r in csv_rows if is_internal_test_email(r.get("email"))]
+
     stripe_299_clicks = [
-        e for e in evs
+        e for e in ext_evs
         if e.get("event_type") == "checkout_clicked"
         and ("2.99" in json.dumps(e) or "love_mini" in json.dumps(e))
     ]
     purchases = [
-        e for e in evs
-        if e.get("event_type") in ("purchase_completed", "dossier_unlocked", "payment_verified")
+        e for e in ext_evs
+        if e.get("event_type") in ("purchase_completed", "dossier_unlocked", "payment_verified", "purchase_return")
     ]
-    print(f"\n=== TELEMETRY: {len(pviews)} PAGE_VIEW SESSIONS / {len(evs)} TOTAL EVENTS ===")
     print(
-        f"Breakdown: page_view={len(pviews)} | hero_engaged_3s={counts.get('hero_engaged_3s', 0)} | "
-        f"hero_my_day={counts.get('hero_my_day_selected', 0)} | hero_pair_match={counts.get('hero_pair_match_selected', 0)} | "
-        f"quick_day={counts.get('quick_day_selected', 0)} | partner_check_run={counts.get('partner_check_run', 0)} | "
-        f"lead_submitted={counts.get('lead_submitted', 0)} | checkout_clicked={counts.get('checkout_clicked', 0)} "
+        f"\n=== TRUE EXTERNAL CUSTOMER TELEMETRY: {len(pviews)} REAL SESSIONS "
+        f"(+{len(bot_pviews)} Playwright/crawler filtered from {len(pviews)+len(bot_pviews)} raw) ==="
+    )
+    print(
+        f"External Funnel: page_view={len(pviews)} | calc_started={counts.get('calc_started', 0)} | "
+        f"quick_day={counts.get('quick_day_selected', 0)} | calc_preview={counts.get('calc_preview', 0)} | "
+        f"partner_check_run={counts.get('partner_check_run', 0)} | real_leads={len(real_leads)} "
+        f"(+{len(test_leads)} [INTERNAL TEST] excluded) | checkout_clicked={counts.get('checkout_clicked', 0)} "
         f"(love_mini/$2.99={len(stripe_299_clicks)}) | purchases={len(purchases)}"
     )
-    for pv in pviews[-5:]:
+    for pv in pviews:
         ts = pv.get("timestamp", "")[:19]
-        utm = pv.get("utm_source", "") or "direct"
-        dev = pv.get("browser", "") or pv.get("browser_label", "") or pv.get("device", "") or "Browser"
-        print(f"  Recent Session: {ts} | utm={utm:<12} | dev={dev}")
+        utm = (pv.get("utm") or {}).get("utm_source") or pv.get("source_attribution") or "direct"
+        dev = pv.get("browser_label") or pv.get("browser") or "Browser"
+        ref = pv.get("referrer") or ""
+        print(f"  External Session: {ts} | src={str(utm):<22} | dev={dev:<26} | ref={ref}")
 
 
 async def main():

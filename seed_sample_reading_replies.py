@@ -436,9 +436,43 @@ async def seed_tiktok_sample_replies(delete_old_short_21_vid: str = ""):
         await ctx.close()
 
 
+def get_dynamic_ig_targets() -> list[dict]:
+    """Merges newly shared Short_0XX Reels from uploaded_ig_reels.json ahead of static IG_TARGETS."""
+    dynamic = []
+    seen_ids = set()
+    ig_json = os.path.join(BASE_DIR, "uploaded_ig_reels.json")
+    if os.path.exists(ig_json):
+        try:
+            u_reels = json.load(open(ig_json, "r", encoding="utf-8")).get("uploaded_reels", {})
+            for fname, info in sorted(u_reels.items(), reverse=True):
+                m_num = re.match(r"^Short_0?(\d+)_", fname, re.IGNORECASE)
+                m_sc = re.search(r"/reel/([A-Za-z0-9_-]+)", str(info.get("reel_url") or ""))
+                if m_num and m_sc and info.get("status") == "shared":
+                    sid = f"short_{int(m_num.group(1)):02d}"
+                    sc = m_sc.group(1)
+                    if sid not in seen_ids:
+                        dynamic.append({"id": sid, "shortcode": sc})
+                        seen_ids.add(sid)
+        except Exception:
+            pass
+    for t in IG_TARGETS:
+        if t["id"] not in seen_ids:
+            dynamic.append(t)
+            seen_ids.add(t["id"])
+    return dynamic
+
+
 async def seed_ig_sample_replies():
     assert len(SAMPLE_MATCH_COMMENT) <= 140, f"Comment too long: {len(SAMPLE_MATCH_COMMENT)}"
     tracker = load_tracker()
+    targets = get_dynamic_ig_targets()
+    unseeded = [
+        t for t in targets
+        if not (t["id"] in tracker.get("instagram", {}) and tracker["instagram"][t["id"]].get("shortcode") == t["shortcode"])
+    ]
+    if not unseeded:
+        print(f"  ✓ [IG Sample Seeder] All {len(targets)} tracked IG Reels already have Sample Match replies seeded.", flush=True)
+        return
     import urllib.request
     cdp_open = False
     try:
@@ -467,7 +501,7 @@ async def seed_ig_sample_replies():
         await page.evaluate("window.scrollBy(0, 400)")
         await asyncio.sleep(2.0)
 
-        for t in IG_TARGETS:
+        for t in targets:
             tid = t["id"]
             sc = t["shortcode"]
             if tid in tracker.get("instagram", {}) and tracker["instagram"][tid].get("shortcode") == sc:

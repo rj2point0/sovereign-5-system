@@ -18,15 +18,22 @@ import urllib.parse
 import sys
 
 from lead_capture_worker import (
+    INTERNAL_TEST_EMAILS,
     STRIPE_MINI_URL,
     calculate_5_systems,
     collect_lead_partner_checks_and_intent,
+    is_internal_test_email,
     load_processed_state,
     save_processed_state,
     send_email_via_smtp,
 )
 
 STRIPE_LINK_MINI = STRIPE_MINI_URL  # https://buy.stripe.com/00w4gz0tj66x0cw5Tx38405
+INTERNAL_TEST_EMAILS = set(INTERNAL_TEST_EMAILS) | {
+    "getshoes7@gmail.com",
+    "adam.vegaui@gmail.com",
+    "imcodingdad@gmail.com",
+}
 
 
 def build_3line_price_drop_email(lead_entry: Dict[str, Any]) -> Tuple[str, str, str]:
@@ -125,6 +132,9 @@ def dispatch_price_drop_299(target_email: str = "", send_all: bool = False, forc
     all_ok = True
     for key, entry in targets:
         em = str(entry.get("email") or "").strip()
+        if em.lower() in {x.lower() for x in INTERNAL_TEST_EMAILS} or is_internal_test_email(em):
+            print(f"✓ [INTERNAL TEST] Skipping test account {em}.")
+            continue
         if entry.get("price_drop_299_sent_at") and not force and not dry_run:
             print(f"✓ $2.99 Express Script recovery already sent to {em} at {entry['price_drop_299_sent_at']} (skipping).")
             continue
